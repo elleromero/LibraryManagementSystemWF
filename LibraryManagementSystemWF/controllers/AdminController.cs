@@ -224,7 +224,7 @@ namespace LibraryManagementSystemWF.controllers
             returnData.Results = new List<User>();
             Dictionary<string, string> errors = new Dictionary<string, string>();
             bool isSuccess = false;
-            returnData.rowCount = 1;
+            returnData.rowCount = 0;
 
             // is not admin
             if (!AuthGuard.IsAdmin())

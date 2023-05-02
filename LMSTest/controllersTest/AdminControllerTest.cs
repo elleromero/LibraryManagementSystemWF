@@ -67,6 +67,7 @@ namespace LMSTest
         [TestMethod]
         public void Should_GetAllUsers()
         {
+            AuthController.SignIn("admin", "password");
             ControllerAccessData<User> res = AdminController.GetAllUsers();
 
             Assert.IsTrue(res.IsSuccess);

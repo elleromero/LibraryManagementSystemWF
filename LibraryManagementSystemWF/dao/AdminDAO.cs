@@ -58,7 +58,8 @@ namespace LibraryManagementSystemWF.dao
             returnResult.IsSuccess = false;
             returnResult.rowCount = 0;
 
-            string query = "SELECT *, (SELECT COUNT(*) FROM users) as row_count FROM users u " +
+            string countQuery = "SELECT COUNT(*) as row_count FROM users;";
+            string query = "SELECT * FROM users u " +
                 "JOIN members m ON m.member_id = u.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
@@ -70,6 +71,7 @@ namespace LibraryManagementSystemWF.dao
                     try
                     {
                         SqlCommand command = new SqlCommand(query, conn);
+                        SqlCommand countCommand = new SqlCommand(countQuery, conn);
                         SqlDataReader reader = command.ExecuteReader();
 
                         // fill data
@@ -80,16 +82,19 @@ namespace LibraryManagementSystemWF.dao
                             if (user != null) returnResult.Results.Add(user);
                         }
 
+                        reader.Close();
+
                         // add row count
-                        if (reader.NextResult() && reader.Read())
+                        SqlDataReader countReader = countCommand.ExecuteReader();
+                        if (countReader.Read())
                         {
-                            returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                            returnResult.rowCount = countReader.GetInt32(countReader.GetOrdinal("row_count"));
                         }
 
-                        reader.Close();
+                        countReader.Close();
                         returnResult.IsSuccess = true;
                     }
-                    catch { return; }
+                    catch (Exception e) { Console.WriteLine(e); return; }
                 }
             });
 
