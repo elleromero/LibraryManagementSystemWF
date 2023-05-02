@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LibraryManagementSystem\LibraryManagementSystem.csproj" />
+    <ProjectReference Include="..\LibraryManagementSystemWF\LibraryManagementSystemWF.csproj" />
   </ItemGroup>
 
 </Project>
