@@ -1,4 +1,6 @@
-# Library Management System
+**IMPORTANT:** This project uses the traditional C# WinForms rather than WPF.
+
+# Library Management System WF
 With this system, librarians can manage their collections more efficiently and provide better service to patrons. They can easily find items, keep track of who has borrowed them, and much more. Whether you're a small town library or a big university, this system can help you run your library smoothly and effectively.
 
 **View ER Diagram [here](https://miro.com/app/board/uXjVMTqRfmM=/)**
@@ -17,3 +19,7 @@ With this system, librarians can manage their collections more efficiently and p
 - [x] Get User by Id
 - [x] Get All Users
 - [x] Remove by Id
+
+**Book**
+- [x] Create Book
+- [x] Update Book
