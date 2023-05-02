@@ -48,5 +48,14 @@ namespace LMSTest
             Console.WriteLine(res.IsSuccess);
             Console.WriteLine(res.Result?.Author);
         }
+
+        [TestMethod]
+        public void Should_Get_All_Books()
+        {
+            AuthController.SignIn("admin", "password");
+            ControllerAccessData<Book> res = BookController.GetAllBooks();
+
+            Assert.IsTrue(res.IsSuccess);
+        }
     }
 }

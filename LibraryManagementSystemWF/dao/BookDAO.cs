@@ -79,7 +79,51 @@ namespace LibraryManagementSystemWF.dao
 
         public ReturnResultArr<Book> GetAll(int page)
         {
-            throw new NotImplementedException();
+            ReturnResultArr<Book> returnResult = new ReturnResultArr<Book>();
+            returnResult.Results = new List<Book>();
+            returnResult.IsSuccess = false;
+            returnResult.rowCount = 0;
+
+            string countQuery = "SELECT COUNT(*) as row_count FROM users;";
+            string query = "SELECT * FROM books b " +
+                "JOIN genres g ON g.genre_id = b.genre_id " +
+                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+
+            SqlClient.Execute((error, conn) =>
+            {
+                if (error == null)
+                {
+                    try
+                    {
+                        SqlCommand command = new SqlCommand(query, conn);
+                        SqlCommand countCommand = new SqlCommand(countQuery, conn);
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        // fill data
+                        while (reader.Read())
+                        {
+                            Book? book = this.Fill(reader);
+
+                            if (book != null) returnResult.Results.Add(book);
+                        }
+
+                        reader.Close();
+
+                        // add row count
+                        SqlDataReader countReader = countCommand.ExecuteReader();
+                        if (countReader.Read())
+                        {
+                            returnResult.rowCount = countReader.GetInt32(countReader.GetOrdinal("row_count"));
+                        }
+
+                        countReader.Close();
+                        returnResult.IsSuccess = true;
+                    }
+                    catch (Exception e) { Console.WriteLine(e); return; }
+                }
+            });
+
+            return returnResult;
         }
 
         public ReturnResult<Book> GetById(string id)
