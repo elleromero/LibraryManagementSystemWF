@@ -57,5 +57,14 @@ namespace LMSTest
 
             Assert.IsTrue(res.IsSuccess);
         }
+
+        [TestMethod]
+        public void Should_Remove_By_Id()
+        {
+            AuthController.SignIn("admin", "password");
+            ControllerActionData res = BookController.RemoveById("A21D93F9-1AC2-4B77-9543-8B38C286DA29");
+
+            Assert.IsTrue(res.IsSuccess);
+        }
     }
 }
