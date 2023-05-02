@@ -48,5 +48,23 @@ namespace LMSTest
             Console.WriteLine(res.IsSuccess);
             Console.WriteLine(res.Result?.Author);
         }
+
+        [TestMethod]
+        public void Should_Get_All_Books()
+        {
+            AuthController.SignIn("admin", "password");
+            ControllerAccessData<Book> res = BookController.GetAllBooks();
+
+            Assert.IsTrue(res.IsSuccess);
+        }
+
+        [TestMethod]
+        public void Should_Remove_By_Id()
+        {
+            AuthController.SignIn("admin", "password");
+            ControllerActionData res = BookController.RemoveById("A21D93F9-1AC2-4B77-9543-8B38C286DA29");
+
+            Assert.IsTrue(res.IsSuccess);
+        }
     }
 }
