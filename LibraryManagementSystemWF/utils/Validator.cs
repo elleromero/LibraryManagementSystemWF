@@ -64,6 +64,40 @@ namespace LibraryManagementSystemWF.utils
             return true;
         }
 
+        public static bool IsNameUnique(string tableName, string columnName, string value)
+        {
+            bool isUnique = false;
+            SqlClient.Execute((error, conn) =>
+            {
+                try
+                {
+                    if (error == null)
+                    {
+                        string query = $"SELECT * FROM {tableName}";
+                        SqlCommand command = new SqlCommand(query, conn);
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            string name = reader.GetString(reader.GetOrdinal(columnName));
+
+                            name = Regex.Replace(name, @"\s+", "_").ToLower();
+                            value = Regex.Replace(value, @"\s+", "_").ToLower();
+
+                            if (name.Equals(value)) return;
+                        }
+
+                        isUnique = true;
+                    }
+                    else return;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
+
         public static bool IsUsernameUnique(string username)
         {
             // Check if username is unique
