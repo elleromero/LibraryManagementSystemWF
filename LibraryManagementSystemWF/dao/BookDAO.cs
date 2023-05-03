@@ -82,7 +82,7 @@ namespace LibraryManagementSystemWF.dao
             ReturnResultArr<Book> returnResult = new ReturnResultArr<Book>();
             returnResult.Results = new List<Book>();
             returnResult.IsSuccess = false;
-            returnResult.rowCount = 0;
+            returnResult.rowCount = 1;
 
             string countQuery = "SELECT COUNT(*) as row_count FROM users;";
             string query = "SELECT * FROM books b " +
