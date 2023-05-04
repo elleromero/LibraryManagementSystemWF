@@ -56,7 +56,8 @@ namespace LibraryManagementSystemWF.views
         {
             SignIn signIn = new SignIn();
             signIn.Show();
-            signIn.Hide();
+            this.Close();
+            this.Hide();
         }
     }
 }
