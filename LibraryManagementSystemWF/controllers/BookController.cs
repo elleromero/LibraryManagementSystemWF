@@ -207,7 +207,7 @@ namespace LibraryManagementSystemWF.controllers
                 return returnData;
             }
 
-            if (page < 0) errors.Add("page", "Invalid page");
+            if (page <= 0) errors.Add("page", "Invalid page");
 
             if (errors.Count == 0)
             {

@@ -6,6 +6,12 @@ namespace LMSTest
     public class ValidatorTest
     {
         [TestMethod]
+        public void Should_Name_Is_Unique()
+        {
+            Assert.IsTrue(Validator.IsNameUnique("genres", "name", "horror genre"));
+        }
+
+        [TestMethod]
         public void Should_Be_Email()
         {
             Assert.IsTrue(

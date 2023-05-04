@@ -1,9 +1,7 @@
 ﻿using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
-using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,20 +10,17 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.dao
 {
-    internal class BookDAO : IDAO<Book>
+    internal class GenreDAO : IDAO<Genre>
     {
-        public ReturnResult<Book> Create(Book model)
+        public ReturnResult<Genre> Create(Genre model)
         {
-            ReturnResult<Book> returnResult = new ReturnResult<Book>();
-            returnResult.Result = default(Book);
+            ReturnResult<Genre> returnResult = new ReturnResult<Genre>();
+            returnResult.Result = default(Genre);
             returnResult.IsSuccess = false;
 
-            string declareQuery = "DECLARE @book_id UNIQUEIDENTIFIER; SET @book_id = NEWID();";
-            string insertQuery = "INSERT INTO books (book_id, genre_id, title, sypnosis, cover, author, publication_date, publisher, isbn) " +
-                $"VALUES (@book_id, {model.Genre.ID}, '{model.Title}', '{model.Sypnosis}', '{model.Cover}', '{model.Author}', '{model.PublicationDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}', '{model.Publisher}', '{model.ISBN}');";
-            string copyQuery = "INSERT INTO copies (book_id, status_id) VALUES (@book_id, 1);";
-            string selectQuery = "SELECT * FROM books b JOIN genres g ON g.genre_id = b.genre_id WHERE book_id = @book_id;";
-            string query = $"{declareQuery} {insertQuery} {copyQuery} {selectQuery}";
+            string query = "INSERT INTO genres (name, description) " +
+                $"VALUES ('{model.Name}', '{model.Description}'); " +
+                "SELECT * FROM genres WHERE genre_id = SCOPE_IDENTITY();";
 
             SqlClient.Execute((error, conn) =>
             {
@@ -39,57 +34,42 @@ namespace LibraryManagementSystemWF.dao
                         if (reader.Read())
                         {
                             returnResult.Result = this.Fill(reader);
-                            returnResult.IsSuccess = returnResult.Result != default(Book);
+                            returnResult.IsSuccess = returnResult.Result != default(Genre);
                         }
 
                         reader.Close();
                     }
                     else return;
                 }
-                catch {  return; }
+                catch { return; }
             });
 
             return returnResult;
         }
 
-        public Book? Fill(SqlDataReader reader)
+        public Genre? Fill(SqlDataReader reader)
         {
-            Book? book = default(Book);
-            Genre genre = new Genre();
+            Genre? genre = default(Genre);
 
-            if (!reader.IsDBNull(reader.GetOrdinal("genre_id")))
+            genre = new Genre
             {
-                genre.ID = reader.GetInt32(reader.GetOrdinal("genre_id"));
-                genre.Name = reader.GetString(reader.GetOrdinal("name"));
-                genre.Description = reader.GetString(reader.GetOrdinal("description"));
-            }
-
-            book = new Book
-            {
-                ID = reader.GetGuid(reader.GetOrdinal("book_id")),
-                Title = reader.GetString(reader.GetOrdinal("title")),
-                Sypnosis = reader.GetString(reader.GetOrdinal("sypnosis")),
-                Author = reader.GetString(reader.GetOrdinal("author")),
-                Cover = reader.GetString(reader.GetOrdinal("cover")),
-                Publisher = reader.GetString(reader.GetOrdinal("publisher")),
-                PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
-                ISBN = reader.GetString(reader.GetOrdinal("isbn")),
-                Genre = genre
+                ID = reader.GetInt32(reader.GetOrdinal("genre_id")),
+                Name = reader.GetString(reader.GetOrdinal("name")),
+                Description = reader.GetString(reader.GetOrdinal("description"))
             };
 
-            return book;
+            return genre;
         }
 
-        public ReturnResultArr<Book> GetAll(int page)
+        public ReturnResultArr<Genre> GetAll(int page)
         {
-            ReturnResultArr<Book> returnResult = new ReturnResultArr<Book>();
-            returnResult.Results = new List<Book>();
+            ReturnResultArr<Genre> returnResult = new ReturnResultArr<Genre>();
+            returnResult.Results = new List<Genre>();
             returnResult.IsSuccess = false;
             returnResult.rowCount = 1;
 
-            string countQuery = "SELECT COUNT(*) as row_count FROM users;";
-            string query = "SELECT * FROM books b " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+            string countQuery = "SELECT COUNT(*) as row_count FROM genres;";
+            string query = "SELECT * FROM genres " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             SqlClient.Execute((error, conn) =>
@@ -105,9 +85,9 @@ namespace LibraryManagementSystemWF.dao
                         // fill data
                         while (reader.Read())
                         {
-                            Book? book = this.Fill(reader);
+                            Genre? genre = this.Fill(reader);
 
-                            if (book != null) returnResult.Results.Add(book);
+                            if (genre != null) returnResult.Results.Add(genre);
                         }
 
                         reader.Close();
@@ -129,17 +109,17 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
-        public ReturnResult<Book> GetById(string id)
+        public ReturnResult<Genre> GetById(string id)
         {
-            ReturnResult<Book> returnResult = new ReturnResult<Book>();
-            returnResult.Result = default(Book);
+            ReturnResult<Genre> returnResult = new ReturnResult<Genre>();
+            returnResult.Result = default(Genre);
             returnResult.IsSuccess = false;
 
             SqlClient.Execute((error, conn) =>
             {
                 if (error == null)
                 {
-                    string query = $"SELECT * FROM books b JOIN genres g ON g.genre_id = b.genre_id WHERE b.book_id = '{id}';";
+                    string query = $"SELECT * FROM genres WHERE genre_id = {id};";
 
                     try
                     {
@@ -151,7 +131,7 @@ namespace LibraryManagementSystemWF.dao
                             returnResult.Result = this.Fill(reader);
                         }
                         reader.Close();
-                        returnResult.IsSuccess = returnResult.Result != default(Book);
+                        returnResult.IsSuccess = returnResult.Result != default(Genre);
                     }
                     catch { return; }
                 }
@@ -162,12 +142,11 @@ namespace LibraryManagementSystemWF.dao
 
         public bool Remove(string id)
         {
-
             bool isRemoved = false;
 
-            // remove book
-            string query = $"DELETE FROM copies WHERE book_id = '{id}'; " +
-                $"DELETE FROM books WHERE book_id = '{id}'; ";
+            // remove genre
+            string query = $"DELETE FROM genres WHERE genre_id = ${id}; " +
+                $"UPDATE books SET genre_id = NULL WHERE genre_id = ${id};";
 
             SqlClient.Execute((error, conn) =>
             {
@@ -187,22 +166,16 @@ namespace LibraryManagementSystemWF.dao
             return isRemoved;
         }
 
-        public ReturnResult<Book> Update(Book model)
+        public ReturnResult<Genre> Update(Genre model)
         {
-            ReturnResult<Book> returnResult = new ReturnResult<Book>();
-            returnResult.Result = default(Book);
+            ReturnResult<Genre> returnResult = new ReturnResult<Genre>();
+            returnResult.Result = default(Genre);
             returnResult.IsSuccess = false;
 
-            string query = "UPDATE books SET " +
-                $"genre_id = {model.Genre.ID}, " +
-                $"title = '{model.Title}', " +
-                $"sypnosis = '{model.Sypnosis}', " +
-                $"cover = '{model.Cover}', " +
-                $"author = '{model.Author}', " +
-                $"publication_date = '{model.PublicationDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}', " +
-                $"publisher = '{model.Publisher}', " +
-                $"isbn = '{model.ISBN}' WHERE book_id = '{model.ID}'; " +
-                $"SELECT * FROM books b JOIN genres g ON g.genre_id = b.genre_id WHERE b.book_id = '{model.ID}';";
+            string query = "UPDATE genres SET " +
+                $"name = '{model.Name}', " +
+                $"description = '{model.Description}' WHERE genre_id = {model.ID}; " +
+                $"SELECT * FROM genres WHERE genre_id = {model.ID};";
 
             SqlClient.Execute((error, conn) =>
             {
@@ -218,7 +191,7 @@ namespace LibraryManagementSystemWF.dao
                             returnResult.Result = this.Fill(reader);
                         }
                         reader.Close();
-                        returnResult.IsSuccess = returnResult.Result != default(Book);
+                        returnResult.IsSuccess = returnResult.Result != default(Genre);
                     }
                     catch { return; }
                 }
