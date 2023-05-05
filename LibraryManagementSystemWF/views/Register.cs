@@ -58,5 +58,10 @@ namespace LibraryManagementSystemWF.views
             signIn.Show();
             signIn.Hide();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
