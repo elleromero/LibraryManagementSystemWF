@@ -26,7 +26,8 @@ namespace LibraryManagementSystemWF.dao
                 $"INSERT INTO copies (copy_id, book_id, status_id) VALUES (@copy_id, '{bookId}', 1); " +
                 "SET @counter = @counter + 1; " +
                 "END;";
-            string selectQuery = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available FROM copies c " +
+            string selectQuery = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
+                "g.name AS genre_name, g.description AS genre_description FROM copies c " +
                 "JOIN books b ON b.book_id = c.book_id " +
                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                 "JOIN statuses s ON s.status_id = c.status_id " +
@@ -74,8 +75,8 @@ namespace LibraryManagementSystemWF.dao
             if (!reader.IsDBNull(reader.GetOrdinal("genre_id")))
             {
                 genre.ID = reader.GetInt32(reader.GetOrdinal("genre_id"));
-                genre.Name = reader.GetString(reader.GetOrdinal("genres.name"));
-                genre.Description = reader.GetString(reader.GetOrdinal("genres.description"));
+                genre.Name = reader.GetString(reader.GetOrdinal("genre_name"));
+                genre.Description = reader.GetString(reader.GetOrdinal("genre_description"));
             }
 
             book = new Book
