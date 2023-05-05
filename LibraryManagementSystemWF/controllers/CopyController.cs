@@ -96,5 +96,28 @@ namespace LibraryManagementSystemWF.controllers
             returnData.IsSuccess = isSuccess;
             return returnData;
         }
+
+        public static ControllerActionData RemoveById(string id)
+        {
+            ControllerActionData returnResult = new ControllerActionData();
+            returnResult.Errors = new Dictionary<string, string>();
+            returnResult.IsSuccess = false;
+
+            // is not admin
+            if (!AuthGuard.IsAdmin())
+            {
+                returnResult.Errors.Add("permission", "Forbidden");
+
+                return returnResult;
+            }
+
+            if (returnResult.Errors.Count == 0)
+            {
+                CopyDAO copyDao = new CopyDAO();
+                returnResult.IsSuccess = copyDao.Remove(id);
+            }
+
+            return returnResult;
+        }
     }
 }

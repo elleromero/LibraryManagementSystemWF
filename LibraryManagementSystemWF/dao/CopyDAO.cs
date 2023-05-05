@@ -118,8 +118,12 @@ namespace LibraryManagementSystemWF.dao
             returnResult.rowCount = 1;
 
             string countQuery = "SELECT COUNT(*) as row_count FROM copies;";
-            string query = "SELECT * FROM copies " +
-                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+            string query = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
+                       "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+                       "JOIN books b ON b.book_id = c.book_id " +
+                       "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                       "JOIN statuses s ON s.status_id = c.status_id " +
+                       $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             SqlClient.Execute((error, conn) =>
             {
@@ -168,7 +172,8 @@ namespace LibraryManagementSystemWF.dao
             {
                 if (error == null)
                 {
-                    string query = "SELECT * FROM copies c " +
+                    string query = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
+                       "g.name AS genre_name, g.description AS genre_description FROM copies c " +
                        "JOIN books b ON b.book_id = c.book_id " +
                        "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                        "JOIN statuses s ON s.status_id = c.status_id " +
@@ -186,7 +191,7 @@ namespace LibraryManagementSystemWF.dao
                         reader.Close();
                         returnResult.IsSuccess = returnResult.Result != default(Copy);
                     }
-                    catch { return; }
+                    catch (Exception e) { Console.WriteLine(e);  return; }
                 }
             });
 
@@ -197,7 +202,28 @@ namespace LibraryManagementSystemWF.dao
 
         public bool Remove(string id)
         {
-            throw new NotImplementedException();
+
+            bool isRemoved = false;
+
+            // remove copy
+            string query = $"DELETE FROM copies WHERE book_id = '{id}'; ";
+
+            SqlClient.Execute((error, conn) =>
+            {
+                if (error == null)
+                {
+                    try
+                    {
+                        SqlCommand command = new SqlCommand(query, conn);
+                        command.ExecuteNonQuery();
+
+                        isRemoved = true;
+                    }
+                    catch (Exception e) { Console.WriteLine(e); return; }
+                }
+            });
+
+            return isRemoved;
         }
 
         public ReturnResult<Copy> Update(Copy model)
