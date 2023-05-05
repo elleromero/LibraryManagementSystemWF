@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.Dashboard;
 using LibraryManagementSystemWF.models;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,10 @@ namespace LibraryManagementSystemWF.views
             if (res.IsSuccess)
             {
                 MessageBox.Show("LOGIN SUCCESS!!!! WELCOME USER!!!");
+
+                AdminDashboard admin = new AdminDashboard();
+                admin.Show();
+                this.Hide();
             }
             else
             {
