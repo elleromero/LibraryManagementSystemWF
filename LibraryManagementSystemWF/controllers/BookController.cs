@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace LibraryManagementSystemWF.controllers
 {
@@ -38,6 +39,7 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
+            if (!Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
             if (!Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
             if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
             if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
@@ -99,6 +101,7 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
+            if (!Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
             if (!Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
             if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
             if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
