@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementSystemWF", "LibraryManagementSystemWF\LibraryManagementSystemWF.csproj", "{57835BB7-F0AC-4212-9A85-E28580415B7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryManagementSystemWF", "LibraryManagementSystemWF\LibraryManagementSystemWF.csproj", "{57835BB7-F0AC-4212-9A85-E28580415B7F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMSTest", "..\LibraryManagementSystemWF\LMSTest\LMSTest.csproj", "{A790224D-38FD-44A7-81C0-1BB953C2A86A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LMSTest", "LMSTest\LMSTest.csproj", "{A790224D-38FD-44A7-81C0-1BB953C2A86A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
