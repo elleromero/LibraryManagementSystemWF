@@ -88,12 +88,12 @@
             // 
             button1.BackColor = Color.DimGray;
             button1.FlatAppearance.BorderSize = 0;
-            button1.FlatAppearance.MouseDownBackColor = Color.Blue;
-            button1.FlatAppearance.MouseOverBackColor = Color.Blue;
+            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(211, 283);
+            button1.ForeColor = SystemColors.ActiveCaptionText;
+            button1.Location = new Point(368, 283);
             button1.Name = "button1";
             button1.Size = new Size(134, 34);
             button1.TabIndex = 10;
@@ -105,12 +105,12 @@
             // 
             button2.BackColor = Color.DimGray;
             button2.FlatAppearance.BorderSize = 0;
-            button2.FlatAppearance.MouseDownBackColor = Color.Blue;
-            button2.FlatAppearance.MouseOverBackColor = Color.Blue;
+            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
+            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.ForeColor = SystemColors.ControlLightLight;
-            button2.Location = new Point(368, 283);
+            button2.ForeColor = SystemColors.ActiveCaptionText;
+            button2.Location = new Point(211, 283);
             button2.Name = "button2";
             button2.Size = new Size(134, 34);
             button2.TabIndex = 11;
