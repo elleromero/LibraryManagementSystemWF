@@ -1,28 +1,29 @@
 ﻿using LibraryManagementSystemWF.services;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.utils
 {
     internal class SqlClient : EnvService
     {
-        public static void Execute(Action<Exception?, SqlConnection?> callback, bool useBase = false)
+        public static async Task ExecuteAsync(Func<Exception?, SqlConnection?, Task> callback, bool useBase = false)
         {
-            SqlConnection conn = new SqlConnection(useBase ? GetConnBase() : GetConnStr());
-            Exception? error = null;
-
-            try { conn.Open(); }
-            catch (Exception e)
+            using (SqlConnection conn = new SqlConnection(useBase ? GetConnBase() : GetConnStr()))
             {
-                error = e;
-            }
+                Exception? error = null;
 
-            callback(error, conn);
-            conn.Close();
+                try
+                {
+                    await conn.OpenAsync();
+                }
+                catch (Exception e)
+                {
+                    error = e;
+                }
+
+                await callback(error, conn);
+            }
         }
     }
 }
