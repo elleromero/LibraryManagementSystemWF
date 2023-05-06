@@ -145,7 +145,7 @@ namespace LibraryManagementSystemWF.dao
             };
         }
 
-        public ReturnResultArr<Loan> GetAll(int page)
+        public ReturnResultArr<Loan> GetAllLoans(int page, Loan model)
         {
             ReturnResultArr<Loan> returnResult = new ReturnResultArr<Loan>();
             returnResult.Results = new List<Loan>();
@@ -163,6 +163,7 @@ namespace LibraryManagementSystemWF.dao
                                 "JOIN members m ON u.member_id = m.member_id" +
                                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                                 "JOIN statuses s ON c.status_id = s.status_id " +
+                                $"WHERE l.user_id = '{model.User.ID}'" +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             SqlClient.Execute((error, conn) =>
@@ -200,6 +201,11 @@ namespace LibraryManagementSystemWF.dao
             });
 
             return returnResult;
+        }
+
+        public ReturnResultArr<Loan> GetAll(int page)
+        {
+            throw new NotImplementedException();
         }
 
         public ReturnResult<Loan> GetById(string id)

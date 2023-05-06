@@ -206,7 +206,8 @@ namespace LibraryManagementSystemWF.dao
             bool isRemoved = false;
 
             // remove copy
-            string query = $"DELETE FROM copies WHERE book_id = '{id}'; ";
+            string query = $"DELETE FROM copies WHERE book_id = '{id}'; " +
+                $"DELETE FROM loans WHEREbook_id = '{id}';";
 
             SqlClient.Execute((error, conn) =>
             {
