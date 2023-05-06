@@ -20,7 +20,14 @@ namespace LibraryManagementSystemWF.views
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Register register = new Register();
+            register.Show();
+            this.Hide();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
             string password = txtPassword.Text;
@@ -39,18 +46,6 @@ namespace LibraryManagementSystemWF.views
             {
                 MessageBox.Show("WRONG INPUT!!!");
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Register register = new Register();
-            register.Show();
-            this.Hide();
-        }
-
-        private void txtUsername_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
