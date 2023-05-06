@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagementSystemWF.models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -223,5 +224,28 @@ namespace LibraryManagementSystemWF.utils
             return true;
         }
 
+        public static bool IsCopyAvailable(string bookId)
+        {
+            bool isValid = false;
+            SqlClient.Execute((error, conn) =>
+            {
+                try
+                {
+                    if (error == null)
+                    {
+                        string query = $"SELECT COUNT(*) FROM copies WHERE book_id = '{bookId}' AND status_id = 1;";
+                        SqlCommand command = new SqlCommand(query, conn);
+
+                        int count = (int)command.ExecuteScalar();
+                        Console.WriteLine(count);
+                        isValid = count > 0;
+                    }
+                    else return;
+                }
+                catch { return; }
+            });
+
+            return isValid;
+        }
     }
 }

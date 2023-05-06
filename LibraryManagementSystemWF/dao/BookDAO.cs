@@ -87,7 +87,7 @@ namespace LibraryManagementSystemWF.dao
             returnResult.IsSuccess = false;
             returnResult.rowCount = 1;
 
-            string countQuery = "SELECT COUNT(*) as row_count FROM users;";
+            string countQuery = "SELECT COUNT(*) as row_count FROM books;";
             string query = "SELECT * FROM books b " +
                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
