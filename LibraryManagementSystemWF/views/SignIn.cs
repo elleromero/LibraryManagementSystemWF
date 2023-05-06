@@ -1,6 +1,7 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.Dashboard;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,14 +34,28 @@ namespace LibraryManagementSystemWF.views
             string password = txtPassword.Text;
 
             ControllerModifyData<User> res = AuthController.SignIn(username, password);
+            User user = AuthService.getSignedUser();
+
+
 
             if (res.IsSuccess)
             {
-                MessageBox.Show("LOGIN SUCCESS!!!! WELCOME USER!!!");
+                if (user.Role.HasAccess)
+                {
+                    MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
 
-                AdminDashboard admin = new AdminDashboard();
-                admin.Show();
-                this.Hide();
+                    AdminDashboard admin = new AdminDashboard();
+                    admin.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("LOGIN SUCCESS!!!! WELCOME USER!!!");
+
+                    UserDb userDb = new UserDb();
+                    userDb.Show();
+                    this.Hide();
+                }
             }
             else
             {
