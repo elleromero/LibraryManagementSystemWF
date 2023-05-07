@@ -82,13 +82,13 @@ namespace LibraryManagementSystemWF.dao
                     reader = await command.ExecuteReaderAsync();
 
                     // Add row count
-                    if (await reader.NextResultAsync() && await reader.ReadAsync())
+                    if (await reader.ReadAsync())
                     {
                         returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
                     }
 
                     // Fill data
-                    if (await reader.NextResultAsync())
+                    if (await reader.NextResultAsync() && await reader.NextResultAsync())
                     {
                         while (await reader.ReadAsync())
                         {

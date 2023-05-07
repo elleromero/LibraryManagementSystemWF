@@ -106,7 +106,7 @@ namespace LibraryManagementSystemWF.dao
                     reader = await command.ExecuteReaderAsync();
 
                     // add row count
-                    if (await reader.NextResultAsync() && await reader.ReadAsync())
+                    if (await reader.ReadAsync())
                     {
                         returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
                     }
