@@ -9,9 +9,9 @@ namespace LMSTest
     public class AuthControllerTest
     {
         [TestMethod]
-        public void Shoulld_Register()
+        public async void Shoulld_Register()
         {
-            ControllerModifyData<User> res = AuthController.Register(
+            ControllerModifyData<User> res = await AuthController.Register(
                 "test_omineko12",
                 "password",
                 "elle",
@@ -25,9 +25,9 @@ namespace LMSTest
         }
 
         [TestMethod]
-        public void Should_SignIn()
+        public async Task Should_SignIn()
         {
-            ControllerModifyData<User> res = AuthController.SignIn("admin", "password");
+            ControllerModifyData<User> res = await AuthController.SignIn("admin", "password");
             
             Assert.IsTrue(res.IsSuccess);
         }

@@ -115,6 +115,8 @@ namespace LibraryManagementSystemWF.controllers
                 else errors.Add("password", "Incorrect password");
             } else errors.Add("username", "Username did not exist");
 
+            Console.WriteLine(errors.GetValueOrDefault("username"));
+            Console.WriteLine(errors.GetValueOrDefault("password"));
             returnData.Errors = errors;
             returnData.IsSuccess = isSuccess;
             return returnData;

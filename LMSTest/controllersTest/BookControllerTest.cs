@@ -7,10 +7,10 @@ namespace LMSTest
     public class BookControllerTest
     {
         [TestMethod]
-        public void Should_Create_Book()
+        public async void Should_Create_Book()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Book> res = BookController.CreateBook(
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Book> res = await BookController.CreateBook(
                 1,
                 "HTML Semantics",
                 "K. Heart",
@@ -23,19 +23,19 @@ namespace LMSTest
         }
 
         [TestMethod]
-        public void Should_Get_Book_By_Id()
+        public async void Should_Get_Book_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Book> res = BookController.GetBookById("47298E60-74EA-4F20-AAF2-55FAC9797492");
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Book> res = await BookController.GetBookById("47298E60-74EA-4F20-AAF2-55FAC9797492");
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Update_Book()
+        public async void Should_Update_Book()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Book> res = BookController.UpdateBook(
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Book> res = await BookController.UpdateBook(
                 "47298E60-74EA-4F20-AAF2-55FAC9797492",
                 1,
                 "HTML Semantic",
@@ -50,19 +50,19 @@ namespace LMSTest
         }
 
         [TestMethod]
-        public void Should_Get_All_Books()
+        public async void Should_Get_All_Books()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerAccessData<Book> res = BookController.GetAllBooks();
+            await AuthController.SignIn("admin", "password");
+            ControllerAccessData<Book> res = await BookController.GetAllBooks();
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Remove_By_Id()
+        public async void Should_Remove_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerActionData res = BookController.RemoveById("A21D93F9-1AC2-4B77-9543-8B38C286DA29");
+            await AuthController.SignIn("admin", "password");
+            ControllerActionData res = await BookController.RemoveById("A21D93F9-1AC2-4B77-9543-8B38C286DA29");
 
             Assert.IsTrue(res.IsSuccess);
         }

@@ -31,11 +31,12 @@ namespace LibraryManagementSystemWF.utils
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();
 
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         if (isStrict)
                         {
                             string passwordHash = reader.GetString(reader.GetOrdinal("password_hash"));
+                            Console.WriteLine(Argon2.Hash(password));
                             isAllowed = Argon2.Verify(passwordHash, password);
                         } else isAllowed = true;
                     }

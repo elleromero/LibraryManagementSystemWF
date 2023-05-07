@@ -47,9 +47,8 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = returnResult.Result != null;
                 }
-                catch { return; }
-                finally
-                { if (reader != null) await reader.CloseAsync(); }
+                catch (Exception e) { Console.WriteLine(e);  return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
@@ -88,7 +87,7 @@ namespace LibraryManagementSystemWF.dao
                     }
 
                     // Fill data
-                    if (await reader.NextResultAsync() && await reader.NextResultAsync())
+                    if (await reader.NextResultAsync())
                     {
                         while (await reader.ReadAsync())
                         {
@@ -202,6 +201,7 @@ namespace LibraryManagementSystemWF.dao
 
                 try
                 {
+                    Console.WriteLine("AJHVSJHFSJHFS");
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();
 
@@ -218,7 +218,7 @@ namespace LibraryManagementSystemWF.dao
                         AuthService.setSignedUser(returnResult.Result);
                     }
                 }
-                catch { return; }
+                catch (Exception e) { Console.WriteLine(e);  return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 

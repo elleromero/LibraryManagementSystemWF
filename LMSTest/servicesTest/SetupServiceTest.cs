@@ -12,9 +12,9 @@ namespace LMSTest.servicesTest
     public class SetupServiceTest
     {
         [TestMethod]
-        public void Should_Setup()
+        public async void Should_Setup()
         {
-            Assert.IsTrue(SetupService.Ready());
+            Assert.IsTrue(await SetupService.Ready());
         }
     }
 }
