@@ -62,5 +62,32 @@ namespace LibraryManagementSystemWF.views
                 MessageBox.Show("WRONG INPUT!!!");
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Register register = new Register();
+            register.Show();
+            this.Hide();
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
     }
 }
