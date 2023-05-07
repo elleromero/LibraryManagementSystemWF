@@ -28,13 +28,13 @@ namespace LibraryManagementSystemWF.views
             this.Hide();
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private async void button2_Click_1(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
-            ControllerModifyData<User> res = AuthController.SignIn(username, password);
-            User user = AuthService.getSignedUser();
+            ControllerModifyData<User> res = await AuthController.SignIn(username, password);
+            User? user = AuthService.getSignedUser();
 
 
 

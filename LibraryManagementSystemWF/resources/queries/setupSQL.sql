@@ -59,10 +59,11 @@ CREATE TABLE copies (
 
 CREATE TABLE loans (
 	loan_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	member_id UNIQUEIDENTIFIER,
+	user_id UNIQUEIDENTIFIER,
 	copy_id UNIQUEIDENTIFIER,
 	date_borrowed DATETIME2 NOT NULL,
 	due_date DATETIME2 NOT NULL,
+	is_returned BIT NOT NULL,
 	FOREIGN KEY (member_id) REFERENCES members(member_id),
 	FOREIGN KEY (copy_id) REFERENCES copies(copy_id),
 )

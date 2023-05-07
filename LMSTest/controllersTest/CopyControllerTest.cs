@@ -7,49 +7,42 @@ namespace LMSTest
     public class CopyControllerTest
     {
         [TestMethod]
-        public void Should_Create_Copies()
+        public async void Should_Create_Copies()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Copy> res = CopyController.CreateCopies(
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Copy> res = await CopyController.CreateCopies(
                 "A5BDF027-CE17-4F76-B95A-82D2FB7640E8",
                 12
                 );
-            Console.WriteLine(res.Result.Book.Genre.Name);
-            Assert.IsTrue(res.IsSuccess);
-        }
-
-        [TestMethod]
-        public void Should_Get_Genre_By_Id()
-        {
-            ControllerModifyData<Genre> res = GenreController.GetGenreById(5);
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Update_Genre()
+        public async void Should_Get_Copy_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Genre> res = GenreController.UpdateGenre(5, "Embutido", "AAAAAHHHH");
+            ControllerModifyData<Copy> res = await CopyController.GetCopyById("4F19038B-EEF3-4940-8505-00406EF8BBC9");
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Get_All_Genres()
+        public async void Should_Get_All_Copies()
         {
-            ControllerAccessData<Genre> res = GenreController.GetAllGenres();
+            ControllerAccessData<Copy> res = await CopyController.GetAllCopies();
 
+            Assert.IsTrue(res.Results.Count > 0);
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Remove_By_Id()
+        public async void Should_Remove_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerActionData res = GenreController.RemoveById(7);
+            await AuthController.SignIn("admin", "password");
+            ControllerActionData res = await CopyController.RemoveById("4F19038B-EEF3-4940-8505-00406EF8BBC9");
 
             Assert.IsTrue(res.IsSuccess);
         }
+
     }
 }

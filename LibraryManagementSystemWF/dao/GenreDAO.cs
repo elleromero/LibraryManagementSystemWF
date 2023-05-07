@@ -12,36 +12,37 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class GenreDAO : IDAO<Genre>
     {
-        public ReturnResult<Genre> Create(Genre model)
+        public async Task<ReturnResult<Genre>> Create(Genre model)
         {
-            ReturnResult<Genre> returnResult = new ReturnResult<Genre>();
-            returnResult.Result = default(Genre);
-            returnResult.IsSuccess = false;
+            ReturnResult<Genre> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
 
             string query = "INSERT INTO genres (name, description) " +
                 $"VALUES ('{model.Name}', '{model.Description}'); " +
                 "SELECT * FROM genres WHERE genre_id = SCOPE_IDENTITY();";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
                 try
                 {
-                    if (error == null)
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                            returnResult.IsSuccess = returnResult.Result != default(Genre);
-                        }
-
-                        reader.Close();
+                        returnResult.Result = Fill(reader);
+                        returnResult.IsSuccess = returnResult.Result != default(Genre);
                     }
-                    else return;
                 }
                 catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
@@ -49,98 +50,98 @@ namespace LibraryManagementSystemWF.dao
 
         public Genre? Fill(SqlDataReader reader)
         {
-            Genre? genre = default(Genre);
-
-            genre = new Genre
+            Genre? genre = new()
             {
                 ID = reader.GetInt32(reader.GetOrdinal("genre_id")),
                 Name = reader.GetString(reader.GetOrdinal("name")),
                 Description = reader.GetString(reader.GetOrdinal("description"))
             };
-
             return genre;
         }
 
-        public ReturnResultArr<Genre> GetAll(int page)
+        public async Task<ReturnResultArr<Genre>> GetAll(int page)
         {
-            ReturnResultArr<Genre> returnResult = new ReturnResultArr<Genre>();
-            returnResult.Results = new List<Genre>();
-            returnResult.IsSuccess = false;
-            returnResult.rowCount = 1;
+            ReturnResultArr<Genre> returnResult = new()
+            {
+                Results = new List<Genre>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
 
-            string countQuery = "SELECT COUNT(*) as row_count FROM genres;";
-            string query = "SELECT * FROM genres " +
+            string query = "SELECT COUNT(*) as row_count FROM genres; " +
+                "SELECT * FROM genres " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    try
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // add row count
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlCommand countCommand = new SqlCommand(countQuery, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        // fill data
-                        while (reader.Read())
-                        {
-                            Genre? genre = this.Fill(reader);
-
-                            if (genre != null) returnResult.Results.Add(genre);
-                        }
-
-                        reader.Close();
-
-                        // add row count
-                        SqlDataReader countReader = countCommand.ExecuteReader();
-                        if (countReader.Read())
-                        {
-                            returnResult.rowCount = countReader.GetInt32(countReader.GetOrdinal("row_count"));
-                        }
-
-                        countReader.Close();
-                        returnResult.IsSuccess = true;
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
                     }
-                    catch (Exception e) { Console.WriteLine(e); return; }
+
+                    // fill data
+                    await reader.NextResultAsync();
+                    while (reader.Read())
+                    {
+                        Genre? genre = this.Fill(reader);
+
+                        if (genre != null) returnResult.Results.Add(genre);
+                    }
+
+                    returnResult.IsSuccess = true;
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public ReturnResult<Genre> GetById(string id)
+        public async Task<ReturnResult<Genre>> GetById(string id)
         {
-            ReturnResult<Genre> returnResult = new ReturnResult<Genre>();
-            returnResult.Result = default(Genre);
-            returnResult.IsSuccess = false;
-
-            SqlClient.Execute((error, conn) =>
+            ReturnResult<Genre> returnResult = new()
             {
-                if (error == null)
+                Result = default,
+                IsSuccess = false
+            };
+
+            string query = $"SELECT * FROM genres WHERE genre_id = {id};";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    string query = $"SELECT * FROM genres WHERE genre_id = {id};";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
 
-                    try
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                        }
-                        reader.Close();
+                        returnResult.Result = Fill(reader);
                         returnResult.IsSuccess = returnResult.Result != default(Genre);
                     }
-                    catch { return; }
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public bool Remove(string id)
+        public async Task<bool> Remove(string id)
         {
             bool isRemoved = false;
 
@@ -148,56 +149,59 @@ namespace LibraryManagementSystemWF.dao
             string query = $"DELETE FROM genres WHERE genre_id = ${id}; " +
                 $"UPDATE books SET genre_id = NULL WHERE genre_id = ${id};";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
-                {
+                if (error != null) return;
+
                     try
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        command.ExecuteNonQuery();
+                        SqlCommand command = new(query, conn);
+                        await command.ExecuteNonQueryAsync();
 
                         isRemoved = true;
                     }
-                    catch (Exception e) { Console.WriteLine(e); return; }
-                }
+                    catch { return; }
             });
 
             return isRemoved;
         }
 
-        public ReturnResult<Genre> Update(Genre model)
+        public async Task<ReturnResult<Genre>> Update(Genre model)
         {
-            ReturnResult<Genre> returnResult = new ReturnResult<Genre>();
-            returnResult.Result = default(Genre);
-            returnResult.IsSuccess = false;
+            ReturnResult<Genre> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
 
             string query = "UPDATE genres SET " +
                 $"name = '{model.Name}', " +
                 $"description = '{model.Description}' WHERE genre_id = {model.ID}; " +
                 $"SELECT * FROM genres WHERE genre_id = {model.ID};";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
-                {
-                    try
-                    {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
+                if (error != null) return;
 
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                        }
-                        reader.Close();
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (reader.Read())
+                    {
+                        returnResult.Result = Fill(reader);
                         returnResult.IsSuccess = returnResult.Result != default(Genre);
                     }
-                    catch { return; }
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
+
     }
 }

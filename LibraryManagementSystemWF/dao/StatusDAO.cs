@@ -12,73 +12,74 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class StatusDAO : IDAO<Status>
     {
-        public ReturnResult<Status> Create(Status model)
+        public Task<ReturnResult<Status>> Create(Status model)
         {
             throw new NotImplementedException();
         }
 
         public Status? Fill(SqlDataReader reader)
         {
-            Status? status = default(Status);
-
-            status = new Status
+            Status? status = new()
             {
                 ID = reader.GetInt32(reader.GetOrdinal("status_id")),
                 Name = reader.GetString(reader.GetOrdinal("name")),
                 Description = reader.GetString(reader.GetOrdinal("description")),
                 IsAvailable = reader.GetBoolean(reader.GetOrdinal("is_available"))
             };
-
             return status;
         }
 
-        public ReturnResultArr<Status> GetAll(int page = 1)
+        public async Task<ReturnResultArr<Status>> GetAll(int page = 1)
         {
-            ReturnResultArr<Status> returnResult = new ReturnResultArr<Status>();
-            returnResult.Results = new List<Status>();
-            returnResult.IsSuccess = false;
-            returnResult.rowCount = 1;
+            ReturnResultArr<Status> returnResult = new()
+            {
+                Results = new List<Status>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
 
             string query = "SELECT * FROM statuses;";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    try
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // fill data
+                    while (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
+                        Status? status = Fill(reader);
 
-                        // fill data
-                        while (reader.Read())
-                        {
-                            Status? status = this.Fill(reader);
-
-                            if (status != null) returnResult.Results.Add(status);
-                        }
-
-                        reader.Close();
-                        returnResult.IsSuccess = true;
+                        if (status != null) returnResult.Results.Add(status);
                     }
-                    catch (Exception e) { Console.WriteLine(e); return; }
+
+                    returnResult.IsSuccess = true;
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public ReturnResult<Status> GetById(string id)
+
+        public Task<ReturnResult<Status>> GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(string id)
+        public Task<bool> Remove(string id)
         {
             throw new NotImplementedException();
         }
 
-        public ReturnResult<Status> Update(Status model)
+        public Task<ReturnResult<Status>> Update(Status model)
         {
             throw new NotImplementedException();
         }

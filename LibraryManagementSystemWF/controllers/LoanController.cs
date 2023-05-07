@@ -4,16 +4,19 @@ using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace LibraryManagementSystemWF.controllers
 {
-    internal class GenreController : BaseController
+    internal class LoanController : BaseController
     {
-        public static async Task<ControllerModifyData<Genre>> CreateGenre(string name, string description)
+        public static async Task<ControllerModifyData<Loan>> BorrowBook(string userId, string bookId, DateTime dueDate)
         {
-            ControllerModifyData<Genre> returnData = new()
+            ControllerModifyData<Loan> returnData = new()
             {
                 Result = default
             };
@@ -31,17 +34,28 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (string.IsNullOrWhiteSpace(name)) errors.Add("name", "Name is required");
-            if (string.IsNullOrWhiteSpace(description)) errors.Add("description", "Description is required");
-            if (!await Validator.IsNameUnique("genres", "name", name)) errors.Add("name", "Name already exists");
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
+            if (!await Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available books");
 
             if (errors.Count == 0)
             {
-                GenreDAO genreDao = new();
-                ReturnResult<Genre> result = await genreDao.Create(new Genre
+                LoanDAO loanDao = new();
+                ReturnResult<Loan> result = await loanDao.Create(new Loan
                 {
-                    Name = name,
-                    Description = description
+                    Copy = new Copy
+                    {
+                        Book =
+                        {
+                            ID = new Guid(bookId)
+                        }
+                    },
+                    User = new User
+                    {
+                        ID = new Guid(userId)
+                    },
+                    DateBorrowed = DateTime.Now,
+                    DateDue = dueDate
                 });
 
                 isSuccess = result.IsSuccess;
@@ -52,35 +66,10 @@ namespace LibraryManagementSystemWF.controllers
             returnData.IsSuccess = isSuccess;
             return returnData;
         }
-
-        public static async Task<ControllerActionData> RemoveById(int id)
+    
+        public static async Task<ControllerModifyData<Loan>> ReturnBook(string userId, string loanId)
         {
-            ControllerActionData returnResult = new()
-            {
-                Errors = new Dictionary<string, string>(),
-                IsSuccess = false
-            };
-
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
-            {
-                returnResult.Errors.Add("permission", "Forbidden");
-
-                return returnResult;
-            }
-
-            if (returnResult.Errors.Count == 0)
-            {
-                GenreDAO genreDao = new();
-                returnResult.IsSuccess = await genreDao.Remove(id.ToString());
-            }
-
-            return returnResult;
-        }
-
-        public static async Task<ControllerModifyData<Genre>> UpdateGenre(int genreId, string name, string description)
-        {
-            ControllerModifyData<Genre> returnData = new()
+            ControllerModifyData<Loan> returnData = new()
             {
                 Result = default
             };
@@ -98,33 +87,22 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (genreId < 0) errors.Add("genreId", "ID is invalid");
-            if (string.IsNullOrWhiteSpace(name)) errors.Add("name", "Name is required");
-            if (string.IsNullOrWhiteSpace(description)) errors.Add("description", "Description is required");
-            if (!await Validator.IsNameUnique("genres", "name", name)) errors.Add("name", "Name already exists");
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(loanId)) errors.Add("loanId", "ID is invalid");
 
             // update if theres no error
             if (errors.Count == 0)
             {
-                GenreDAO genreDao = new();
-
-                // check if book exists
-                ReturnResult<Genre> genre = await genreDao.GetById(genreId.ToString());
-
-                if (!genre.IsSuccess)
-                {
-                    errors.Add("genreId", "Genre not found");
-                    returnData.Errors = errors;
-                    returnData.IsSuccess = isSuccess;
-                    return returnData;
-                }
+                LoanDAO loanDao = new();
 
                 // proceed if book is found
-                ReturnResult<Genre> result = await genreDao.Update(new Genre
+                ReturnResult<Loan> result = await loanDao.Update(new Loan
                 {
-                    ID = genreId,
-                    Name = name,
-                    Description = description
+                    ID = new Guid(loanId),
+                    User = new User
+                    {
+                        ID = new Guid(userId)
+                    }
                 });
 
                 isSuccess = result.IsSuccess;
@@ -139,9 +117,9 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static async Task<ControllerModifyData<Genre>> GetGenreById(int id)
+        public static async Task<ControllerModifyData<Loan>> GetLoanById(int id)
         {
-            ControllerModifyData<Genre> returnData = new()
+            ControllerModifyData<Loan> returnData = new()
             {
                 Result = default
             };
@@ -153,8 +131,8 @@ namespace LibraryManagementSystemWF.controllers
 
             if (errors.Count == 0)
             {
-                GenreDAO genreDao = new();
-                ReturnResult<Genre> result = await genreDao.GetById(id.ToString());
+                LoanDAO loanDao = new();
+                ReturnResult<Loan> result = await loanDao.GetById(id.ToString());
 
                 isSuccess = result.IsSuccess;
                 if (isSuccess && result.Result != null)
@@ -168,22 +146,30 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static async Task<ControllerAccessData<Genre>> GetAllGenres(int page = 1)
+        public static async Task<ControllerAccessData<Loan>> GetAllLoans(string userId, int page = 1)
         {
-            ControllerAccessData<Genre> returnData = new()
+            ControllerAccessData<Loan> returnData = new()
             {
-                Results = new List<Genre>(),
+                Results = new List<Loan>(),
                 rowCount = 0
             };
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
+            // validate
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
             if (page <= 0) errors.Add("page", "Invalid page");
 
             if (errors.Count == 0)
             {
-                GenreDAO genreDao = new();
-                ReturnResultArr<Genre> result = await genreDao.GetAll(page);
+                LoanDAO loanDao = new();
+                ReturnResultArr<Loan> result = await loanDao.GetAllLoans(page, new Loan
+                {
+                    User = new User
+                    {
+                        ID = new Guid(userId)
+                    }
+                });
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;

@@ -1,6 +1,8 @@
 ﻿using Isopoh.Cryptography.Argon2;
 using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
+using System.Diagnostics;
 
 namespace LMSTest
 {
@@ -8,10 +10,11 @@ namespace LMSTest
     public class AdminControllerTest
     {
         [TestMethod]
-        public void Should_Create_Admin()
+        public async Task Should_Create_Admin()
         {
-            ControllerModifyData<User> admin = AdminController.CreateAdmin(
-                "admin_omineko132",
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<User> admin = await AdminController.CreateAdmin(
+                "admin_tanuki",
                 "password",
                 "admin",
                 "romero",
@@ -23,12 +26,13 @@ namespace LMSTest
         }
 
         [TestMethod]
-        public void Should_Update_User()
+        public async Task Should_Update_User()
         {
             bool isUpdated = false;
 
-            ControllerModifyData<User> admin = AdminController.CreateAdmin(
-                "admin1",
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<User> admin = await AdminController.CreateAdmin(
+                "admin_999",
                 "password",
                 "admin",
                 "romero",
@@ -39,7 +43,7 @@ namespace LMSTest
 
             if (admin.IsSuccess && admin.Result != null)
             {
-                ControllerModifyData<User> adminUpd = AdminController.UpdateUser(
+                ControllerModifyData<User> adminUpd = await AdminController.UpdateUser(
                     admin.Result.ID.ToString(),
                     "admin_updated",
                     "password",
@@ -47,9 +51,14 @@ namespace LMSTest
                     "romero",
                     "717 Apitong st.",
                     "+63910083695",
+                    "password",
                     "normal@email.com"
                     );
 
+                foreach (KeyValuePair<string, string> err in adminUpd.Errors)
+                {
+                    Console.WriteLine(err.Value);
+                }
                 isUpdated = adminUpd.IsSuccess;
             }
 
@@ -57,28 +66,33 @@ namespace LMSTest
         }
 
         [TestMethod]
-        public void Should_GetById()
+        public async Task Should_GetById()
         {
-            ControllerModifyData<User> res = AdminController.GetUserById("993CC885-4EA2-4210-8468-7B81C7F0DE2F");
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<User> res = await AdminController.GetUserById("993CC885-4EA2-4210-8468-7B81C7F0DE2F");
 
+            Console.WriteLine(res.Result?.Username);
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_GetAllUsers()
+        public async Task Should_GetAllUsers()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerAccessData<User> res = AdminController.GetAllUsers();
+            await AuthController.SignIn("admin", "password");
+            ControllerAccessData<User> res = await AdminController.GetAllUsers();
 
+            Console.WriteLine(res.Results.Count);
+            Console.WriteLine(res.rowCount);
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_RemoveById()
+        public async Task Should_RemoveById()
         {
-            ControllerActionData res = AdminController.RemoveById("4749519F-3818-424A-B9CE-30BF0B31DAF5", "admin");
+            await AuthController.SignIn("admin", "password");
+            ControllerActionData res = await AdminController.RemoveById("43BEA7F9-6DFA-46E0-829F-68FD2F78E14F", "password");
 
-            Console.WriteLine(res.IsSuccess);
+            Assert.IsTrue(res.IsSuccess);
         }
     }
 }

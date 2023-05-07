@@ -26,7 +26,7 @@ namespace LibraryManagementSystemWF.views
             this.Hide();
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private async void button1_Click_1(object sender, EventArgs e)
         {
 
             string reguser = txtRegUser.Text.Trim();
@@ -38,7 +38,7 @@ namespace LibraryManagementSystemWF.views
             string email = txtEmail.Text.Trim();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
-            ControllerModifyData<User> res = AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email);
+            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email);
 
             if (res.IsSuccess)
             {

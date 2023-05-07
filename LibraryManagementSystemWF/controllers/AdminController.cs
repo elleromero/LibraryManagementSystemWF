@@ -13,7 +13,7 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class AdminController : BaseController
     {
-        public static ControllerModifyData<User> CreateAdmin(
+        public static async Task<ControllerModifyData<User>> CreateAdmin(
             string username,
             string password,
             string firstName,
@@ -23,13 +23,15 @@ namespace LibraryManagementSystemWF.controllers
             string email = ""
             )
         {
-            ControllerModifyData<User> returnData = new ControllerModifyData<User>();
-            returnData.Result = default(User);
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<User> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -48,7 +50,7 @@ namespace LibraryManagementSystemWF.controllers
                 "username",
                 "Username should contain only letters, numbers, underscores, or hyphens"
                 );
-            if (!Validator.IsUsernameUnique(username)) errors.Add(
+            if (!await Validator.IsUsernameUnique(username)) errors.Add(
                 "username",
                 "Username already exists"
                 );
@@ -60,8 +62,8 @@ namespace LibraryManagementSystemWF.controllers
             // register admin if theres no error
             if (errors.Count == 0)
             {
-                AdminDAO adminDao = new AdminDAO();
-                ReturnResult<User> result = adminDao.Create(new User
+                AdminDAO adminDao = new();
+                ReturnResult<User> result = await adminDao.Create(new User
                 {
                     Username = username,
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
@@ -90,7 +92,7 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerModifyData<User> UpdateUser(
+        public static async Task<ControllerModifyData<User>> UpdateUser(
             string userId,
             string username,
             string password,
@@ -102,13 +104,16 @@ namespace LibraryManagementSystemWF.controllers
             string email = ""
             )
         {
-            ControllerModifyData<User> returnData = new ControllerModifyData<User>();
-            returnData.Result = default(User);
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            Console.WriteLine("AUTH VAX");
+            ControllerModifyData<User> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // is not admin
-            if (!AuthGuard.IsAdmin(true, adminPassword))
+            if (!await AuthGuard.IsAdmin(true, adminPassword))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -117,6 +122,7 @@ namespace LibraryManagementSystemWF.controllers
                 return returnData;
             }
 
+            Console.WriteLine("AUTH VA");
             // validate fields
             if (!Validator.IsName(firstName)) errors.Add("first_name", "Name is invalid");
             if (!Validator.IsName(lastName)) errors.Add("last_name", "Name is invalid");
@@ -127,7 +133,7 @@ namespace LibraryManagementSystemWF.controllers
                 "username",
                 "Username should contain only letters, numbers, underscores, or hyphens"
                 );
-            if (!Validator.IsUsernameUnique(username)) errors.Add(
+            if (!await Validator.IsUsernameUnique(username)) errors.Add(
                 "username",
                 "Username already exists"
                 );
@@ -136,25 +142,26 @@ namespace LibraryManagementSystemWF.controllers
                 "Password is too short"
                 );
 
+            Console.WriteLine(errors.Count);
             // update user if theres no error
             if (errors.Count == 0)
             {
-                AdminDAO adminDao = new AdminDAO();
+                AdminDAO adminDao = new();
 
                 // check if user with access exists
-                ReturnResult<User> user = adminDao.GetById(userId);
+                ReturnResult<User> user = await adminDao.GetById(userId);
 
                 if (!user.IsSuccess)
                 {
-                    Console.WriteLine("THIS ONE");
                     errors.Add("userId", "User not found");
                     returnData.Errors = errors;
                     returnData.IsSuccess = isSuccess;
                     return returnData;
                 }
 
+                Console.WriteLine("IM HERE");
                 // proceed if user is found
-                ReturnResult<User> result = adminDao.Update(new User
+                ReturnResult<User> result = await adminDao.Update(new User
                 {
                     ID = new Guid(userId),
                     Username = username,
@@ -181,15 +188,17 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerModifyData<User> GetUserById(string id)
+        public static async Task<ControllerModifyData<User>> GetUserById(string id)
         {
-            ControllerModifyData<User> returnData = new ControllerModifyData<User>();
-            returnData.Result = default(User);
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<User> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -203,8 +212,8 @@ namespace LibraryManagementSystemWF.controllers
 
             if (errors.Count == 0)
             {
-                AdminDAO adminDao = new AdminDAO();
-                ReturnResult<User> result = adminDao.GetById(id);
+                AdminDAO adminDao = new();
+                ReturnResult<User> result = await adminDao.GetById(id);
 
                 isSuccess = result.IsSuccess;
                 if (isSuccess && result.Result != null)
@@ -218,16 +227,18 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerAccessData<User> GetAllUsers(int page = 1)
+        public static async Task<ControllerAccessData<User>> GetAllUsers(int page = 1)
         {
-            ControllerAccessData<User> returnData = new ControllerAccessData<User>();
-            returnData.Results = new List<User>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerAccessData<User> returnData = new()
+            {
+                Results = new List<User>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
-            returnData.rowCount = 0;
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -240,8 +251,8 @@ namespace LibraryManagementSystemWF.controllers
 
             if (errors.Count == 0)
             {
-                AdminDAO adminDao = new AdminDAO();
-                ReturnResultArr<User> result = adminDao.GetAll(page);
+                AdminDAO adminDao = new();
+                ReturnResultArr<User> result = await adminDao.GetAll(page);
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;
@@ -253,14 +264,16 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerActionData RemoveById(string id, string password)
+        public static async Task<ControllerActionData> RemoveById(string id, string password)
         {
-            ControllerActionData returnResult = new ControllerActionData();
-            returnResult.Errors = new Dictionary<string, string>();
-            returnResult.IsSuccess = false;
+            ControllerActionData returnResult = new()
+            {
+                Errors = new Dictionary<string, string>(),
+                IsSuccess = false
+            };
 
             // is not admin
-            if (!AuthGuard.IsAdmin(true, password))
+            if (!await AuthGuard.IsAdmin(true, password))
             {
                 returnResult.Errors.Add("permission", "Forbidden");
 
@@ -271,8 +284,8 @@ namespace LibraryManagementSystemWF.controllers
             
             if (returnResult.Errors.Count == 0)
             {
-                AdminDAO adminDao = new AdminDAO();
-                returnResult.IsSuccess = adminDao.Remove(id);
+                AdminDAO adminDao = new();
+                returnResult.IsSuccess = await adminDao.Remove(id);
             }
 
             return returnResult;
