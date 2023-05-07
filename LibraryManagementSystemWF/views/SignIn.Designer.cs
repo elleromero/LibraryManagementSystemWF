@@ -37,8 +37,12 @@
             button2 = new Button();
             pictureBox2 = new PictureBox();
             label2 = new Label();
+            panel1 = new Panel();
+            btnMini = new Button();
+            btnClose = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -46,9 +50,9 @@
             pictureBox1.BackgroundImageLayout = ImageLayout.Center;
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(302, 6);
+            pictureBox1.Location = new Point(300, 26);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(123, 96);
+            pictureBox1.Size = new Size(123, 97);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -57,7 +61,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Black", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(315, 108);
+            label1.Location = new Point(313, 127);
             label1.Name = "label1";
             label1.Size = new Size(96, 32);
             label1.TabIndex = 1;
@@ -66,7 +70,7 @@
             // txtUsername
             // 
             txtUsername.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            txtUsername.Location = new Point(211, 179);
+            txtUsername.Location = new Point(211, 187);
             txtUsername.Name = "txtUsername";
             txtUsername.PlaceholderText = "USERNAME";
             txtUsername.Size = new Size(291, 33);
@@ -122,9 +126,9 @@
             // 
             pictureBox2.BackColor = Color.FromArgb(255, 192, 128);
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(-2, -15);
+            pictureBox2.Location = new Point(-2, 12);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(197, 345);
+            pictureBox2.Size = new Size(197, 318);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 12;
             pictureBox2.TabStop = false;
@@ -133,11 +137,48 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(241, 150);
+            label2.Location = new Point(241, 159);
             label2.Name = "label2";
             label2.Size = new Size(245, 17);
             label2.TabIndex = 13;
             label2.Text = "Welcome! Please login to your account";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.LightGray;
+            panel1.Controls.Add(btnMini);
+            panel1.Controls.Add(btnClose);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(519, 23);
+            panel1.TabIndex = 14;
+            // 
+            // btnMini
+            // 
+            btnMini.BackColor = Color.LightGray;
+            btnMini.BackgroundImage = (Image)resources.GetObject("btnMini.BackgroundImage");
+            btnMini.BackgroundImageLayout = ImageLayout.Zoom;
+            btnMini.Dock = DockStyle.Right;
+            btnMini.Location = new Point(459, 0);
+            btnMini.Name = "btnMini";
+            btnMini.Size = new Size(30, 23);
+            btnMini.TabIndex = 2;
+            btnMini.UseVisualStyleBackColor = false;
+            btnMini.Click += button5_Click;
+            // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.LightGray;
+            btnClose.BackgroundImage = (Image)resources.GetObject("btnClose.BackgroundImage");
+            btnClose.BackgroundImageLayout = ImageLayout.Zoom;
+            btnClose.Dock = DockStyle.Right;
+            btnClose.Location = new Point(489, 0);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(30, 23);
+            btnClose.TabIndex = 0;
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += button3_Click;
             // 
             // SignIn
             // 
@@ -146,6 +187,7 @@
             BackColor = Color.White;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(519, 329);
+            Controls.Add(panel1);
             Controls.Add(label2);
             Controls.Add(pictureBox2);
             Controls.Add(button2);
@@ -160,6 +202,7 @@
             Text = "SignIn";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -174,5 +217,8 @@
         private Button button2;
         private PictureBox pictureBox2;
         private Label label2;
+        private Panel panel1;
+        private Button btnMini;
+        private Button btnClose;
     }
 }

@@ -37,6 +37,10 @@ namespace LibraryManagementSystemWF.views
             {
                 // CHECK IF THE REGISTRATION IS SUCCESS
                 MessageBox.Show("Registration Successfull!!");
+
+                SignIn signin = new SignIn();
+                signin.Show();
+                this.Hide();
             }
             else
             {
