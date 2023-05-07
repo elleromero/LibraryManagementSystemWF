@@ -8,9 +8,9 @@ namespace LMSTest
     public class AdminControllerTest
     {
         [TestMethod]
-        public void Should_Create_Admin()
+        public async void Should_Create_Admin()
         {
-            ControllerModifyData<User> admin = AdminController.CreateAdmin(
+            ControllerModifyData<User> admin = await AdminController.CreateAdmin(
                 "admin_omineko132",
                 "password",
                 "admin",

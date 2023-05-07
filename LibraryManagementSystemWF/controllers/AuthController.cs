@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class AuthController : BaseController
     {
-        public static ControllerModifyData<User> Register(
+        public static async Task<ControllerModifyData<User>> Register(
             string username,
             string password,
             string firstName,
@@ -23,9 +23,11 @@ namespace LibraryManagementSystemWF.controllers
             string phone,
             string email = ""
             ) {
-            ControllerModifyData<User> returnData = new ControllerModifyData<User>();
-            returnData.Result = default(User);
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<User> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // validate fields
@@ -38,7 +40,7 @@ namespace LibraryManagementSystemWF.controllers
                 "username",
                 "Username should contain only letters, numbers, underscores, or hyphens"
                 );
-            if (!Validator.IsUsernameUnique(username)) errors.Add(
+            if (!await Validator.IsUsernameUnique(username)) errors.Add(
                 "username",
                 "Username already exists"
                 );
@@ -50,8 +52,8 @@ namespace LibraryManagementSystemWF.controllers
             // register user if theres no error
             if (errors.Count == 0)
             {
-                AuthDAO authDao = new AuthDAO();
-                ReturnResult<User> result = authDao.Create(new User
+                AuthDAO authDao = new();
+                ReturnResult<User> result = await authDao.Create(new User
                 {
                     Username = username,
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
@@ -83,16 +85,18 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerModifyData<User> SignIn(string username, string password)
+        public static async Task<ControllerModifyData<User>> SignIn(string username, string password)
         {
-            ControllerModifyData<User> returnData = new ControllerModifyData<User>();
-            returnData.Result = default(User);
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<User> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // get username
-            AuthDAO authDao = new AuthDAO();
-            ReturnResult<User> result = authDao.GetByUsername(username);
+            AuthDAO authDao = new();
+            ReturnResult<User> result = await authDao.GetByUsername(username);
 
             // if username did not exist
             if (result.Result != default(User))
@@ -117,9 +121,9 @@ namespace LibraryManagementSystemWF.controllers
         }
 
         public static ControllerActionData LogOut() {
-            ControllerActionData returnData = new ControllerActionData();
+            ControllerActionData returnData = new();
             
-            AuthService.setSignedUser(default(User));
+            AuthService.setSignedUser(default);
             returnData.IsSuccess = true;
 
             return returnData;

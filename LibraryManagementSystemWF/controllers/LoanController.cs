@@ -14,14 +14,17 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class LoanController : BaseController
     {
-        public static ControllerModifyData<Loan> BorrowBook(string userId, string bookId, DateTime dueDate)
+        public static async Task<ControllerModifyData<Loan>> BorrowBook(string userId, string bookId, DateTime dueDate)
         {
-            ControllerModifyData<Loan> returnData = new ControllerModifyData<Loan>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<Loan> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -33,12 +36,12 @@ namespace LibraryManagementSystemWF.controllers
             // validation
             if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
             if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
-            if (!Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available books");
+            if (!await Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available books");
 
             if (errors.Count == 0)
             {
-                LoanDAO loanDao = new LoanDAO();
-                ReturnResult<Loan> result = loanDao.Create(new Loan
+                LoanDAO loanDao = new();
+                ReturnResult<Loan> result = await loanDao.Create(new Loan
                 {
                     Copy = new Copy
                     {
@@ -64,14 +67,17 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
     
-        public static ControllerModifyData<Loan> ReturnBook(string userId, string loanId)
+        public static async Task<ControllerModifyData<Loan>> ReturnBook(string userId, string loanId)
         {
-            ControllerModifyData<Loan> returnData = new ControllerModifyData<Loan>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<Loan> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -87,10 +93,10 @@ namespace LibraryManagementSystemWF.controllers
             // update if theres no error
             if (errors.Count == 0)
             {
-                LoanDAO loanDao = new LoanDAO();
+                LoanDAO loanDao = new();
 
                 // proceed if book is found
-                ReturnResult<Loan> result = loanDao.Update(new Loan
+                ReturnResult<Loan> result = await loanDao.Update(new Loan
                 {
                     ID = new Guid(loanId),
                     User = new User
@@ -111,11 +117,13 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerModifyData<Loan> GetLoanById(int id)
+        public static async Task<ControllerModifyData<Loan>> GetLoanById(int id)
         {
-            ControllerModifyData<Loan> returnData = new ControllerModifyData<Loan>();
-            returnData.Result = default(Loan);
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<Loan> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // validate fields
@@ -123,8 +131,8 @@ namespace LibraryManagementSystemWF.controllers
 
             if (errors.Count == 0)
             {
-                LoanDAO loanDao = new LoanDAO();
-                ReturnResult<Loan> result = loanDao.GetById(id.ToString());
+                LoanDAO loanDao = new();
+                ReturnResult<Loan> result = await loanDao.GetById(id.ToString());
 
                 isSuccess = result.IsSuccess;
                 if (isSuccess && result.Result != null)
@@ -138,13 +146,15 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerAccessData<Loan> GetAllLoans(string userId, int page = 1)
+        public static async Task<ControllerAccessData<Loan>> GetAllLoans(string userId, int page = 1)
         {
-            ControllerAccessData<Loan> returnData = new ControllerAccessData<Loan>();
-            returnData.Results = new List<Loan>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerAccessData<Loan> returnData = new()
+            {
+                Results = new List<Loan>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
-            returnData.rowCount = 0;
 
             // validate
             if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
@@ -152,8 +162,8 @@ namespace LibraryManagementSystemWF.controllers
 
             if (errors.Count == 0)
             {
-                LoanDAO loanDao = new LoanDAO();
-                ReturnResultArr<Loan> result = loanDao.GetAllLoans(page, new Loan
+                LoanDAO loanDao = new();
+                ReturnResultArr<Loan> result = await loanDao.GetAllLoans(page, new Loan
                 {
                     User = new User
                     {

@@ -9,7 +9,7 @@ namespace LibraryManagementSystemWF.utils
     {
         public static async Task ExecuteAsync(Func<Exception?, SqlConnection?, Task> callback, bool useBase = false)
         {
-            using (SqlConnection conn = new SqlConnection(useBase ? GetConnBase() : GetConnStr()))
+            using (SqlConnection conn = new(useBase ? GetConnBase() : GetConnStr()))
             {
                 Exception? error = null;
 
