@@ -36,7 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RosyBrown;
             this.Name = "Ctrlauthor";
-            this.Size = new System.Drawing.Size(575, 294);
+            this.Size = new System.Drawing.Size(667, 382);
             this.ResumeLayout(false);
 
         }
