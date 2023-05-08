@@ -138,8 +138,6 @@ namespace LibraryManagementSystemWF.utils
         {
             bool isValid = false;
 
-            Console.WriteLine(genreId);
-
             if (genreId == null) return isValid; 
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
