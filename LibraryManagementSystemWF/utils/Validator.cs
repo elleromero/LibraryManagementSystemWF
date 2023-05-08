@@ -134,9 +134,13 @@ namespace LibraryManagementSystemWF.utils
             return true;
         }
 
-        public static async Task<bool> IsGenreIdValid(int genreId)
+        public static async Task<bool> IsGenreIdValid(int? genreId)
         {
             bool isValid = false;
+
+            Console.WriteLine(genreId);
+
+            if (genreId == null) return isValid; 
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -150,6 +154,7 @@ namespace LibraryManagementSystemWF.utils
 
                     object? v = await command.ExecuteScalarAsync();
                     if (v != null) count = (int)v;
+
 
                     isValid = count > 0;
                 } catch { return; }

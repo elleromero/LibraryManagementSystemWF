@@ -168,8 +168,7 @@ namespace LibraryManagementSystemWF.dao
             bool isRemoved = false;
 
             // remove book
-            string query = $"DELETE FROM copies WHERE book_id = '{id}'; " +
-                           $"DELETE FROM books WHERE book_id = '{id}'; ";
+            string query = $"DELETE FROM books WHERE book_id = '{id}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

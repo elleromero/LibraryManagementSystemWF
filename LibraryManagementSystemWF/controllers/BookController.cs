@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.controllers
     {
 
         public static async Task<ControllerModifyData<Book>> CreateBook(
-            int genreId,
+            int? genreId,
             string title,
             string author,
             string publisher,
@@ -170,16 +170,6 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
-            {
-                errors.Add("permission", "Forbidden");
-                returnData.Errors = errors;
-                returnData.IsSuccess = false;
-
-                return returnData;
-            }
-
             // validate fields
             if (string.IsNullOrWhiteSpace(id)) errors.Add("id", "ID is invalid");
 
@@ -209,16 +199,6 @@ namespace LibraryManagementSystemWF.controllers
             };
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
-
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
-            {
-                errors.Add("permission", "Forbidden");
-                returnData.Errors = errors;
-                returnData.IsSuccess = false;
-
-                return returnData;
-            }
 
             if (page <= 0) errors.Add("page", "Invalid page");
 

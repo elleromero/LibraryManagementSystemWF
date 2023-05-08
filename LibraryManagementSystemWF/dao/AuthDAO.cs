@@ -48,7 +48,7 @@ namespace LibraryManagementSystemWF.dao
                     returnResult.IsSuccess = returnResult.Result != null;
                 }
                 catch { return; }
-                finally { reader?.Close(); }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
