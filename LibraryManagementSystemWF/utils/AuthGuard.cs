@@ -42,6 +42,7 @@ namespace LibraryManagementSystemWF.utils
                     }
                 }
                 catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return isAllowed;
