@@ -41,6 +41,11 @@ namespace LibraryManagementSystemWF.Dashboard
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void btnDashboard_Click_1(object sender, EventArgs e)
+        {
             dashboard.Visible = true;
             status.Visible = false;
             author.Visible = false;
@@ -49,7 +54,7 @@ namespace LibraryManagementSystemWF.Dashboard
             members.Visible = false;
         }
 
-        private void btnStatus_Click(object sender, EventArgs e)
+        private void btnStatus_Click_1(object sender, EventArgs e)
         {
             dashboard.Visible = false;
             status.Visible = true;
@@ -59,7 +64,7 @@ namespace LibraryManagementSystemWF.Dashboard
             members.Visible = false;
         }
 
-        private void btnAuthor_Click(object sender, EventArgs e)
+        private void btnAuthor_Click_1(object sender, EventArgs e)
         {
             dashboard.Visible = false;
             status.Visible = false;
@@ -69,7 +74,7 @@ namespace LibraryManagementSystemWF.Dashboard
             members.Visible = false;
         }
 
-        private void btnBooks_Click(object sender, EventArgs e)
+        private void btnBooks_Click_1(object sender, EventArgs e)
         {
             dashboard.Visible = false;
             status.Visible = false;
@@ -79,7 +84,7 @@ namespace LibraryManagementSystemWF.Dashboard
             members.Visible = false;
         }
 
-        private void btnLoans_Click(object sender, EventArgs e)
+        private void btnLoans_Click_1(object sender, EventArgs e)
         {
             dashboard.Visible = false;
             status.Visible = false;
@@ -89,7 +94,7 @@ namespace LibraryManagementSystemWF.Dashboard
             members.Visible = false;
         }
 
-        private void btnMembers_Click(object sender, EventArgs e)
+        private void btnMembers_Click_1(object sender, EventArgs e)
         {
             dashboard.Visible = false;
             status.Visible = false;

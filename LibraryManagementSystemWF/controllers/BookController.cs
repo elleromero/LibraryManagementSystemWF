@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.controllers
     {
 
         public static ControllerModifyData<Book> CreateBook(
-            int genreId,
+            int? genreId,
             string title,
             string author,
             string publisher,
