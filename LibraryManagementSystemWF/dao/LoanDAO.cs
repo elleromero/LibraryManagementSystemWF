@@ -29,9 +29,8 @@ namespace LibraryManagementSystemWF.dao
                 "INSERT INTO loans (user_id, copy_id, date_borrowed, due_date, is_returned) " +
                 $"VALUES ('{model.User.ID}', @copy_id, '{model.DateBorrowed:yyyy-MM-dd HH:mm:ss.fff}', '{model.DateDue:yyyy-MM-dd HH:mm:ss.fff}', 0); " +
                 "UPDATE copies SET status_id = 2 WHERE copy_id = @copy_id; " +
-                "SELECT *, s.name AS sname, s.description AS sdescription, " +
-                "g.name AS gname, g.description AS gdescription, " +
-                "b.name AS bname, b.description AS bdescription " +
+                "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
+                "g.name AS gname, g.description AS gdescription " +
                 "FROM loans l " +
                 "JOIN users u ON u.user_id = l.user_id " +
                 "JOIN copies c ON c.copy_id = l.copy_id " +
@@ -147,15 +146,15 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 1
             };
 
-            string query = "SELECT COUNT(*) as row_count FROM loans; " + 
-                "SELECT *, s.name AS sname, s.description AS sdescription, " +
-                "g.name AS gname, g.description AS gdescription FROM loans l " +
+            string query = "SELECT COUNT(*) as row_count FROM loans; " +
+                "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
+                "g.name AS gname, g.description AS gdescription " +
+                "FROM loans l " +
                 "JOIN users u ON u.user_id = l.user_id " +
                 "JOIN copies c ON c.copy_id = l.copy_id " +
                 "JOIN books b ON c.book_id = b.book_id " +
-                "JOIN users u ON l.user_id = u.user_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
-                "JOIN members m ON u.member_id = m.member_id" +
+                "JOIN members m ON u.member_id = m.member_id " +
                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"WHERE l.user_id = '{model.User.ID}' " +
@@ -209,17 +208,17 @@ namespace LibraryManagementSystemWF.dao
                 IsSuccess = false
             };
 
-            string query = "SELECT *, s.name AS sname, s.description AS sdescription, " +
-                           "g.name AS gname, g.description AS gdescription FROM loans l " +
-                           "JOIN users u ON u.user_id = l.user_id " +
-                           "JOIN copies c ON c.copy_id = l.copy_id " +
-                           "JOIN books b ON c.book_id = b.book_id " +
-                           "JOIN users u ON l.user_id = u.user_id " +
-                           "JOIN roles r ON u.role_id = r.role_id " +
-                           "JOIN members m ON u.member_id = m.member_id" +
-                           "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
-                           "JOIN statuses s ON c.status_id = s.status_id " +
-                           $"WHERE loan_id = {id};";
+            string query = "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
+                "g.name AS gname, g.description AS gdescription " +
+                "FROM loans l " +
+                "JOIN users u ON u.user_id = l.user_id " +
+                "JOIN copies c ON c.copy_id = l.copy_id " +
+                "JOIN books b ON c.book_id = b.book_id " +
+                "JOIN roles r ON u.role_id = r.role_id " +
+                "JOIN members m ON u.member_id = m.member_id " +
+                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN statuses s ON c.status_id = s.status_id " +
+                $"WHERE loan_id = '{id}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -236,7 +235,7 @@ namespace LibraryManagementSystemWF.dao
                     {
                         returnResult.Result = Fill(reader);
                     }
-                    reader.Close();
+
                     returnResult.IsSuccess = returnResult.Result != default(Loan);
                 }
                 catch { return; }
@@ -266,17 +265,17 @@ namespace LibraryManagementSystemWF.dao
                            $"WHERE user_id = '{model.User.ID}' AND loan_id = '{model.ID}'; " +
                            "UPDATE copies SET status_id = 1 " +
                            "WHERE copy_id = (SELECT TOP 1 copy_id FROM @copy); " +
-                           "SELECT *, s.name AS sname, s.description AS sdescription, " +
-                           "g.name AS gname, g.description AS gdescription FROM loans l " +
+                           "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
+                           "g.name AS gname, g.description AS gdescription " +
+                           "FROM loans l " +
                            "JOIN users u ON u.user_id = l.user_id " +
                            "JOIN copies c ON c.copy_id = l.copy_id " +
                            "JOIN books b ON c.book_id = b.book_id " +
-                           "JOIN users u ON l.user_id = u.user_id " +
                            "JOIN roles r ON u.role_id = r.role_id " +
-                           "JOIN members m ON u.member_id = m.member_id" +
+                           "JOIN members m ON u.member_id = m.member_id " +
                            "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                            "JOIN statuses s ON c.status_id = s.status_id " +
-                           $"WHERE loan_id = {model.ID};";
+                           $"WHERE loan_id = '{model.ID}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -295,7 +294,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != default(Loan);
                     }
                 }
-                catch { return; }
+                catch {  return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 

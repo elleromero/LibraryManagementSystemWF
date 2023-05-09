@@ -9,10 +9,10 @@ namespace LMSTest
     public class AuthControllerTest
     {
         [TestMethod]
-        public async void Shoulld_Register()
+        public async Task Shoulld_Register()
         {
             ControllerModifyData<User> res = await AuthController.Register(
-                "test_omineko12",
+                "test_omineko",
                 "password",
                 "elle",
                 "romero",

@@ -69,7 +69,7 @@ namespace LMSTest
         public async Task Should_GetById()
         {
             await AuthController.SignIn("admin", "password");
-            ControllerModifyData<User> res = await AdminController.GetUserById("993CC885-4EA2-4210-8468-7B81C7F0DE2F");
+            ControllerModifyData<User> res = await AdminController.GetUserById("3AF072D1-6376-4D4B-8C59-BE2CCEC6CB2E");
 
             Console.WriteLine(res.Result?.Username);
             Assert.IsTrue(res.IsSuccess);
@@ -90,7 +90,7 @@ namespace LMSTest
         public async Task Should_RemoveById()
         {
             await AuthController.SignIn("admin", "password");
-            ControllerActionData res = await AdminController.RemoveById("43BEA7F9-6DFA-46E0-829F-68FD2F78E14F", "password");
+            ControllerActionData res = await AdminController.RemoveById("CD3C9844-F161-4C9C-A1B0-F405B81D91F8", "password");
 
             Assert.IsTrue(res.IsSuccess);
         }

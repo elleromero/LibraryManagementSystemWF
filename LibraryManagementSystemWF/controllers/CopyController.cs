@@ -104,6 +104,33 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
+        public static async Task<ControllerAccessData<Copy>> GetAllCopiesWithBook(string bookId, int page = 1)
+        {
+            ControllerAccessData<Copy> returnData = new()
+            {
+                Results = new List<Copy>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+
+            if (page <= 0) errors.Add("page", "Invalid page");
+
+            if (errors.Count == 0)
+            {
+                CopyDAO copyDao = new();
+                ReturnResultArr<Copy> result = await copyDao.GetAllWithBooks(bookId, page);
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
+
         public static async Task<ControllerActionData> RemoveById(string id)
         {
             ControllerActionData returnResult = new()

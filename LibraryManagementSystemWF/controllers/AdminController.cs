@@ -104,7 +104,6 @@ namespace LibraryManagementSystemWF.controllers
             string email = ""
             )
         {
-            Console.WriteLine("AUTH VAX");
             ControllerModifyData<User> returnData = new()
             {
                 Result = default
@@ -122,7 +121,6 @@ namespace LibraryManagementSystemWF.controllers
                 return returnData;
             }
 
-            Console.WriteLine("AUTH VA");
             // validate fields
             if (!Validator.IsName(firstName)) errors.Add("first_name", "Name is invalid");
             if (!Validator.IsName(lastName)) errors.Add("last_name", "Name is invalid");
@@ -142,7 +140,6 @@ namespace LibraryManagementSystemWF.controllers
                 "Password is too short"
                 );
 
-            Console.WriteLine(errors.Count);
             // update user if theres no error
             if (errors.Count == 0)
             {
@@ -159,7 +156,6 @@ namespace LibraryManagementSystemWF.controllers
                     return returnData;
                 }
 
-                Console.WriteLine("IM HERE");
                 // proceed if user is found
                 ReturnResult<User> result = await adminDao.Update(new User
                 {

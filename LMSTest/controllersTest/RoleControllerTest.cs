@@ -7,7 +7,7 @@ namespace LMSTest
     public class RoleControllerTest
     {
         [TestMethod]
-        public async void Should_Get_All_Roles()
+        public async Task Should_Get_All_Roles()
         {
             ControllerAccessData<Role> res = await RoleController.GetAllRoles();
 

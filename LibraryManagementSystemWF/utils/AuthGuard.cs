@@ -36,12 +36,12 @@ namespace LibraryManagementSystemWF.utils
                         if (isStrict)
                         {
                             string passwordHash = reader.GetString(reader.GetOrdinal("password_hash"));
-                            Console.WriteLine(Argon2.Hash(password));
                             isAllowed = Argon2.Verify(passwordHash, password);
                         } else isAllowed = true;
                     }
                 }
                 catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return isAllowed;

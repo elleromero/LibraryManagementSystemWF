@@ -7,7 +7,7 @@ namespace LMSTest
     public class StatusControllerTest
     {
         [TestMethod]
-        public async void Should_Get_All_Statuses()
+        public async Task Should_Get_All_Statuses()
         {
             ControllerAccessData<Status> res = await StatusController.GetAllStatuses();
 
