@@ -12,15 +12,17 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class CopyDAO : IDAO<Copy>
     {
-        public ReturnResult<Copy> CreateMany(string bookId, int copies)
+        public async Task<ReturnResult<Copy>> CreateMany(string bookId, int copies)
         {
-            ReturnResult<Copy> returnResult = new ReturnResult<Copy>();
-            returnResult.Result = default(Copy);
-            returnResult.IsSuccess = false;
+            ReturnResult<Copy> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
 
             string declareQuery = "DECLARE @counter int SET @counter = 1; " +
                 "DECLARE @copy_id UNIQUEIDENTIFIER;";
-            string loopQuery = $"WHILE (@counter <= 10) " +
+            string loopQuery = $"WHILE (@counter <= {copies}) " +
                 "BEGIN " +
                 "SET @copy_id = NEWID(); " +
                 $"INSERT INTO copies (copy_id, book_id, status_id) VALUES (@copy_id, '{bookId}', 1); " +
@@ -34,43 +36,40 @@ namespace LibraryManagementSystemWF.dao
                 "WHERE copy_id = @copy_id;";
             string query = $"{declareQuery} {loopQuery} {selectQuery}";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
                 try
                 {
-                    if (error == null)
+                    SqlCommand command = new SqlCommand(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                            returnResult.IsSuccess = returnResult.Result != default(Copy);
-                        }
-
-                        reader.Close();
+                        returnResult.Result = Fill(reader);
+                        returnResult.IsSuccess = returnResult.Result != default(Copy);
                     }
-                    else return;
+
+                    reader.Close();
                 }
-                catch (Exception e) { Console.WriteLine(e); return; }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
-
         }
 
-        public ReturnResult<Copy> Create(Copy model)
+        public Task<ReturnResult<Copy>> Create(Copy model)
         {
             throw new NotImplementedException();
         }
 
         public Copy? Fill(SqlDataReader reader)
         {
-            Copy? copy = default(Copy);
-            Genre genre = new Genre();
-            Book? book = default(Book);
-            Status? status = default(Status);
+            Genre genre = new();
 
             if (!reader.IsDBNull(reader.GetOrdinal("genre_id")))
             {
@@ -79,7 +78,7 @@ namespace LibraryManagementSystemWF.dao
                 genre.Description = reader.GetString(reader.GetOrdinal("genre_description"));
             }
 
-            book = new Book
+            Book? book = new Book
             {
                 ID = reader.GetGuid(reader.GetOrdinal("book_id")),
                 Title = reader.GetString(reader.GetOrdinal("title")),
@@ -91,16 +90,15 @@ namespace LibraryManagementSystemWF.dao
                 ISBN = reader.GetString(reader.GetOrdinal("isbn")),
                 Genre = genre
             };
-            
-            status = new Status
+
+            Status? status = new Status
             {
                 ID = reader.GetInt32(reader.GetOrdinal("status_id")),
                 Name = reader.GetString(reader.GetOrdinal("status_name")),
                 Description = reader.GetString(reader.GetOrdinal("status_description")),
                 IsAvailable = reader.GetBoolean(reader.GetOrdinal("status_is_available"))
             };
-            
-            copy = new Copy
+            Copy? copy = new Copy
             {
                 ID = reader.GetGuid(reader.GetOrdinal("copy_id")),
                 Book = book,
@@ -110,97 +108,175 @@ namespace LibraryManagementSystemWF.dao
             return copy;
         }
 
-        public ReturnResultArr<Copy> GetAll(int page)
+        public async Task<ReturnResultArr<Copy>> GetAll(int page)
         {
-            ReturnResultArr<Copy> returnResult = new ReturnResultArr<Copy>();
-            returnResult.Results = new List<Copy>();
-            returnResult.IsSuccess = false;
-            returnResult.rowCount = 1;
-
-            string countQuery = "SELECT COUNT(*) as row_count FROM copies;";
-            string query = "SELECT * FROM copies " +
-                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
-
-            SqlClient.Execute((error, conn) =>
+            ReturnResultArr<Copy> returnResult = new()
             {
-                if (error == null)
+                Results = new List<Copy>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
+
+            string query = "SELECT COUNT(*) as row_count FROM copies; " +
+                           "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
+                           "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+                           "JOIN books b ON b.book_id = c.book_id " +
+                           "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                           "JOIN statuses s ON s.status_id = c.status_id " +
+                           $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    try
+                    SqlCommand command = new SqlCommand(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // Add row count
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlCommand countCommand = new SqlCommand(countQuery, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        // fill data
-                        while (reader.Read())
-                        {
-                            Copy? copy = this.Fill(reader);
-
-                            if (copy != null) returnResult.Results.Add(copy);
-                        }
-
-                        reader.Close();
-
-                        // add row count
-                        SqlDataReader countReader = countCommand.ExecuteReader();
-                        if (countReader.Read())
-                        {
-                            returnResult.rowCount = countReader.GetInt32(countReader.GetOrdinal("row_count"));
-                        }
-
-                        countReader.Close();
-                        returnResult.IsSuccess = true;
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
                     }
-                    catch (Exception e) { Console.WriteLine(e); return; }
+
+                    // Fill data
+                    await reader.NextResultAsync();
+                    while (await reader.ReadAsync())
+                    {
+                        Copy? copy = Fill(reader);
+
+                        if (copy != null) returnResult.Results.Add(copy);
+                    }
+
+                    returnResult.IsSuccess = true;
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public ReturnResult<Copy> GetById(string id)
+        public async Task<ReturnResultArr<Copy>> GetAllWithBooks(string bookId, int page)
         {
-            ReturnResult<Copy> returnResult = new ReturnResult<Copy>();
-            returnResult.Result = default(Copy);
-            returnResult.IsSuccess = false;
-
-            SqlClient.Execute((error, conn) =>
+            ReturnResultArr<Copy> returnResult = new()
             {
-                if (error == null)
+                Results = new List<Copy>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
+
+            string query = "SELECT COUNT(*) as row_count FROM copies; " +
+                           "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
+                           "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+                           "JOIN books b ON b.book_id = c.book_id " +
+                           "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                           "JOIN statuses s ON s.status_id = c.status_id " +
+                           $"WHERE c.book_id = '{bookId}'" +
+                           $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    string query = "SELECT * FROM copies c " +
-                       "JOIN books b ON b.book_id = c.book_id " +
-                       "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
-                       "JOIN statuses s ON s.status_id = c.status_id " +
-                       $"WHERE copy_id = '{id}';";
+                    SqlCommand command = new SqlCommand(query, conn);
+                    reader = await command.ExecuteReaderAsync();
 
-                    try
+                    // Add row count
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
 
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                        }
-                        reader.Close();
+                    // Fill data
+                    await reader.NextResultAsync();
+                    while (await reader.ReadAsync())
+                    {
+                        Copy? copy = Fill(reader);
+
+                        if (copy != null) returnResult.Results.Add(copy);
+                    }
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
+        }
+
+        public async Task<ReturnResult<Copy>> GetById(string id)
+        {
+            ReturnResult<Copy> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
+
+            string query = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
+               "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+               "JOIN books b ON b.book_id = c.book_id " +
+               "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+               "JOIN statuses s ON s.status_id = c.status_id " +
+               $"WHERE copy_id = '{id}';";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.Result = Fill(reader);
                         returnResult.IsSuccess = returnResult.Result != default(Copy);
                     }
-                    catch { return; }
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
-
-            throw new NotImplementedException();
         }
 
-        public bool Remove(string id)
+        public async Task<bool> Remove(string id)
         {
-            throw new NotImplementedException();
+            bool isRemoved = false;
+
+            // remove copy
+            string query = $"DELETE FROM copies WHERE copy_id = '{id}';";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, conn);
+                    await command.ExecuteNonQueryAsync();
+
+                    isRemoved = true;
+                }
+                catch { return; }
+            });
+
+            return isRemoved;
         }
 
-        public ReturnResult<Copy> Update(Copy model)
+        public Task<ReturnResult<Copy>> Update(Copy model)
         {
             throw new NotImplementedException();
         }

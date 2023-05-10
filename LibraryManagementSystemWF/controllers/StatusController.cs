@@ -10,18 +10,20 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class StatusController
     {
-        public static ControllerAccessData<Status> GetAllStatuses()
+        public static async Task<ControllerAccessData<Status>> GetAllStatuses()
         {
-            ControllerAccessData<Status> returnData = new ControllerAccessData<Status>();
-            returnData.Results = new List<Status>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerAccessData<Status> returnData = new()
+            {
+                Results = new List<Status>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
-            returnData.rowCount = 0;
 
             if (errors.Count == 0)
             {
-                StatusDAO statusDao = new StatusDAO();
-                ReturnResultArr<Status> result = statusDao.GetAll();
+                StatusDAO statusDao = new();
+                ReturnResultArr<Status> result = await statusDao.GetAll();
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;

@@ -12,37 +12,36 @@ namespace LibraryManagementSystemWF.utils
 {
     internal class AuthGuard
     {
-        public static bool IsAdmin(bool isStrict = false, string password = "")
+        public static async Task<bool> IsAdmin(bool isStrict = false, string password = "")
         {
             bool isAllowed = false;
             string? userId = AuthService.getSignedUser()?.ID.ToString();
 
-            SqlClient.Execute((error, conn) =>
+            string query = "SELECT * FROM users u JOIN roles r ON u.role_id = r.role_id " +
+                $"WHERE r.has_access = 1 AND u.user_id = '{userId}'";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (!string.IsNullOrWhiteSpace(userId) && error == null)
+                if (string.IsNullOrWhiteSpace(userId) && error != null) return;
+
+                SqlDataReader? reader = null;
+                
+                try
                 {
-                    Console.WriteLine("ACTIVATED");
-                    string query = "SELECT * FROM users u JOIN roles r ON u.role_id = r.role_id " +
-                    $"WHERE r.has_access = 1 AND u.user_id = '{userId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
 
-                    Console.WriteLine(query);
-                    try
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
+                        if (isStrict)
                         {
-                            if (isStrict)
-                            {
-                                string passwordHash = reader.GetString(reader.GetOrdinal("password_hash"));
-                                isAllowed = Argon2.Verify(passwordHash, password);
-                            }
-                            isAllowed = true;
-                        }
+                            string passwordHash = reader.GetString(reader.GetOrdinal("password_hash"));
+                            isAllowed = Argon2.Verify(passwordHash, password);
+                        } else isAllowed = true;
                     }
-                    catch (Exception e) { Console.WriteLine(e); return; }
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return isAllowed;

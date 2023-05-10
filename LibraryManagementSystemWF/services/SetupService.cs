@@ -10,12 +10,12 @@ namespace LibraryManagementSystemWF.services
     internal class SetupService
     {
         // NOTE: This class will initialize the database when the program first loads
-        public static bool Ready()
+        public static async Task<bool> Ready()
         {
             try
             {
-                SeederService.CreateDatabase();
-                SeederService.CreateInitialTables();
+                await SeederService.CreateDatabase();
+                await SeederService.CreateInitialTables();
 
                 return true;
             } catch { return false; }

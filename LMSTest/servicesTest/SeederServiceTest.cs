@@ -12,13 +12,13 @@ namespace LMSTest.servicesTest
     public class SeederServiceTest
     {
         [TestMethod]
-        public void Should_Create_DB()
+        public async void Should_Create_DB()
         {
-           Assert.IsTrue(SeederService.CreateDatabase());
+           Assert.IsTrue(await SeederService.CreateDatabase());
         }
-        public void Should_Create_Tables()
+        public async void Should_Create_Tables()
         {
-            Assert.IsTrue(SeederService.CreateInitialTables());
+            Assert.IsTrue(await SeederService.CreateInitialTables());
         }
     }
 }

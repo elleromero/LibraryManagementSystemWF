@@ -16,11 +16,11 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
     public partial class Ctrlstatus : UserControl
     {
 
-        public void getStatuses()
+        public async void getStatuses()
         {
 
 
-            ControllerAccessData<Status> statuses = StatusController.GetAllStatuses();
+            ControllerAccessData<Status> statuses = await StatusController.GetAllStatuses();
 
             if (statuses.IsSuccess)
             {

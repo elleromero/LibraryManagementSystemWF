@@ -18,11 +18,11 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
     public partial class Ctrlbooks : UserControl
     {
 
-        public void LoadBooks()
+        public async void LoadBooks()
         {
 
             // Create an Instance of the BookController class
-            ControllerAccessData<Book> books = BookController.GetAllBooks();
+            ControllerAccessData<Book> books = await BookController.GetAllBooks();
 
             if (books.IsSuccess)
             {

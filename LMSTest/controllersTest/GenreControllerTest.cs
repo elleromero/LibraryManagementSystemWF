@@ -7,44 +7,45 @@ namespace LMSTest
     public class GenreControllerTest
     {
         [TestMethod]
-        public void Should_Create_Genre()
+        public async Task Should_Create_Genre()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Genre> res = GenreController.CreateGenre("You", "Not a fiction");
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Genre> res = await GenreController.CreateGenre("You", "Not a fiction");
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Get_Genre_By_Id()
+        public async Task Should_Get_Genre_By_Id()
         {
-            ControllerModifyData<Genre> res = GenreController.GetGenreById(5);
+            ControllerModifyData<Genre> res = await GenreController.GetGenreById(5);
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Update_Genre()
+        public async Task Should_Update_Genre()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Genre> res = GenreController.UpdateGenre(5, "Embutido", "AAAAAHHHH");
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Genre> res = await GenreController.UpdateGenre(17, "Embutido", "AAAAAHHHH");
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Get_All_Genres()
+        public async Task Should_Get_All_Genres()
         {
-            ControllerAccessData<Genre> res = GenreController.GetAllGenres();
+            ControllerAccessData<Genre> res = await GenreController.GetAllGenres();
 
+            Assert.IsTrue(res.Results.Count > 0);
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Remove_By_Id()
+        public async Task Should_Remove_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerActionData res = GenreController.RemoveById(7);
+            await AuthController.SignIn("admin", "password");
+            ControllerActionData res = await GenreController.RemoveById(17);
 
             Assert.IsTrue(res.IsSuccess);
         }
