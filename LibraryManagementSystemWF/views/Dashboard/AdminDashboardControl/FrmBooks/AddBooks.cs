@@ -15,11 +15,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
     public partial class AddBooks : Form
     {
 
-        public void LoadBooks()
+        public async void LoadBooks()
         {
 
             // Create an Instance of the BookController class
-            ControllerAccessData<Book> books = BookController.GetAllBooks();
+            ControllerAccessData<Book> books = await BookController.GetAllBooks();
 
             // Display the Book List in the DataGridView
             if (books.IsSuccess)
@@ -35,14 +35,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
         }
 
-        public AddBooks()
+        public async void LoadGenres()
         {
-            InitializeComponent();
-
-            LoadBooks();
-
             // Creating an Instance of the GenreController class
-            ControllerAccessData<Genre> genres = GenreController.GetAllGenres();
+            ControllerAccessData<Genre> genres = await GenreController.GetAllGenres();
 
             // Adding the result of Genre in the ComboBox
             if (genres.IsSuccess)
@@ -58,9 +54,17 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             }
         }
 
+        public AddBooks()
+        {
+            InitializeComponent();
+
+            LoadBooks();
+            LoadGenres();
+        }
+
     
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
 
             // Temporary Genre
@@ -73,8 +77,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             string Cover = txtCover.Text;
             string Sypnosis = txtSynopsis.Text;
 
+
             // Add the new book to the database using the BookController class
-            ControllerAccessData<Book> result = BookController.CreateBook(Genre.ID, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+            ControllerModifyData<Book> result = await BookController.CreateBook(Genre.ID, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
 
             if (result.IsSuccess)
             {
