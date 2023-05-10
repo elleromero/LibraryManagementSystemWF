@@ -12,8 +12,8 @@ namespace LMSTest
             await AuthController.SignIn("admin", "password");
             ControllerModifyData<Book> res = await BookController.CreateBook(
                 3,
-                "HTML Semantics",
-                "K. Heart",
+                "HTML Semantics Vol. 21",
+                "Jane Doe",
                 "freecodecamp",
                 new DateTime(2003, 1, 23),
                 "978-3-16-148410-0"
