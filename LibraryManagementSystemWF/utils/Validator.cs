@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagementSystemWF.models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -64,33 +65,33 @@ namespace LibraryManagementSystemWF.utils
             return true;
         }
 
-        public static bool IsNameUnique(string tableName, string columnName, string value)
+        public static async Task<bool> IsNameUnique(string tableName, string columnName, string value)
         {
             bool isUnique = false;
-            SqlClient.Execute((error, conn) =>
+            
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
+                SqlDataReader? reader = null;
+
                 try
                 {
-                    if (error == null)
+                    if (error != null) return;
+                    
+                    string query = $"SELECT * FROM {tableName}";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
                     {
-                        string query = $"SELECT * FROM {tableName}";
-                        SqlCommand command = new SqlCommand(query, conn);
+                        string name = reader.GetString(reader.GetOrdinal(columnName));
 
-                        SqlDataReader reader = command.ExecuteReader();
+                        name = Regex.Replace(name, @"\s+", "_").ToLower();
+                        value = Regex.Replace(value, @"\s+", "_").ToLower();
 
-                        while (reader.Read())
-                        {
-                            string name = reader.GetString(reader.GetOrdinal(columnName));
-
-                            name = Regex.Replace(name, @"\s+", "_").ToLower();
-                            value = Regex.Replace(value, @"\s+", "_").ToLower();
-
-                            if (name.Equals(value)) return;
-                        }
-
-                        isUnique = true;
+                        if (name.Equals(value)) return;
                     }
-                    else return;
+
+                    isUnique = true;
                 }
                 catch { return; }
             });
@@ -98,23 +99,25 @@ namespace LibraryManagementSystemWF.utils
             return isUnique;
         }
 
-        public static bool IsUsernameUnique(string username)
+        public static async Task<bool> IsUsernameUnique(string username)
         {
             // Check if username is unique
             bool isUnique = false;
-            SqlClient.Execute((error, conn) =>
+            
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
                 try
                 {
-                    if (error == null)
-                    {
-                        string query = $"SELECT COUNT(*) FROM users WHERE username = '{username}'";
-                        SqlCommand command = new SqlCommand(query, conn);
+                    int count = 0;
+                    if (error != null) return;
 
-                        int count = (int)command.ExecuteScalar();
+                    string query = $"SELECT COUNT(*) FROM users WHERE username = '{username}'";
+                    SqlCommand command = new(query, conn);
 
-                        isUnique = count == 0;
-                    } else return;
+                    object? v = await command.ExecuteScalarAsync();
+                    if (v != null) count = (int)v;
+
+                    isUnique = count == 0;
                 }
                 catch { return; }
             });
@@ -131,23 +134,27 @@ namespace LibraryManagementSystemWF.utils
             return true;
         }
 
-        public static bool IsGenreIdValid(int genreId)
+        public static async Task<bool> IsGenreIdValid(int? genreId)
         {
             bool isValid = false;
-            SqlClient.Execute((error, conn) =>
+
+            if (genreId == null) return isValid; 
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
                 try
                 {
-                    if (error == null)
-                    {
-                        string query = $"SELECT COUNT(*) FROM genres WHERE genre_id = {genreId}";
-                        SqlCommand command = new SqlCommand(query, conn);
+                    int count = 0;
+                    if (error != null) return;
 
-                        int count = (int)command.ExecuteScalar();
+                    string query = $"SELECT COUNT(*) FROM genres WHERE genre_id = {genreId}";
+                    SqlCommand command = new(query, conn);
 
-                        isValid = count > 0;
-                    }
-                    else return;
+                    object? v = await command.ExecuteScalarAsync();
+                    if (v != null) count = (int)v;
+
+
+                    isValid = count > 0;
                 } catch { return; }
             });
 
@@ -174,7 +181,7 @@ namespace LibraryManagementSystemWF.utils
             // Check if the last character is an X (only valid for ISBN-10)
             if (isbn.Length == 10 && isbn[9] == 'X')
             {
-                isbn = isbn.Substring(0, 9) + "10";
+                isbn = string.Concat(isbn.AsSpan(0, 9), "10");
             }
 
             // Check if all characters are digits (except for the last one in ISBN-10)
@@ -223,5 +230,29 @@ namespace LibraryManagementSystemWF.utils
             return true;
         }
 
+        public static async Task<bool> IsCopyAvailable(string bookId)
+        {
+            bool isValid = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                try
+                {
+                    int count = 0;
+                    if (error != null) return;
+                    
+                    string query = $"SELECT COUNT(*) FROM copies WHERE book_id = '{bookId}' AND status_id = 1;";
+                    SqlCommand command = new SqlCommand(query, conn);
+
+                    object? v = await command.ExecuteScalarAsync();
+                    if (v != null) count = (int)v;
+
+                    isValid = count > 0;
+                }
+                catch { return; }
+            });
+
+            return isValid;
+        }
     }
 }

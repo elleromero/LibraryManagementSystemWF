@@ -12,18 +12,20 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class RoleController : BaseController
     {
-        public static ControllerAccessData<Role> GetAllRoles()
+        public static async Task<ControllerAccessData<Role>> GetAllRoles()
         {
-            ControllerAccessData<Role> returnData = new ControllerAccessData<Role>();
-            returnData.Results = new List<Role>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerAccessData<Role> returnData = new ControllerAccessData<Role>
+            {
+                Results = new List<Role>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
-            returnData.rowCount = 0;
 
             if (errors.Count == 0)
             {
-                RoleDAO roleDao = new RoleDAO();
-                ReturnResultArr<Role> result = roleDao.GetAll();
+                RoleDAO roleDao = new();
+                ReturnResultArr<Role> result = await roleDao.GetAll();
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;
