@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.controllers
     {
 
         public static async Task<ControllerModifyData<Book>> CreateBook(
-            int? genreId,
+            int genreId,
             string title,
             string author,
             string publisher,
@@ -79,7 +79,7 @@ namespace LibraryManagementSystemWF.controllers
 
         public static async Task<ControllerModifyData<Book>> UpdateBook(
             string bookId,
-            int? genreId,
+            int genreId,
             string title,
             string author,
             string publisher,

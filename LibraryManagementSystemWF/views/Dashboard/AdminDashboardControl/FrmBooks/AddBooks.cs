@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 {
     public partial class AddBooks : Form
     {
-
+        private List<Genre> genresList = new List<Genre>();
         public async void LoadBooks()
         {
 
@@ -33,6 +33,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 MessageBox.Show("Error!!");
             }
 
+           
+
         }
 
         public async void LoadGenres()
@@ -40,18 +42,40 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             // Creating an Instance of the GenreController class
             ControllerAccessData<Genre> genres = await GenreController.GetAllGenres();
 
-            // Adding the result of Genre in the ComboBox
+
+            /*            // Adding the result of Genre in the ComboBox
+                        if (genres.IsSuccess)
+                        {
+                            foreach (Genre genre in genres.Results)
+                            {
+                                cmbGenre.Items.Add(genre.Name);
+
+
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error retrieving genres!");
+                        }*/
+            genresList = genres.Results;
+
             if (genres.IsSuccess)
             {
-                foreach (Genre genre in genres.Results)
+                for (int i = 0; i < genres.Results.Count; i++)
                 {
-                    cmbGenre.Items.Add(genre);
+                    Genre genre = genresList[i];
+                    cmbGenre.ValueMember = nameof(Genre.ID);
+                    cmbGenre.DisplayMember = nameof(Genre.Name);
+                    cmbGenre.DataSource = genresList;
+
                 }
             }
             else
             {
                 MessageBox.Show("Error retrieving genres!");
             }
+
+
         }
 
         public AddBooks()
@@ -62,44 +86,54 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             LoadGenres();
         }
 
-    
+
 
         private async void button1_Click(object sender, EventArgs e)
         {
 
-            // Temporary Genre
-            Genre Genre = (Genre)cmbGenre.SelectedItem;
-            string Title = txtTitle.Text;
-            string Author = txtAuthor.Text;
-            string Publisher = txtPublisher.Text;
-            DateTime PublicationDate = dtpPublicationDate.Value;
-            string ISBN = txtISBN.Text;
-            string Cover = txtCover.Text;
-            string Sypnosis = txtSynopsis.Text;
 
-
-            // Add the new book to the database using the BookController class
-            ControllerModifyData<Book> result = await BookController.CreateBook(Genre.ID, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
-
-            if (result.IsSuccess)
+            if (cmbGenre.SelectedItem != null)
             {
-                // Clear the textboxes and other controls
-                cmbGenre.SelectedIndex = -1;
-                txtTitle.Text = "";
-                txtAuthor.Text = "";
-                txtPublisher.Text = "";
-                dtpPublicationDate.Value = DateTime.Now;
-                txtISBN.Text = "";
-                txtCover.Text = "";
-                txtSynopsis.Text = "";
+                Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
+                int selectedGenreId = selectedGenre.ID;
 
-                // Refresh the book list in the DataGridView
-                LoadBooks();
+                string Title = txtTitle.Text;
+                string Author = txtAuthor.Text;
+                string Publisher = txtPublisher.Text;
+                DateTime PublicationDate = dtpPublicationDate.Value;
+                string ISBN = txtISBN.Text;
+                string Cover = txtCover.Text;
+                string Sypnosis = txtSynopsis.Text;
+
+                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+
+                if (result.IsSuccess)
+                {
+                    cmbGenre.SelectedIndex = -1;
+                    txtTitle.Text = "";
+                    txtAuthor.Text = "";
+                    txtPublisher.Text = "";
+                    dtpPublicationDate.Value = DateTime.Now;
+                    txtISBN.Text = "";
+                    txtCover.Text = "";
+                    txtSynopsis.Text = "";
+
+                    LoadBooks();
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        MessageBox.Show(error.Value);
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Error!!");
+                MessageBox.Show("Please select a genre.");
             }
         }
     }
 }
+    
+
