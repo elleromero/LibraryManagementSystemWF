@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.models;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 MessageBox.Show("Error!!");
             }
 
-           
+
 
         }
 
@@ -96,7 +97,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             {
                 Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
                 int selectedGenreId = selectedGenre.ID;
-
+                string BookId = textBookID.Text;
                 string Title = txtTitle.Text;
                 string Author = txtAuthor.Text;
                 string Publisher = txtPublisher.Text;
@@ -110,6 +111,55 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 if (result.IsSuccess)
                 {
                     cmbGenre.SelectedIndex = -1;
+                    textBookID.Text = "";
+                    txtTitle.Text = "";
+                    txtAuthor.Text = "";
+                    txtPublisher.Text = "";
+                    dtpPublicationDate.Value = DateTime.Now;
+                    txtISBN.Text = "";
+                    txtCover.Text = "";
+                    txtSynopsis.Text = "";
+
+                    LoadBooks();
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        MessageBox.Show(error.Value);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a genre.");
+            }
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            if (cmbGenre.SelectedItem != null)
+            {
+                Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
+                int selectedGenreId = selectedGenre.ID;
+
+                string BookId = textBookID.Text;
+                string Title = txtTitle.Text;
+                string Author = txtAuthor.Text;
+                string Publisher = txtPublisher.Text;
+                DateTime PublicationDate = dtpPublicationDate.Value;
+                string ISBN = txtISBN.Text;
+                string Cover = txtCover.Text;
+                string Sypnosis = txtSynopsis.Text;
+
+                ControllerModifyData<Book> result = await BookController.UpdateBook(
+                    new Guid(BookId).ToString(), selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+
+
+                if (result.IsSuccess)
+                {
+                    cmbGenre.SelectedIndex = -1;
+                    textBookID.Text = "";
                     txtTitle.Text = "";
                     txtAuthor.Text = "";
                     txtPublisher.Text = "";
@@ -135,5 +185,5 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         }
     }
 }
-    
+
 

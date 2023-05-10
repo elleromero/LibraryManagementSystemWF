@@ -28,43 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnAddForm = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.SuspendLayout();
+            dataGridView1 = new DataGridView();
+            btnAddForm = new Button();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            SuspendLayout();
             // 
             // dataGridView1
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(42, 32);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(551, 150);
-            this.dataGridView1.TabIndex = 0;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(42, 32);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(551, 150);
+            dataGridView1.TabIndex = 0;
             // 
             // btnAddForm
             // 
-            this.btnAddForm.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnAddForm.Location = new System.Drawing.Point(78, 211);
-            this.btnAddForm.Name = "btnAddForm";
-            this.btnAddForm.Size = new System.Drawing.Size(106, 43);
-            this.btnAddForm.TabIndex = 1;
-            this.btnAddForm.Text = "ADD";
-            this.btnAddForm.UseVisualStyleBackColor = true;
-            this.btnAddForm.Click += new System.EventHandler(this.btnAddForm_Click);
+            btnAddForm.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            btnAddForm.Location = new Point(42, 206);
+            btnAddForm.Name = "btnAddForm";
+            btnAddForm.Size = new Size(106, 43);
+            btnAddForm.TabIndex = 1;
+            btnAddForm.Text = "ADD";
+            btnAddForm.UseVisualStyleBackColor = true;
+            btnAddForm.Click += btnAddForm_Click;
             // 
             // Ctrlbooks
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Menu;
-            this.Controls.Add(this.btnAddForm);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "Ctrlbooks";
-            this.Size = new System.Drawing.Size(643, 388);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Menu;
+            Controls.Add(btnAddForm);
+            Controls.Add(dataGridView1);
+            Name = "Ctrlbooks";
+            Size = new Size(643, 388);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
