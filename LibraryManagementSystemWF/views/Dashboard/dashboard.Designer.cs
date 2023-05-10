@@ -38,7 +38,7 @@
             label1.BackColor = Color.White;
             label1.Font = new Font("Bookman Old Style", 24F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = Color.DimGray;
-            label1.Location = new Point(250, 201);
+            label1.Location = new Point(225, 177);
             label1.Name = "label1";
             label1.Size = new Size(348, 38);
             label1.TabIndex = 0;

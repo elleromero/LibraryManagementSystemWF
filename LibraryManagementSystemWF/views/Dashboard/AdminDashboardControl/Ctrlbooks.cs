@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagementSystemWF.controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,8 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
         public Ctrlbooks()
         {
             InitializeComponent();
+           
+
         }
     }
 }
