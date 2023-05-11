@@ -28,222 +28,199 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.txtTitle = new System.Windows.Forms.TextBox();
-            this.txtAuthor = new System.Windows.Forms.TextBox();
-            this.txtSynopsis = new System.Windows.Forms.TextBox();
-            this.txtPublisher = new System.Windows.Forms.TextBox();
-            this.txtISBN = new System.Windows.Forms.TextBox();
-            this.txtCover = new System.Windows.Forms.TextBox();
-            this.dtpPublicationDate = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cmbGenre = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.textBookID = new System.Windows.Forms.TextBox();
-            this.btnDeleteBooks = new System.Windows.Forms.Button();
-            this.btnBack = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.SuspendLayout();
+            dataGridView1 = new DataGridView();
+            txtTitle = new TextBox();
+            txtAuthor = new TextBox();
+            txtSynopsis = new TextBox();
+            txtPublisher = new TextBox();
+            txtISBN = new TextBox();
+            txtCover = new TextBox();
+            dtpPublicationDate = new DateTimePicker();
+            label1 = new Label();
+            cmbGenre = new ComboBox();
+            label2 = new Label();
+            button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
+            textBookID = new TextBox();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            SuspendLayout();
             // 
             // dataGridView1
             // 
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(43, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(722, 148);
-            this.dataGridView1.TabIndex = 0;
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Sunken;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(43, 12);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(722, 148);
+            dataGridView1.TabIndex = 0;
             // 
             // txtTitle
             // 
-            this.txtTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtTitle.Location = new System.Drawing.Point(90, 230);
-            this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(280, 29);
-            this.txtTitle.TabIndex = 1;
-            this.txtTitle.Text = "TITLE*";
-            this.txtTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtTitle.Location = new Point(90, 224);
+            txtTitle.Name = "txtTitle";
+            txtTitle.Size = new Size(280, 29);
+            txtTitle.TabIndex = 1;
+            txtTitle.Text = "TITLE*";
+            txtTitle.TextAlign = HorizontalAlignment.Center;
             // 
             // txtAuthor
             // 
-            this.txtAuthor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtAuthor.Location = new System.Drawing.Point(90, 274);
-            this.txtAuthor.Name = "txtAuthor";
-            this.txtAuthor.Size = new System.Drawing.Size(280, 29);
-            this.txtAuthor.TabIndex = 1;
-            this.txtAuthor.Text = "AUTHOR*";
-            this.txtAuthor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtAuthor.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtAuthor.Location = new Point(90, 259);
+            txtAuthor.Name = "txtAuthor";
+            txtAuthor.Size = new Size(280, 29);
+            txtAuthor.TabIndex = 1;
+            txtAuthor.Text = "AUTHOR*";
+            txtAuthor.TextAlign = HorizontalAlignment.Center;
             // 
             // txtSynopsis
             // 
-            this.txtSynopsis.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtSynopsis.Location = new System.Drawing.Point(90, 318);
-            this.txtSynopsis.Name = "txtSynopsis";
-            this.txtSynopsis.Size = new System.Drawing.Size(280, 29);
-            this.txtSynopsis.TabIndex = 1;
-            this.txtSynopsis.Text = "SYPNOSIS*";
-            this.txtSynopsis.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtSynopsis.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtSynopsis.Location = new Point(90, 310);
+            txtSynopsis.Name = "txtSynopsis";
+            txtSynopsis.Size = new Size(280, 29);
+            txtSynopsis.TabIndex = 1;
+            txtSynopsis.Text = "SYPNOSIS*";
+            txtSynopsis.TextAlign = HorizontalAlignment.Center;
             // 
             // txtPublisher
             // 
-            this.txtPublisher.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtPublisher.Location = new System.Drawing.Point(90, 362);
-            this.txtPublisher.Name = "txtPublisher";
-            this.txtPublisher.Size = new System.Drawing.Size(280, 29);
-            this.txtPublisher.TabIndex = 1;
-            this.txtPublisher.Text = "PUBLISHER*";
-            this.txtPublisher.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtPublisher.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtPublisher.Location = new Point(90, 358);
+            txtPublisher.Name = "txtPublisher";
+            txtPublisher.Size = new Size(280, 29);
+            txtPublisher.TabIndex = 1;
+            txtPublisher.Text = "PUBLISHER*";
+            txtPublisher.TextAlign = HorizontalAlignment.Center;
             // 
             // txtISBN
             // 
-            this.txtISBN.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtISBN.Location = new System.Drawing.Point(413, 205);
-            this.txtISBN.Name = "txtISBN";
-            this.txtISBN.Size = new System.Drawing.Size(280, 29);
-            this.txtISBN.TabIndex = 1;
-            this.txtISBN.Text = "ISBN*";
-            this.txtISBN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtISBN.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtISBN.Location = new Point(413, 205);
+            txtISBN.Name = "txtISBN";
+            txtISBN.Size = new Size(280, 29);
+            txtISBN.TabIndex = 1;
+            txtISBN.Text = "ISBN*";
+            txtISBN.TextAlign = HorizontalAlignment.Center;
             // 
             // txtCover
             // 
-            this.txtCover.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtCover.Location = new System.Drawing.Point(413, 250);
-            this.txtCover.Name = "txtCover";
-            this.txtCover.Size = new System.Drawing.Size(280, 29);
-            this.txtCover.TabIndex = 1;
-            this.txtCover.Text = "COVER*";
-            this.txtCover.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtCover.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtCover.Location = new Point(413, 250);
+            txtCover.Name = "txtCover";
+            txtCover.Size = new Size(280, 29);
+            txtCover.TabIndex = 1;
+            txtCover.Text = "COVER*";
+            txtCover.TextAlign = HorizontalAlignment.Center;
             // 
             // dtpPublicationDate
             // 
-            this.dtpPublicationDate.Location = new System.Drawing.Point(413, 364);
-            this.dtpPublicationDate.Name = "dtpPublicationDate";
-            this.dtpPublicationDate.Size = new System.Drawing.Size(280, 23);
-            this.dtpPublicationDate.TabIndex = 2;
+            dtpPublicationDate.Location = new Point(413, 364);
+            dtpPublicationDate.Name = "dtpPublicationDate";
+            dtpPublicationDate.Size = new Size(280, 23);
+            dtpPublicationDate.TabIndex = 2;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(471, 340);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(169, 21);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "DATE OF PUBLISHING :";
+            label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(471, 340);
+            label1.Name = "label1";
+            label1.Size = new Size(169, 21);
+            label1.TabIndex = 3;
+            label1.Text = "DATE OF PUBLISHING :";
             // 
             // cmbGenre
             // 
-            this.cmbGenre.FormattingEnabled = true;
-            this.cmbGenre.Location = new System.Drawing.Point(533, 297);
-            this.cmbGenre.Name = "cmbGenre";
-            this.cmbGenre.Size = new System.Drawing.Size(150, 23);
-            this.cmbGenre.TabIndex = 4;
+            cmbGenre.FormattingEnabled = true;
+            cmbGenre.Location = new Point(533, 297);
+            cmbGenre.Name = "cmbGenre";
+            cmbGenre.Size = new Size(150, 23);
+            cmbGenre.TabIndex = 4;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(449, 299);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 21);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "GENRE :";
+            label2.AutoSize = true;
+            label2.BackColor = Color.Transparent;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(449, 299);
+            label2.Name = "label2";
+            label2.Size = new Size(66, 21);
+            label2.TabIndex = 3;
+            label2.Text = "GENRE :";
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(90, 420);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(141, 39);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "ADD BOOKS";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            button1.Location = new Point(90, 420);
+            button1.Name = "button1";
+            button1.Size = new Size(141, 39);
+            button1.TabIndex = 5;
+            button1.Text = "ADD BOOKS";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button2.Location = new System.Drawing.Point(249, 420);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(141, 39);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "UPDATE BOOKS";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            button2.Location = new Point(249, 420);
+            button2.Name = "button2";
+            button2.Size = new Size(141, 39);
+            button2.TabIndex = 6;
+            button2.Text = "UPDATE BOOKS";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
-            // btnDelete
+            // button3
             // 
-            this.btnDelete.Location = new System.Drawing.Point(0, 0);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 0;
+            button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            button3.Location = new Point(413, 420);
+            button3.Name = "button3";
+            button3.Size = new Size(141, 39);
+            button3.TabIndex = 7;
+            button3.Text = "DELETE BOOKS";
+            button3.UseVisualStyleBackColor = true;
             // 
             // textBookID
             // 
-            this.textBookID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBookID.Location = new System.Drawing.Point(90, 186);
-            this.textBookID.Name = "textBookID";
-            this.textBookID.Size = new System.Drawing.Size(280, 29);
-            this.textBookID.TabIndex = 8;
-            this.textBookID.Text = "BOOK ID*";
-            this.textBookID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // btnDeleteBooks
-            // 
-            this.btnDeleteBooks.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnDeleteBooks.Location = new System.Drawing.Point(413, 420);
-            this.btnDeleteBooks.Name = "btnDeleteBooks";
-            this.btnDeleteBooks.Size = new System.Drawing.Size(141, 39);
-            this.btnDeleteBooks.TabIndex = 9;
-            this.btnDeleteBooks.Text = "DELETE BOOKS";
-            this.btnDeleteBooks.UseVisualStyleBackColor = true;
-            this.btnDeleteBooks.Click += new System.EventHandler(this.btnDeleteBooks_Click);
-            // 
-            // btnBack
-            // 
-            this.btnBack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnBack.Location = new System.Drawing.Point(572, 420);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(141, 39);
-            this.btnBack.TabIndex = 10;
-            this.btnBack.Text = "BACK";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            textBookID.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            textBookID.Location = new Point(90, 189);
+            textBookID.Name = "textBookID";
+            textBookID.Size = new Size(280, 29);
+            textBookID.TabIndex = 8;
+            textBookID.Text = "BOOK ID*";
+            textBookID.TextAlign = HorizontalAlignment.Center;
             // 
             // AddBooks
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 471);
-            this.Controls.Add(this.btnBack);
-            this.Controls.Add(this.btnDeleteBooks);
-            this.Controls.Add(this.textBookID);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.cmbGenre);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dtpPublicationDate);
-            this.Controls.Add(this.txtPublisher);
-            this.Controls.Add(this.txtSynopsis);
-            this.Controls.Add(this.txtAuthor);
-            this.Controls.Add(this.txtCover);
-            this.Controls.Add(this.txtISBN);
-            this.Controls.Add(this.txtTitle);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "AddBooks";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AddBooks";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 471);
+            Controls.Add(textBookID);
+            Controls.Add(button3);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(cmbGenre);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(dtpPublicationDate);
+            Controls.Add(txtPublisher);
+            Controls.Add(txtSynopsis);
+            Controls.Add(txtAuthor);
+            Controls.Add(txtCover);
+            Controls.Add(txtISBN);
+            Controls.Add(txtTitle);
+            Controls.Add(dataGridView1);
+            Name = "AddBooks";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "AddBooks";
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

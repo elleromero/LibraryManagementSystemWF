@@ -39,6 +39,20 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 dataGridView1.Columns.Add("ISBN", "ISBN");
                 dataGridView1.Columns.Add("Cover", "Cover");
 
+                foreach (Book book in books.Results)
+                {
+                    dataGridView1.Rows.Add(
+                        book.ID,
+                        book.Title,
+                        book.Genre.Name,
+                        book.Author,
+                        book.Publisher,
+                        book.Sypnosis,
+                        book.PublicationDate,
+                        book.ISBN,
+                        book.Cover
+                        );
+                }
 
                 foreach (Book book in books.Results)
                 {
@@ -212,6 +226,56 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             {
                 MessageBox.Show("Please select a genre.");
             }
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            if (cmbGenre.SelectedItem != null)
+            {
+                Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
+                int selectedGenreId = selectedGenre.ID;
+
+                string BookId = textBookID.Text;
+                string Title = txtTitle.Text;
+                string Author = txtAuthor.Text; 
+                string Publisher = txtPublisher.Text;
+                DateTime PublicationDate = dtpPublicationDate.Value;
+                string ISBN = txtISBN.Text;
+                string Cover = txtCover.Text;
+                string Sypnosis = txtSynopsis.Text;
+
+                Console.WriteLine(BookId);
+
+                ControllerModifyData<Book> result = await BookController.UpdateBook(
+                    BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+
+
+                if (result.IsSuccess)
+                {
+                    cmbGenre.SelectedIndex = -1;
+                    textBookID.Text = "";
+                    txtTitle.Text = "";
+                    txtAuthor.Text = "";
+                    txtPublisher.Text = "";
+                    dtpPublicationDate.Value = DateTime.Now;
+                    txtISBN.Text = "";
+                    txtCover.Text = "";
+                    txtSynopsis.Text = "";
+
+                    LoadBooks();
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        MessageBox.Show(error.Value);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a genre.");
+            }
 
         }
 
@@ -270,7 +334,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
         }
     }
-    }
 
-    
+}
+
 

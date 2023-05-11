@@ -26,9 +26,8 @@ namespace LibraryManagementSystemWF.views
             this.Hide();
         }
 
-        private async void button1_Click_1(object sender, EventArgs e)
+        private async void button3_Click(object sender, EventArgs e)
         {
-
             string reguser = txtRegUser.Text.Trim();
             string regpass = txtRegPass.Text.Trim();
             string firstname = txtFirstName.Text.Trim();
