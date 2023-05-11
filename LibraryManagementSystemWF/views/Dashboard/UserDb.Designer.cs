@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserDb));
             panelside = new Panel();
-            btnRenew = new Button();
             pictureBox1 = new PictureBox();
             btnBorrow = new Button();
             btnDash = new Button();
@@ -45,7 +44,6 @@
             // panelside
             // 
             panelside.BackColor = Color.DimGray;
-            panelside.Controls.Add(btnRenew);
             panelside.Controls.Add(pictureBox1);
             panelside.Controls.Add(btnBorrow);
             panelside.Controls.Add(btnDash);
@@ -56,24 +54,6 @@
             panelside.Name = "panelside";
             panelside.Size = new Size(200, 420);
             panelside.TabIndex = 0;
-            // 
-            // btnRenew
-            // 
-            btnRenew.BackColor = Color.DimGray;
-            btnRenew.BackgroundImageLayout = ImageLayout.Zoom;
-            btnRenew.FlatAppearance.BorderSize = 0;
-            btnRenew.FlatStyle = FlatStyle.Flat;
-            btnRenew.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnRenew.ForeColor = Color.White;
-            btnRenew.Image = (Image)resources.GetObject("btnRenew.Image");
-            btnRenew.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRenew.Location = new Point(0, 301);
-            btnRenew.Name = "btnRenew";
-            btnRenew.Size = new Size(200, 30);
-            btnRenew.TabIndex = 4;
-            btnRenew.Text = "RENEW";
-            btnRenew.UseVisualStyleBackColor = false;
-            btnRenew.Click += btnRenew_Click;
             // 
             // pictureBox1
             // 
@@ -196,7 +176,6 @@
 
         private Panel panelside;
         private Panel panelheader;
-        private Button btnRenew;
         private PictureBox pictureBox1;
         private Button btnBorrow;
         private Button btnDash;
