@@ -145,15 +145,17 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 string BookId = textBookID.Text;
                 string Title = txtTitle.Text;
-                string Author = txtAuthor.Text;
+                string Author = txtAuthor.Text; 
                 string Publisher = txtPublisher.Text;
                 DateTime PublicationDate = dtpPublicationDate.Value;
                 string ISBN = txtISBN.Text;
                 string Cover = txtCover.Text;
                 string Sypnosis = txtSynopsis.Text;
 
+                Console.WriteLine(BookId);
+
                 ControllerModifyData<Book> result = await BookController.UpdateBook(
-                    new Guid(BookId).ToString(), selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+                    BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
 
 
                 if (result.IsSuccess)
