@@ -12,7 +12,7 @@ namespace LMSTest
             await AuthController.SignIn("admin", "password");
             ControllerModifyData<Book> res = await BookController.CreateBook(
                 3,
-                "HTML Semantics Vol. 21",
+                "HTML Semantics Vol. 212",
                 "Jane Doe",
                 "freecodecamp",
                 new DateTime(2003, 1, 23),
@@ -37,11 +37,13 @@ namespace LMSTest
         [TestMethod]
         public async Task Should_Update_Book()
         {
+            Console.WriteLine("D8B0DF29-9FDE-4EFC-8059-5E0A6D42E20E".ToLower());
             await AuthController.SignIn("admin", "password");
+            ControllerAccessData<Book> book = await BookController.GetAllBooks();
             ControllerModifyData<Book> res = await BookController.UpdateBook(
-                "1D7A0664-2E78-407F-B0CD-C3CE50D3FD24",
+                book.Results.ToArray()[0].ID.ToString(),
                 1,
-                "HTML Semantic Third Edition",
+                "HTML Semantic War Edition",
                 "Kevin Bacon",
                 "freecodecamp",
                 new DateTime(2003, 1, 23),
