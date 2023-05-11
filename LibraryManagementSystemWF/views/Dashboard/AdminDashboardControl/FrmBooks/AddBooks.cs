@@ -26,7 +26,20 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             if (books.IsSuccess)
             {
 
-                dataGridView1.DataSource = books.Results;
+                foreach (Book book in books.Results)
+                {
+                    dataGridView1.Rows.Add(
+                        book.ID,
+                        book.Title,
+                        book.Genre.Name,
+                        book.Author,
+                        book.Publisher,
+                        book.Sypnosis,
+                        book.PublicationDate,
+                        book.ISBN,
+                        book.Cover
+                        );
+                }
 
             }
             else
