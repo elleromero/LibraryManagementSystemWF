@@ -42,6 +42,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panelMainDesktop = new System.Windows.Forms.Panel();
+            this.btnLogout = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -208,6 +209,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.DimGray;
+            this.panel3.Controls.Add(this.btnLogout);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Location = new System.Drawing.Point(158, -2);
             this.panel3.Name = "panel3";
@@ -231,6 +233,17 @@
             this.panelMainDesktop.Name = "panelMainDesktop";
             this.panelMainDesktop.Size = new System.Drawing.Size(639, 445);
             this.panelMainDesktop.TabIndex = 4;
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnLogout.Location = new System.Drawing.Point(540, 17);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(90, 34);
+            this.btnLogout.TabIndex = 5;
+            this.btnLogout.Text = "LOGOUT";
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // AdminDashboard
             // 
@@ -269,5 +282,6 @@
         private Panel panel3;
         private Label label3;
         private Panel panelMainDesktop;
+        private Button btnLogout;
     }
 }

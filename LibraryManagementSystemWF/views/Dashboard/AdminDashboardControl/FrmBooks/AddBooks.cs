@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
 using LibraryManagementSystemWF.models;
 using System;
 using System.Collections.Generic;
@@ -15,25 +16,27 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
     public partial class AddBooks : Form
     {
         private List<Genre> genresList = new List<Genre>();
+        private List<Book> booksList = new List<Book>();
         public async void LoadBooks()
         {
 
             // Create an Instance of the BookController class
             ControllerAccessData<Book> books = await BookController.GetAllBooks();
 
-            // Display the Book List in the DataGridView
             if (books.IsSuccess)
             {
+                booksList.Clear();
+                booksList.AddRange(books.Results);
 
+                dataGridView1.DataSource = null; // Clear the data source to refresh the DataGridView
                 dataGridView1.DataSource = books.Results;
-
             }
             else
             {
-                MessageBox.Show("Error!!");
+                MessageBox.Show("Error retrieving books!");
             }
 
-           
+
 
         }
 
@@ -133,7 +136,64 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 MessageBox.Show("Please select a genre.");
             }
         }
+
+
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridView1.SelectedRows.Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("Are you sure you want to delete the selected row?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+
+                        string bookId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
+
+                        // Call the appropriate method from your controller to delete the book by its ID
+                        if (bookId != null)
+                        {
+                            ControllerActionData deleteResult = await BookController.RemoveById(bookId);
+
+                            if (deleteResult.IsSuccess)
+                            {
+                                MessageBox.Show("Row deleted successfully.");
+
+                                // Remove the selected row from the BindingList
+                                booksList.RemoveAt(selectedRow.Index);
+
+                                LoadBooks();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error deleting the row. Please try again.");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Unable to retrieve the book ID. Please try again.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while deleting the record: " + ex.Message);
+            }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+
+            Ctrlbooks ctrlbooks = new Ctrlbooks();
+
+            ctrlbooks.Show();
+            this.Hide();
+
+        }
     }
-}
+    }
+
     
 
