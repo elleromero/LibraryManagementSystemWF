@@ -29,6 +29,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 booksList.Clear();
                 booksList.AddRange(books.Results);
 
+                dataGridView1.Columns.Add("ID", "ID");
+                dataGridView1.Columns.Add("Title", "Title");
+                dataGridView1.Columns.Add("Genre", "Genre");
+                dataGridView1.Columns.Add("Author", "Author");
+                dataGridView1.Columns.Add("Publisher", "Publisher");
+                dataGridView1.Columns.Add("Sypnosis", "Sypnosis");
+                dataGridView1.Columns.Add("PubDate", "Publication Date");
+                dataGridView1.Columns.Add("ISBN", "ISBN");
+                dataGridView1.Columns.Add("Cover", "Cover");
+
                 foreach (Book book in books.Results)
                 {
                     dataGridView1.Rows.Add(
