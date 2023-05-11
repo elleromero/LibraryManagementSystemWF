@@ -2,6 +2,7 @@
 using LibraryManagementSystemWF.Dashboard;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
+using LibraryManagementSystemWF.views.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,7 +44,8 @@ namespace LibraryManagementSystemWF.views
                 {
                     MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
 
-                    AdminDashboard admin = new AdminDashboard();
+                    // AdminDashboard admin = new AdminDashboard();
+                    AdminDashboardRevamp admin = new();
                     admin.Show();
                     this.Hide();
                 }
