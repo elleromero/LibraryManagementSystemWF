@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
+using LibraryManagementSystemWF.views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -102,6 +103,15 @@ namespace LibraryManagementSystemWF.Dashboard
             books.Visible = false;
             loans.Visible = false;
             members.Visible = true;
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            SignIn signIn = new SignIn();
+
+            signIn.Show();
+            this.Hide();
+            
         }
     }
 }

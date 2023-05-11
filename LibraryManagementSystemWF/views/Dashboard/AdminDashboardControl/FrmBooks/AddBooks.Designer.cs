@@ -238,7 +238,9 @@
         private Label label2;
         private Button button1;
         private Button button2;
-        private Button button3;
+        private Button btnDelete;
         private TextBox textBookID;
+        private Button btnDeleteBooks;
+        private Button btnBack;
     }
 }
