@@ -28,228 +28,229 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            btnMembers = new Button();
-            btnBooks = new Button();
-            btnLoans = new Button();
-            btnStatus = new Button();
-            btnAuthor = new Button();
-            panel4 = new Panel();
-            btnDashboard = new Button();
-            panel2 = new Panel();
-            label2 = new Label();
-            label1 = new Label();
-            panel3 = new Panel();
-            label3 = new Label();
-            panelMainDesktop = new Panel();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel3.SuspendLayout();
-            SuspendLayout();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnMembers = new System.Windows.Forms.Button();
+            this.btnBooks = new System.Windows.Forms.Button();
+            this.btnLoans = new System.Windows.Forms.Button();
+            this.btnStatus = new System.Windows.Forms.Button();
+            this.btnAuthor = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btnDashboard = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.panelMainDesktop = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.SuspendLayout();
             // 
             // panel1
             // 
-            panel1.BackColor = Color.DimGray;
-            panel1.Controls.Add(btnMembers);
-            panel1.Controls.Add(btnBooks);
-            panel1.Controls.Add(btnLoans);
-            panel1.Controls.Add(btnStatus);
-            panel1.Controls.Add(btnAuthor);
-            panel1.Controls.Add(panel4);
-            panel1.Controls.Add(btnDashboard);
-            panel1.Controls.Add(panel2);
-            panel1.Location = new Point(0, -2);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(166, 453);
-            panel1.TabIndex = 0;
+            this.panel1.BackColor = System.Drawing.Color.DimGray;
+            this.panel1.Controls.Add(this.btnMembers);
+            this.panel1.Controls.Add(this.btnBooks);
+            this.panel1.Controls.Add(this.btnLoans);
+            this.panel1.Controls.Add(this.btnStatus);
+            this.panel1.Controls.Add(this.btnAuthor);
+            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.btnDashboard);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Location = new System.Drawing.Point(0, -2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(166, 516);
+            this.panel1.TabIndex = 0;
             // 
             // btnMembers
             // 
-            btnMembers.BackColor = Color.DimGray;
-            btnMembers.FlatAppearance.BorderSize = 0;
-            btnMembers.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnMembers.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnMembers.FlatStyle = FlatStyle.Flat;
-            btnMembers.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnMembers.ForeColor = SystemColors.ActiveCaptionText;
-            btnMembers.Location = new Point(0, 292);
-            btnMembers.Name = "btnMembers";
-            btnMembers.Size = new Size(166, 40);
-            btnMembers.TabIndex = 5;
-            btnMembers.Text = "MEMBERS";
-            btnMembers.UseVisualStyleBackColor = false;
-            btnMembers.Click += btnMembers_Click;
+            this.btnMembers.BackColor = System.Drawing.Color.DimGray;
+            this.btnMembers.FlatAppearance.BorderSize = 0;
+            this.btnMembers.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnMembers.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnMembers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMembers.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnMembers.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnMembers.Location = new System.Drawing.Point(0, 292);
+            this.btnMembers.Name = "btnMembers";
+            this.btnMembers.Size = new System.Drawing.Size(166, 40);
+            this.btnMembers.TabIndex = 5;
+            this.btnMembers.Text = "MEMBERS";
+            this.btnMembers.UseVisualStyleBackColor = false;
+            this.btnMembers.Click += new System.EventHandler(this.btnMembers_Click_1);
             // 
             // btnBooks
             // 
-            btnBooks.BackColor = Color.DimGray;
-            btnBooks.FlatAppearance.BorderSize = 0;
-            btnBooks.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnBooks.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnBooks.FlatStyle = FlatStyle.Flat;
-            btnBooks.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBooks.ForeColor = SystemColors.ActiveCaptionText;
-            btnBooks.Location = new Point(0, 218);
-            btnBooks.Name = "btnBooks";
-            btnBooks.Size = new Size(166, 40);
-            btnBooks.TabIndex = 5;
-            btnBooks.Text = "BOOKS";
-            btnBooks.UseVisualStyleBackColor = false;
-            btnBooks.Click += btnBooks_Click;
+            this.btnBooks.BackColor = System.Drawing.Color.DimGray;
+            this.btnBooks.FlatAppearance.BorderSize = 0;
+            this.btnBooks.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnBooks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBooks.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnBooks.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnBooks.Location = new System.Drawing.Point(0, 218);
+            this.btnBooks.Name = "btnBooks";
+            this.btnBooks.Size = new System.Drawing.Size(166, 40);
+            this.btnBooks.TabIndex = 5;
+            this.btnBooks.Text = "BOOKS";
+            this.btnBooks.UseVisualStyleBackColor = false;
+            this.btnBooks.Click += new System.EventHandler(this.btnBooks_Click_1);
             // 
             // btnLoans
             // 
-            btnLoans.BackColor = Color.DimGray;
-            btnLoans.FlatAppearance.BorderSize = 0;
-            btnLoans.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnLoans.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnLoans.FlatStyle = FlatStyle.Flat;
-            btnLoans.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnLoans.ForeColor = SystemColors.ActiveCaptionText;
-            btnLoans.Location = new Point(0, 255);
-            btnLoans.Name = "btnLoans";
-            btnLoans.Size = new Size(166, 40);
-            btnLoans.TabIndex = 4;
-            btnLoans.Text = "LOANS";
-            btnLoans.UseVisualStyleBackColor = false;
-            btnLoans.Click += btnLoans_Click;
+            this.btnLoans.BackColor = System.Drawing.Color.DimGray;
+            this.btnLoans.FlatAppearance.BorderSize = 0;
+            this.btnLoans.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnLoans.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnLoans.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoans.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnLoans.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnLoans.Location = new System.Drawing.Point(0, 255);
+            this.btnLoans.Name = "btnLoans";
+            this.btnLoans.Size = new System.Drawing.Size(166, 40);
+            this.btnLoans.TabIndex = 4;
+            this.btnLoans.Text = "LOANS";
+            this.btnLoans.UseVisualStyleBackColor = false;
+            this.btnLoans.Click += new System.EventHandler(this.btnLoans_Click_1);
             // 
             // btnStatus
             // 
-            btnStatus.BackColor = Color.DimGray;
-            btnStatus.FlatAppearance.BorderSize = 0;
-            btnStatus.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnStatus.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnStatus.FlatStyle = FlatStyle.Flat;
-            btnStatus.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnStatus.ForeColor = SystemColors.ActiveCaptionText;
-            btnStatus.Location = new Point(0, 143);
-            btnStatus.Name = "btnStatus";
-            btnStatus.Size = new Size(166, 40);
-            btnStatus.TabIndex = 5;
-            btnStatus.Text = "STATUS";
-            btnStatus.UseVisualStyleBackColor = false;
-            btnStatus.Click += btnStatus_Click;
+            this.btnStatus.BackColor = System.Drawing.Color.DimGray;
+            this.btnStatus.FlatAppearance.BorderSize = 0;
+            this.btnStatus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnStatus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStatus.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnStatus.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnStatus.Location = new System.Drawing.Point(0, 143);
+            this.btnStatus.Name = "btnStatus";
+            this.btnStatus.Size = new System.Drawing.Size(166, 40);
+            this.btnStatus.TabIndex = 5;
+            this.btnStatus.Text = "STATUS";
+            this.btnStatus.UseVisualStyleBackColor = false;
+            this.btnStatus.Click += new System.EventHandler(this.btnStatus_Click_1);
             // 
             // btnAuthor
             // 
-            btnAuthor.BackColor = Color.DimGray;
-            btnAuthor.FlatAppearance.BorderSize = 0;
-            btnAuthor.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnAuthor.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnAuthor.FlatStyle = FlatStyle.Flat;
-            btnAuthor.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAuthor.ForeColor = SystemColors.ActiveCaptionText;
-            btnAuthor.Location = new Point(0, 181);
-            btnAuthor.Name = "btnAuthor";
-            btnAuthor.Size = new Size(166, 40);
-            btnAuthor.TabIndex = 4;
-            btnAuthor.Text = "AUTHOR";
-            btnAuthor.UseVisualStyleBackColor = false;
-            btnAuthor.Click += btnAuthor_Click;
+            this.btnAuthor.BackColor = System.Drawing.Color.DimGray;
+            this.btnAuthor.FlatAppearance.BorderSize = 0;
+            this.btnAuthor.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnAuthor.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnAuthor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAuthor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAuthor.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnAuthor.Location = new System.Drawing.Point(0, 181);
+            this.btnAuthor.Name = "btnAuthor";
+            this.btnAuthor.Size = new System.Drawing.Size(166, 40);
+            this.btnAuthor.TabIndex = 4;
+            this.btnAuthor.Text = "AUTHOR";
+            this.btnAuthor.UseVisualStyleBackColor = false;
+            this.btnAuthor.Click += new System.EventHandler(this.btnAuthor_Click_1);
             // 
             // panel4
             // 
-            panel4.BackColor = Color.DimGray;
-            panel4.Location = new Point(0, 71);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(166, 39);
-            panel4.TabIndex = 4;
+            this.panel4.BackColor = System.Drawing.Color.DimGray;
+            this.panel4.Location = new System.Drawing.Point(0, 71);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(166, 39);
+            this.panel4.TabIndex = 4;
             // 
             // btnDashboard
             // 
-            btnDashboard.BackColor = Color.DimGray;
-            btnDashboard.FlatAppearance.BorderSize = 0;
-            btnDashboard.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnDashboard.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnDashboard.FlatStyle = FlatStyle.Flat;
-            btnDashboard.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDashboard.ForeColor = SystemColors.ActiveCaptionText;
-            btnDashboard.Location = new Point(0, 106);
-            btnDashboard.Name = "btnDashboard";
-            btnDashboard.Size = new Size(166, 40);
-            btnDashboard.TabIndex = 4;
-            btnDashboard.Text = "DASHBOARD";
-            btnDashboard.UseVisualStyleBackColor = false;
-            btnDashboard.Click += btnDashboard_Click;
+            this.btnDashboard.BackColor = System.Drawing.Color.DimGray;
+            this.btnDashboard.FlatAppearance.BorderSize = 0;
+            this.btnDashboard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDashboard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDashboard.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDashboard.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDashboard.Location = new System.Drawing.Point(0, 106);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(166, 40);
+            this.btnDashboard.TabIndex = 4;
+            this.btnDashboard.Text = "DASHBOARD";
+            this.btnDashboard.UseVisualStyleBackColor = false;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click_1);
             // 
             // panel2
             // 
-            panel2.BackColor = Color.DimGray;
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(label1);
-            panel2.Location = new Point(0, 3);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(163, 69);
-            panel2.TabIndex = 1;
+            this.panel2.BackColor = System.Drawing.Color.DimGray;
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Location = new System.Drawing.Point(0, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(163, 69);
+            this.panel2.TabIndex = 1;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Arial Narrow", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(58, 28);
-            label2.Name = "label2";
-            label2.Size = new Size(94, 17);
-            label2.TabIndex = 2;
-            label2.Text = "MANAGEMENT";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.Control;
+            this.label2.Location = new System.Drawing.Point(58, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(94, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "MANAGEMENT";
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Arial Narrow", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.ForeColor = SystemColors.Control;
-            label1.Location = new Point(58, 11);
-            label1.Name = "label1";
-            label1.Size = new Size(57, 17);
-            label1.TabIndex = 1;
-            label1.Text = "LIBRARY";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial Narrow", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(58, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "LIBRARY";
             // 
             // panel3
             // 
-            panel3.BackColor = Color.DimGray;
-            panel3.Controls.Add(label3);
-            panel3.Location = new Point(158, -2);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(642, 72);
-            panel3.TabIndex = 3;
+            this.panel3.BackColor = System.Drawing.Color.DimGray;
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Location = new System.Drawing.Point(158, -2);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(642, 72);
+            this.panel3.TabIndex = 3;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = SystemColors.Control;
-            label3.Location = new Point(209, 14);
-            label3.Name = "label3";
-            label3.Size = new Size(250, 37);
-            label3.TabIndex = 4;
-            label3.Text = "WELCOME ADMIN";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.SystemColors.Control;
+            this.label3.Location = new System.Drawing.Point(209, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(250, 37);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "WELCOME ADMIN";
             // 
             // panelMainDesktop
             // 
-            panelMainDesktop.Location = new Point(161, 69);
-            panelMainDesktop.Name = "panelMainDesktop";
-            panelMainDesktop.Size = new Size(639, 382);
-            panelMainDesktop.TabIndex = 4;
+            this.panelMainDesktop.Location = new System.Drawing.Point(161, 69);
+            this.panelMainDesktop.Name = "panelMainDesktop";
+            this.panelMainDesktop.Size = new System.Drawing.Size(639, 445);
+            this.panelMainDesktop.TabIndex = 4;
             // 
             // AdminDashboard
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(panelMainDesktop);
-            Controls.Add(panel1);
-            Controls.Add(panel3);
-            FormBorderStyle = FormBorderStyle.None;
-            Name = "AdminDashboard";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "AdminDashboard";
-            panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.panelMainDesktop);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel3);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "AdminDashboard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "AdminDashboard";
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion

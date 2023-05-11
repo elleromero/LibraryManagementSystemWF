@@ -58,19 +58,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnRenew.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAYdJREFUSEvN1s8rBGEcx3FRtrCHLQcXcXVxEQc5Orsp4qaUkpNy8Qc4uTmQoxRy
-        kpM4UGpLwpZy8SMu64Csi8J4f2e+M/t4euRZI+2nXjXzfXa+33b22dmtsRMEQRNyKTVou69hoQ3vSJtX
-        ZLVtORQ7wuW/SbO2LYfivw94xJGnEsxEAzjoQj/6YA84gKz5OIOZZMBbdB5cwx5QxI4nebdmkgFxXAPy
-        GPR0DjNeA9KkOgZcYM5yiF2rJm5hxmtAATOWPWxZNXEFM9UxwOcWLeASz4i3vMRrwDHGLduI84F5tGqv
-        DGTLSq9JnwF3WLeY+30ibGKFegvklnX/NMD1RduEJK/9nGF9BBty8CSvJifoiQ6TuB4Vcr8ls9rLGdaz
-        KMrBANbQiyX4Zkp7OcN6LUrxSR3GYN/v7+xjObzYCnX5VZQndCdOtVxZuLARNwh3jxlqo1jEKqa1XHm0
-        kXxu7VoKo/V7yAbJaPl30Way+1YwZNQkL3gIX5gmNJHdIk2H9bwe+vclyH0CeGxmlMzg95IAAAAASUVO
-        RK5CYII=
-</value>
-  </data>
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL

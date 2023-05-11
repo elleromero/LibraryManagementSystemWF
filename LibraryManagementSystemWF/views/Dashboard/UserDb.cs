@@ -49,9 +49,6 @@ namespace LibraryManagementSystemWF.views
             loadform(new booksform());
         }
 
-        private void btnRenew_Click(object sender, EventArgs e)
-        {
-            loadform(new renewform());
-        }
+        
     }
 }
