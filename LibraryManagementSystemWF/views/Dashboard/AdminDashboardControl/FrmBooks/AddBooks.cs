@@ -28,6 +28,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             {
                 booksList.Clear();
                 booksList.AddRange(books.Results);
+                dataGridView1.Rows.Clear(); // Clear existing rows before adding new ones
 
                 dataGridView1.Columns.Add("ID", "ID");
                 dataGridView1.Columns.Add("Title", "Title");
@@ -137,14 +138,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 if (result.IsSuccess)
                 {
                     cmbGenre.SelectedIndex = -1;
-                    textBookID.Text = "";
-                    txtTitle.Text = "";
-                    txtAuthor.Text = "";
-                    txtPublisher.Text = "";
+                    textBookID.Text = "BOOK ID*";
+                    txtTitle.Text = "TITLE*";
+                    txtAuthor.Text = "AUTHOR*";
+                    txtPublisher.Text = "PUBLISHER*";
                     dtpPublicationDate.Value = DateTime.Now;
-                    txtISBN.Text = "";
-                    txtCover.Text = "";
-                    txtSynopsis.Text = "";
+                    txtISBN.Text = "ISBN*";
+                    txtCover.Text = "COVER*";
+                    txtSynopsis.Text = "SYPNOSIS*";
 
                     LoadBooks();
                 }

@@ -16,7 +16,7 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 {
     public partial class Ctrlbooks : UserControl
     {
-
+        private List<Book> booksList = new List<Book>();
         public async void LoadBooks()
         {
 
@@ -26,14 +26,16 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
             if (books.IsSuccess)
             {
 
-                dataGridView1.DataSource = books.Results;
+                booksList.AddRange(books.Results);
+                
 
             }
             else
             {
                 MessageBox.Show("Error!!");
             }
-
+            dataGridView1.DataSource = null; // Clear the data source
+            dataGridView1.DataSource = booksList; // Bind the booksList to the DataGridView
         }
         public Ctrlbooks()
         {
