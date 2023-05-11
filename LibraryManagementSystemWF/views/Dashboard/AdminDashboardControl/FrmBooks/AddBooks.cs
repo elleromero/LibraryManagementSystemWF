@@ -52,9 +52,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                         book.ISBN,
                         book.Cover
                         );
-                    
+
                 }
-                
+
             }
             else
             {
@@ -112,7 +112,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             LoadBooks();
             LoadGenres();
- 
+
         }
 
 
@@ -260,16 +260,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
         }
 
-        private  void btnBack_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
 
-            Ctrlbooks ctrlbooks =  new Ctrlbooks();
+            Ctrlbooks ctrlbooks = new Ctrlbooks();
             ctrlbooks.Show();
             this.Hide();
 
         }
     }
-    }
+}
 
-    
+
 
