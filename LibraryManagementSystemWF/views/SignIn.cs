@@ -26,7 +26,7 @@ namespace LibraryManagementSystemWF.views
         {
             Register register = new();
             register.Show();
-            this.Close();
+            this.Hide();
         }
 
         private async void button2_Click(object sender, EventArgs e)
@@ -44,8 +44,8 @@ namespace LibraryManagementSystemWF.views
                 {
                     MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
 
-                    // AdminDashboard admin = new AdminDashboard();
-                    AdminDashboardRevamp admin = new();
+                    AdminDashboard admin = new AdminDashboard();
+                    // AdminDashboardRevamp admin = new(); // ssshhh
                     admin.Show();
                     this.Hide();
                 }
