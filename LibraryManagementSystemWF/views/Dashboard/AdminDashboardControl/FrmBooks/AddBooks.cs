@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
 using LibraryManagementSystemWF.models;
 using System;
@@ -28,8 +29,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 booksList.Clear();
                 booksList.AddRange(books.Results);
 
-                dataGridView1.DataSource = null; // Clear the data source to refresh the DataGridView
-                dataGridView1.DataSource = books.Results;
+                foreach (Book book in books.Results)
+                {
+                    dataGridView1.Rows.Add(
+                        book.ID,
+                        book.Title,
+                        book.Genre.Name,
+                        book.Author,
+                        book.Publisher,
+                        book.Sypnosis,
+                        book.PublicationDate,
+                        book.ISBN,
+                        book.Cover
+                        );
+                    
+                }
+                
             }
             else
             {
@@ -87,19 +102,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             LoadBooks();
             LoadGenres();
+ 
         }
 
 
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async void button1_Click_1(object sender, EventArgs e)
         {
-
-
             if (cmbGenre.SelectedItem != null)
             {
                 Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
                 int selectedGenreId = selectedGenre.ID;
-
+                string BookId = textBookID.Text;
                 string Title = txtTitle.Text;
                 string Author = txtAuthor.Text;
                 string Publisher = txtPublisher.Text;
@@ -113,6 +127,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 if (result.IsSuccess)
                 {
                     cmbGenre.SelectedIndex = -1;
+                    textBookID.Text = "";
                     txtTitle.Text = "";
                     txtAuthor.Text = "";
                     txtPublisher.Text = "";
@@ -135,10 +150,61 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             {
                 MessageBox.Show("Please select a genre.");
             }
+
         }
 
+        private async void button2_Click_1(object sender, EventArgs e)
+        {
+            if (cmbGenre.SelectedItem != null)
+            {
+                Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
+                int selectedGenreId = selectedGenre.ID;
 
-        private async void btnDelete_Click(object sender, EventArgs e)
+                string BookId = textBookID.Text;
+                string Title = txtTitle.Text;
+                string Author = txtAuthor.Text;
+                string Publisher = txtPublisher.Text;
+                DateTime PublicationDate = dtpPublicationDate.Value;
+                string ISBN = txtISBN.Text;
+                string Cover = txtCover.Text;
+                string Sypnosis = txtSynopsis.Text;
+
+                Console.WriteLine(BookId);
+
+                ControllerModifyData<Book> result = await BookController.UpdateBook(
+                    BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+
+
+                if (result.IsSuccess)
+                {
+                    cmbGenre.SelectedIndex = -1;
+                    textBookID.Text = "";
+                    txtTitle.Text = "";
+                    txtAuthor.Text = "";
+                    txtPublisher.Text = "";
+                    dtpPublicationDate.Value = DateTime.Now;
+                    txtISBN.Text = "";
+                    txtCover.Text = "";
+                    txtSynopsis.Text = "";
+
+                    LoadBooks();
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        MessageBox.Show(error.Value);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a genre.");
+            }
+
+        }
+
+        private async void btnDeleteBooks_Click(object sender, EventArgs e)
         {
             try
             {
@@ -181,13 +247,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             {
                 MessageBox.Show("An error occurred while deleting the record: " + ex.Message);
             }
+
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
+        private  void btnBack_Click(object sender, EventArgs e)
         {
 
-            Ctrlbooks ctrlbooks = new Ctrlbooks();
-
+            Ctrlbooks ctrlbooks =  new Ctrlbooks();
             ctrlbooks.Show();
             this.Hide();
 

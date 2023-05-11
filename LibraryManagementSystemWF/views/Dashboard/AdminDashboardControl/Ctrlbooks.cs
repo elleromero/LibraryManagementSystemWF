@@ -1,5 +1,4 @@
 ﻿using LibraryManagementSystemWF.controllers;
-using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBooks;
 using System;
@@ -44,9 +43,10 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
         }
 
-        AddBooks addbooks = new AddBooks();
+
         private void btnAddForm_Click(object sender, EventArgs e)
         {
+            AddBooks addbooks = new AddBooks();
 
             addbooks.Show();
 
