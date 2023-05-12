@@ -6,9 +6,9 @@ namespace LMSTest
     public class ValidatorTest
     {
         [TestMethod]
-        public void Should_Name_Is_Unique()
+        public async void Should_Name_Is_Unique()
         {
-            Assert.IsTrue(Validator.IsNameUnique("genres", "name", "horror genre"));
+            Assert.IsTrue(await Validator.IsNameUnique("genres", "name", "horror genre"));
         }
 
         [TestMethod]
@@ -59,6 +59,12 @@ namespace LMSTest
                 &&
                 Validator.IsPassword("1234567890")
                 );
+        }
+
+        [TestMethod]
+        public async void Should_Have_Copy()
+        {
+            Assert.IsTrue(await Validator.IsCopyAvailable("A3B69499-7EC9-4B51-9BE7-E13840862733"));
         }
     }
 }

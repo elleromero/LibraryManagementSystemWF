@@ -13,7 +13,7 @@ namespace LibraryManagementSystemWF.controllers
     internal class BookController : BaseController
     {
 
-        public static ControllerModifyData<Book> CreateBook(
+        public static async Task<ControllerModifyData<Book>> CreateBook(
             int genreId,
             string title,
             string author,
@@ -24,12 +24,15 @@ namespace LibraryManagementSystemWF.controllers
             string sypnosis = "No sypnosis available"
             )
         {
-            ControllerModifyData<Book> returnData = new ControllerModifyData<Book>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<Book> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -39,8 +42,8 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (!Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
-            if (!Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
+            if (!await Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
+            if (!await Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
             if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
             if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
             if (string.IsNullOrWhiteSpace(publisher)) errors.Add("publisher", "Publisher is required");
@@ -49,8 +52,8 @@ namespace LibraryManagementSystemWF.controllers
 
             if (errors.Count == 0)
             {
-                BookDAO bookDao = new BookDAO();
-                ReturnResult<Book> result = bookDao.Create(new Book
+                BookDAO bookDao = new();
+                ReturnResult<Book> result = await bookDao.Create(new Book
                 {
                     Title = title,
                     Sypnosis = sypnosis,
@@ -74,7 +77,7 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerModifyData<Book> UpdateBook(
+        public static async Task<ControllerModifyData<Book>> UpdateBook(
             string bookId,
             int genreId,
             string title,
@@ -86,12 +89,15 @@ namespace LibraryManagementSystemWF.controllers
             string sypnosis = "No sypnosis available"
             )
         {
-            ControllerModifyData<Book> returnData = new ControllerModifyData<Book>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
+            ControllerModifyData<Book> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -101,8 +107,8 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (!Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
-            if (!Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
+            if (!await Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
+            if (!await Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
             if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
             if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
             if (string.IsNullOrWhiteSpace(publisher)) errors.Add("publisher", "Publisher is required");
@@ -112,21 +118,22 @@ namespace LibraryManagementSystemWF.controllers
             // update if theres no error
             if (errors.Count == 0)
             {
-                BookDAO bookDao = new BookDAO();
+                BookDAO bookDao = new();
 
                 // check if book exists
-                ReturnResult<Book> book = bookDao.GetById(bookId);
+                ReturnResult<Book> book = await bookDao.GetById(bookId);
 
                 if (!book.IsSuccess)
                 {
                     errors.Add("bookId", "Book not found");
+
                     returnData.Errors = errors;
                     returnData.IsSuccess = isSuccess;
                     return returnData;
                 }
 
                 // proceed if book is found
-                ReturnResult<Book> result = bookDao.Update(new Book
+                ReturnResult<Book> result = await bookDao.Update(new Book
                 {
                     ID = new Guid(bookId),
                     Title = title,
@@ -142,7 +149,6 @@ namespace LibraryManagementSystemWF.controllers
                     }
                 });
 
-                Console.WriteLine("RESULT: " + result.IsSuccess);
                 isSuccess = result.IsSuccess;
                 if (isSuccess && result.Result != null)
                 {
@@ -155,30 +161,22 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerModifyData<Book> GetBookById(string id)
+        public static async Task<ControllerModifyData<Book>> GetBookById(string id)
         {
-            ControllerModifyData<Book> returnData = new ControllerModifyData<Book>();
-            returnData.Result = default(Book);
-            Dictionary<string, string> errors = new Dictionary<string, string>();
-            bool isSuccess = false;
-
-            // is not admin
-            if (!AuthGuard.IsAdmin())
+            ControllerModifyData<Book> returnData = new()
             {
-                errors.Add("permission", "Forbidden");
-                returnData.Errors = errors;
-                returnData.IsSuccess = false;
-
-                return returnData;
-            }
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
 
             // validate fields
             if (string.IsNullOrWhiteSpace(id)) errors.Add("id", "ID is invalid");
 
             if (errors.Count == 0)
             {
-                BookDAO bookDao = new BookDAO();
-                ReturnResult<Book> result = bookDao.GetById(id);
+                BookDAO bookDao = new();
+                ReturnResult<Book> result = await bookDao.GetById(id);
 
                 isSuccess = result.IsSuccess;
                 if (isSuccess && result.Result != null)
@@ -192,30 +190,22 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerAccessData<Book> GetAllBooks(int page = 1)
+        public static async Task<ControllerAccessData<Book>> GetAllBooks(int page = 1)
         {
-            ControllerAccessData<Book> returnData = new ControllerAccessData<Book>();
-            returnData.Results = new List<Book>();
-            Dictionary<string, string> errors = new Dictionary<string, string>();
-            bool isSuccess = false;
-            returnData.rowCount = 0;
-
-            // is not admin
-            if (!AuthGuard.IsAdmin())
+            ControllerAccessData<Book> returnData = new()
             {
-                errors.Add("permission", "Forbidden");
-                returnData.Errors = errors;
-                returnData.IsSuccess = false;
-
-                return returnData;
-            }
+                Results = new List<Book>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
 
             if (page <= 0) errors.Add("page", "Invalid page");
 
             if (errors.Count == 0)
             {
-                BookDAO bookDao = new BookDAO();
-                ReturnResultArr<Book> result = bookDao.GetAll(page);
+                BookDAO bookDao = new();
+                ReturnResultArr<Book> result = await bookDao.GetAll(page);
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;
@@ -227,14 +217,16 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static ControllerActionData RemoveById(string id)
+        public static async Task<ControllerActionData> RemoveById(string id)
         {
-            ControllerActionData returnResult = new ControllerActionData();
-            returnResult.Errors = new Dictionary<string, string>();
-            returnResult.IsSuccess = false;
+            ControllerActionData returnResult = new()
+            {
+                Errors = new Dictionary<string, string>(),
+                IsSuccess = false
+            };
 
             // is not admin
-            if (!AuthGuard.IsAdmin())
+            if (!await AuthGuard.IsAdmin())
             {
                 returnResult.Errors.Add("permission", "Forbidden");
 
@@ -243,11 +235,13 @@ namespace LibraryManagementSystemWF.controllers
 
             if (returnResult.Errors.Count == 0)
             {
-                BookDAO bookDao = new BookDAO();
-                returnResult.IsSuccess = bookDao.Remove(id);
+                BookDAO bookDao = new();
+                returnResult.IsSuccess = await bookDao.Remove(id);
             }
 
             return returnResult;
         }
+
+        
     }
 }

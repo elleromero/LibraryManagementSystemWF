@@ -7,38 +7,43 @@ namespace LMSTest
     public class BookControllerTest
     {
         [TestMethod]
-        public void Should_Create_Book()
+        public async Task Should_Create_Book()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Book> res = BookController.CreateBook(
-                1,
-                "HTML Semantics",
-                "K. Heart",
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Book> res = await BookController.CreateBook(
+                3,
+                "HTML Semantics Vol. 212",
+                "Jane Doe",
                 "freecodecamp",
                 new DateTime(2003, 1, 23),
                 "978-3-16-148410-0"
                 );
 
+            foreach (KeyValuePair<string, string> err in res.Errors)
+            {
+                Console.WriteLine(err.Value);
+            }
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Get_Book_By_Id()
+        public async Task Should_Get_Book_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Book> res = BookController.GetBookById("47298E60-74EA-4F20-AAF2-55FAC9797492");
+            ControllerModifyData<Book> res = await BookController.GetBookById("5C71A9E2-9038-462A-993B-E622A5717660");
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Update_Book()
+        public async Task Should_Update_Book()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Book> res = BookController.UpdateBook(
-                "47298E60-74EA-4F20-AAF2-55FAC9797492",
+            Console.WriteLine("D8B0DF29-9FDE-4EFC-8059-5E0A6D42E20E".ToLower());
+            await AuthController.SignIn("admin", "password");
+            ControllerAccessData<Book> book = await BookController.GetAllBooks();
+            ControllerModifyData<Book> res = await BookController.UpdateBook(
+                book.Results.ToArray()[0].ID.ToString(),
                 1,
-                "HTML Semantic",
+                "HTML Semantic War Edition",
                 "Kevin Bacon",
                 "freecodecamp",
                 new DateTime(2003, 1, 23),
@@ -50,19 +55,19 @@ namespace LMSTest
         }
 
         [TestMethod]
-        public void Should_Get_All_Books()
+        public async Task Should_Get_All_Books()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerAccessData<Book> res = BookController.GetAllBooks();
+            ControllerAccessData<Book> res = await BookController.GetAllBooks();
 
+            Console.WriteLine(res.Results.Count);
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Remove_By_Id()
+        public async Task Should_Remove_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerActionData res = BookController.RemoveById("A21D93F9-1AC2-4B77-9543-8B38C286DA29");
+            await AuthController.SignIn("admin", "password");
+            ControllerActionData res = await BookController.RemoveById("5C71A9E2-9038-462A-993B-E622A5717660");
 
             Assert.IsTrue(res.IsSuccess);
         }

@@ -13,160 +13,169 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class AdminDAO : IDAO<User>
     {
-        public ReturnResult<User> Create(User model)
+        public async Task<ReturnResult<User>> Create(User model)
         {
-            ReturnResult<User> returnResult = new ReturnResult<User>();
-            returnResult.Result = default(User);
-            returnResult.IsSuccess = false;
+            ReturnResult<User> returnResult = new()
+            {
+                Result = null,
+                IsSuccess = false
+            };
 
-            string declareQuery = "DECLARE @member_id UNIQUEIDENTIFIER; SET @member_id = NEWID();";
-            string memberQuery = "INSERT INTO members (first_name, last_name, address, phone, email, member_id) " +
+            string declareQuery = "DECLARE @member_id UNIQUEIDENTIFIER = NEWID();";
+            string memberQuery = $"INSERT INTO members (first_name, last_name, address, phone, email, member_id) " +
                 $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', '{model.Member.Address}', '{model.Member.Phone}', '{model.Member.Email}', @member_id);";
-            string userQuery = "INSERT INTO users (member_id, role_id, username, password_hash) " +
+            string userQuery = $"INSERT INTO users (member_id, role_id, username, password_hash) " +
                 $"VALUES (@member_id, {model.Role.ID}, '{model.Username}', '{model.PasswordHash}');";
             string selectQuery = "SELECT * FROM members m JOIN users u ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE u.member_id = @member_id;";
             string query = $"{declareQuery} {memberQuery} {userQuery} {selectQuery}";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    try
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                        }
-                        reader.Close();
-
-                        returnResult.IsSuccess = returnResult.Result != default(User);
+                        returnResult.Result = Fill(reader);
                     }
-                    catch { return; }
+
+                    returnResult.IsSuccess = returnResult.Result != null;
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public ReturnResultArr<User> GetAll(int page = 1)
+        public async Task<ReturnResultArr<User>> GetAll(int page = 1)
         {
-            ReturnResultArr<User> returnResult = new ReturnResultArr<User>();
-            returnResult.Results = new List<User>();
-            returnResult.IsSuccess = false;
-            returnResult.rowCount = 0;
+            ReturnResultArr<User> returnResult = new()
+            {
+                Results = new List<User>(),
+                IsSuccess = false,
+                rowCount = 0
+            };
 
-            string countQuery = "SELECT COUNT(*) as row_count FROM users;";
-            string query = "SELECT * FROM users u " +
+            string query = "SELECT COUNT(*) as row_count FROM users; " +
+                "SELECT * FROM users u " +
                 "JOIN members m ON m.member_id = u.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
-                {
-                    try
-                    {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlCommand countCommand = new SqlCommand(countQuery, conn);
-                        SqlDataReader reader = command.ExecuteReader();
+                if (error != null) return;
 
-                        // fill data
-                        while (reader.Read())
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // Add row count
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
+
+                    // Fill data
+                    if (await reader.NextResultAsync())
+                    {
+                        while (await reader.ReadAsync())
                         {
-                            User? user = this.Fill(reader);
+                            User? user = Fill(reader);
 
                             if (user != null) returnResult.Results.Add(user);
                         }
-
-                        reader.Close();
-
-                        // add row count
-                        SqlDataReader countReader = countCommand.ExecuteReader();
-                        if (countReader.Read())
-                        {
-                            returnResult.rowCount = countReader.GetInt32(countReader.GetOrdinal("row_count"));
-                        }
-
-                        countReader.Close();
-                        returnResult.IsSuccess = true;
                     }
-                    catch (Exception e) { Console.WriteLine(e); return; }
+
+                    returnResult.IsSuccess = true;
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public ReturnResult<User> GetById(string id)
+        public async Task<ReturnResult<User>> GetById(string id)
         {
-            ReturnResult<User> returnResult = new ReturnResult<User>();
-            returnResult.Result = default(User);
-            returnResult.IsSuccess = false;
+            ReturnResult<User> returnResult = new()
+            {
+                Result = null,
+                IsSuccess = false
+            };
 
             string query = "SELECT * FROM users u " +
                 $"JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE u.user_id = '{id}';";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
-                {
-                    try
-                    {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
+                if (error != null) return;
 
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                        }
-                        reader.Close();
-                        returnResult.IsSuccess = returnResult.Result != default(User);
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.Result = Fill(reader);
+                        returnResult.IsSuccess = returnResult.Result != null;
                     }
-                    catch { return; }
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public bool Remove(string id)
+        public async Task<bool> Remove(string id)
         {
             bool isRemoved = false;
 
-            // remove user
+            // Remove user
             string declareQuery = "DECLARE @member_id UNIQUEIDENTIFIER;" +
                 $"SELECT @member_id = member_id FROM users WHERE user_id = '{id}';";
             string userQuery = $"DELETE FROM users WHERE user_id = '{id}';";
             string memberQuery = "DELETE FROM members WHERE member_id = @member_id;";
             string query = $"{declareQuery} {userQuery} {memberQuery}";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
-                {
-                    try
-                    {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        command.ExecuteNonQuery();
+                if (error != null) return;
 
-                        isRemoved = true;
-                    }
-                    catch { return; }
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, conn);
+                    await command.ExecuteNonQueryAsync();
+
+                    isRemoved = true;
                 }
+                catch { return; }
             });
 
             return isRemoved;
         }
 
-        public ReturnResult<User> Update(User model)
+        public async Task<ReturnResult<User>> Update(User model)
         {
-            ReturnResult<User> returnResult = new ReturnResult<User>();
-            returnResult.Result = default(User);
-            returnResult.IsSuccess = false;
+            ReturnResult<User> returnResult = new()
+            {
+                Result = null,
+                IsSuccess = false
+            };
 
             string declareQuery = "DECLARE @user table (member_id UNIQUEIDENTIFIER);";
             string updateUserQuery = "UPDATE users SET " +
@@ -178,45 +187,46 @@ namespace LibraryManagementSystemWF.dao
                 $"first_name = '{model.Member.FirstName}', " +
                 $"last_name = '{model.Member.LastName}', " +
                 $"address = '{model.Member.Address}', " +
-                $"email = 'romero@romero.com', " +
-                $"phone = '+639111813695' " +
+                $"email = '{model.Member.Email}', " +
+                $"phone = '{model.Member.Phone}' " +
                 "WHERE member_id = (SELECT member_id FROM @user as u WHERE u.member_id = members.member_id);";
             string selectQuery = $"SELECT * FROM users u JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE user_id = '{model.ID}';";
             string query = $"{declareQuery} {updateUserQuery} {updateMemberQuery} {selectQuery}";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    try
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (reader.Read())
-                        {
-                            returnResult.Result = this.Fill(reader);
-                        }
-                        reader.Close();
-                        returnResult.IsSuccess = returnResult.Result != default(User);
-
-                        // update info of current logged in user
-                        if (returnResult.IsSuccess && AuthGuard.IsLoggedIn(model.ID.ToString()))
-                        {
-                            AuthService.setSignedUser(returnResult.Result);
-                        }
+                        returnResult.Result = Fill(reader);
                     }
-                    catch { return; }
+
+                    returnResult.IsSuccess = returnResult.Result != null;
+
+                    // Update info of current logged-in user
+                    if (returnResult.IsSuccess && AuthGuard.IsLoggedIn(model.ID.ToString()))
+                    {
+                        AuthService.setSignedUser(returnResult.Result);
+                    }
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public User? Fill(SqlDataReader reader)
+        public User Fill(SqlDataReader reader)
         {
-            User? user = default(User);
-            user = new User
+            User? user = new()
             {
                 ID = reader.GetGuid(reader.GetOrdinal("user_id")),
                 Username = reader.GetString(reader.GetOrdinal("username")),

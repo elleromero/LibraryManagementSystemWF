@@ -7,49 +7,51 @@ namespace LMSTest
     public class CopyControllerTest
     {
         [TestMethod]
-        public void Should_Create_Copies()
+        public async Task Should_Create_Copies()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Copy> res = CopyController.CreateCopies(
-                "A5BDF027-CE17-4F76-B95A-82D2FB7640E8",
-                12
+            await AuthController.SignIn("admin", "password");
+            ControllerModifyData<Copy> res = await CopyController.CreateCopies(
+                "1D7A0664-2E78-407F-B0CD-C3CE50D3FD24",
+                5
                 );
-            Console.WriteLine(res.Result.Book.Genre.Name);
-            Assert.IsTrue(res.IsSuccess);
-        }
-
-        [TestMethod]
-        public void Should_Get_Genre_By_Id()
-        {
-            ControllerModifyData<Genre> res = GenreController.GetGenreById(5);
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Update_Genre()
+        public async Task Should_Get_Copy_By_Id()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerModifyData<Genre> res = GenreController.UpdateGenre(5, "Embutido", "AAAAAHHHH");
+            ControllerModifyData<Copy> res = await CopyController.GetCopyById("9A49991B-1946-4092-BE74-4E4CEB1F2A70");
 
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Get_All_Genres()
+        public async Task Should_Get_All_Copies()
         {
-            ControllerAccessData<Genre> res = GenreController.GetAllGenres();
+            ControllerAccessData<Copy> res = await CopyController.GetAllCopies();
 
+            Assert.IsTrue(res.Results.Count > 0);
             Assert.IsTrue(res.IsSuccess);
         }
 
         [TestMethod]
-        public void Should_Remove_By_Id()
+        public async Task Should_Get_All_Copies_With_Books()
         {
-            AuthController.SignIn("admin", "password");
-            ControllerActionData res = GenreController.RemoveById(7);
+            ControllerAccessData<Copy> res = await CopyController.GetAllCopiesWithBook("1D7A0664-2E78-407F-B0CD-C3CE50D3FD24");
+
+            Assert.IsTrue(res.Results.Count > 0);
+            Assert.IsTrue(res.IsSuccess);
+        }
+
+        [TestMethod]
+        public async Task Should_Remove_By_Id()
+        {
+            await AuthController.SignIn("admin", "password");
+            ControllerActionData res = await CopyController.RemoveById("9A49991B-1946-4092-BE74-4E4CEB1F2A70");
 
             Assert.IsTrue(res.IsSuccess);
         }
+
     }
 }

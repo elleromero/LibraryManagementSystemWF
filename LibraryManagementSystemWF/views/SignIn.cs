@@ -2,6 +2,7 @@
 using LibraryManagementSystemWF.Dashboard;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
+using LibraryManagementSystemWF.views.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,21 +22,20 @@ namespace LibraryManagementSystemWF.views
             InitializeComponent();
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Register register = new Register();
+            Register register = new();
             register.Show();
             this.Hide();
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
-            ControllerModifyData<User> res = AuthController.SignIn(username, password);
-            User user = AuthService.getSignedUser();
-
+            ControllerModifyData<User> res = await AuthController.SignIn(username, password);
+            User? user = AuthService.getSignedUser();
 
 
             if (res.IsSuccess)
@@ -45,6 +45,7 @@ namespace LibraryManagementSystemWF.views
                     MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
 
                     AdminDashboard admin = new AdminDashboard();
+                    // AdminDashboardRevamp admin = new(); // ssshhh
                     admin.Show();
                     this.Hide();
                 }
@@ -61,6 +62,14 @@ namespace LibraryManagementSystemWF.views
             {
                 MessageBox.Show("WRONG INPUT!!!");
             }
+
+            txtUsername.Text = "";
+            txtPassword.Text = "";
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

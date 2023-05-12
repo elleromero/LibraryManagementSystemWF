@@ -12,72 +12,72 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class RoleDAO : IDAO<Role>
     {
-        public ReturnResult<Role> Create(Role model)
+        public Task<ReturnResult<Role>> Create(Role model)
         {
             throw new NotImplementedException();
         }
 
         public Role? Fill(SqlDataReader reader)
         {
-            Role? role = default(Role);
-
-            role = new Role
+            Role? role = new()
             {
                 ID = reader.GetInt32(reader.GetOrdinal("role_id")),
                 Name = reader.GetString(reader.GetOrdinal("name")),
                 HasAccess = reader.GetBoolean(reader.GetOrdinal("has_access"))
             };
-
             return role;
         }
 
-        public ReturnResultArr<Role> GetAll(int page = 1)
+        public async Task<ReturnResultArr<Role>> GetAll(int page = 1)
         {
-            ReturnResultArr<Role> returnResult = new ReturnResultArr<Role>();
-            returnResult.Results = new List<Role>();
-            returnResult.IsSuccess = false;
-            returnResult.rowCount = 1;
+            ReturnResultArr<Role> returnResult = new()
+            {
+                Results = new List<Role>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
 
             string query = "SELECT * FROM roles;";
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
                 {
-                    try
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // fill data
+                    while (await reader.ReadAsync())
                     {
-                        SqlCommand command = new SqlCommand(query, conn);
-                        SqlDataReader reader = command.ExecuteReader();
+                        Role? role = Fill(reader);
 
-                        // fill data
-                        while (reader.Read())
-                        {
-                            Role? role = this.Fill(reader);
-
-                            if (role != null) returnResult.Results.Add(role);
-                        }
-
-                        reader.Close();
-                        returnResult.IsSuccess = true;
+                        if (role != null) returnResult.Results.Add(role);
                     }
-                    catch (Exception e) { Console.WriteLine(e); return; }
+
+                    returnResult.IsSuccess = true;
                 }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
         }
 
-        public ReturnResult<Role> GetById(string id)
+        public Task<ReturnResult<Role>> GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(string id)
+        public Task<bool> Remove(string id)
         {
             throw new NotImplementedException();
         }
 
-        public ReturnResult<Role> Update(Role model)
+        public Task<ReturnResult<Role>> Update(Role model)
         {
             throw new NotImplementedException();
         }

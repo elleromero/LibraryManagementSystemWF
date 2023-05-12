@@ -12,29 +12,27 @@ namespace LibraryManagementSystemWF.services
     internal class SeederService : EnvService
     {
         // This class inserts and creates initial data to the database
-        public static bool CreateInitialTables()
+        public static async Task<bool> CreateInitialTables()
         {
             bool areTablesCreated = false;
 
             // check if the the database exists and has no tables
-            if (IsDatabaseExist(GetDBName()))
+            if (await IsDatabaseExist(GetDBName()))
             {
-                if (!AreTablesExist(GetDBName()))
+                if (!await AreTablesExist(GetDBName()))
                 {
-                    SqlClient.Execute((error, conn) =>
+                    await SqlClient.ExecuteAsync(async (error, conn) =>
                     {
-                        if (error == null)
+                        if (error != null) return;
+                        
+                        try
                         {
-                            try
-                            {
-                                string script = File.ReadAllText("../../../resources/queries/setupSQL.sql");
-                                SqlCommand command = new SqlCommand(script, conn);
+                            string script = File.ReadAllText("../../../resources/queries/setupSQL.sql");
+                            SqlCommand command = new(script, conn);
 
-                                command.ExecuteScalar();
-                                areTablesCreated = true;
-                            } catch { areTablesCreated = false; }
-                        }
-                        else areTablesCreated = false;
+                            await command.ExecuteScalarAsync();
+                            areTablesCreated = true;
+                        } catch { return; }
                     });
                 }
             }
@@ -42,78 +40,77 @@ namespace LibraryManagementSystemWF.services
             return areTablesCreated;
         }
 
-        public static bool CreateDatabase() {
+        public static async Task<bool> CreateDatabase() {
             bool isDBCreated = false;
 
             // check if database already exists
-            if (!IsDatabaseExist(GetDBName()))
+            if (!await IsDatabaseExist(GetDBName()))
             {
                 string query = $"CREATE DATABASE {GetDBName()};";
 
-                SqlClient.Execute((error, conn) =>
+                await SqlClient.ExecuteAsync(async (error, conn) =>
                 {
-                    SqlCommand command = new SqlCommand(query, conn);
+                    SqlCommand command = new(query, conn);
 
-                    if (error == null)
+                    if (error != null) return;
+                    
+                    try
                     {
-                        try
-                        {
-                            command.ExecuteScalar();
-                            isDBCreated = true;
-                        }
-                        catch { isDBCreated = false; }
+                        await command.ExecuteScalarAsync();
+                        isDBCreated = true;
                     }
-                    else isDBCreated = false;
+                    catch { return; }
+
                 }, true);
             }
             return isDBCreated;
         }
 
-        private static bool IsDatabaseExist(string dbName)
+        private static async Task<bool> IsDatabaseExist(string dbName)
         {
-            bool isExists = true;
+            bool isExists = false;
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
+                if (error != null) return;
+                
+                string query = $"SELECT DB_ID('{dbName}') AS db_id;";
+                SqlCommand command = new(query, conn);
+
+                try
                 {
-                    string query = $"SELECT DB_ID('{dbName}') AS db_id;";
-                    SqlCommand command = new SqlCommand(query, conn);
+                    object? dbId = await command.ExecuteScalarAsync();
 
-                    try
-                    {
-                        object dbId = command.ExecuteScalar();
-
-                        isExists = dbId != DBNull.Value;
-                    }
-                    catch { isExists = true; }
+                    isExists = dbId != DBNull.Value;
                 }
-                else isExists = false;
+                catch { return; }
+
             }, true);
 
             return isExists;
         }
 
-        private static bool AreTablesExist(string dbName)
+        private static async Task<bool> AreTablesExist(string dbName)
         {
-            bool isExists = true;
+            bool isExists = false;
 
-            SqlClient.Execute((error, conn) =>
+            await SqlClient.ExecuteAsync(async (error, conn) =>
             {
-                if (error == null)
+                if (error != null) return;
+
+                string query = $"SELECT COUNT(*) FROM information_schema.tables WHERE table_catalog = '{dbName}';";
+                SqlCommand command = new(query, conn);
+
+                try
                 {
-                    string query = $"SELECT COUNT(*) FROM information_schema.tables WHERE table_catalog = '{dbName}';";
-                    SqlCommand command = new SqlCommand(query, conn);
+                    int count = 0;
+                    object? v = await command.ExecuteScalarAsync();
+                    if (v != null) count = (int)v;
 
-                    try
-                    {
-                        int count = (int)command.ExecuteScalar();
-
-                        isExists = count > 0;
-                    }
-                    catch { isExists = true; }
+                    isExists = count > 0;
                 }
-                else isExists = false;
+                catch { return; }
+                
             }, true);
 
             return isExists;

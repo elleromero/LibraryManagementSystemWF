@@ -19,8 +19,8 @@ CREATE TABLE users (
 	member_id UNIQUEIDENTIFIER,
 	username VARCHAR(20) NOT NULL,
     password_hash VARCHAR(500) NOT NULL,
-	FOREIGN KEY (role_id) REFERENCES roles(role_id),
-	FOREIGN KEY (member_id) REFERENCES members(member_id)
+	FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE,
+	FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 )
 
 CREATE TABLE statuses (
@@ -53,18 +53,19 @@ CREATE TABLE copies (
 	copy_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	book_id UNIQUEIDENTIFIER,
 	status_id INT,
-	FOREIGN KEY (book_id) REFERENCES books(book_id),
-	FOREIGN KEY (status_id) REFERENCES statuses(status_id)
+	FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE,
+	FOREIGN KEY (status_id) REFERENCES statuses(status_id) ON DELETE CASCADE
 )
 
 CREATE TABLE loans (
 	loan_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	member_id UNIQUEIDENTIFIER,
+	user_id UNIQUEIDENTIFIER,
 	copy_id UNIQUEIDENTIFIER,
 	date_borrowed DATETIME2 NOT NULL,
 	due_date DATETIME2 NOT NULL,
-	FOREIGN KEY (member_id) REFERENCES members(member_id),
-	FOREIGN KEY (copy_id) REFERENCES copies(copy_id),
+	is_returned BIT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (copy_id) REFERENCES copies(copy_id) ON DELETE CASCADE,
 )
 
 /* INSERTS DATA */
