@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.views;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBooks;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,27 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
             addbooks.Show();
 
+        }
+
+        private void btnupdate_Click(object sender, EventArgs e)
+        {
+            AddBooks addbooks = new AddBooks();
+
+            addbooks.Show();
+        }
+
+        private void btnremove_Click(object sender, EventArgs e)
+        {
+            AddBooks addbooks = new AddBooks();
+
+            addbooks.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            AdminDashboard AD = new AdminDashboard();
+            AD.Show();
+            this.Hide();
         }
     }
 }
