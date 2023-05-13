@@ -23,14 +23,20 @@ namespace LibraryManagementSystemWF.views.components
             authorLbl.Text = book.Author;
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            topPanel.Visible = true;
-        }
-
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
             topPanel.Visible = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Feature not yet implemented!");
+        }
+
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            topPanel.Visible = true;
+            topPanel.BringToFront();
         }
     }
 }
