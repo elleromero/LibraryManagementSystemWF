@@ -1,4 +1,6 @@
-﻿using LibraryManagementSystemWF.views.components;
+﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.views.components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,13 +15,30 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 {
     public partial class Ctrlbooksrevamp : UserControl
     {
+        private List<Book> books = new();
+        private int page = 1;
+
         public Ctrlbooksrevamp()
         {
             InitializeComponent();
+            LoadBooks();
+        }
 
-            for (int i = 0; i < 10; i++)
+        private async void LoadBooks()
+        {
+            ControllerAccessData<Book> res = await BookController.GetAllBooks(page);
+            
+            if (res.IsSuccess)
             {
-                flowLayoutPanel1.Controls.Add(new BookContainer());
+                books = res.Results;
+
+                subtitleLbl.Text = $"You currently have {res.rowCount} book(s) registered.";
+
+                // Fill books
+                foreach (Book book in books)
+                {   
+                    flowLayoutPanel1.Controls.Add(new BookContainer(book));
+                }
             }
         }
     }
