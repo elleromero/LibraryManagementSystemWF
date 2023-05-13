@@ -18,6 +18,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
     {
         private List<Genre> genresList = new List<Genre>();
         private List<Book> booksList = new List<Book>();
+        private Ctrlbooksrevamp ctrlbookRevamp = new();
+
+        public void Show(Ctrlbooksrevamp parentForm)
+        {
+            this.ctrlbookRevamp = parentForm;
+            base.Show();
+        }
+
         public async void LoadBooks()
         {
 
@@ -148,6 +156,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     txtSynopsis.Text = "SYPNOSIS*";
 
                     LoadBooks();
+                    ctrlbookRevamp.LoadBooks();
                 }
                 else
                 {
@@ -199,6 +208,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     txtSynopsis.Text = "";
 
                     LoadBooks();
+                    ctrlbookRevamp.LoadBooks();
                 }
                 else
                 {
@@ -241,6 +251,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                                 booksList.RemoveAt(selectedRow.Index);
 
                                 LoadBooks();
+                                ctrlbookRevamp.LoadBooks();
                             }
                             else
                             {

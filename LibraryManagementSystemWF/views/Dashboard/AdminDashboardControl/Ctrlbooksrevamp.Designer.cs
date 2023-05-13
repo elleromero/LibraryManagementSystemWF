@@ -30,19 +30,13 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.subtitleLbl = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.prevLastBtn = new System.Windows.Forms.Button();
+            this.prevBtn = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.flowLayoutPanel2.SuspendLayout();
+            this.nextBtn = new System.Windows.Forms.Button();
+            this.nextLastBtn = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.pageLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -66,29 +60,31 @@
             this.subtitleLbl.TabIndex = 1;
             this.subtitleLbl.Text = "You currently have 5 book(s) registered";
             // 
-            // button1
+            // prevLastBtn
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(186, 433);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(42, 27);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "<<";
-            this.button1.UseVisualStyleBackColor = false;
+            this.prevLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.prevLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.prevLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.prevLastBtn.Location = new System.Drawing.Point(267, 433);
+            this.prevLastBtn.Name = "prevLastBtn";
+            this.prevLastBtn.Size = new System.Drawing.Size(42, 27);
+            this.prevLastBtn.TabIndex = 2;
+            this.prevLastBtn.Text = "<<";
+            this.prevLastBtn.UseVisualStyleBackColor = false;
+            this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
-            // button4
+            // prevBtn
             // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button4.Location = new System.Drawing.Point(236, 433);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(27, 27);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "<";
-            this.button4.UseVisualStyleBackColor = false;
+            this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.prevBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.prevBtn.Location = new System.Drawing.Point(317, 433);
+            this.prevBtn.Name = "prevBtn";
+            this.prevBtn.Size = new System.Drawing.Size(27, 27);
+            this.prevBtn.TabIndex = 5;
+            this.prevBtn.Text = "<";
+            this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -99,136 +95,72 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(683, 320);
             this.flowLayoutPanel1.TabIndex = 6;
             // 
-            // button3
+            // nextBtn
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button3.Location = new System.Drawing.Point(475, 433);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(27, 27);
-            this.button3.TabIndex = 7;
-            this.button3.Text = ">";
-            this.button3.UseVisualStyleBackColor = false;
+            this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.nextBtn.Location = new System.Drawing.Point(386, 433);
+            this.nextBtn.Name = "nextBtn";
+            this.nextBtn.Size = new System.Drawing.Size(27, 27);
+            this.nextBtn.TabIndex = 7;
+            this.nextBtn.Text = ">";
+            this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
-            // button5
+            // nextLastBtn
             // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button5.Location = new System.Drawing.Point(508, 433);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(42, 27);
-            this.button5.TabIndex = 8;
-            this.button5.Text = ">>";
-            this.button5.UseVisualStyleBackColor = false;
+            this.nextLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.nextLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.nextLastBtn.Location = new System.Drawing.Point(419, 433);
+            this.nextLastBtn.Name = "nextLastBtn";
+            this.nextLastBtn.Size = new System.Drawing.Size(42, 27);
+            this.nextLastBtn.TabIndex = 8;
+            this.nextLastBtn.Text = ">>";
+            this.nextLastBtn.UseVisualStyleBackColor = false;
+            this.nextLastBtn.Click += new System.EventHandler(this.nextLastBtn_Click);
             // 
-            // button2
+            // button11
             // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button2.Location = new System.Drawing.Point(3, 0);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(27, 27);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "1";
-            this.button2.UseVisualStyleBackColor = false;
+            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.button11.FlatAppearance.BorderSize = 0;
+            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button11.Location = new System.Drawing.Point(606, 30);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(90, 27);
+            this.button11.TabIndex = 10;
+            this.button11.Text = "Open Menu";
+            this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
-            // flowLayoutPanel2
+            // pageLbl
             // 
-            this.flowLayoutPanel2.Controls.Add(this.button2);
-            this.flowLayoutPanel2.Controls.Add(this.button6);
-            this.flowLayoutPanel2.Controls.Add(this.button7);
-            this.flowLayoutPanel2.Controls.Add(this.button8);
-            this.flowLayoutPanel2.Controls.Add(this.button9);
-            this.flowLayoutPanel2.Controls.Add(this.button10);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(269, 433);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(200, 27);
-            this.flowLayoutPanel2.TabIndex = 9;
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.White;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button6.Location = new System.Drawing.Point(36, 0);
-            this.button6.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(27, 27);
-            this.button6.TabIndex = 4;
-            this.button6.Text = "2";
-            this.button6.UseVisualStyleBackColor = false;
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.White;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button7.Location = new System.Drawing.Point(69, 0);
-            this.button7.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(27, 27);
-            this.button7.TabIndex = 5;
-            this.button7.Text = "3";
-            this.button7.UseVisualStyleBackColor = false;
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.White;
-            this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button8.Location = new System.Drawing.Point(102, 0);
-            this.button8.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(27, 27);
-            this.button8.TabIndex = 6;
-            this.button8.Text = "4";
-            this.button8.UseVisualStyleBackColor = false;
-            // 
-            // button9
-            // 
-            this.button9.BackColor = System.Drawing.Color.White;
-            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button9.Location = new System.Drawing.Point(135, 0);
-            this.button9.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(27, 27);
-            this.button9.TabIndex = 7;
-            this.button9.Text = "5";
-            this.button9.UseVisualStyleBackColor = false;
-            // 
-            // button10
-            // 
-            this.button10.BackColor = System.Drawing.Color.White;
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button10.Location = new System.Drawing.Point(168, 0);
-            this.button10.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(27, 27);
-            this.button10.TabIndex = 8;
-            this.button10.Text = "6";
-            this.button10.UseVisualStyleBackColor = false;
+            this.pageLbl.AutoSize = true;
+            this.pageLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.pageLbl.Location = new System.Drawing.Point(350, 437);
+            this.pageLbl.Name = "pageLbl";
+            this.pageLbl.Size = new System.Drawing.Size(30, 17);
+            this.pageLbl.TabIndex = 11;
+            this.pageLbl.Text = "1 | 1";
+            this.pageLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Ctrlbooksrevamp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.flowLayoutPanel2);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.pageLbl);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.nextLastBtn);
+            this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.prevBtn);
+            this.Controls.Add(this.prevLastBtn);
             this.Controls.Add(this.subtitleLbl);
             this.Controls.Add(this.label1);
             this.Name = "Ctrlbooksrevamp";
             this.Size = new System.Drawing.Size(710, 520);
-            this.flowLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,17 +170,12 @@
 
         private Label label1;
         private Label subtitleLbl;
-        private Button button1;
-        private Button button4;
+        private Button prevLastBtn;
+        private Button prevBtn;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button button3;
-        private Button button5;
-        private Button button2;
-        private FlowLayoutPanel flowLayoutPanel2;
-        private Button button6;
-        private Button button7;
-        private Button button8;
-        private Button button9;
-        private Button button10;
+        private Button nextBtn;
+        private Button nextLastBtn;
+        private Button button11;
+        private Label pageLbl;
     }
 }
