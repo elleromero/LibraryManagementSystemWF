@@ -45,6 +45,7 @@
             this.btnDeleteBooks = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.coverImg = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -57,6 +58,7 @@
             this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.coverImg)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -74,20 +76,18 @@
             this.txtTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtTitle.Location = new System.Drawing.Point(177, 280);
             this.txtTitle.Name = "txtTitle";
+            this.txtTitle.PlaceholderText = "Harry Potter";
             this.txtTitle.Size = new System.Drawing.Size(280, 29);
             this.txtTitle.TabIndex = 1;
-            this.txtTitle.Text = "TITLE*";
-            this.txtTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtAuthor
             // 
             this.txtAuthor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtAuthor.Location = new System.Drawing.Point(177, 347);
             this.txtAuthor.Name = "txtAuthor";
+            this.txtAuthor.PlaceholderText = "J. K. Rowling";
             this.txtAuthor.Size = new System.Drawing.Size(280, 29);
             this.txtAuthor.TabIndex = 1;
-            this.txtAuthor.Text = "AUTHOR*";
-            this.txtAuthor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtSynopsis
             // 
@@ -95,41 +95,39 @@
             this.txtSynopsis.Location = new System.Drawing.Point(493, 347);
             this.txtSynopsis.Multiline = true;
             this.txtSynopsis.Name = "txtSynopsis";
+            this.txtSynopsis.PlaceholderText = "Write something awesome...";
             this.txtSynopsis.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtSynopsis.Size = new System.Drawing.Size(280, 221);
             this.txtSynopsis.TabIndex = 1;
-            this.txtSynopsis.Text = "SYPNOSIS*";
-            this.txtSynopsis.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtPublisher
             // 
             this.txtPublisher.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtPublisher.Location = new System.Drawing.Point(177, 539);
             this.txtPublisher.Name = "txtPublisher";
+            this.txtPublisher.PlaceholderText = "Agila Inc.";
             this.txtPublisher.Size = new System.Drawing.Size(280, 29);
             this.txtPublisher.TabIndex = 1;
-            this.txtPublisher.Text = "PUBLISHER*";
-            this.txtPublisher.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtISBN
             // 
             this.txtISBN.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtISBN.Location = new System.Drawing.Point(177, 412);
             this.txtISBN.Name = "txtISBN";
+            this.txtISBN.PlaceholderText = "ISBN 10 or ISBN 13";
             this.txtISBN.Size = new System.Drawing.Size(280, 29);
             this.txtISBN.TabIndex = 1;
-            this.txtISBN.Text = "ISBN*";
-            this.txtISBN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtCover
             // 
+            this.txtCover.Enabled = false;
             this.txtCover.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtCover.Location = new System.Drawing.Point(177, 476);
             this.txtCover.Name = "txtCover";
+            this.txtCover.PlaceholderText = "C://Images/cover.png";
             this.txtCover.ReadOnly = true;
             this.txtCover.Size = new System.Drawing.Size(222, 29);
             this.txtCover.TabIndex = 1;
-            this.txtCover.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // dtpPublicationDate
             // 
@@ -249,6 +247,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.panel1.Controls.Add(this.coverImg);
             this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnDeleteBooks);
@@ -258,6 +257,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(155, 595);
             this.panel1.TabIndex = 11;
+            // 
+            // coverImg
+            // 
+            this.coverImg.Location = new System.Drawing.Point(0, 372);
+            this.coverImg.Name = "coverImg";
+            this.coverImg.Size = new System.Drawing.Size(155, 196);
+            this.coverImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.coverImg.TabIndex = 11;
+            this.coverImg.TabStop = false;
             // 
             // label3
             // 
@@ -386,6 +394,7 @@
             this.button3.TabIndex = 27;
             this.button3.Text = "find";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // AddBooks
             // 
@@ -420,6 +429,7 @@
             this.Text = "AddBooks";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.coverImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -453,5 +463,6 @@
         private Label label10;
         private Label label1;
         private Button button3;
+        private PictureBox coverImg;
     }
 }

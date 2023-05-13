@@ -90,6 +90,7 @@
             // 
             // titleLbl
             // 
+            this.titleLbl.AutoEllipsis = true;
             this.titleLbl.Dock = System.Windows.Forms.DockStyle.Top;
             this.titleLbl.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.titleLbl.Location = new System.Drawing.Point(0, 196);

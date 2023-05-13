@@ -145,15 +145,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 if (result.IsSuccess)
                 {
-                    cmbGenre.SelectedIndex = -1;
-                    textBookID.Text = "BOOK ID*";
-                    txtTitle.Text = "TITLE*";
-                    txtAuthor.Text = "AUTHOR*";
-                    txtPublisher.Text = "PUBLISHER*";
+                    cmbGenre.SelectedIndex = 0;
+                    textBookID.Text = "";
+                    txtTitle.Text = "";
+                    txtAuthor.Text = "";
+                    txtPublisher.Text = "";
                     dtpPublicationDate.Value = DateTime.Now;
-                    txtISBN.Text = "ISBN*";
-                    txtCover.Text = "COVER*";
-                    txtSynopsis.Text = "SYPNOSIS*";
+                    txtISBN.Text = "";
+                    txtCover.Text = "";
+                    txtSynopsis.Text = "";
+                    coverImg.Image = null;
 
                     LoadBooks();
                     ctrlbookRevamp.LoadBooks();
@@ -197,7 +198,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 if (result.IsSuccess)
                 {
-                    cmbGenre.SelectedIndex = -1;
+                    cmbGenre.SelectedIndex = 0;
                     textBookID.Text = "";
                     txtTitle.Text = "";
                     txtAuthor.Text = "";
@@ -206,6 +207,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     txtISBN.Text = "";
                     txtCover.Text = "";
                     txtSynopsis.Text = "";
+                    coverImg.Image = null;
 
                     LoadBooks();
                     ctrlbookRevamp.LoadBooks();
@@ -279,6 +281,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             ctrlbooks.Show();
             this.Hide();
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string imagePath = openFileDialog.FileName;
+                txtCover.Text = imagePath;
+                coverImg.Image = Image.FromFile(imagePath);
+            }
         }
     }
 }

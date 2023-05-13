@@ -19,8 +19,11 @@ namespace LibraryManagementSystemWF.views.components
         {
             InitializeComponent();
             this.book = book;
+            new ToolTip().SetToolTip(titleLbl, book.Title);
             titleLbl.Text = book.Title;
             authorLbl.Text = book.Author;
+
+            if (File.Exists(book.Cover)) pictureBox1.Image = Image.FromFile(book.Cover);
         }
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
