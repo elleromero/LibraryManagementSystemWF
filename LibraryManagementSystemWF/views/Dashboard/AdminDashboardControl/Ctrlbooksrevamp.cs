@@ -38,13 +38,24 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
                 // Fill books
                 flowLayoutPanel1.Controls.Clear();
-                foreach (Book book in books)
+                if (res.Results.Count > 0)
                 {
-                    flowLayoutPanel1.Controls.Add(new BookContainer(book));
+                    flowLayoutPanel1.Margin = new Padding(3);
+                    // loop through results
+                    foreach (Book book in books)
+                    {
+                        flowLayoutPanel1.Controls.Add(new BookContainer(book));
+                    }
+                }
+                else
+                {
+                    // add empty template
+                    flowLayoutPanel1.Margin = Padding.Empty;
+                    flowLayoutPanel1.Controls.Add(new CtrlEmpty());
                 }
 
                 // init page label
-                maxPage = (int)Math.Ceiling((double)res.rowCount / 10);
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
 
                 // init pagination buttons

@@ -109,11 +109,11 @@ INSERT INTO members (
 	address,
 	member_id
 ) VALUES (
-	'Lumpiang',
-	'Shanghai',
-	'howtomakelumpia@mail.net',
+	'John',
+	'Doe',
+	'johndoe@mail.co.uk',
 	'+639100813695',
-	'127.0.0.1',
+	'211 Baker St.',
 	@member_id
 );
 
