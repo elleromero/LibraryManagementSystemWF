@@ -29,108 +29,109 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ctrlbooks));
-            dataGridView1 = new DataGridView();
-            btnAddForm = new Button();
-            btnupdate = new Button();
-            btnremove = new Button();
-            button2 = new Button();
-            label1 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            SuspendLayout();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnAddForm = new System.Windows.Forms.Button();
+            this.btnupdate = new System.Windows.Forms.Button();
+            this.btnremove = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SuspendLayout();
             // 
             // dataGridView1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(16, 71);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(608, 174);
-            dataGridView1.TabIndex = 0;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(16, 71);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(608, 174);
+            this.dataGridView1.TabIndex = 0;
             // 
             // btnAddForm
             // 
-            btnAddForm.BackColor = Color.FromArgb(254, 206, 47);
-            btnAddForm.FlatAppearance.BorderSize = 0;
-            btnAddForm.FlatStyle = FlatStyle.Flat;
-            btnAddForm.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAddForm.Location = new Point(16, 261);
-            btnAddForm.Name = "btnAddForm";
-            btnAddForm.Size = new Size(202, 26);
-            btnAddForm.TabIndex = 1;
-            btnAddForm.Text = "ADD";
-            btnAddForm.UseVisualStyleBackColor = false;
-            btnAddForm.Click += btnAddForm_Click;
+            this.btnAddForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.btnAddForm.FlatAppearance.BorderSize = 0;
+            this.btnAddForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddForm.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAddForm.Location = new System.Drawing.Point(16, 261);
+            this.btnAddForm.Name = "btnAddForm";
+            this.btnAddForm.Size = new System.Drawing.Size(202, 26);
+            this.btnAddForm.TabIndex = 1;
+            this.btnAddForm.Text = "ADD";
+            this.btnAddForm.UseVisualStyleBackColor = false;
+            this.btnAddForm.Click += new System.EventHandler(this.btnAddForm_Click);
             // 
             // btnupdate
             // 
-            btnupdate.BackColor = Color.FromArgb(254, 206, 47);
-            btnupdate.FlatAppearance.BorderSize = 0;
-            btnupdate.FlatStyle = FlatStyle.Flat;
-            btnupdate.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnupdate.Location = new Point(224, 261);
-            btnupdate.Name = "btnupdate";
-            btnupdate.Size = new Size(183, 26);
-            btnupdate.TabIndex = 2;
-            btnupdate.Text = "UPDATE";
-            btnupdate.UseVisualStyleBackColor = false;
-            btnupdate.Click += btnupdate_Click;
+            this.btnupdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.btnupdate.FlatAppearance.BorderSize = 0;
+            this.btnupdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnupdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnupdate.Location = new System.Drawing.Point(224, 261);
+            this.btnupdate.Name = "btnupdate";
+            this.btnupdate.Size = new System.Drawing.Size(183, 26);
+            this.btnupdate.TabIndex = 2;
+            this.btnupdate.Text = "UPDATE";
+            this.btnupdate.UseVisualStyleBackColor = false;
+            this.btnupdate.Click += new System.EventHandler(this.btnupdate_Click);
             // 
             // btnremove
             // 
-            btnremove.BackColor = Color.FromArgb(254, 206, 47);
-            btnremove.FlatAppearance.BorderSize = 0;
-            btnremove.FlatStyle = FlatStyle.Flat;
-            btnremove.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnremove.Location = new Point(413, 261);
-            btnremove.Name = "btnremove";
-            btnremove.Size = new Size(211, 26);
-            btnremove.TabIndex = 3;
-            btnremove.Text = "DELETE";
-            btnremove.UseVisualStyleBackColor = false;
-            btnremove.Click += btnremove_Click;
+            this.btnremove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.btnremove.FlatAppearance.BorderSize = 0;
+            this.btnremove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnremove.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnremove.Location = new System.Drawing.Point(413, 261);
+            this.btnremove.Name = "btnremove";
+            this.btnremove.Size = new System.Drawing.Size(211, 26);
+            this.btnremove.TabIndex = 3;
+            this.btnremove.Text = "DELETE";
+            this.btnremove.UseVisualStyleBackColor = false;
+            this.btnremove.Click += new System.EventHandler(this.btnremove_Click);
             // 
             // button2
             // 
-            button2.BackColor = Color.White;
-            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
-            button2.BackgroundImageLayout = ImageLayout.Stretch;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.ForeColor = Color.Black;
-            button2.Location = new Point(12, 20);
-            button2.Name = "button2";
-            button2.Size = new Size(37, 35);
-            button2.TabIndex = 11;
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button2.ForeColor = System.Drawing.Color.Black;
+            this.button2.Location = new System.Drawing.Point(12, 20);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(37, 35);
+            this.button2.TabIndex = 11;
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Black", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(53, 20);
-            label1.Name = "label1";
-            label1.Size = new Size(99, 37);
-            label1.TabIndex = 12;
-            label1.Text = "Books";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(53, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 37);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Books";
             // 
             // Ctrlbooks
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            Controls.Add(label1);
-            Controls.Add(button2);
-            Controls.Add(btnremove);
-            Controls.Add(btnupdate);
-            Controls.Add(btnAddForm);
-            Controls.Add(dataGridView1);
-            Name = "Ctrlbooks";
-            Size = new Size(643, 388);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnremove);
+            this.Controls.Add(this.btnupdate);
+            this.Controls.Add(this.btnAddForm);
+            this.Controls.Add(this.dataGridView1);
+            this.Name = "Ctrlbooks";
+            this.Size = new System.Drawing.Size(710, 520);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

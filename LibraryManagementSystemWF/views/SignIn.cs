@@ -44,8 +44,8 @@ namespace LibraryManagementSystemWF.views
                 {
                     MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
 
-                    AdminDashboard admin = new AdminDashboard();
-                    // AdminDashboardRevamp admin = new(); // ssshhh
+                    // AdminDashboard admin = new AdminDashboard();
+                    AdminDashboardRevamp admin = new(); // ssshhh
                     admin.Show();
                     this.Hide();
                 }
