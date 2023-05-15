@@ -8,6 +8,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -292,6 +295,26 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string imagePath = openFileDialog.FileName;
                 txtCover.Text = imagePath;
                 coverImg.Image = Image.FromFile(imagePath);
+            }
+        }
+
+
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                // Set the values of the text boxes to the values in the clicked row
+                textBookID.Text = row.Cells["ID"].Value.ToString();
+                txtTitle.Text = row.Cells["Title"].Value.ToString();
+                txtAuthor.Text = row.Cells["Author"].Value.ToString();
+                txtPublisher.Text = row.Cells["Publisher"].Value.ToString();
+                dtpPublicationDate.Value = DateTime.Parse(row.Cells["PubDate"].Value.ToString());
+                txtISBN.Text = row.Cells["ISBN"].Value.ToString();
+                txtCover.Text = row.Cells["Cover"].Value.ToString();
+                txtSynopsis.Text = row.Cells["Sypnosis"].Value.ToString();
             }
         }
     }
