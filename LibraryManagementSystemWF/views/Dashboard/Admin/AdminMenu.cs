@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.views.components;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
     {
         private AdminDashboard adminDashboard = new();
         private string adminPassword = "";
-        // private List<User> usersList = new List<User>();
+        private bool isInitialized = true;
 
         public AdminMenu(AdminDashboard adminDashboard)
         {
@@ -27,6 +28,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
             LoadUsers();
             LoadRoles();
+
+            // load default preview
+            panel2.Controls.Clear();
+            panel2.Controls.Add(new UserContainer(new User
+            {
+                Username = "juan_54",
+                Member = new Member
+                {
+                    FirstName = "Juan",
+                    LastName = "Dela Cruz"
+                },
+                Role = new Role
+                {
+                    Name = "ADMINISTRATOR"
+                }
+            }));
         }
 
         private async void LoadUsers()
@@ -223,6 +240,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 textAddress.Text = row.Cells["Address"].Value.ToString();
                 textPhone.Text = row.Cells["Phone"].Value.ToString();
                 textEmail.Text = row.Cells["Email"].Value.ToString();
+
+                // disable role
+                cmbRole.Enabled = false;
             }
         }
 
@@ -275,6 +295,30 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             {
                 MessageBox.Show("An error occurred while deleting the record: " + ex.Message);
             }
+        }
+
+        private void text_TextChanged(object sender, EventArgs e)
+        {
+            if (!isInitialized)
+            {
+                // refresh preview
+                panel2.Controls.Clear();
+                panel2.Controls.Add(new UserContainer(new User
+                {
+                    Username = textUsername.Text,
+                    Member = new Member
+                    {
+                        FirstName = textFirstName.Text,
+                        LastName = textLastName.Text
+                    },
+                    Role =
+                {
+                    Name = cmbRole.Text
+                }
+                }));
+            }
+
+            isInitialized = false;
         }
     }
 }

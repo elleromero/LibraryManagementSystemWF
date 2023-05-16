@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminMenu));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnBack = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnDeleteBooks = new System.Windows.Forms.Button();
@@ -53,13 +54,20 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbRole = new System.Windows.Forms.ComboBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtCover = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridList)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnDeleteBooks);
@@ -69,6 +77,14 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(155, 556);
             this.panel1.TabIndex = 12;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 380);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(155, 155);
+            this.pictureBox1.TabIndex = 42;
+            this.pictureBox1.TabStop = false;
             // 
             // btnBack
             // 
@@ -157,7 +173,7 @@
             this.usersGridList.Location = new System.Drawing.Point(155, 0);
             this.usersGridList.Name = "usersGridList";
             this.usersGridList.RowTemplate.Height = 25;
-            this.usersGridList.Size = new System.Drawing.Size(628, 170);
+            this.usersGridList.Size = new System.Drawing.Size(949, 170);
             this.usersGridList.TabIndex = 13;
             this.usersGridList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersList_CellClick);
             // 
@@ -195,6 +211,7 @@
             this.textFirstName.PlaceholderText = "Juan";
             this.textFirstName.Size = new System.Drawing.Size(280, 29);
             this.textFirstName.TabIndex = 22;
+            this.textFirstName.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // label1
             // 
@@ -219,6 +236,7 @@
             this.textLastName.PlaceholderText = "Dela Cruz";
             this.textLastName.Size = new System.Drawing.Size(280, 29);
             this.textLastName.TabIndex = 24;
+            this.textLastName.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // label2
             // 
@@ -315,6 +333,7 @@
             this.textUsername.PlaceholderText = "johndoe";
             this.textUsername.Size = new System.Drawing.Size(280, 29);
             this.textUsername.TabIndex = 32;
+            this.textUsername.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // label7
             // 
@@ -378,13 +397,75 @@
             this.cmbRole.Name = "cmbRole";
             this.cmbRole.Size = new System.Drawing.Size(280, 29);
             this.cmbRole.TabIndex = 35;
+            this.cmbRole.TextChanged += new System.EventHandler(this.text_TextChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(807, 213);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(271, 126);
+            this.panel2.TabIndex = 37;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label10.ForeColor = System.Drawing.Color.Black;
+            this.label10.Location = new System.Drawing.Point(804, 193);
+            this.label10.Margin = new System.Windows.Forms.Padding(0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(55, 17);
+            this.label10.TabIndex = 38;
+            this.label10.Text = "Preview";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(1032, 380);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(52, 29);
+            this.button3.TabIndex = 41;
+            this.button3.Text = "find";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label11.ForeColor = System.Drawing.Color.Black;
+            this.label11.Location = new System.Drawing.Point(801, 360);
+            this.label11.Margin = new System.Windows.Forms.Padding(0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(92, 17);
+            this.label11.TabIndex = 40;
+            this.label11.Text = "Profile Picture";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtCover
+            // 
+            this.txtCover.Enabled = false;
+            this.txtCover.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtCover.Location = new System.Drawing.Point(804, 380);
+            this.txtCover.Name = "txtCover";
+            this.txtCover.PlaceholderText = "C://Images/profile.png";
+            this.txtCover.ReadOnly = true;
+            this.txtCover.Size = new System.Drawing.Size(222, 29);
+            this.txtCover.TabIndex = 39;
+            this.txtCover.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // AdminMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(783, 556);
+            this.ClientSize = new System.Drawing.Size(1104, 556);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.txtCover);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.cmbRole);
             this.Controls.Add(this.textPassword);
@@ -410,6 +491,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdminMenu";
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -442,5 +524,11 @@
         private Label label8;
         private Label label9;
         private ComboBox cmbRole;
+        private Panel panel2;
+        private Label label10;
+        private Button button3;
+        private Label label11;
+        private TextBox txtCover;
+        private PictureBox pictureBox1;
     }
 }

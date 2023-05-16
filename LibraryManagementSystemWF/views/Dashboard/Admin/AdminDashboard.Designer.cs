@@ -239,6 +239,7 @@
             this.Controls.Add(this.subtitleLbl);
             this.Controls.Add(this.titleLbl);
             this.Controls.Add(this.topbar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AdminDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdminDashboard";
