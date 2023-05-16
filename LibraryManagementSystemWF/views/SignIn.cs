@@ -2,6 +2,7 @@
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.views.Dashboard.Admin;
+using LibraryManagementSystemWF.views.Dashboard.Librarian;
 
 namespace LibraryManagementSystemWF.views
 {
@@ -30,7 +31,7 @@ namespace LibraryManagementSystemWF.views
 
             if (res.IsSuccess)
             {
-                if (user.Role.HasAccess)
+                if (user.Role.HasAccess && user.Role.Name == "ADMINISTRATOR")
                 {
                     MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
 
@@ -38,6 +39,12 @@ namespace LibraryManagementSystemWF.views
                     // AdminDashboardRevamp admin = new(); // ssshhh
                     AdminDashboard admin = new();
                     admin.Show();
+                    this.Hide();
+                }
+                else if (user.Role.HasAccess && user.Role.Name == "LIBRARIAN")
+                {
+                    LibrarianDashboard librarian = new();
+                    librarian.Show();
                     this.Hide();
                 }
                 else

@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LibraryManagementSystemWF.views.Dashboard
+namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 {
     public partial class LibrarianDashboard : Form
     {
@@ -39,6 +39,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 nameLbl.Text = $"{user.Member.FirstName} {user.Member.LastName} ({user.Username})";
                 emailLbl.Text = user.Member.Email;
                 idLbl.Text += user.ID;
+                if (File.Exists(user.ProfilePicture)) pictureBox1.Image = Image.FromFile(user.ProfilePicture);
             }
             else
             {

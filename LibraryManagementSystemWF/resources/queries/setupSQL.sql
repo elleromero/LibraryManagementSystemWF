@@ -74,7 +74,7 @@ CREATE TABLE loans (
 INSERT INTO roles (name, has_access) VALUES 
 ('ADMINISTRATOR', 1),
 ('USER', 0),
-('LIBRARIAN', 0);
+('LIBRARIAN', 1);
 
 INSERT INTO statuses (name, description, is_available) VALUES 
 ('AVAILABLE', 'The book is currently available', 1),

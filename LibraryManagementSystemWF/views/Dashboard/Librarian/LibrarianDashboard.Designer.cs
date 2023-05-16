@@ -1,4 +1,4 @@
-﻿namespace LibraryManagementSystemWF.views.Dashboard
+﻿namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 {
     partial class LibrarianDashboard
     {
