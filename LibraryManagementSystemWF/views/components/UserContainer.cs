@@ -13,6 +13,7 @@ namespace LibraryManagementSystemWF.views.components
             this.user = user;
             titleLbl.Text = $"{user.Member.FirstName} {user.Member.LastName} ({user.Username})";
             subtitleLbl.Text = user.Role.Name;
+            if (File.Exists(user.ProfilePicture)) pictureBox1.Image = Image.FromFile(user.ProfilePicture);
         }
     }
 }

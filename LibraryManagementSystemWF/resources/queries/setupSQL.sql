@@ -119,9 +119,10 @@ INSERT INTO members (
 	@member_id
 );
 
-INSERT INTO users (username, password_hash, role_id, member_id) VALUES (
+INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
 	'admin',
 	'$argon2id$v=19$m=65536,t=3,p=1$3wKJEyw8CQjpQHN2DjH7qg$uRD8wwKE4DTmjFVgunfEcH+zbdJOzi7n1/03Le70lRo',
+	'',
 	1,
 	@member_id
 );

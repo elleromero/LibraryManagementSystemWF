@@ -59,6 +59,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.txtProfile = new System.Windows.Forms.TextBox();
+            this.clearBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridList)).BeginInit();
@@ -67,6 +68,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.panel1.Controls.Add(this.clearBtn);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.button1);
@@ -165,15 +167,20 @@
             // 
             // usersGridList
             // 
-            this.usersGridList.BackgroundColor = System.Drawing.Color.White;
+            this.usersGridList.AllowUserToAddRows = false;
+            this.usersGridList.AllowUserToDeleteRows = false;
+            this.usersGridList.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.usersGridList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.usersGridList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.usersGridList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.usersGridList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.usersGridList.Dock = System.Windows.Forms.DockStyle.Top;
             this.usersGridList.GridColor = System.Drawing.Color.Black;
             this.usersGridList.Location = new System.Drawing.Point(155, 0);
             this.usersGridList.Name = "usersGridList";
+            this.usersGridList.ReadOnly = true;
+            this.usersGridList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.usersGridList.RowTemplate.Height = 25;
+            this.usersGridList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.usersGridList.Size = new System.Drawing.Size(949, 170);
             this.usersGridList.TabIndex = 13;
             this.usersGridList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersList_CellClick);
@@ -193,12 +200,14 @@
             // 
             // textUserID
             // 
-            this.textUserID.BackColor = System.Drawing.Color.White;
+            this.textUserID.BackColor = System.Drawing.SystemColors.Control;
+            this.textUserID.Enabled = false;
             this.textUserID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.textUserID.ForeColor = System.Drawing.SystemColors.MenuText;
             this.textUserID.Location = new System.Drawing.Point(176, 213);
             this.textUserID.Name = "textUserID";
             this.textUserID.PlaceholderText = "Not required in ADD MODE";
+            this.textUserID.ReadOnly = true;
             this.textUserID.Size = new System.Drawing.Size(280, 29);
             this.textUserID.TabIndex = 20;
             // 
@@ -389,7 +398,7 @@
             // 
             // cmbRole
             // 
-            this.cmbRole.BackColor = System.Drawing.Color.Gainsboro;
+            this.cmbRole.BackColor = System.Drawing.SystemColors.Control;
             this.cmbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbRole.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -457,11 +466,30 @@
             this.txtProfile.TabIndex = 39;
             this.txtProfile.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
+            // clearBtn
+            // 
+            this.clearBtn.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.clearBtn.FlatAppearance.BorderSize = 2;
+            this.clearBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clearBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clearBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clearBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.clearBtn.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.clearBtn.Image = ((System.Drawing.Image)(resources.GetObject("clearBtn.Image")));
+            this.clearBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.clearBtn.Location = new System.Drawing.Point(0, 127);
+            this.clearBtn.Name = "clearBtn";
+            this.clearBtn.Size = new System.Drawing.Size(155, 54);
+            this.clearBtn.TabIndex = 43;
+            this.clearBtn.Text = "      CLEAR";
+            this.clearBtn.UseVisualStyleBackColor = false;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
+            // 
             // AdminMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1104, 556);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label11);
@@ -532,5 +560,6 @@
         private Label label11;
         private TextBox txtProfile;
         private PictureBox pictureBox1;
+        private Button clearBtn;
     }
 }

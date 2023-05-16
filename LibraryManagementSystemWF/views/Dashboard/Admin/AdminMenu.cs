@@ -29,6 +29,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             LoadUsers();
             LoadRoles();
 
+            defaultPreview();
+        }
+
+        private void defaultPreview()
+        {
+            isInitialized = true;
+
             // load default preview
             panel2.Controls.Clear();
             panel2.Controls.Add(new UserContainer(new User
@@ -62,6 +69,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 usersGridList.Columns.Add("Address", "Address");
                 usersGridList.Columns.Add("Phone", "Phone");
                 usersGridList.Columns.Add("Email", "Email");
+                usersGridList.Columns.Add("Profile Picture", "Profile Picture");
 
                 foreach (User user in res.Results)
                 {
@@ -73,7 +81,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                         user.Member.LastName,
                         user.Member.Address,
                         user.Member.Phone,
-                        user.Member.Email
+                        user.Member.Email,
+                        user.ProfilePicture
                         );
                 }
 
@@ -123,6 +132,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 string Address = textAddress.Text;
                 string Phone = textPhone.Text;
                 string Email = textEmail.Text;
+                string ProfilePicture = txtProfile.Text;
 
                 ControllerModifyData<User> res = await AdminController.CreateUser(
                     Username,
@@ -132,11 +142,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Address,
                     Phone,
                     selectedRoleId,
-                    Email
+                    Email,
+                    ProfilePicture
                     );
 
                 if (res.IsSuccess)
                 {
+                    defaultPreview();
+
                     cmbRole.SelectedIndex = 0;
                     textUserID.Text = "";
                     textUsername.Text = "";
@@ -146,6 +159,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     textAddress.Text = "";
                     textPhone.Text = "";
                     textEmail.Text = "";
+                    txtProfile.Text = "";
+                    pictureBox1.Image = null;
 
                     LoadUsers();
                     adminDashboard.LoadUsers();
@@ -174,6 +189,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             string Address = textAddress.Text;
             string Phone = textPhone.Text;
             string Email = textEmail.Text;
+            string ProfilePicture = txtProfile.Text;
 
             // show password confirmation dialog
             PasswordProtected passProtected = new(this);
@@ -189,13 +205,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Address,
                     Phone,
                     this.adminPassword,
-                    Email
+                    Email,
+                    ProfilePicture
                     );
 
                 this.adminPassword = "";
 
                 if (res.IsSuccess)
                 {
+                    defaultPreview();
+
                     cmbRole.SelectedIndex = 0;
                     textUserID.Text = "";
                     textUsername.Text = "";
@@ -205,6 +224,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     textAddress.Text = "";
                     textPhone.Text = "";
                     textEmail.Text = "";
+                    txtProfile.Text = "";
+                    pictureBox1.Image = null;
 
                     LoadUsers();
                     adminDashboard.LoadUsers();
@@ -240,9 +261,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 textAddress.Text = row.Cells["Address"].Value.ToString();
                 textPhone.Text = row.Cells["Phone"].Value.ToString();
                 textEmail.Text = row.Cells["Email"].Value.ToString();
+                txtProfile.Text = row.Cells["Profile Picture"].Value.ToString();
 
                 // disable role
                 cmbRole.Enabled = false;
+                textUserID.Enabled = false;
             }
         }
 
@@ -306,15 +329,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 panel2.Controls.Add(new UserContainer(new User
                 {
                     Username = textUsername.Text,
+                    ProfilePicture = txtProfile.Text,
                     Member = new Member
                     {
                         FirstName = textFirstName.Text,
                         LastName = textLastName.Text
                     },
-                    Role =
-                {
-                    Name = cmbRole.Text
-                }
+                    Role = new Role
+                    {
+                        Name = cmbRole.Text
+                    }
                 }));
             }
 
@@ -331,6 +355,25 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 txtProfile.Text = imagePath;
                 pictureBox1.Image = Image.FromFile(imagePath);
             }
+        }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            cmbRole.SelectedIndex = 0;
+            textUserID.Text = "";
+            textUsername.Text = "";
+            textPassword.Text = "";
+            textFirstName.Text = "";
+            textLastName.Text = "";
+            textAddress.Text = "";
+            textPhone.Text = "";
+            textEmail.Text = "";
+            txtProfile.Text = "";
+            pictureBox1.Image = null;
+
+            defaultPreview();
+
+            cmbRole.Enabled = true;
         }
     }
 }
