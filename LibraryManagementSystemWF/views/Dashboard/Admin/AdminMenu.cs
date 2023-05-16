@@ -320,5 +320,17 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
             isInitialized = false;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string imagePath = openFileDialog.FileName;
+                txtProfile.Text = imagePath;
+                pictureBox1.Image = Image.FromFile(imagePath);
+            }
+        }
     }
 }

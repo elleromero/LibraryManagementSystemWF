@@ -97,5 +97,29 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             new AdminMenu(this).Show();
         }
+
+        private void prevLastBtn_Click(object sender, EventArgs e)
+        {
+            page = 1;
+            LoadUsers();
+        }
+
+        private void nextLastBtn_Click(object sender, EventArgs e)
+        {
+            page = maxPage;
+            LoadUsers();
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            page += 1;
+            LoadUsers();
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            page -= 1;
+            LoadUsers();
+        }
     }
 }

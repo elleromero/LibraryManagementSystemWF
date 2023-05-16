@@ -21,7 +21,8 @@ namespace LibraryManagementSystemWF.controllers
             string address,
             string phone,
             int roleId,
-            string email = ""
+            string email = "",
+            string profilePicture = ""
             )
         {
             ControllerModifyData<User> returnData = new()
@@ -60,7 +61,7 @@ namespace LibraryManagementSystemWF.controllers
                 "Password is too short"
                 );
 
-            // register admin if theres no error
+            // register user if theres no error
             if (errors.Count == 0)
             {
                 AdminDAO adminDao = new();
@@ -68,6 +69,7 @@ namespace LibraryManagementSystemWF.controllers
                 {
                     Username = username,
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
+                    ProfilePicture = profilePicture,
                     Member = new Member
                     {
                         FirstName = firstName,
@@ -102,7 +104,8 @@ namespace LibraryManagementSystemWF.controllers
             string address,
             string phone,
             string adminPassword,
-            string email = ""
+            string email = "",
+            string profilePicture = ""
             )
         {
             ControllerModifyData<User> returnData = new()
@@ -159,6 +162,7 @@ namespace LibraryManagementSystemWF.controllers
                     ID = new Guid(userId),
                     Username = username,
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
+                    ProfilePicture = profilePicture,
                     Member = new Member
                     {
                         FirstName = firstName,

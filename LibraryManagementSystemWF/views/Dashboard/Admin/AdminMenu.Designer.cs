@@ -58,7 +58,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtCover = new System.Windows.Forms.TextBox();
+            this.txtProfile = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridList)).BeginInit();
@@ -83,6 +83,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 380);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(155, 155);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 42;
             this.pictureBox1.TabStop = false;
             // 
@@ -429,6 +430,7 @@
             this.button3.TabIndex = 41;
             this.button3.Text = "find";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label11
             // 
@@ -443,17 +445,17 @@
             this.label11.Text = "Profile Picture";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtCover
+            // txtProfile
             // 
-            this.txtCover.Enabled = false;
-            this.txtCover.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtCover.Location = new System.Drawing.Point(804, 380);
-            this.txtCover.Name = "txtCover";
-            this.txtCover.PlaceholderText = "C://Images/profile.png";
-            this.txtCover.ReadOnly = true;
-            this.txtCover.Size = new System.Drawing.Size(222, 29);
-            this.txtCover.TabIndex = 39;
-            this.txtCover.TextChanged += new System.EventHandler(this.text_TextChanged);
+            this.txtProfile.Enabled = false;
+            this.txtProfile.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtProfile.Location = new System.Drawing.Point(804, 380);
+            this.txtProfile.Name = "txtProfile";
+            this.txtProfile.PlaceholderText = "C://Images/profile.png";
+            this.txtProfile.ReadOnly = true;
+            this.txtProfile.Size = new System.Drawing.Size(222, 29);
+            this.txtProfile.TabIndex = 39;
+            this.txtProfile.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // AdminMenu
             // 
@@ -463,7 +465,7 @@
             this.ClientSize = new System.Drawing.Size(1104, 556);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.txtCover);
+            this.Controls.Add(this.txtProfile);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label9);
@@ -528,7 +530,7 @@
         private Label label10;
         private Button button3;
         private Label label11;
-        private TextBox txtCover;
+        private TextBox txtProfile;
         private PictureBox pictureBox1;
     }
 }
