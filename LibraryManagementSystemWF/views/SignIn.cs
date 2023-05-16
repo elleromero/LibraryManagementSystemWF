@@ -1,17 +1,7 @@
 ﻿using LibraryManagementSystemWF.controllers;
-using LibraryManagementSystemWF.Dashboard;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
-using LibraryManagementSystemWF.views.Dashboard;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using LibraryManagementSystemWF.views.Dashboard.Admin;
 
 namespace LibraryManagementSystemWF.views
 {
@@ -45,7 +35,8 @@ namespace LibraryManagementSystemWF.views
                     MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
 
                     // AdminDashboard admin = new AdminDashboard();
-                    AdminDashboardRevamp admin = new(); // ssshhh
+                    // AdminDashboardRevamp admin = new(); // ssshhh
+                    AdminDashboard admin = new();
                     admin.Show();
                     this.Hide();
                 }

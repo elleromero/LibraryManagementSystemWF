@@ -1,6 +1,7 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.views;
+using LibraryManagementSystemWF.views.Dashboard.Admin;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBooks;
 using System;
 using System.Collections.Generic;

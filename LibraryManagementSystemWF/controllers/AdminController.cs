@@ -13,13 +13,14 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class AdminController : BaseController
     {
-        public static async Task<ControllerModifyData<User>> CreateAdmin(
+        public static async Task<ControllerModifyData<User>> CreateUser(
             string username,
             string password,
             string firstName,
             string lastName,
             string address,
             string phone,
+            int roleId,
             string email = ""
             )
         {
@@ -76,7 +77,7 @@ namespace LibraryManagementSystemWF.controllers
                     },
                     Role = new Role
                     {
-                        ID = 1
+                        ID = roleId
                     }
                 });
 
@@ -130,10 +131,6 @@ namespace LibraryManagementSystemWF.controllers
             if (!Validator.IsUsername(username)) errors.Add(
                 "username",
                 "Username should contain only letters, numbers, underscores, or hyphens"
-                );
-            if (!await Validator.IsUsernameUnique(username)) errors.Add(
-                "username",
-                "Username already exists"
                 );
             if (!Validator.IsPassword(password)) errors.Add(
                 "password",
