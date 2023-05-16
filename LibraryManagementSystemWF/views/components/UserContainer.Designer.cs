@@ -46,11 +46,11 @@
             // 
             // titleLbl
             // 
-            this.titleLbl.AutoSize = true;
+            this.titleLbl.AutoEllipsis = true;
             this.titleLbl.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.titleLbl.Location = new System.Drawing.Point(68, 77);
             this.titleLbl.Name = "titleLbl";
-            this.titleLbl.Size = new System.Drawing.Size(135, 20);
+            this.titleLbl.Size = new System.Drawing.Size(200, 20);
             this.titleLbl.TabIndex = 1;
             this.titleLbl.Text = "John Doe (admin)";
             this.titleLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
