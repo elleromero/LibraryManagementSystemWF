@@ -24,8 +24,8 @@ namespace LibraryManagementSystemWF.dao
             string declareQuery = "DECLARE @member_id UNIQUEIDENTIFIER; SET @member_id = NEWID();";
             string memberQuery = "INSERT INTO members (first_name, last_name, address, phone, email, member_id) " +
                 $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', '{model.Member.Address}', '{model.Member.Phone}', '{model.Member.Email}', @member_id);";
-            string userQuery = "INSERT INTO users (member_id, role_id, username, password_hash) " +
-                $"VALUES (@member_id, {model.Role.ID}, '{model.Username}', '{model.PasswordHash}');";
+            string userQuery = "INSERT INTO users (member_id, role_id, username, password_hash, profile_picture) " +
+                $"VALUES (@member_id, {model.Role.ID}, '{model.Username}', '{model.PasswordHash}', '{model.ProfilePicture}');";
             string selectQuery = "SELECT * FROM members m JOIN users u ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE u.member_id = @member_id;";
             string query = $"{declareQuery} {memberQuery} {userQuery} {selectQuery}";
 
@@ -114,6 +114,7 @@ namespace LibraryManagementSystemWF.dao
                 ID = reader.GetGuid(reader.GetOrdinal("user_id")),
                 Username = reader.GetString(reader.GetOrdinal("username")),
                 PasswordHash = reader.GetString(reader.GetOrdinal("password_hash")),
+                ProfilePicture = reader.GetString(reader.GetOrdinal("profile_picture")),
                 Role = new Role
                 {
                     ID = reader.GetInt32(reader.GetOrdinal("role_id")),

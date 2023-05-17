@@ -12,8 +12,9 @@ namespace LibraryManagementSystemWF.services
         // You can customize the values of each variable as much as you like.
         private const string
             DB_NAME = "DB_LMS",
-            CONN_BASE = "Data Source = DESKTOP-SL438A7\\SQLEXPRESS;Integrated Security=true;",
-            CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}";
+            CONN_BASE = "Data Source = DESKTOP-PDLDGGJ\\SQLEXPRESS;Integrated Security=true;",
+            CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}",
+            VERSION = "v.2.0.1 Frappe. Candidate Release (May 17, 2023)";
                            
         public static string GetDBName()
         {
@@ -28,6 +29,11 @@ namespace LibraryManagementSystemWF.services
         public static string GetConnStr()
         {
             return CONN_STR;
+        }
+
+        public static string GetVersion()
+        {
+            return VERSION;
         }
     }
 }

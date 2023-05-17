@@ -14,10 +14,13 @@ namespace LibraryManagementSystemWF.views.components
     public partial class BookContainer : UserControl
     {
         private Book book = new();
+        private bool isPreview;
 
-        public BookContainer(Book book)
+        public BookContainer(Book book, bool isPreview = false)
         {
             InitializeComponent();
+
+            this.isPreview = isPreview;
             this.book = book;
             new ToolTip().SetToolTip(titleLbl, book.Title);
             titleLbl.Text = book.Title;
@@ -28,18 +31,21 @@ namespace LibraryManagementSystemWF.views.components
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e)
         {
-            topPanel.Visible = false;
+            if (!isPreview) topPanel.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Feature not yet implemented!");
+            if (!isPreview) MessageBox.Show("Feature not yet implemented!");
         }
 
         private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
-            topPanel.Visible = true;
-            topPanel.BringToFront();
+            if (!isPreview)
+            {
+                topPanel.Visible = true;
+                topPanel.BringToFront();
+            }
         }
     }
 }

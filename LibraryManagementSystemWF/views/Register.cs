@@ -35,9 +35,10 @@ namespace LibraryManagementSystemWF.views
             string address = txtAddress.Text.Trim();
             string phone = txtPhone.Text.Trim();
             string email = txtEmail.Text.Trim();
+            string profile = txtProfile.Text;
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
-            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email);
+            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email, profile);
 
             if (res.IsSuccess)
             {
@@ -59,6 +60,18 @@ namespace LibraryManagementSystemWF.views
 
                 MessageBox.Show(errors);
 
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string imagePath = openFileDialog.FileName;
+                txtProfile.Text = imagePath;
+                pictureBox1.Image = Image.FromFile(imagePath);
             }
         }
     }

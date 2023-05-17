@@ -2,6 +2,7 @@
 using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.views.components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,11 +23,28 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         private List<Genre> genresList = new List<Genre>();
         private List<Book> booksList = new List<Book>();
         private Ctrlbooksrevamp ctrlbookRevamp = new();
+        private bool isInitialized = true;
 
         public void Show(Ctrlbooksrevamp parentForm)
         {
             this.ctrlbookRevamp = parentForm;
             base.Show();
+        }
+
+        private void defaultPreview()
+        {
+            isInitialized = true;
+
+            // load default preview
+            panel2.Controls.Clear();
+            panel2.Controls.Add(new BookContainer(new Book
+            {
+                Cover = "",
+                Author = "J. K. Rowling",
+                Title = "Harry Potter"
+            }, true));
+
+            isInitialized = false;
         }
 
         public async void LoadBooks()
@@ -125,11 +143,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             LoadBooks();
             LoadGenres();
 
+            defaultPreview();
         }
 
 
 
-        private async void button1_Click_1(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             if (cmbGenre.SelectedItem != null)
             {
@@ -161,6 +180,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                     LoadBooks();
                     ctrlbookRevamp.LoadBooks();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
@@ -214,6 +234,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                     LoadBooks();
                     ctrlbookRevamp.LoadBooks();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
@@ -257,6 +278,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                                 LoadBooks();
                                 ctrlbookRevamp.LoadBooks();
+                                clearBtn.PerformClick();
                             }
                             else
                             {
@@ -315,7 +337,49 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 txtISBN.Text = row.Cells["ISBN"].Value.ToString();
                 txtCover.Text = row.Cells["Cover"].Value.ToString();
                 txtSynopsis.Text = row.Cells["Sypnosis"].Value.ToString();
+
+                cmbGenre.Text = row.Cells["Genre"].Value.ToString();
+
+                // update image
+                if (File.Exists(txtCover.Text))
+                {
+                    coverImg.Image = Image.FromFile(txtCover.Text);
+                }
+                else coverImg.Image = null;
             }
+        }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            cmbGenre.SelectedIndex = 0;
+            textBookID.Text = "";
+            txtTitle.Text = "";
+            txtAuthor.Text = "";
+            txtPublisher.Text = "";
+            dtpPublicationDate.Value = DateTime.Now;
+            txtISBN.Text = "";
+            txtCover.Text = "";
+            txtSynopsis.Text = "";
+            coverImg.Image = null;
+
+            defaultPreview();
+        }
+
+        private void txtTitle_TextChanged(object sender, EventArgs e)
+        {
+            if (!isInitialized)
+            {
+                // refresh preview
+                panel2.Controls.Clear();
+                panel2.Controls.Add(new BookContainer(new Book
+                {
+                    Cover = txtCover.Text,
+                    Author = txtAuthor.Text,
+                    Title = txtTitle.Text
+                }, true));
+            }
+
+            isInitialized = false;
         }
     }
 }

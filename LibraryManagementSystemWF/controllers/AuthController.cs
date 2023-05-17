@@ -21,7 +21,8 @@ namespace LibraryManagementSystemWF.controllers
             string lastName,
             string address,
             string phone,
-            string email = ""
+            string email = "",
+            string profilePicture = ""
             ) {
             ControllerModifyData<User> returnData = new()
             {
@@ -57,6 +58,7 @@ namespace LibraryManagementSystemWF.controllers
                 {
                     Username = username,
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
+                    ProfilePicture = profilePicture,
                     Member = new Member
                     {
                         FirstName = firstName,
