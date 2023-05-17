@@ -127,9 +127,9 @@
             this.titleLbl.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.titleLbl.Location = new System.Drawing.Point(12, 50);
             this.titleLbl.Name = "titleLbl";
-            this.titleLbl.Size = new System.Drawing.Size(205, 30);
+            this.titleLbl.Size = new System.Drawing.Size(114, 30);
             this.titleLbl.TabIndex = 11;
-            this.titleLbl.Text = "Good Morning, Elle";
+            this.titleLbl.Text = "Greetings!";
             // 
             // flowLayoutPanel1
             // 
