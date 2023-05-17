@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.models
 {
-    internal class Copy
+    public class Copy
     {
         public Guid ID { get; set; }
         public Book Book { get; set; } = new Book();

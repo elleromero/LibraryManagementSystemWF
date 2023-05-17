@@ -13,14 +13,16 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class AdminController : BaseController
     {
-        public static async Task<ControllerModifyData<User>> CreateAdmin(
+        public static async Task<ControllerModifyData<User>> CreateUser(
             string username,
             string password,
             string firstName,
             string lastName,
             string address,
             string phone,
-            string email = ""
+            int roleId,
+            string email = "",
+            string profilePicture = ""
             )
         {
             ControllerModifyData<User> returnData = new()
@@ -59,7 +61,7 @@ namespace LibraryManagementSystemWF.controllers
                 "Password is too short"
                 );
 
-            // register admin if theres no error
+            // register user if theres no error
             if (errors.Count == 0)
             {
                 AdminDAO adminDao = new();
@@ -67,6 +69,7 @@ namespace LibraryManagementSystemWF.controllers
                 {
                     Username = username,
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
+                    ProfilePicture = profilePicture,
                     Member = new Member
                     {
                         FirstName = firstName,
@@ -76,7 +79,7 @@ namespace LibraryManagementSystemWF.controllers
                     },
                     Role = new Role
                     {
-                        ID = 1
+                        ID = roleId
                     }
                 });
 
@@ -101,7 +104,8 @@ namespace LibraryManagementSystemWF.controllers
             string address,
             string phone,
             string adminPassword,
-            string email = ""
+            string email = "",
+            string profilePicture = ""
             )
         {
             ControllerModifyData<User> returnData = new()
@@ -131,10 +135,6 @@ namespace LibraryManagementSystemWF.controllers
                 "username",
                 "Username should contain only letters, numbers, underscores, or hyphens"
                 );
-            if (!await Validator.IsUsernameUnique(username)) errors.Add(
-                "username",
-                "Username already exists"
-                );
             if (!Validator.IsPassword(password)) errors.Add(
                 "password",
                 "Password is too short"
@@ -162,6 +162,7 @@ namespace LibraryManagementSystemWF.controllers
                     ID = new Guid(userId),
                     Username = username,
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
+                    ProfilePicture = profilePicture,
                     Member = new Member
                     {
                         FirstName = firstName,

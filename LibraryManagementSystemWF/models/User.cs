@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.models
 {
-    internal class User
+    public class User
     {
         public Guid ID { get; set; }
         public string Username { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
+        public string ProfilePicture { get; set; } = string.Empty;
 
         // Foreign keys
         public Role Role { get; set; } = new Role();

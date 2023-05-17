@@ -19,6 +19,7 @@ CREATE TABLE users (
 	member_id UNIQUEIDENTIFIER,
 	username VARCHAR(20) NOT NULL,
     password_hash VARCHAR(500) NOT NULL,
+	profile_picture VARCHAR(500) NOT NULL,
 	FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE,
 	FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 )
@@ -42,7 +43,7 @@ CREATE TABLE books (
 	title VARCHAR(100) NOT NULL,
 	sypnosis VARCHAR(1500) NOT NULL,
 	author VARCHAR(40) NOT NULL,
-	cover VARCHAR(200) NOT NULL,
+	cover VARCHAR(500) NOT NULL,
 	publisher VARCHAR(40) NOT NULL,
 	publication_date DATETIME2 NOT NULL,
 	isbn VARCHAR(100) NOT NULL,
@@ -72,7 +73,8 @@ CREATE TABLE loans (
 
 INSERT INTO roles (name, has_access) VALUES 
 ('ADMINISTRATOR', 1),
-('USER', 0);
+('USER', 0),
+('LIBRARIAN', 1);
 
 INSERT INTO statuses (name, description, is_available) VALUES 
 ('AVAILABLE', 'The book is currently available', 1),
@@ -109,17 +111,18 @@ INSERT INTO members (
 	address,
 	member_id
 ) VALUES (
-	'Lumpiang',
-	'Shanghai',
-	'howtomakelumpia@mail.net',
+	'John',
+	'Doe',
+	'johndoe@mail.co.uk',
 	'+639100813695',
-	'127.0.0.1',
+	'211 Baker St.',
 	@member_id
 );
 
-INSERT INTO users (username, password_hash, role_id, member_id) VALUES (
+INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
 	'admin',
 	'$argon2id$v=19$m=65536,t=3,p=1$3wKJEyw8CQjpQHN2DjH7qg$uRD8wwKE4DTmjFVgunfEcH+zbdJOzi7n1/03Le70lRo',
+	'',
 	1,
 	@member_id
 );

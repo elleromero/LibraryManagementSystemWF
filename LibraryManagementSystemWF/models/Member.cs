@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.models
 {
-    internal class Member
+    public class Member
     {
         public Guid ID { get; set; }
         public string FirstName { get; set; } = string.Empty;

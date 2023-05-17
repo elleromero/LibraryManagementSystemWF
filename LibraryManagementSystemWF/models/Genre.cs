@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.models
 {
-    internal class Genre
+    public class Genre
     {
         public int ID { get; set; }
         public string? Name { get; set; } = string.Empty;

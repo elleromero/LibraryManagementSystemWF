@@ -2,12 +2,16 @@
 using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.views.components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +22,31 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
     {
         private List<Genre> genresList = new List<Genre>();
         private List<Book> booksList = new List<Book>();
+        private Ctrlbooksrevamp ctrlbookRevamp = new();
+        private bool isInitialized = true;
+
+        public void Show(Ctrlbooksrevamp parentForm)
+        {
+            this.ctrlbookRevamp = parentForm;
+            base.Show();
+        }
+
+        private void defaultPreview()
+        {
+            isInitialized = true;
+
+            // load default preview
+            panel2.Controls.Clear();
+            panel2.Controls.Add(new BookContainer(new Book
+            {
+                Cover = "",
+                Author = "J. K. Rowling",
+                Title = "Harry Potter"
+            }, true));
+
+            isInitialized = false;
+        }
+
         public async void LoadBooks()
         {
 
@@ -53,9 +82,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                         book.ISBN,
                         book.Cover
                         );
-                    
+
                 }
-                
+
             }
             else
             {
@@ -113,12 +142,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             LoadBooks();
             LoadGenres();
- 
+
+            defaultPreview();
         }
 
 
 
-        private async void button1_Click_1(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             if (cmbGenre.SelectedItem != null)
             {
@@ -137,17 +167,20 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 if (result.IsSuccess)
                 {
-                    cmbGenre.SelectedIndex = -1;
-                    textBookID.Text = "BOOK ID*";
-                    txtTitle.Text = "TITLE*";
-                    txtAuthor.Text = "AUTHOR*";
-                    txtPublisher.Text = "PUBLISHER*";
+                    cmbGenre.SelectedIndex = 0;
+                    textBookID.Text = "";
+                    txtTitle.Text = "";
+                    txtAuthor.Text = "";
+                    txtPublisher.Text = "";
                     dtpPublicationDate.Value = DateTime.Now;
-                    txtISBN.Text = "ISBN*";
-                    txtCover.Text = "COVER*";
-                    txtSynopsis.Text = "SYPNOSIS*";
+                    txtISBN.Text = "";
+                    txtCover.Text = "";
+                    txtSynopsis.Text = "";
+                    coverImg.Image = null;
 
                     LoadBooks();
+                    ctrlbookRevamp.LoadBooks();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
@@ -188,7 +221,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 if (result.IsSuccess)
                 {
-                    cmbGenre.SelectedIndex = -1;
+                    cmbGenre.SelectedIndex = 0;
                     textBookID.Text = "";
                     txtTitle.Text = "";
                     txtAuthor.Text = "";
@@ -197,8 +230,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     txtISBN.Text = "";
                     txtCover.Text = "";
                     txtSynopsis.Text = "";
+                    coverImg.Image = null;
 
                     LoadBooks();
+                    ctrlbookRevamp.LoadBooks();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
@@ -241,6 +277,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                                 booksList.RemoveAt(selectedRow.Index);
 
                                 LoadBooks();
+                                ctrlbookRevamp.LoadBooks();
+                                clearBtn.PerformClick();
                             }
                             else
                             {
@@ -261,16 +299,90 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
         }
 
-        private  void btnBack_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
 
-            Ctrlbooks ctrlbooks =  new Ctrlbooks();
+            Ctrlbooks ctrlbooks = new Ctrlbooks();
             ctrlbooks.Show();
             this.Hide();
 
         }
-    }
-    }
 
-    
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string imagePath = openFileDialog.FileName;
+                txtCover.Text = imagePath;
+                coverImg.Image = Image.FromFile(imagePath);
+            }
+        }
+
+
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                // Set the values of the text boxes to the values in the clicked row
+                textBookID.Text = row.Cells["ID"].Value.ToString();
+                txtTitle.Text = row.Cells["Title"].Value.ToString();
+                txtAuthor.Text = row.Cells["Author"].Value.ToString();
+                txtPublisher.Text = row.Cells["Publisher"].Value.ToString();
+                dtpPublicationDate.Value = DateTime.Parse(row.Cells["PubDate"].Value.ToString());
+                txtISBN.Text = row.Cells["ISBN"].Value.ToString();
+                txtCover.Text = row.Cells["Cover"].Value.ToString();
+                txtSynopsis.Text = row.Cells["Sypnosis"].Value.ToString();
+
+                cmbGenre.Text = row.Cells["Genre"].Value.ToString();
+
+                // update image
+                if (File.Exists(txtCover.Text))
+                {
+                    coverImg.Image = Image.FromFile(txtCover.Text);
+                }
+                else coverImg.Image = null;
+            }
+        }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            cmbGenre.SelectedIndex = 0;
+            textBookID.Text = "";
+            txtTitle.Text = "";
+            txtAuthor.Text = "";
+            txtPublisher.Text = "";
+            dtpPublicationDate.Value = DateTime.Now;
+            txtISBN.Text = "";
+            txtCover.Text = "";
+            txtSynopsis.Text = "";
+            coverImg.Image = null;
+
+            defaultPreview();
+        }
+
+        private void txtTitle_TextChanged(object sender, EventArgs e)
+        {
+            if (!isInitialized)
+            {
+                // refresh preview
+                panel2.Controls.Clear();
+                panel2.Controls.Add(new BookContainer(new Book
+                {
+                    Cover = txtCover.Text,
+                    Author = txtAuthor.Text,
+                    Title = txtTitle.Text
+                }, true));
+            }
+
+            isInitialized = false;
+        }
+    }
+}
+
+
 
