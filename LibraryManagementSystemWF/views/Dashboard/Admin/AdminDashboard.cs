@@ -1,6 +1,7 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl;
 using System;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace LibraryManagementSystemWF.views.Dashboard.Admin
 {
@@ -30,6 +32,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             versionlbl.Text = EnvService.GetVersion();
 
             LoadUsers();
+
+            // init greeting
+            User? user = AuthService.getSignedUser();
+
+            if (user != null)
+            {
+                titleLbl.Text = GreetingGenerator.GenerateGreeting(user.Member.FirstName, DateTime.Now.ToString());
+            }
 
             // run clock
             // Start the timer
@@ -83,7 +93,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private void Timer_Tick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
-            timeLbl.Text = now.ToString("MMM. d yyyy. dddd. hh:mm:ss tt");
+            string time = now.ToString("MMM. d yyyy. dddd. hh:mm:ss tt");
+            timeLbl.Text = time;
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
