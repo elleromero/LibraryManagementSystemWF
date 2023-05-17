@@ -13,6 +13,7 @@ namespace LibraryManagementSystemWF.views.components
             InitializeComponent();
             this.user = user;
 
+            new ToolTip().SetToolTip(titleLbl, $"{user.Member.FirstName} {user.Member.LastName} ({user.Username})");
             panel1.BackColor = ColorTranslator.FromHtml(PastelColorGenerator.GeneratePastelColor(user.Username));
             titleLbl.Text = $"{user.Member.FirstName} {user.Member.LastName} ({user.Username})";
             subtitleLbl.Text = user.Role.Name;
