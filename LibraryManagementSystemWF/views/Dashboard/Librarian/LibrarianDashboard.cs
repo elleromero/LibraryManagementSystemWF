@@ -25,6 +25,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         {
             InitializeComponent();
 
+            versionlbl.Text = EnvService.GetVersion();
+
             mainPanel.Controls.Add(dashboard);
             mainPanel.Controls.Add(books);
 

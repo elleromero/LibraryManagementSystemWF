@@ -44,6 +44,7 @@
             this.emailLbl = new System.Windows.Forms.Label();
             this.nameLbl = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.versionlbl = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.topbar.SuspendLayout();
             this.sidebar.SuspendLayout();
@@ -93,11 +94,10 @@
             // 
             this.timerLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.timerLbl.AutoSize = true;
             this.timerLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timerLbl.Location = new System.Drawing.Point(489, 12);
+            this.timerLbl.Location = new System.Drawing.Point(336, 12);
             this.timerLbl.Name = "timerLbl";
-            this.timerLbl.Size = new System.Drawing.Size(209, 15);
+            this.timerLbl.Size = new System.Drawing.Size(362, 15);
             this.timerLbl.TabIndex = 1;
             this.timerLbl.Text = "Sept. 14 2023. Monday. 11:00:34 AM";
             this.timerLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -118,6 +118,7 @@
             // sidebar
             // 
             this.sidebar.BackColor = System.Drawing.Color.White;
+            this.sidebar.Controls.Add(this.versionlbl);
             this.sidebar.Controls.Add(this.idLbl);
             this.sidebar.Controls.Add(this.panel3);
             this.sidebar.Controls.Add(this.button1);
@@ -151,7 +152,7 @@
             this.panel3.Controls.Add(this.button2);
             this.panel3.Location = new System.Drawing.Point(-45, 75);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(333, 417);
+            this.panel3.Size = new System.Drawing.Size(333, 402);
             this.panel3.TabIndex = 0;
             // 
             // button3
@@ -253,7 +254,16 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // AdminDashboardRevamp
+            // versionlbl
+            // 
+            this.versionlbl.AutoSize = true;
+            this.versionlbl.Location = new System.Drawing.Point(12, 480);
+            this.versionlbl.Name = "versionlbl";
+            this.versionlbl.Size = new System.Drawing.Size(80, 15);
+            this.versionlbl.TabIndex = 23;
+            this.versionlbl.Text = "Version Name";
+            // 
+            // LibrarianDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -261,13 +271,14 @@
             this.ClientSize = new System.Drawing.Size(998, 558);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "AdminDashboardRevamp";
+            this.Name = "LibrarianDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdminDashboardRevamp";
             this.panel1.ResumeLayout(false);
             this.topbar.ResumeLayout(false);
             this.topbar.PerformLayout();
             this.sidebar.ResumeLayout(false);
+            this.sidebar.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -293,5 +304,6 @@
         private Button button3;
         private Button button2;
         private Label idLbl;
+        private Label versionlbl;
     }
 }

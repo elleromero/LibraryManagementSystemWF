@@ -62,11 +62,10 @@
             // 
             this.timeLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.timeLbl.AutoSize = true;
             this.timeLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timeLbl.Location = new System.Drawing.Point(961, 14);
+            this.timeLbl.Location = new System.Drawing.Point(858, 14);
             this.timeLbl.Name = "timeLbl";
-            this.timeLbl.Size = new System.Drawing.Size(209, 15);
+            this.timeLbl.Size = new System.Drawing.Size(312, 15);
             this.timeLbl.TabIndex = 2;
             this.timeLbl.Text = "Sept. 14 2023. Monday. 11:00:34 AM";
             this.timeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
