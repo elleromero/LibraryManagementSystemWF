@@ -381,6 +381,50 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             isInitialized = false;
         }
+
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    // Get the selected book's ID
+                    string bookId = dataGridView1.SelectedRows[0].Cells["ID"]?.Value?.ToString();
+
+                    if (bookId != null)
+                    {
+                        int copies = Convert.ToInt32(numCopies.Value);
+
+                        // Call the method to create copies of the book
+                        ControllerModifyData<Copy> result = await CopyController.CreateCopies(bookId, copies);
+
+                        if (result.IsSuccess)
+                        {
+                            MessageBox.Show($"{copies} copies of the book have been created successfully.");
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                MessageBox.Show(error.Value);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Unable to retrieve the book ID. Please try again.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred while creating copies: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a book to create copies.");
+            }
+        }
     }
 }
 
