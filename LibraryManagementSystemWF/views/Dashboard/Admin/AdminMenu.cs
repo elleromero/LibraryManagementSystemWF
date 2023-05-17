@@ -164,6 +164,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                     LoadUsers();
                     adminDashboard.LoadUsers();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
@@ -229,9 +230,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                     LoadUsers();
                     adminDashboard.LoadUsers();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
+                    MessageBox.Show("ERROR");
                     foreach (var error in res.Errors)
                     {
                         MessageBox.Show(error.Value);
@@ -262,6 +265,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 textPhone.Text = row.Cells["Phone"].Value.ToString();
                 textEmail.Text = row.Cells["Email"].Value.ToString();
                 txtProfile.Text = row.Cells["Profile Picture"].Value.ToString();
+
+                // update image
+                if (File.Exists(txtProfile.Text))
+                {
+                    pictureBox1.Image = Image.FromFile(txtProfile.Text);
+                }
+                else pictureBox1.Image = null;
 
                 // disable role
                 cmbRole.Enabled = false;
@@ -297,6 +307,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                                 LoadUsers();
                                 adminDashboard.LoadUsers();
+                                clearBtn.PerformClick();
                             }
                             else
                             {
@@ -370,10 +381,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             textEmail.Text = "";
             txtProfile.Text = "";
             pictureBox1.Image = null;
+            cmbRole.Enabled = true;
 
             defaultPreview();
-
-            cmbRole.Enabled = true;
         }
     }
 }

@@ -180,7 +180,7 @@ namespace LibraryManagementSystemWF.dao
             string declareQuery = "DECLARE @user table (member_id UNIQUEIDENTIFIER);";
             string updateUserQuery = "UPDATE users SET " +
                 $"username = '{model.Username}', " +
-                $"password_hash = '{model.PasswordHash}' " +
+                $"password_hash = '{model.PasswordHash}', " +
                 $"profile_picture = '{model.ProfilePicture}' " +
                 "OUTPUT inserted.member_id INTO @user(member_id) " +
                 $"WHERE user_id = '{model.ID}';";

@@ -180,6 +180,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                     LoadBooks();
                     ctrlbookRevamp.LoadBooks();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
@@ -233,6 +234,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                     LoadBooks();
                     ctrlbookRevamp.LoadBooks();
+                    clearBtn.PerformClick();
                 }
                 else
                 {
@@ -276,6 +278,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                                 LoadBooks();
                                 ctrlbookRevamp.LoadBooks();
+                                clearBtn.PerformClick();
                             }
                             else
                             {

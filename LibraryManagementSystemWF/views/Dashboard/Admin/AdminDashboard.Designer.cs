@@ -55,7 +55,7 @@
             this.topbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.topbar.Location = new System.Drawing.Point(0, 0);
             this.topbar.Name = "topbar";
-            this.topbar.Size = new System.Drawing.Size(1102, 38);
+            this.topbar.Size = new System.Drawing.Size(1182, 38);
             this.topbar.TabIndex = 2;
             // 
             // timeLbl
@@ -64,7 +64,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.timeLbl.AutoSize = true;
             this.timeLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timeLbl.Location = new System.Drawing.Point(881, 14);
+            this.timeLbl.Location = new System.Drawing.Point(961, 14);
             this.timeLbl.Name = "timeLbl";
             this.timeLbl.Size = new System.Drawing.Size(209, 15);
             this.timeLbl.TabIndex = 2;
@@ -77,7 +77,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.timerLbl.AutoSize = true;
             this.timerLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timerLbl.Location = new System.Drawing.Point(1391, 12);
+            this.timerLbl.Location = new System.Drawing.Point(1471, 12);
             this.timerLbl.Name = "timerLbl";
             this.timerLbl.Size = new System.Drawing.Size(209, 15);
             this.timerLbl.TabIndex = 1;
@@ -103,7 +103,7 @@
             this.button11.FlatAppearance.BorderSize = 0;
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button11.Location = new System.Drawing.Point(1000, 56);
+            this.button11.Location = new System.Drawing.Point(1080, 56);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(90, 27);
             this.button11.TabIndex = 13;
@@ -138,14 +138,14 @@
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 115);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1075, 434);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1155, 434);
             this.flowLayoutPanel1.TabIndex = 14;
             // 
             // pageLbl
             // 
             this.pageLbl.AutoSize = true;
             this.pageLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.pageLbl.Location = new System.Drawing.Point(536, 571);
+            this.pageLbl.Location = new System.Drawing.Point(575, 571);
             this.pageLbl.Name = "pageLbl";
             this.pageLbl.Size = new System.Drawing.Size(30, 17);
             this.pageLbl.TabIndex = 19;
@@ -157,7 +157,7 @@
             this.nextLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextLastBtn.Location = new System.Drawing.Point(605, 567);
+            this.nextLastBtn.Location = new System.Drawing.Point(644, 567);
             this.nextLastBtn.Name = "nextLastBtn";
             this.nextLastBtn.Size = new System.Drawing.Size(42, 27);
             this.nextLastBtn.TabIndex = 18;
@@ -170,7 +170,7 @@
             this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextBtn.Location = new System.Drawing.Point(572, 567);
+            this.nextBtn.Location = new System.Drawing.Point(611, 567);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.Size = new System.Drawing.Size(27, 27);
             this.nextBtn.TabIndex = 17;
@@ -183,7 +183,7 @@
             this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevBtn.Location = new System.Drawing.Point(503, 567);
+            this.prevBtn.Location = new System.Drawing.Point(542, 567);
             this.prevBtn.Name = "prevBtn";
             this.prevBtn.Size = new System.Drawing.Size(27, 27);
             this.prevBtn.TabIndex = 16;
@@ -196,7 +196,7 @@
             this.prevLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevLastBtn.Location = new System.Drawing.Point(453, 567);
+            this.prevLastBtn.Location = new System.Drawing.Point(492, 567);
             this.prevLastBtn.Name = "prevLastBtn";
             this.prevLastBtn.Size = new System.Drawing.Size(42, 27);
             this.prevLastBtn.TabIndex = 15;
@@ -208,7 +208,7 @@
             // 
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.LinkColor = System.Drawing.Color.Black;
-            this.linkLabel2.Location = new System.Drawing.Point(1040, 605);
+            this.linkLabel2.Location = new System.Drawing.Point(1120, 605);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(50, 15);
             this.linkLabel2.TabIndex = 21;
@@ -230,7 +230,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1102, 629);
+            this.ClientSize = new System.Drawing.Size(1182, 629);
             this.Controls.Add(this.versionlbl);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.pageLbl);
