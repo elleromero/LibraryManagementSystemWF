@@ -21,6 +21,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private Ctrlbooksrevamp books = new();
         private Ctrlstatus status = new();
         private CtrlGenre genre= new();
+        private CtrlCopies copies = new();
         private User? user;
 
         public LibrarianDashboard()
@@ -33,6 +34,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             mainPanel.Controls.Add(books);
             mainPanel.Controls.Add(status);
             mainPanel.Controls.Add(genre);
+            mainPanel.Controls.Add(copies);
 
             books.Visible = false;
             dashboard.Visible = true;
@@ -74,6 +76,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             dashboard.Visible = true;
             status.Visible = false;
             genre.Visible = false;
+            copies.Visible = false;
             navLbl.Text = "Home";
         }
 
@@ -83,6 +86,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             dashboard.Visible = false;
             status.Visible = false;
             genre.Visible = false;
+            copies.Visible=false;
             navLbl.Text = "Books";
 
         }
@@ -101,6 +105,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             dashboard.Visible = false;
             status.Visible = true;
             genre.Visible = false;
+            copies.Visible = false;
 
         }
 
@@ -110,6 +115,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             dashboard.Visible = false;
             status.Visible = false;
             genre.Visible = true;
+            copies.Visible = false;
+        }
+
+        private void btnCopies_Click(object sender, EventArgs e)
+        {
+            books.Visible = false;
+            dashboard.Visible = false;
+            status.Visible = false;
+            genre.Visible = false;
+            copies.Visible = true;
         }
     }
 }
