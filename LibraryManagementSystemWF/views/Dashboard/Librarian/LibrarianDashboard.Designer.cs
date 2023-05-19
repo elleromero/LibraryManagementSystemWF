@@ -46,6 +46,7 @@
             this.emailLbl = new System.Windows.Forms.Label();
             this.nameLbl = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnCopies = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.topbar.SuspendLayout();
             this.sidebar.SuspendLayout();
@@ -158,6 +159,7 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Controls.Add(this.btnCopies);
             this.panel3.Controls.Add(this.btnGenre);
             this.panel3.Controls.Add(this.button3);
             this.panel3.Controls.Add(this.button2);
@@ -278,6 +280,18 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // btnCopies
+            // 
+            this.btnCopies.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopies.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCopies.Location = new System.Drawing.Point(45, 161);
+            this.btnCopies.Name = "btnCopies";
+            this.btnCopies.Size = new System.Drawing.Size(288, 54);
+            this.btnCopies.TabIndex = 0;
+            this.btnCopies.Text = "Copies";
+            this.btnCopies.UseVisualStyleBackColor = true;
+            this.btnCopies.Click += new System.EventHandler(this.btnCopies_Click);
+            // 
             // LibrarianDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -321,5 +335,6 @@
         private Label idLbl;
         private Label versionlbl;
         private Button btnGenre;
+        private Button btnCopies;
     }
 }
