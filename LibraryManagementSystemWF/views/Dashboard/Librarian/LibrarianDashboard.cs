@@ -19,6 +19,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
     {
         private Ctrldashboard dashboard = new();
         private Ctrlbooksrevamp books = new();
+        private Ctrlstatus status = new();
+        private CtrlGenre genre= new();
         private User? user;
 
         public LibrarianDashboard()
@@ -29,6 +31,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             mainPanel.Controls.Add(dashboard);
             mainPanel.Controls.Add(books);
+            mainPanel.Controls.Add(status);
+            mainPanel.Controls.Add(genre);
 
             books.Visible = false;
             dashboard.Visible = true;
@@ -68,6 +72,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         {
             books.Visible = false;
             dashboard.Visible = true;
+            status.Visible = false;
+            genre.Visible = false;
             navLbl.Text = "Home";
         }
 
@@ -75,6 +81,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         {
             books.Visible = true;
             dashboard.Visible = false;
+            status.Visible = false;
+            genre.Visible = false;
             navLbl.Text = "Books";
 
         }
@@ -85,6 +93,23 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             AuthController.LogOut();
             new SignIn().Show();
             this.Close();
+        }
+
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+            books.Visible = false;
+            dashboard.Visible = false;
+            status.Visible = true;
+            genre.Visible = false;
+
+        }
+
+        private void btnGenre_Click(object sender, EventArgs e)
+        {
+            books.Visible = false;
+            dashboard.Visible = false;
+            status.Visible = false;
+            genre.Visible = true;
         }
     }
 }
