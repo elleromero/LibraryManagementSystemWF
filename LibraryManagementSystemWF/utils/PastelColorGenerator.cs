@@ -8,10 +8,10 @@ namespace LibraryManagementSystemWF.utils
 {
     internal class PastelColorGenerator
     {
-        public static string GeneratePastelColor(string username)
+        public static string GeneratePastelColor(string str)
         {
             // Calculate the hash code for the username using the MurmurHash3 algorithm
-            byte[] usernameBytes = Encoding.UTF8.GetBytes(username);
+            byte[] usernameBytes = Encoding.UTF8.GetBytes(str);
             uint hashCode = MurmurHash3.ComputeHash(usernameBytes);
 
             // Convert the hash code to a positive value

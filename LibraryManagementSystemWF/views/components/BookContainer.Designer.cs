@@ -74,7 +74,6 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "More Info";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // authorLbl
             // 
@@ -99,7 +98,9 @@
             this.titleLbl.TabIndex = 1;
             this.titleLbl.Text = "Book Title";
             this.titleLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.titleLbl.DoubleClick += new System.EventHandler(this.button1_Click);
+            this.titleLbl.Click += new System.EventHandler(this.titleLbl_Click);
+            this.titleLbl.MouseEnter += new System.EventHandler(this.titleLbl_MouseEnter);
+            this.titleLbl.MouseLeave += new System.EventHandler(this.titleLbl_MouseLeave);
             // 
             // pictureBox1
             // 
