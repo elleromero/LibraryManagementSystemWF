@@ -35,8 +35,10 @@
             this.timerLbl = new System.Windows.Forms.Label();
             this.navLbl = new System.Windows.Forms.Label();
             this.sidebar = new System.Windows.Forms.Panel();
+            this.versionlbl = new System.Windows.Forms.Label();
             this.idLbl = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnGenre = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -44,7 +46,7 @@
             this.emailLbl = new System.Windows.Forms.Label();
             this.nameLbl = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.versionlbl = new System.Windows.Forms.Label();
+            this.btnCopies = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.topbar.SuspendLayout();
             this.sidebar.SuspendLayout();
@@ -129,6 +131,15 @@
             this.sidebar.Size = new System.Drawing.Size(288, 558);
             this.sidebar.TabIndex = 0;
             // 
+            // versionlbl
+            // 
+            this.versionlbl.AutoSize = true;
+            this.versionlbl.Location = new System.Drawing.Point(12, 480);
+            this.versionlbl.Name = "versionlbl";
+            this.versionlbl.Size = new System.Drawing.Size(80, 15);
+            this.versionlbl.TabIndex = 23;
+            this.versionlbl.Text = "Version Name";
+            // 
             // idLbl
             // 
             this.idLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -148,12 +159,27 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Controls.Add(this.btnCopies);
+            this.panel3.Controls.Add(this.btnGenre);
             this.panel3.Controls.Add(this.button3);
             this.panel3.Controls.Add(this.button2);
             this.panel3.Location = new System.Drawing.Point(-45, 75);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(333, 402);
             this.panel3.TabIndex = 0;
+            // 
+            // btnGenre
+            // 
+            this.btnGenre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGenre.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnGenre.Location = new System.Drawing.Point(45, 101);
+            this.btnGenre.Name = "btnGenre";
+            this.btnGenre.Size = new System.Drawing.Size(288, 54);
+            this.btnGenre.TabIndex = 0;
+            this.btnGenre.Text = "Genre";
+            this.btnGenre.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnGenre.UseVisualStyleBackColor = true;
+            this.btnGenre.Click += new System.EventHandler(this.btnGenre_Click);
             // 
             // button3
             // 
@@ -254,14 +280,17 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // versionlbl
+            // btnCopies
             // 
-            this.versionlbl.AutoSize = true;
-            this.versionlbl.Location = new System.Drawing.Point(12, 480);
-            this.versionlbl.Name = "versionlbl";
-            this.versionlbl.Size = new System.Drawing.Size(80, 15);
-            this.versionlbl.TabIndex = 23;
-            this.versionlbl.Text = "Version Name";
+            this.btnCopies.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopies.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCopies.Location = new System.Drawing.Point(45, 161);
+            this.btnCopies.Name = "btnCopies";
+            this.btnCopies.Size = new System.Drawing.Size(288, 54);
+            this.btnCopies.TabIndex = 0;
+            this.btnCopies.Text = "Copies";
+            this.btnCopies.UseVisualStyleBackColor = true;
+            this.btnCopies.Click += new System.EventHandler(this.btnCopies_Click);
             // 
             // LibrarianDashboard
             // 
@@ -305,5 +334,7 @@
         private Button button2;
         private Label idLbl;
         private Label versionlbl;
+        private Button btnGenre;
+        private Button btnCopies;
     }
 }

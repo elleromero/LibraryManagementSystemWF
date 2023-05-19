@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
+namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBooks
 {
-    public partial class CtrlEmpty : UserControl
+    public partial class asdasdasd : Form
     {
-        public CtrlEmpty()
+        public asdasdasd()
         {
             InitializeComponent();
         }
