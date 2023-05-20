@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
+            this.SuspendLayout();
             // 
             // Ctrldashboard
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ActiveBorder;
-            Name = "Ctrldashboard";
-            Size = new Size(710, 520);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.Name = "Ctrldashboard";
+            this.Size = new System.Drawing.Size(710, 520);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
