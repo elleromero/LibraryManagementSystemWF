@@ -33,7 +33,7 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // is not admin
-            if (!await AuthGuard.IsAdmin())
+            if (!await AuthGuard.HavePermission("ADMINISTRATOR"))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -116,7 +116,7 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // is not admin
-            if (!await AuthGuard.IsAdmin(true, adminPassword))
+            if (!await AuthGuard.HavePermission("ADMINISTRATOR", true, adminPassword))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -195,7 +195,7 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // is not admin
-            if (!await AuthGuard.IsAdmin())
+            if (!await AuthGuard.HavePermission("ADMINISTRATOR"))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -235,7 +235,7 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // is not admin
-            if (!await AuthGuard.IsAdmin())
+            if (!await AuthGuard.HavePermission("ADMINISTRATOR"))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -270,7 +270,7 @@ namespace LibraryManagementSystemWF.controllers
             };
 
             // is not admin
-            if (!await AuthGuard.IsAdmin(true, password))
+            if (!await AuthGuard.HavePermission("ADMINISTRATOR", true, password))
             {
                 returnResult.Errors.Add("permission", "Forbidden");
 

@@ -36,8 +36,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             mainPanel.Controls.Add(genre);
             mainPanel.Controls.Add(copies);
 
-            books.Visible = false;
+            this.ClearAndHide();
+            button2.BackColor = SystemColors.Control;
             dashboard.Visible = true;
+            navLbl.Text = "Home";
 
             // initialize user info
             user = AuthService.getSignedUser();
@@ -70,23 +72,35 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             timerLbl.Text = now.ToString("MMM. d yyyy. dddd. hh:mm:ss tt");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void ClearAndHide()
         {
+            button2.BackColor = Color.White;
+            button3.BackColor = Color.White;
+            button4.BackColor = Color.White;
+            button5.BackColor = Color.White;
+
             books.Visible = false;
-            dashboard.Visible = true;
+            dashboard.Visible = false;
             status.Visible = false;
             genre.Visible = false;
             copies.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button2.BackColor = SystemColors.Control;
+
+            dashboard.Visible = true;
             navLbl.Text = "Home";
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            this.ClearAndHide();
+            button3.BackColor = SystemColors.Control;
+
             books.Visible = true;
-            dashboard.Visible = false;
-            status.Visible = false;
-            genre.Visible = false;
-            copies.Visible=false;
             navLbl.Text = "Books";
 
         }
@@ -99,32 +113,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.Close();
         }
 
-        private void btnStatus_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            books.Visible = false;
-            dashboard.Visible = false;
-            status.Visible = true;
-            genre.Visible = false;
-            copies.Visible = false;
+            this.ClearAndHide();
+            button4.BackColor = SystemColors.Control;
 
-        }
-
-        private void btnGenre_Click(object sender, EventArgs e)
-        {
-            books.Visible = false;
-            dashboard.Visible = false;
-            status.Visible = false;
             genre.Visible = true;
-            copies.Visible = false;
+            navLbl.Text = "Genres";
         }
 
-        private void btnCopies_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-            books.Visible = false;
-            dashboard.Visible = false;
-            status.Visible = false;
-            genre.Visible = false;
+            this.ClearAndHide();
+            button5.BackColor = SystemColors.Control;
+
             copies.Visible = true;
+            navLbl.Text = "Copies";
         }
     }
 }
