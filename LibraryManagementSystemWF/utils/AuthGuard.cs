@@ -12,46 +12,6 @@ namespace LibraryManagementSystemWF.utils
 {
     internal class AuthGuard
     {
-        public static async Task<bool> IsAdmin(bool isStrict = false, string password = "")
-        {
-            bool isAllowed = false;
-            string? userId = AuthService.getSignedUser()?.ID.ToString();
-
-            string query = "SELECT * FROM users u JOIN roles r ON u.role_id = r.role_id " +
-                $"WHERE r.has_access = 1 AND u.user_id = '{userId}'";
-
-            await SqlClient.ExecuteAsync(async (error, conn) =>
-            {
-                if (string.IsNullOrWhiteSpace(userId) && error != null) return;
-
-                SqlDataReader? reader = null;
-                
-                try
-                {
-                    SqlCommand command = new(query, conn);
-                    reader = await command.ExecuteReaderAsync();
-
-                    if (await reader.ReadAsync())
-                    {
-                        if (isStrict)
-                        {
-                            string passwordHash = reader.GetString(reader.GetOrdinal("password_hash"));
-                            isAllowed = Argon2.Verify(passwordHash, password);
-                        }
-                        else
-                        {
-                            string roleName = reader.GetString(reader.GetOrdinal("name"));
-                            isAllowed = roleName.ToUpper() == "ADMINISTRATOR";
-
-                        }
-                    }
-                }
-                catch { return; }
-                finally { if (reader != null) await reader.CloseAsync(); }
-            });
-
-            return isAllowed;
-        }
 
         public static async Task<bool> HavePermission(string roleName, bool isStrict = false, string password = "")
         {
