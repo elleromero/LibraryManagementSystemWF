@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class LoanController : BaseController
     {
-        public static async Task<ControllerModifyData<Loan>> BorrowBook(string userId, string bookId, DateTime dueDate)
+        public static async Task<ControllerModifyData<Loan>> BorrowBook(string bookId, DateTime dueDate)
         {
             ControllerModifyData<Loan> returnData = new()
             {
@@ -22,13 +23,29 @@ namespace LibraryManagementSystemWF.controllers
             };
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
+            string? userId = AuthService.getSignedUser()?.ID.ToString();
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("USER"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
 
             // validation
-            if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                errors.Add("auth", "Please login");
+            } else
+            {
+                if (await BookGuard.IsPastDue(userId)) errors.Add("book", "You currently have books borrowed past due");
+            }
             if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
             if (dueDate.Date < DateTime.Now.Date) errors.Add("dueDate", "Invalid due date");
             if (!await Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available books");
-            if (await BookGuard.IsPastDue(userId)) errors.Add("book", "You currently have books borrowed past due");
 
             if (errors.Count == 0)
             {
@@ -59,7 +76,7 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
     
-        public static async Task<ControllerModifyData<Loan>> ReturnBook(string userId, string loanId)   
+        public static async Task<ControllerModifyData<Loan>> ReturnBook(string loanId)   
         {
             ControllerModifyData<Loan> returnData = new()
             {
@@ -67,13 +84,24 @@ namespace LibraryManagementSystemWF.controllers
             };
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
+            string? userId = AuthService.getSignedUser()?.ID.ToString();
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("USER"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
 
             // validation
-            if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
             if (string.IsNullOrWhiteSpace(loanId)) errors.Add("loanId", "ID is invalid");
 
             // update if theres no error
-            if (errors.Count == 0)
+            if (errors.Count == 0 && userId != null)
             {
                 LoanDAO loanDao = new();
 
@@ -111,6 +139,16 @@ namespace LibraryManagementSystemWF.controllers
             // validate fields
             if (string.IsNullOrWhiteSpace(id)) errors.Add("id", "ID is invalid");
 
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
             if (errors.Count == 0)
             {
                 LoanDAO loanDao = new();
@@ -128,7 +166,7 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static async Task<ControllerAccessData<Loan>> GetAllLoans(string userId, int page = 1)
+        public static async Task<ControllerAccessData<Loan>> GetAllBorrowedBooks(int page = 1)
         {
             ControllerAccessData<Loan> returnData = new()
             {
@@ -137,12 +175,23 @@ namespace LibraryManagementSystemWF.controllers
             };
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
+            string? userId = AuthService.getSignedUser()?.ID.ToString();
+
+            // is not user
+            if (!await AuthGuard.HavePermission("USER"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
 
             // validate
-            if (string.IsNullOrWhiteSpace(userId)) errors.Add("userId", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
             if (page <= 0) errors.Add("page", "Invalid page");
 
-            if (errors.Count == 0)
+            if (errors.Count == 0 && userId != null)
             {
                 LoanDAO loanDao = new();
                 ReturnResultArr<Loan> result = await loanDao.GetAllLoans(page, new Loan
@@ -152,6 +201,46 @@ namespace LibraryManagementSystemWF.controllers
                         ID = new Guid(userId)
                     }
                 });
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
+
+        public static async Task<ControllerAccessData<Loan>> GetAllLoans(int page = 1)
+        {
+            ControllerAccessData<Loan> returnData = new()
+            {
+                Results = new List<Loan>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+            string? userId = AuthService.getSignedUser()?.ID.ToString();
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
+            // validate
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
+            if (page <= 0) errors.Add("page", "Invalid page");
+
+            if (errors.Count == 0 && userId != null)
+            {
+                LoanDAO loanDao = new();
+                ReturnResultArr<Loan> result = await loanDao.GetAll(page);
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;
