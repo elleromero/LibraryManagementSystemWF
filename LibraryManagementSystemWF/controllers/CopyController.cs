@@ -20,8 +20,8 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -60,6 +60,16 @@ namespace LibraryManagementSystemWF.controllers
             // validate fields
             if (string.IsNullOrWhiteSpace(id)) errors.Add("id", "ID is invalid");
 
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
             if (errors.Count == 0)
             {
                 CopyDAO copyDao = new();
@@ -88,6 +98,16 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             if (page <= 0) errors.Add("page", "Invalid page");
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
 
             if (errors.Count == 0)
             {
@@ -139,8 +159,8 @@ namespace LibraryManagementSystemWF.controllers
                 IsSuccess = false
             };
 
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
                 returnResult.Errors.Add("permission", "Forbidden");
 

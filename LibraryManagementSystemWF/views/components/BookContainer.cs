@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.views.Dashboard.Librarian;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,11 +35,6 @@ namespace LibraryManagementSystemWF.views.components
             if (!isPreview) topPanel.Visible = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!isPreview) MessageBox.Show("Feature not yet implemented!");
-        }
-
         private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
             if (!isPreview)
@@ -46,6 +42,21 @@ namespace LibraryManagementSystemWF.views.components
                 topPanel.Visible = true;
                 topPanel.BringToFront();
             }
+        }
+
+        private void titleLbl_Click(object sender, EventArgs e)
+        {
+            new BookInformation(this.book).Show();
+        }
+
+        private void titleLbl_MouseEnter(object sender, EventArgs e)
+        {
+            titleLbl.ForeColor = Color.Gray;
+        }
+
+        private void titleLbl_MouseLeave(object sender, EventArgs e)
+        {
+            titleLbl.ForeColor = Color.Black;
         }
     }
 }

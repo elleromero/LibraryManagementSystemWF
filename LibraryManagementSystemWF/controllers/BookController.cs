@@ -31,8 +31,8 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -96,8 +96,8 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
                 errors.Add("permission", "Forbidden");
                 returnData.Errors = errors;
@@ -107,7 +107,6 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (!await Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
             if (!await Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
             if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
             if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
@@ -225,8 +224,8 @@ namespace LibraryManagementSystemWF.controllers
                 IsSuccess = false
             };
 
-            // is not admin
-            if (!await AuthGuard.IsAdmin())
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
                 returnResult.Errors.Add("permission", "Forbidden");
 
