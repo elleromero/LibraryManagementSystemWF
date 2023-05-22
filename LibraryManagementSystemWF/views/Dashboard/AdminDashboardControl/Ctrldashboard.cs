@@ -16,5 +16,10 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
         {
             InitializeComponent();
         }
+    
+        private async void LoadStats()
+        {
+            
+        }
     }
 }
