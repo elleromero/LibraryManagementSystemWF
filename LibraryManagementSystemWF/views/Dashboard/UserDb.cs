@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystemWF.views.Dashboard;
+﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.views.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,36 +20,36 @@ namespace LibraryManagementSystemWF.views
         }
         public void loadform(object form)
         {
-            if (this.mainpanel.Controls.Count > 0)
-                this.mainpanel.Controls.RemoveAt(0);
+            if (this.mainPanel.Controls.Count > 0)
+                this.mainPanel.Controls.RemoveAt(0);
             Form f = form as Form;
             f.TopLevel = false;
             f.Dock = DockStyle.Fill;
-            this.mainpanel.Controls.Add(f);
-            this.mainpanel.Tag = f;
+            this.mainPanel.Controls.Add(f);
+            this.mainPanel.Tag = f;
             f.Show();
         }
 
-        private void btnDash_Click(object sender, EventArgs e)
+        private void btnBorrowed_Click(object sender, EventArgs e)
         {
-            loadform(new dashboard());
+            loadform(new Borrow());
         }
 
-        private void btnBooks_Click(object sender, EventArgs e)
+        private void btnReturn_Click(object sender, EventArgs e)
         {
-            loadform(new booksform());
+            loadform(new Return());
         }
 
-        private void btnRes_Click(object sender, EventArgs e)
+        private void btnHome_Click(object sender, EventArgs e)
         {
-            loadform(new reserveform());
+            loadform(new Home());
         }
 
-        private void btnBorrow_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            loadform(new booksform());
+            AuthController.LogOut();
+            new SignIn().Show();
+            this.Close();
         }
-
-        
     }
 }
