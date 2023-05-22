@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace LibraryManagementSystemWF.views.Dashboard
 {
-    public partial class borrowedform : Form
+    public partial class Return : Form
     {
-        public borrowedform()
+        public Return()
         {
             InitializeComponent();
         }
