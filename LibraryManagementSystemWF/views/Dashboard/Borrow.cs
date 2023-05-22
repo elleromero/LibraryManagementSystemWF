@@ -7,20 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace LibraryManagementSystemWF.views.Dashboard
 {
-    public partial class dashboard : Form
+    public partial class Borrow : Form
     {
-        public dashboard()
+        public Borrow()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
