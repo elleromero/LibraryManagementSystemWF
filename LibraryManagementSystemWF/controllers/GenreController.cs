@@ -102,7 +102,6 @@ namespace LibraryManagementSystemWF.controllers
             if (genreId < 0) errors.Add("genreId", "ID is invalid");
             if (string.IsNullOrWhiteSpace(name)) errors.Add("name", "Name is required");
             if (string.IsNullOrWhiteSpace(description)) errors.Add("description", "Description is required");
-            if (!await Validator.IsNameUnique("genres", "name", name)) errors.Add("name", "Name already exists");
 
             // update if theres no error
             if (errors.Count == 0)

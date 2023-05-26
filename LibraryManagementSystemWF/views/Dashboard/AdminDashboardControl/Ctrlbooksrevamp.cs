@@ -51,7 +51,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 {
                     // add empty template
                     flowLayoutPanel1.Margin = Padding.Empty;
-                    flowLayoutPanel1.Controls.Add(new CtrlGenre());
+                    flowLayoutPanel1.Controls.Add(new CtrlEmpty());
                 }
 
                 // init page label
