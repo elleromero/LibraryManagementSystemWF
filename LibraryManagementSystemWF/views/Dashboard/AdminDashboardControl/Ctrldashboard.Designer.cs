@@ -32,10 +32,10 @@
             this.totalBooksLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btrRatioLbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
+            this.availableCopiesLbl = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.subtitleLbl = new System.Windows.Forms.Label();
             this.titleLbl = new System.Windows.Forms.Label();
@@ -67,7 +67,7 @@
             this.totalBooksLbl.Name = "totalBooksLbl";
             this.totalBooksLbl.Size = new System.Drawing.Size(208, 68);
             this.totalBooksLbl.TabIndex = 3;
-            this.totalBooksLbl.Text = "0";
+            this.totalBooksLbl.Text = "N/A";
             // 
             // label1
             // 
@@ -76,30 +76,31 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 17);
+            this.label1.Padding = new System.Windows.Forms.Padding(5);
+            this.label1.Size = new System.Drawing.Size(105, 27);
             this.label1.TabIndex = 0;
             this.label1.Text = "TOTAL BOOKS";
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.btrRatioLbl);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(252, 15);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(208, 100);
             this.panel2.TabIndex = 1;
             // 
-            // label5
+            // btrRatioLbl
             // 
-            this.label5.AutoEllipsis = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Black", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(0, 32);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(208, 68);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "0";
+            this.btrRatioLbl.AutoEllipsis = true;
+            this.btrRatioLbl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btrRatioLbl.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btrRatioLbl.Location = new System.Drawing.Point(0, 32);
+            this.btrRatioLbl.Name = "btrRatioLbl";
+            this.btrRatioLbl.Size = new System.Drawing.Size(208, 68);
+            this.btrRatioLbl.TabIndex = 3;
+            this.btrRatioLbl.Text = "N/A";
             // 
             // label2
             // 
@@ -108,30 +109,31 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(183, 17);
+            this.label2.Padding = new System.Windows.Forms.Padding(5);
+            this.label2.Size = new System.Drawing.Size(193, 27);
             this.label2.TabIndex = 1;
             this.label2.Text = "BORROW TO RETURN RATIO";
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.panel3.Controls.Add(this.label6);
+            this.panel3.Controls.Add(this.availableCopiesLbl);
             this.panel3.Controls.Add(this.label3);
             this.panel3.Location = new System.Drawing.Point(483, 15);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(208, 100);
             this.panel3.TabIndex = 2;
             // 
-            // label6
+            // availableCopiesLbl
             // 
-            this.label6.AutoEllipsis = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(0, 32);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(208, 68);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "0";
+            this.availableCopiesLbl.AutoEllipsis = true;
+            this.availableCopiesLbl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.availableCopiesLbl.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.availableCopiesLbl.Location = new System.Drawing.Point(0, 32);
+            this.availableCopiesLbl.Name = "availableCopiesLbl";
+            this.availableCopiesLbl.Size = new System.Drawing.Size(208, 68);
+            this.availableCopiesLbl.TabIndex = 3;
+            this.availableCopiesLbl.Text = "N/A";
             // 
             // label3
             // 
@@ -140,7 +142,8 @@
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(167, 17);
+            this.label3.Padding = new System.Windows.Forms.Padding(5);
+            this.label3.Size = new System.Drawing.Size(177, 27);
             this.label3.TabIndex = 2;
             this.label3.Text = "TOTAL AVAILABLE COPIES";
             // 
@@ -235,9 +238,9 @@
         private Panel panel3;
         private Label totalBooksLbl;
         private Label label1;
-        private Label label5;
+        private Label btrRatioLbl;
         private Label label2;
-        private Label label6;
+        private Label availableCopiesLbl;
         private Label label3;
         private Label subtitleLbl;
         private Label titleLbl;
