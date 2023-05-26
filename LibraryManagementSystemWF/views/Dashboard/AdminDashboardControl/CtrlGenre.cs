@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.views.components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,8 +16,20 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
     public partial class CtrlGenre : UserControl
     {
         private List<Genre> genresList = new List<Genre>();
-
+        private int maxPage = 1;
         private int currentPage = 1;
+
+        public void SelectGenre(Genre genre)
+        {
+            txtID.Text = genre.ID.ToString();
+            txtName.Text = genre.Name;
+            txtDescription.Text = genre.Description;
+
+            foreach (GenreContainer genreContainer in flowLayoutPanel1.Controls)
+            {
+                genreContainer.Clear();
+            }
+        }
 
         public async void LoadGenres(int page)
         {
@@ -26,20 +39,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             if (genres.IsSuccess)
             {
                 genresList = genres.Results;
+                this.maxPage = Math.Max(1, (int)Math.Ceiling((double)genres.rowCount / 10));
+                pageLbl.Text = $"{page} | {maxPage}";
 
-                dataGridView1.Rows.Clear(); // Clear existing rows before adding new ones
-
-                dataGridView1.Columns.Add("ID", "ID");
-                dataGridView1.Columns.Add("Name", "Name");
-                dataGridView1.Columns.Add("Description", "Description");
-
+                // Load genres on flow layout panel
+                flowLayoutPanel1.Controls.Clear();
+                
                 foreach (Genre genre in genresList)
                 {
-                    dataGridView1.Rows.Add(
-                        genre.ID,
-                        genre.Name,
-                        genre.Description
-                    );
+                    flowLayoutPanel1.Controls.Add(new GenreContainer(genre, this));
                 }
             }
             else
@@ -53,10 +61,20 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         {
             InitializeComponent();
 
-            int initialPage = 1;
+            LoadGenres(currentPage);
 
-            LoadGenres(initialPage);
+        }
 
+        private void Clear()
+        {
+            txtID.Text = "";
+            txtName.Text = "";
+            txtDescription.Text = "";
+
+            foreach (GenreContainer genreContainer in flowLayoutPanel1.Controls)
+            {
+                genreContainer.Clear();
+            }
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -66,17 +84,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
             ControllerModifyData<Genre> result = await GenreController.CreateGenre(name, description);
 
-            if (result.IsSuccess)
+            if (result.IsSuccess && result.Result != null)
             {
                 Genre genre = result.Result;
                 genresList.Add(genre);
 
-                int initialPage = 1;
-                LoadGenres(initialPage);
+                LoadGenres(currentPage);
 
                 // Clear input fields
-                txtName.Text = "";
-                txtDescription.Text = "";
+                this.Clear();
             }
             else
             {
@@ -87,84 +103,44 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
         private async void btnUpdateGenre_Click(object sender, EventArgs e)
         {
+            // Retrieve the updated values from the input fields
+            string name = txtName.Text;
+            string description = txtDescription.Text;
+            int genreId = Convert.ToInt32(txtID.Text);
 
-            if (dataGridView1.SelectedRows.Count > 0)
+            // Update the genre
+            ControllerModifyData<Genre> result = await GenreController.UpdateGenre(genreId, name, description);
+
+            if (result.IsSuccess && result.Result != null)
             {
-                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-
-                // Retrieve the genre ID from the selected row
-                if (int.TryParse(selectedRow.Cells["ID"].Value.ToString(), out int genreId))
+                // Update the genresList with the modified genre
+                Genre updatedGenre = result.Result;
+                int index = genresList.FindIndex(g => g.ID == genreId);
+                if (index >= 0)
                 {
-                    // Retrieve the updated values from the input fields
-                    string name = txtName.Text;
-                    string description = txtDescription.Text;
-
-                    // Update the genre
-                    ControllerModifyData<Genre> result = await GenreController.UpdateGenre(genreId, name, description);
-
-                    if (result.IsSuccess)
-                    {
-                        // Update the genresList with the modified genre
-                        Genre updatedGenre = result.Result;
-                        int index = genresList.FindIndex(g => g.ID == genreId);
-                        if (index >= 0)
-                        {
-                            genresList[index] = updatedGenre;
-                        }
-
-                        int initialPage = 1;
-                        LoadGenres(initialPage);
-
-                        // Clear input fields
-                        txtName.Text = "";
-                        txtDescription.Text = "";
-                    }
-                    else
-                    {
-                        string errorMessage = result.Errors.FirstOrDefault().Value;
-                        MessageBox.Show("Failed to update genre: " + errorMessage);
-                    }
+                    genresList[index] = updatedGenre;
                 }
+
+                LoadGenres(currentPage);
+
+                // Clear input fields
+                this.Clear();
             }
             else
             {
-                MessageBox.Show("Please select a genre to update.");
+                string errorMessage = result.Errors.FirstOrDefault().Value;
+                MessageBox.Show("Failed to update genre: " + errorMessage);
             }
 
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                DataGridViewCell clickedCell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                string cellValue = clickedCell.Value.ToString();
-
-                // Display the cell value in a separate control or message box
-                MessageBox.Show(cellValue, "Cell Value");
-            }
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                // Reload data from the database
-                int initialPage = 1;
-                LoadGenres(initialPage);
-            }
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-
-                // Set the values of the text boxes to the values in the clicked row
-                txtID.Text = row.Cells["ID"].Value.ToString();
-                txtName.Text = row.Cells["Name"].Value.ToString();
-                txtDescription.Text = row.Cells["Description"].Value.ToString();
-
-            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            currentPage++;
-            LoadGenres(currentPage);
+            if (currentPage < maxPage)
+            {
+                currentPage++;
+                LoadGenres(currentPage);
+            }
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -178,62 +154,28 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            try
+            int genreId = Convert.ToInt32(txtID.Text);
+
+            // Call the appropriate method from your controller to delete the genre by its ID
+            ControllerActionData deleteResult = await GenreController.RemoveById(genreId);
+
+            if (deleteResult.IsSuccess)
             {
-                if (dataGridView1.SelectedRows.Count > 0)
-                {
-                    DialogResult result = MessageBox.Show("Are you sure you want to delete the selected row?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                MessageBox.Show("Row deleted successfully.");
 
-                        if (int.TryParse(selectedRow.Cells["ID"]?.Value?.ToString(), out int genreId))
-                        {
-                            // Call the appropriate method from your controller to delete the genre by its ID
-                            ControllerActionData deleteResult = await GenreController.RemoveById(genreId);
-
-                            if (deleteResult.IsSuccess)
-                            {
-                                MessageBox.Show("Row deleted successfully.");
-
-                                // Remove the selected row from the DataGridView
-                                dataGridView1.Rows.Remove(selectedRow);
-
-                                // You may need to remove the genre from the genresList as well if it's being used elsewhere in your code
-
-                                // Optional: Reload the data to refresh the DataGridView
-                                int initialPage = 1;
-                                LoadGenres(initialPage);
-                            }
-                            else
-                            {
-                                MessageBox.Show("Error deleting the row. Please try again.");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Invalid genre ID. Please try again.");
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Please select a row to delete.");
-                }
+                // Optional: Reload the data to refresh the DataGridView
+                LoadGenres(currentPage);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("An error occurred: " + ex.Message);
+                MessageBox.Show("Error deleting the row. Please try again.");
             }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
 
-            txtID.Text = "";
-            txtName.Text = "";
-            txtDescription.Text = "";
-
+            this.Clear();
         }
     }
     }
