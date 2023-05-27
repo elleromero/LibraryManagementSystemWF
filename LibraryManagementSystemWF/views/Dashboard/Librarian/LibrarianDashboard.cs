@@ -54,7 +54,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             else
             {
                 nameLbl.Text = "Unavailable User";
-                emailLbl.Text = "";
+                emailLbl.Text = "No Email Provided";
                 idLbl.Text += "Unable top fetch";
             }
 
