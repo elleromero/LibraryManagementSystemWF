@@ -58,24 +58,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DgAACw4BQL7hQQAAAe9JREFUSEvtVMtKI0EUjT8ggkO6KsEXiMu0j8Fk1FQZHzvRtQvF9YijjqIojC8E
-        QWFWE3ThSly69gNURMW0C8FfmKWzmhnRzvXea1oqNfHtLAQPHHKr+t5zulPdJ/SOV4MQqYqwVMOOVJNM
-        J9lG+1K2rkajKsVNzwWJC6l+CakhoCP0Jl+7qX87zhNMpNQfhND7OJzF33XkKAs5ujLXcosbA/UTTS6E
-        UP257X8RDrc5+BdMIzsDQbzrZSGSypF6jtbUd+XFZv2M+zfruUCk/cXhOPR2NWWpLitTP7CtiHrzgCJH
-        fDdSp01Bgrn2PfdPIE6MRDUsjSTg4siF0f5PbBiNqF0eNIEXsig0T/V9BqY4saej+fZcTMJBYzEPB6BN
-        EqL6KQbnO7WwNtMIi0MJZnd7Cxv4mdghnLglLEB4roHN5fE4G1ANGXeCBQj/wwBfBtZjvBsE3N9ogLGB
-        BNe2Ab6maoHqlxiYtA0OSQTF7v3QCgmZPN2qh+8Tca7zDCgqUGgqLyqE/mZHhS1oc2XsjjMwEYm0l2KA
-        7WGjnx92ySpb0OTVsQtf+pqgplrx+k4DGxTXaHjOT/UIzn4ucMgPQcrmcozjrwuD8csgFmxS6G2nP5Iw
-        G+CXPJkbfzzAi83YiVqIvhc7g0xdRW7szSIUugbR9GDjdMwWqAAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="button4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DgAACw4BQL7hQQAAAlRJREFUSEtjGAUkAXl5ewFxSbvFEpL2H4H4PxA/Y2AIZZaUdLAGsn9BxXDhjyC9
+        DQAACw0B7QfALAAAAlRJREFUSEtjGAUkAXl5ewFxSbvFEpL2H4H4PxA/Y2AIZZaUdLAGsn9BxXDhjyC9
         IDOgxmECcQn7JeISdt+BiqdISNh3SEjYpoPE5eRsBCUk7OohYtixuKT9VKDeH0BLFoENwwZArgAaNAnK
         JRmA9EpI2n2AcjEByKtAlzSA2P/P6wf8Paf//N85/f/E4q4Sc3BwAfW6gQ1EB8gWoBv+cLvhf1sz2//G
         enb/L681QjEYhmEW/D2rfwNsIDpAtgBdc3KI5X81Fbv/hrq2/30cbVDkYBjJgk9gA9EBugUXVhn/3zbV
