@@ -42,6 +42,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.genreLbl = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.coverPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookCoverPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
@@ -199,12 +200,26 @@
             this.button11.UseVisualStyleBackColor = false;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel1.Location = new System.Drawing.Point(540, 551);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(71, 15);
+            this.linkLabel1.TabIndex = 20;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "View Copies";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // BookInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(633, 585);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.genreLbl);
             this.Controls.Add(this.panel1);
@@ -244,5 +259,6 @@
         private Panel panel1;
         private Label genreLbl;
         private Button button11;
+        private LinkLabel linkLabel1;
     }
 }
