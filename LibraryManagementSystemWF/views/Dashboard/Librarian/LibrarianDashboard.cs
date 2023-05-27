@@ -21,7 +21,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private Ctrlbooksrevamp books = new();
         private Ctrlstatus status = new();
         private CtrlGenre genre= new();
-        private CtrlCopies copies = new();
         private User? user;
 
         public LibrarianDashboard()
@@ -34,7 +33,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             mainPanel.Controls.Add(books);
             mainPanel.Controls.Add(status);
             mainPanel.Controls.Add(genre);
-            mainPanel.Controls.Add(copies);
 
             this.ClearAndHide();
             button2.BackColor = SystemColors.Control;
@@ -83,7 +81,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             dashboard.Visible = false;
             status.Visible = false;
             genre.Visible = false;
-            copies.Visible = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -127,7 +124,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button5.BackColor = SystemColors.Control;
 
-            copies.Visible = true;
             navLbl.Text = "Copies";
         }
     }
