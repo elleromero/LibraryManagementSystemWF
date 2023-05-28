@@ -50,5 +50,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         {
             this.Close();
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new BookCopies(this.book.ID.ToString()).Show();
+        }
     }
 }

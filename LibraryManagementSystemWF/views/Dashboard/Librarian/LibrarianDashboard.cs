@@ -17,11 +17,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 {
     public partial class LibrarianDashboard : Form
     {
-        private Ctrldashboard dashboard = new();
-        private Ctrlbooksrevamp books = new();
-        private Ctrlstatus status = new();
-        private CtrlGenre genre= new();
-        private CtrlCopies copies = new();
         private User? user;
 
         public LibrarianDashboard()
@@ -30,15 +25,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             versionlbl.Text = EnvService.GetVersion();
 
-            mainPanel.Controls.Add(dashboard);
-            mainPanel.Controls.Add(books);
-            mainPanel.Controls.Add(status);
-            mainPanel.Controls.Add(genre);
-            mainPanel.Controls.Add(copies);
-
             this.ClearAndHide();
+
+            mainPanel.Controls.Add(new Ctrldashboard());
+
             button2.BackColor = SystemColors.Control;
-            dashboard.Visible = true;
             navLbl.Text = "Home";
 
             // initialize user info
@@ -47,14 +38,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             if (user != null)
             {
                 nameLbl.Text = $"{user.Member.FirstName} {user.Member.LastName} ({user.Username})";
-                emailLbl.Text = user.Member.Email;
+                emailLbl.Text = string.IsNullOrWhiteSpace(user.Member.Email) ? "No Email Provided" : user.Member.Email;
                 idLbl.Text += user.ID;
                 if (File.Exists(user.ProfilePicture)) pictureBox1.Image = Image.FromFile(user.ProfilePicture);
             }
             else
             {
                 nameLbl.Text = "Unavailable User";
-                emailLbl.Text = "";
+                emailLbl.Text = "No Email Provided";
                 idLbl.Text += "Unable top fetch";
             }
 
@@ -77,13 +68,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             button2.BackColor = Color.White;
             button3.BackColor = Color.White;
             button4.BackColor = Color.White;
-            button5.BackColor = Color.White;
 
-            books.Visible = false;
-            dashboard.Visible = false;
-            status.Visible = false;
-            genre.Visible = false;
-            copies.Visible = false;
+            mainPanel.Controls.Clear();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -91,7 +77,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button2.BackColor = SystemColors.Control;
 
-            dashboard.Visible = true;
+            mainPanel.Controls.Add(new Ctrldashboard());
             navLbl.Text = "Home";
         }
 
@@ -100,7 +86,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button3.BackColor = SystemColors.Control;
 
-            books.Visible = true;
+            mainPanel.Controls.Add(new Ctrlbooksrevamp());
             navLbl.Text = "Books";
 
         }
@@ -118,17 +104,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button4.BackColor = SystemColors.Control;
 
-            genre.Visible = true;
+            mainPanel.Controls.Add(new CtrlGenre());
             navLbl.Text = "Genres";
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            this.ClearAndHide();
-            button5.BackColor = SystemColors.Control;
-
-            copies.Visible = true;
-            navLbl.Text = "Copies";
         }
     }
 }
