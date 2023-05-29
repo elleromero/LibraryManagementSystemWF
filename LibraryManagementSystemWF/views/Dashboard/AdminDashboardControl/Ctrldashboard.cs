@@ -30,7 +30,7 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
             LoadStats();
         }
-    
+
         private async void LoadStats()
         {
             ControllerModifyData<Stats> res = await StatsController.GetStats();
