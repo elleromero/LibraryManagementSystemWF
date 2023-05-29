@@ -30,10 +30,18 @@ CREATE TABLE announcements (
 	announcement_header VARCHAR(1000) NOT NULL,
 	announcement_body NVARCHAR(MAX) NOT NULL,
 	announcement_due DATETIME2 NOT NULL,
-	announcement_timestamp TIMESTAMP,
+	announcement_timestamp DATETIME2 NOT NULL,
 	is_priority BIT NOT NULL,
 	announcement_cover VARCHAR(1000) NULL,
 	FOREIGN KEY (user_id) REFERENCES users(user_id),
+);
+
+CREATE TABLE announcement_roles (
+    announcement_id UNIQUEIDENTIFIER,
+    role_id INT,
+    PRIMARY KEY (announcement_id, role_id),
+    FOREIGN KEY (announcement_id) REFERENCES announcements(announcement_id),
+    FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
 CREATE TABLE statuses (

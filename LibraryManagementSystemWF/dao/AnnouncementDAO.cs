@@ -10,15 +10,25 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.dao
 {
-    internal class AnnoucementDAO : IDAO<Announcement>
+    internal class AnnouncementDAO : IDAO<Announcement>
     {
-        public async Task<ReturnResult<Announcement>> Create(Announcement model)
+        public async Task<ReturnResult<Announcement>> Create(Announcement model, List<RoleEnum> publishToRoles)
         {
             ReturnResult<Announcement> returnResult = new()
             {
                 Result = null,
                 IsSuccess = false
             };
+
+            // announcement role query
+            string insertValues = "";
+
+            foreach (RoleEnum role in publishToRoles)
+            {
+                insertValues += $"(@announcement_id, {(int) role}), ";
+            }
+
+            insertValues = insertValues.Substring(0, insertValues.LastIndexOf(", ")).Trim();
 
             string declareQuery = "DECLARE @announcement_id UNIQUEIDENTIFIER; SET @announcement_id = NEWID();";
             string insertQuery = "INSERT INTO announcements (" +
@@ -27,16 +37,20 @@ namespace LibraryManagementSystemWF.dao
                 "announcement_header, " +
                 "announcement_body, " +
                 "announcement_due, " +
+                "announcement_timestamp, " +
                 "announcement_cover, " +
                 "is_priority" +
                 ") VALUES (" +
-                $"@announcement_id, '{model.User.ID}', '{model.Header}', '{model.Body}', '{model.Due.ToString("yyyy-MM-dd HH:mm:ss.fff")}', " +
+                $"@announcement_id, '{model.User.ID}', '{model.Header}', '{model.Body}', '{model.Due.ToString("yyyy-MM-dd HH:mm:ss.fff")}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}', " +
                 $"'{model.Cover}', {Convert.ToInt32(model.IsPriority)});";
+            string insertAncmtRolesQuery = "INSERT INTO announcement_roles (announcement_id, role_id) " +
+                $"VALUES {insertValues};";
             string selectQuery = "SELECT * FROM announcements a " +
                 "JOIN users u ON a.user_id = u.user_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id WHERE a.announcement_id = @announcement_id;";
-            string query = $"{declareQuery} {insertQuery} {selectQuery}";
+            string query = $"{declareQuery} {insertQuery} {insertAncmtRolesQuery} {selectQuery}";
+            MessageBox.Show(query);
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -56,11 +70,16 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = returnResult.Result != null;
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
             return returnResult;
+        }
+
+        public Task<ReturnResult<Announcement>> Create(Announcement model)
+        {
+            throw new NotImplementedException();
         }
 
         public Announcement? Fill(SqlDataReader reader)

@@ -1,6 +1,6 @@
 ﻿enum RoleEnum
 {
-    ADMINISTRATOR = 0,
-    USER = 1,
-    LIBRARIAN = 2
+    ADMINISTRATOR = 1,
+    USER = 2,
+    LIBRARIAN = 3
 }

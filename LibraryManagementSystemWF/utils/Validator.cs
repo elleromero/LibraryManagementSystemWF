@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -165,6 +166,30 @@ namespace LibraryManagementSystemWF.utils
         {
             DateTime currentDate = DateTime.Now;
             return date <= currentDate;
+        }
+
+        public static bool IsDateAfter(DateTime date)
+        {
+            DateTime currentDate = DateTime.Now;
+            return date > currentDate;
+        }
+
+        public static bool IsUserHavePermissionToPublish(List<RoleEnum> roles)
+        {
+            User? user = AuthService.getSignedUser();
+
+            RoleEnum[] adminAccess = { RoleEnum.ADMINISTRATOR, RoleEnum.LIBRARIAN, RoleEnum.USER };
+            RoleEnum[] librarianAccess = { RoleEnum.LIBRARIAN, RoleEnum.USER };
+
+            if (user == null) return false;
+
+            if (!user.Role.HasAccess) return false;
+
+            if (user.Role.Name.ToUpper() == "ADMINISTRATOR" && roles.Any(adminAccess.Contains)) return true;
+           
+            if (user.Role.Name.ToUpper() == "LIBRARIAN" && roles.Any(librarianAccess.Contains)) return true;
+
+            return false;
         }
 
         public static bool IsValidISBN(string isbn)
