@@ -24,6 +24,18 @@ CREATE TABLE users (
 	FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
 )
 
+CREATE TABLE announcements (
+	announcement_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+	user_id UNIQUEIDENTIFIER,
+	announcement_header VARCHAR(1000) NOT NULL,
+	announcement_body NVARCHAR(MAX) NOT NULL,
+	announcement_due DATETIME2 NOT NULL,
+	announcement_timestamp TIMESTAMP,
+	is_priority BIT NOT NULL,
+	announcement_cover VARCHAR(1000) NULL,
+	FOREIGN KEY (user_id) REFERENCES users(user_id),
+);
+
 CREATE TABLE statuses (
 	status_id INT PRIMARY KEY IDENTITY(1,1),
 	name VARCHAR(20) NOT NULL,
