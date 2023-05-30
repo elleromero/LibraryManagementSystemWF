@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
@@ -132,13 +133,20 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 0
             };
 
-            string query = "SELECT COUNT(*) as row_count FROM announcements; " +
-                "SELECT * FROM announcements a " +
+            // get authenticated role
+            User? user = AuthService.getSignedUser();
+
+            if (user == null) return returnResult;
+
+            string query = $"SELECT COUNT(*) as row_count FROM announcement_roles WHERE role_id = {user.Role.ID}; " +
+                "SELECT * FROM announcement_roles ar " +
+                "JOIN announcements a ON a.announcement_id = ar.announcement_id " +
                 "JOIN users u ON u.user_id = a.user_id " +
                 "JOIN members m ON m.member_id = u.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id " +
-                $"WHERE a.announcement_due < '{DateTime.Now.ToString("yyyy-MM-dd")}' " +
-                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+                $"WHERE a.announcement_due > '{DateTime.Now.ToString("yyyy-MM-dd")}' " +
+                $"AND ar.role_id = {user.Role.ID} " +
+                $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

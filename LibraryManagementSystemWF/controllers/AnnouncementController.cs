@@ -80,12 +80,56 @@ namespace LibraryManagementSystemWF.controllers
 
         public static async Task<ControllerAccessData<Announcement>> GetAllBeforeDue(int page = 1)
         {
-            throw new NotImplementedException();
+            ControllerAccessData<Announcement> returnData = new()
+            {
+                Results = new List<Announcement>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+
+            if (page <= 0) errors.Add("page", "Invalid page");
+
+            if (errors.Count == 0)
+            {
+                AnnouncementDAO announcementDAO = new();
+                ReturnResultArr<Announcement> result = await announcementDAO.GetAll(page);
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
         }
 
         public static async Task<ControllerAccessData<Announcement>> GetAll(int page = 1)
         {
-            throw new NotImplementedException();
+            ControllerAccessData<Announcement> returnData = new()
+            {
+                Results = new List<Announcement>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+
+            if (page <= 0) errors.Add("page", "Invalid page");
+
+            if (errors.Count == 0)
+            {
+                AnnouncementDAO announcementDao = new();
+                ReturnResultArr<Announcement> result = await announcementDao.GetAll(page);
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
         }
 
         public static async Task<ControllerActionData> Remove(string announcementId)
