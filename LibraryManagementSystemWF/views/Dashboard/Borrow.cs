@@ -21,8 +21,8 @@ namespace LibraryManagementSystemWF.views.Dashboard
     {
         private List<Book> books = new();
         private List<Book> booksList = new List<Book>();
-        
-        private int PageNumber =1;
+
+        private int PageNumber = 1;
 
 
         public Borrow()
@@ -96,16 +96,16 @@ namespace LibraryManagementSystemWF.views.Dashboard
         public async void LoadBorrow()
         {
             ControllerAccessData<Loan> res = await LoanController.GetAllBorrowedBooks(PageNumber);
-            
-            if(res.IsSuccess) 
+
+            if (res.IsSuccess)
             {
                 dataGridView1.Columns.Add("BorrowDate", "Borrow date");
             }
 
             foreach (Loan L in res.Results)
-                {
-                    dataGridView1.Rows.Add(L.ID, L.DateBorrowed);
-                }
+            {
+                dataGridView1.Rows.Add(L.ID, L.DateBorrowed);
+            }
 
         }
 
@@ -152,6 +152,11 @@ namespace LibraryManagementSystemWF.views.Dashboard
             {
                 MessageBox.Show("Please select a book to Borrow.");
             }
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
