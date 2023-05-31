@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.models
 {
-    internal class Announcement
+    public class Announcement
     {
         public Guid ID { get; set; }
 

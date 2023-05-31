@@ -17,6 +17,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
     {
         private int currentPage = 1;
         private int maxPage = 1;
+        private List<Announcement> annList = new();
 
         public AdminAnnouncement()
         {
@@ -43,7 +44,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 20));
                 pageLbl.Text = $"{currentPage} | {maxPage}";
 
-                foreach (Announcement ann in res.Results)
+                annList = res.Results;
+
+                foreach (Announcement ann in annList)
                 {
                     dataGridView1.Rows.Add(
                         ann.ID,
@@ -60,26 +63,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             this.Close();
         }
 
-        private async void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            List<RoleEnum> roles = new();
-            roles.Add(RoleEnum.ADMINISTRATOR);
-            roles.Add(RoleEnum.USER);
-            roles.Add(RoleEnum.LIBRARIAN);
+            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+            string? annId = selectedRow.Cells["ID"].Value.ToString();
 
-            ControllerModifyData<Announcement> res = await AnnouncementController.Create(
-                "Announcement Importantdsakjkd",
-                "This is the body",
-                DateTime.Now.AddMonths(12),
-                roles
-                
-                );
-
-            // MessageBox.Show(res.IsSuccess.ToString() + res.Result?.Header);
-
-            foreach (KeyValuePair<string, string> error in res.Errors)
+            if (annId != null)
             {
-                MessageBox.Show(error.Key + ": " + error.Value);
+                foreach (Announcement ann in annList)
+                {
+                    if (ann.ID.ToString() == annId) 
+                    {
+                        new AnnouncementPreview(ann).Show();
+                        break;
+                    }
+                }
+
             }
         }
 
