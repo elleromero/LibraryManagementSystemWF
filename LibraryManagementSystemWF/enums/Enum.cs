@@ -1,4 +1,4 @@
-﻿enum RoleEnum
+﻿public enum RoleEnum
 {
     ADMINISTRATOR = 1,
     USER = 2,
