@@ -34,7 +34,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             dataGridView1.Columns.Add("Header", "Header");
             dataGridView1.Columns.Add("Preview", "Preview");
 
-            ControllerAccessData<Announcement> res = await AnnouncementController.GetAllBeforeDue();
+            ControllerAccessData<Announcement> res = await AnnouncementController.GetAll(currentPage);
 
             if (res.IsSuccess)
             {
