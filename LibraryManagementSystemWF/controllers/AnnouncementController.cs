@@ -29,7 +29,7 @@ namespace LibraryManagementSystemWF.controllers
             };
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
-            Guid userId = AuthService.getSignedUser().ID;
+            Guid? userId = AuthService.getSignedUser()?.ID;
 
             // is not librarian or administrator
             if (await AuthGuard.HavePermission("USER"))
@@ -60,7 +60,7 @@ namespace LibraryManagementSystemWF.controllers
                     IsPriority = isPriority,
                     User = new User()
                     {
-                        ID = userId
+                        ID = userId ?? Guid.Empty
                     }
                 }, publishToRoles);
 

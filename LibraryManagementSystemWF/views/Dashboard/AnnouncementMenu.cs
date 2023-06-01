@@ -14,6 +14,8 @@ namespace LibraryManagementSystemWF.views.Dashboard
 {
     public partial class AnnouncementMenu : Form
     {
+        private List<Announcement> announcements = new();
+
         public AnnouncementMenu()
         {
             InitializeComponent();
@@ -38,8 +40,8 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
             if (res.IsSuccess)
             {
-
-                foreach (Announcement ann in res.Results)
+                announcements = res.Results;
+                foreach (Announcement ann in announcements)
                 {
 
                     dataGridView1.Rows.Add(
@@ -59,6 +61,35 @@ namespace LibraryManagementSystemWF.views.Dashboard
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            if (e.RowIndex >= 0) 
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                string rowId = row.Cells["ID"].Value.ToString() ?? string.Empty;
+
+                // Set the values of the text boxes to the values in the clicked row
+                foreach (Announcement ann in announcements)
+                {
+                    if (rowId == ann.ID.ToString())
+                    {
+                        textAnnouncementID.Text = ann.ID.ToString();
+                        txtHeader.Text = ann.Header;
+                        txtBody.Text = ann.Body;
+                        dtpAnnouncementDue.Value = ann.Due;
+                        txtCover.Text = ann.Cover;
+                        checkBoxImportant.Checked = ann.IsPriority;
+
+                        // set checkbox
+                        checkBoxAdmin.Checked = ann.VisibleRoles.Contains(RoleEnum.ADMINISTRATOR);
+                        checkBoxUser.Checked = ann.VisibleRoles.Contains(RoleEnum.USER);
+                        checkBoxLibrarian.Checked = ann.VisibleRoles.Contains(RoleEnum.LIBRARIAN);
+                    }
+                }
+            }
         }
     }
 }
