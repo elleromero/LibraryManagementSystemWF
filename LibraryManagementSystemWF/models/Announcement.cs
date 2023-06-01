@@ -23,5 +23,7 @@ namespace LibraryManagementSystemWF.models
         public bool IsPriority { get; set; }
 
         public User User { get; set; } = new();
+
+        public RoleEnum[] VisibleRoles { get; set; } = { };
     }
 }
