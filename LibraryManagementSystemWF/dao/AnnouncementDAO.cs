@@ -108,6 +108,26 @@ namespace LibraryManagementSystemWF.dao
                 }
             };
 
+            // Process visible roles
+            string[] visibleRoles = reader.GetString(reader.GetOrdinal("visible_roles")).Split(" ");
+            List<RoleEnum> visibleRolesEnums = new();
+
+            foreach (string role in visibleRoles)
+            {
+                switch (role.ToUpper())
+                {
+                    case "ADMINISTRATOR":
+                        visibleRolesEnums.Add(RoleEnum.ADMINISTRATOR);
+                        break;
+                    case "LIBRARIAN":
+                        visibleRolesEnums.Add(RoleEnum.LIBRARIAN);
+                        break;
+                    case "USER":
+                        visibleRolesEnums.Add(RoleEnum.USER);
+                        break;
+                }
+            }
+
             // Annoucement
             Announcement? annoucement = new()
             {
@@ -118,7 +138,8 @@ namespace LibraryManagementSystemWF.dao
                 Timestamp = reader.GetDateTime(reader.GetOrdinal("announcement_timestamp")),
                 IsPriority = reader.GetBoolean(reader.GetOrdinal("is_priority")),
                 Cover = reader.GetString(reader.GetOrdinal("announcement_cover")),
-                User = user
+                User = user,
+                VisibleRoles = visibleRolesEnums.ToArray()
             };
 
             return annoucement;
@@ -139,12 +160,18 @@ namespace LibraryManagementSystemWF.dao
             if (user == null) return returnResult;
 
             string query = $"SELECT COUNT(*) as row_count FROM announcement_roles WHERE role_id = {user.Role.ID}; " +
-                "SELECT * FROM announcement_roles ar " +
-                "JOIN announcements a ON a.announcement_id = ar.announcement_id " +
-                "JOIN users u ON u.user_id = a.user_id " +
-                "JOIN members m ON m.member_id = u.member_id " +
-                "JOIN roles r ON r.role_id = u.role_id " +
-                $"WHERE a.announcement_due > '{DateTime.Now.ToString("yyyy-MM-dd")}' " +
+                "SELECT *, " +
+                "STUFF((SELECT ' ' + r.name " +
+                "FROM roles r " +
+                "INNER JOIN announcement_roles ar ON ar.role_id = r.role_id " +
+                "WHERE ar.announcement_id = a.announcement_id " +
+                "FOR XML PATH('')), 1, 1, '') AS visible_roles " +
+                "FROM announcements a " +
+                "INNER JOIN announcement_roles ar ON a.announcement_id = ar.announcement_id " +
+                "INNER JOIN users u ON u.user_id = a.user_id " +
+                "INNER JOIN members m ON m.member_id = u.member_id " +
+                "INNER JOIN roles r ON r.role_id = u.role_id " +
+                $"WHERE a.announcement_due > '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}' " +
                 $"AND ar.role_id = {user.Role.ID} " +
                 $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
 
@@ -194,12 +221,26 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 0
             };
 
-            string query = "SELECT COUNT(*) as row_count FROM announcements; " +
-                "SELECT * FROM announcements a " +
-                "JOIN users u ON u.user_id = a.user_id " +
-                "JOIN members m ON m.member_id = u.member_id " +
-                "JOIN roles r ON r.role_id = u.role_id " +
-                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+            // get authenticated role
+            User? user = AuthService.getSignedUser();
+
+            if (user == null) return returnResult;
+
+            string query = $"SELECT COUNT(*) as row_count FROM announcement_roles WHERE role_id = {user.Role.ID}; " +
+                "SELECT *, " +
+                "STUFF((SELECT ' ' + r.name " +
+                "FROM roles r " +
+                "INNER JOIN announcement_roles ar ON ar.role_id = r.role_id " +
+                "WHERE ar.announcement_id = a.announcement_id " +
+                "FOR XML PATH('')), 1, 1, '') AS visible_roles " +
+                "FROM announcements a " +
+                "INNER JOIN announcement_roles ar ON a.announcement_id = ar.announcement_id " +
+                "INNER JOIN users u ON u.user_id = a.user_id " +
+                "INNER JOIN members m ON m.member_id = u.member_id " +
+                "INNER JOIN roles r ON r.role_id = u.role_id " +
+                $"WHERE ar.role_id = {user.Role.ID} " +
+                $"AND u.user_id = {user.ID}" +
+                $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
