@@ -78,7 +78,7 @@ namespace LibraryManagementSystemWF.controllers
             throw new NotImplementedException();
         }
 
-        public static async Task<ControllerAccessData<Announcement>> GetAllBeforeDue(int page = 1)
+        public static async Task<ControllerAccessData<Announcement>> GetAllWithPastDue(int page = 1)
         {
             ControllerAccessData<Announcement> returnData = new()
             {
@@ -93,7 +93,7 @@ namespace LibraryManagementSystemWF.controllers
             if (errors.Count == 0)
             {
                 AnnouncementDAO announcementDAO = new();
-                ReturnResultArr<Announcement> result = await announcementDAO.GetAll(page);
+                ReturnResultArr<Announcement> result = await announcementDAO.GetAllAndIncludePastDue(page);
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;
