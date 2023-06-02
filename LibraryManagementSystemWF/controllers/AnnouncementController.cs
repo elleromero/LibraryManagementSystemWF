@@ -45,7 +45,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!await Validator.IsNameUnique("announcements", "announcement_header", header)) errors.Add("header", "Header already exists");
             if (string.IsNullOrWhiteSpace(header)) errors.Add("header", "Header is required");
             if (string.IsNullOrWhiteSpace(body)) errors.Add("body", "Body is required");
-            if (!Validator.IsDateAfter(announcementDue)) errors.Add("announcementDue", "Datetime must be after date");
+            if (!Validator.IsDateAfter(announcementDue)) errors.Add("announcementDue", "Datetime must be after the present date");
             if (!Validator.IsUserHavePermissionToPublish(publishToRoles)) errors.Add("publishToRoles", "Forbidden");
 
             if (errors.Count == 0)

@@ -46,10 +46,18 @@ namespace LibraryManagementSystemWF.dao
                 $"'{model.Cover}', {Convert.ToInt32(model.IsPriority)});";
             string insertAncmtRolesQuery = "INSERT INTO announcement_roles (announcement_id, role_id) " +
                 $"VALUES {insertValues};";
-            string selectQuery = "SELECT * FROM announcements a " +
-                "JOIN users u ON a.user_id = u.user_id " +
-                "JOIN members m ON u.member_id = m.member_id " +
-                "JOIN roles r ON r.role_id = u.role_id WHERE a.announcement_id = @announcement_id;";
+            string selectQuery = "SELECT *, " +
+                "STUFF((SELECT ' ' + r.name " +
+                "FROM roles r " +
+                "INNER JOIN announcement_roles ar ON ar.role_id = r.role_id " +
+                "WHERE ar.announcement_id = a.announcement_id " +
+                "FOR XML PATH('')), 1, 1, '') AS visible_roles " +
+                "FROM announcements a " +
+                "INNER JOIN announcement_roles ar ON a.announcement_id = ar.announcement_id " +
+                "INNER JOIN users u ON u.user_id = a.user_id " +
+                "INNER JOIN members m ON m.member_id = u.member_id " +
+                "INNER JOIN roles r ON r.role_id = u.role_id " +
+                $"WHERE a.announcement_id = @announcement_id";
             string query = $"{declareQuery} {insertQuery} {insertAncmtRolesQuery} {selectQuery}";
             MessageBox.Show(query);
 
