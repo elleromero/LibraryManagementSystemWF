@@ -33,11 +33,10 @@
             this.checkBoxImportant = new System.Windows.Forms.CheckBox();
             this.dtpAnnouncementDue = new System.Windows.Forms.DateTimePicker();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
             this.clearBtn = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.btnDeleteBooks = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
@@ -89,35 +88,16 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.clearBtn);
             this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.btnDeleteBooks);
+            this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(155, 556);
             this.panel1.TabIndex = 12;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.button4.FlatAppearance.BorderSize = 2;
-            this.button4.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.Location = new System.Drawing.Point(-1, 341);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(156, 54);
-            this.button4.TabIndex = 45;
-            this.button4.Text = "       COPY OF BOOKS";
-            this.button4.UseVisualStyleBackColor = false;
             // 
             // clearBtn
             // 
@@ -176,23 +156,24 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // btnDeleteBooks
+            // btnDelete
             // 
-            this.btnDeleteBooks.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.btnDeleteBooks.FlatAppearance.BorderSize = 2;
-            this.btnDeleteBooks.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnDeleteBooks.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnDeleteBooks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnDeleteBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteBooks.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnDeleteBooks.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteBooks.Image")));
-            this.btnDeleteBooks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDeleteBooks.Location = new System.Drawing.Point(-1, 285);
-            this.btnDeleteBooks.Name = "btnDeleteBooks";
-            this.btnDeleteBooks.Size = new System.Drawing.Size(156, 54);
-            this.btnDeleteBooks.TabIndex = 9;
-            this.btnDeleteBooks.Text = "  REMOVE";
-            this.btnDeleteBooks.UseVisualStyleBackColor = false;
+            this.btnDelete.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnDelete.FlatAppearance.BorderSize = 2;
+            this.btnDelete.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDelete.Location = new System.Drawing.Point(-1, 285);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(156, 54);
+            this.btnDelete.TabIndex = 9;
+            this.btnDelete.Text = "  REMOVE";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // button2
             // 
@@ -428,11 +409,10 @@
         private CheckBox checkBoxImportant;
         private DateTimePicker dtpAnnouncementDue;
         private Panel panel1;
-        private Button button4;
         private Button clearBtn;
         private Button btnBack;
         private Button button1;
-        private Button btnDeleteBooks;
+        private Button btnDelete;
         private Button button2;
         private DataGridView dataGridView1;
         private Label label3;

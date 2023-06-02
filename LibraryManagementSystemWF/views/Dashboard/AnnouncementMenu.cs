@@ -176,11 +176,29 @@ namespace LibraryManagementSystemWF.views.Dashboard
             }
             else
             {
-                MessageBox.Show("Error");
                 foreach (KeyValuePair<string, string> error in res.Errors)
                 {
                     MessageBox.Show($"{error.Key}: {error.Value}");
                 }
+            }
+        }
+
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            // remove announcement
+            ControllerActionData res = await AnnouncementController.RemoveById(
+                textAnnouncementID.Text
+                );
+
+            if (res.IsSuccess)
+            {
+                MessageBox.Show("Announcement is updated!");
+                this.Clear();
+                LoadAnnouncements();
+            }
+            else
+            {
+                MessageBox.Show("Announcement can't be removed");
             }
         }
     }

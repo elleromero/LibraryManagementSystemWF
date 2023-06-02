@@ -189,9 +189,29 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static async Task<ControllerActionData> Remove(string announcementId)
+        public static async Task<ControllerActionData> RemoveById(string announcementId)
         {
-            throw new NotImplementedException();
+            ControllerActionData returnResult = new()
+            {
+                Errors = new Dictionary<string, string>(),
+                IsSuccess = false
+            };
+
+            // is not librarian or admin
+            if (await AuthGuard.HavePermission("USER"))
+            {
+                returnResult.Errors.Add("permission", "Forbidden");
+
+                return returnResult;
+            }
+
+            if (returnResult.Errors.Count == 0)
+            {
+                AnnouncementDAO announcementDao = new();
+                returnResult.IsSuccess = await announcementDao.Remove(announcementId);
+            }
+
+            return returnResult;
         }
     }
 }

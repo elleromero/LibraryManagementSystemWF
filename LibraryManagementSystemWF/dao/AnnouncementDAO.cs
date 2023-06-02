@@ -246,8 +246,7 @@ namespace LibraryManagementSystemWF.dao
                 "INNER JOIN users u ON u.user_id = a.user_id " +
                 "INNER JOIN members m ON m.member_id = u.member_id " +
                 "INNER JOIN roles r ON r.role_id = u.role_id " +
-                $"WHERE ar.role_id = {user.Role.ID} " +
-                $"AND u.user_id = '{user.ID}'" +
+                $"WHERE u.user_id = '{user.ID}' " +
                 $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -297,7 +296,7 @@ namespace LibraryManagementSystemWF.dao
             bool isRemoved = false;
 
             // remove genre
-            string query = $"DELETE FROM announcements WHERE announcement_id = ${id};";
+            string query = $"DELETE FROM announcements WHERE announcement_id = '{id}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -310,7 +309,7 @@ namespace LibraryManagementSystemWF.dao
 
                     isRemoved = true;
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
             });
 
             return isRemoved;
