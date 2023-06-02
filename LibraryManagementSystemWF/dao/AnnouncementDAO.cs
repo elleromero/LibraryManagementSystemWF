@@ -57,7 +57,7 @@ namespace LibraryManagementSystemWF.dao
                 "INNER JOIN users u ON u.user_id = a.user_id " +
                 "INNER JOIN members m ON m.member_id = u.member_id " +
                 "INNER JOIN roles r ON r.role_id = u.role_id " +
-                $"WHERE a.announcement_id = @announcement_id";
+                "WHERE a.announcement_id = @announcement_id;";
             string query = $"{declareQuery} {insertQuery} {insertAncmtRolesQuery} {selectQuery}";
             MessageBox.Show(query);
 
@@ -316,7 +316,12 @@ namespace LibraryManagementSystemWF.dao
             return isRemoved;
         }
 
-        public async Task<ReturnResult<Announcement>> Update(Announcement model)
+        public Task<ReturnResult<Announcement>> Update(Announcement model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ReturnResult<Announcement>> Update(Announcement model, List<RoleEnum> publishToRoles)
         {
             ReturnResult<Announcement> returnResult = new()
             {
@@ -324,18 +329,38 @@ namespace LibraryManagementSystemWF.dao
                 IsSuccess = false
             };
 
+            string rolesId = "";
+            foreach (RoleEnum role in publishToRoles)
+            {
+                rolesId += $"{(int)role}, ";
+            }
+
+            rolesId = rolesId.Substring(0, rolesId.LastIndexOf(", ")).Trim();
+
+
             string updateQuery = "UPDATE announcements SET " +
                 $"announcement_header = '{model.Header}', " +
                 $"announcement_body = '{model.Body}', " +
-                $"announcement_due = '{model.Due.ToString("yyyy - MM - dd HH: mm: ss.fff")}', " +
+                $"announcement_due = '{model.Due.ToString("yyyy-MM-dd HH:mm:ss.fff")}', " +
                 $"is_priority = {Convert.ToInt32(model.IsPriority)}, " +
                 $"announcement_cover = '{model.Cover}' " +
                 $"WHERE announcement_id = '{model.ID}';";
-            string selectQuery = "SELECT * FROM announcements a " +
-                "JOIN users u ON a.user_id = u.user_id " +
-                "JOIN members m ON u.member_id = m.member_id " +
-                $"JOIN roles r ON r.role_id = u.role_id WHERE a.announcement_id = '{model.ID}';";
-            string query = $"{updateQuery} {selectQuery}";
+            string deleteQuery = "DELETE FROM announcement_roles " +
+                $"WHERE announcement_id = '{model.ID}' " +
+                $"AND role_id NOT IN ({rolesId});";
+            string selectQuery = "SELECT *, " +
+                "STUFF((SELECT ' ' + r.name " +
+                "FROM roles r " +
+                "INNER JOIN announcement_roles ar ON ar.role_id = r.role_id " +
+                "WHERE ar.announcement_id = a.announcement_id " +
+                "FOR XML PATH('')), 1, 1, '') AS visible_roles " +
+                "FROM announcements a " +
+                "INNER JOIN announcement_roles ar ON a.announcement_id = ar.announcement_id " +
+                "INNER JOIN users u ON u.user_id = a.user_id " +
+                "INNER JOIN members m ON m.member_id = u.member_id " +
+                "INNER JOIN roles r ON r.role_id = u.role_id " +
+                $"WHERE a.announcement_id = '{model.ID}';";
+            string query = $"{updateQuery} {deleteQuery} {selectQuery}";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

@@ -136,6 +136,7 @@
             this.clearBtn.TabIndex = 44;
             this.clearBtn.Text = "CLEAR";
             this.clearBtn.UseVisualStyleBackColor = false;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
             // btnBack
             // 
@@ -210,6 +211,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "  UPDATE";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridView1
             // 

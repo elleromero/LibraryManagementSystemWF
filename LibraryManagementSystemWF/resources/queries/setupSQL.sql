@@ -40,8 +40,8 @@ CREATE TABLE announcement_roles (
     announcement_id UNIQUEIDENTIFIER,
     role_id INT,
     PRIMARY KEY (announcement_id, role_id),
-    FOREIGN KEY (announcement_id) REFERENCES announcements(announcement_id),
-    FOREIGN KEY (role_id) REFERENCES roles(role_id)
+    FOREIGN KEY (announcement_id) REFERENCES announcements(announcement_id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE
 );
 
 CREATE TABLE statuses (

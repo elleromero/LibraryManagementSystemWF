@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,13 @@ namespace LibraryManagementSystemWF.views.Dashboard
     public partial class AnnouncementMenu : Form
     {
         private List<Announcement> announcements = new();
+        private ICustomForm form;
 
-        public AnnouncementMenu()
+        public AnnouncementMenu(ICustomForm form)
         {
             InitializeComponent();
+
+            this.form = form;
 
             // load data grid columns
             dataGridView1.Columns.Add("ID", "ID");
@@ -57,6 +61,21 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 }
             }
 
+        }
+
+        private void Clear()
+        {
+            textAnnouncementID.Clear();
+            txtHeader.Clear();
+            txtBody.Clear();
+            dtpAnnouncementDue.Value = DateTime.Now;
+            txtCover.Clear();
+            checkBoxImportant.Checked = false;
+
+            // set checkbox
+            checkBoxAdmin.Checked = false;
+            checkBoxUser.Checked = false;
+            checkBoxLibrarian.Checked = false;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -114,9 +133,50 @@ namespace LibraryManagementSystemWF.views.Dashboard
             if (res.IsSuccess)
             {
                 MessageBox.Show("Announcement is published!");
+                this.Clear();
                 LoadAnnouncements();
             } else
             {
+                foreach (KeyValuePair<string, string> error in res.Errors)
+                {
+                    MessageBox.Show($"{error.Key}: {error.Value}");
+                }
+            }
+        }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            this.Clear();
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            // update announcement
+            List<RoleEnum> publishToRoles = new();
+
+            if (checkBoxAdmin.Checked) publishToRoles.Add(RoleEnum.ADMINISTRATOR);
+            if (checkBoxLibrarian.Checked) publishToRoles.Add(RoleEnum.LIBRARIAN);
+            if (checkBoxUser.Checked) publishToRoles.Add(RoleEnum.USER);
+
+            ControllerModifyData<Announcement> res = await AnnouncementController.Update(
+                textAnnouncementID.Text,
+                txtHeader.Text,
+                txtBody.Text,
+                dtpAnnouncementDue.Value,
+                publishToRoles,
+                txtCover.Text,
+                checkBoxImportant.Checked
+                );
+
+            if (res.IsSuccess)
+            {
+                MessageBox.Show("Announcement is updated!");
+                this.Clear();
+                LoadAnnouncements();
+            }
+            else
+            {
+                MessageBox.Show("Error");
                 foreach (KeyValuePair<string, string> error in res.Errors)
                 {
                     MessageBox.Show($"{error.Key}: {error.Value}");

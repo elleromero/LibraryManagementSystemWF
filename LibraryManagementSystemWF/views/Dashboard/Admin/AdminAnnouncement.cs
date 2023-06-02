@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace LibraryManagementSystemWF.views.Dashboard.Admin
 {
-    public partial class AdminAnnouncement : Form
+    public partial class AdminAnnouncement : Form, ICustomForm
     {
         private int currentPage = 1;
         private int maxPage = 1;
@@ -102,7 +103,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void button3_Click(object sender, EventArgs e)
         {
-            new AnnouncementMenu().Show();
+            new AnnouncementMenu(this).Show();
+        }
+
+        public void RefreshDataGrid()
+        {
+            throw new NotImplementedException();
         }
     }
 }
