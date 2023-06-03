@@ -108,7 +108,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         public void RefreshDataGrid()
         {
-            throw new NotImplementedException();
+            LoadAnnouncements();
         }
     }
 }

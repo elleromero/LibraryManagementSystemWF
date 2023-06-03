@@ -135,6 +135,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 MessageBox.Show("Announcement is published!");
                 this.Clear();
                 LoadAnnouncements();
+                form.RefreshDataGrid();
             } else
             {
                 foreach (KeyValuePair<string, string> error in res.Errors)
@@ -173,6 +174,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 MessageBox.Show("Announcement is updated!");
                 this.Clear();
                 LoadAnnouncements();
+                form.RefreshDataGrid();
             }
             else
             {
@@ -195,6 +197,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 MessageBox.Show("Announcement is updated!");
                 this.Clear();
                 LoadAnnouncements();
+                form.RefreshDataGrid();
             }
             else
             {
