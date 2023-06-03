@@ -13,7 +13,7 @@ namespace LibraryManagementSystemWF.services
         //DESKTOP-SL438A7\SQLEXPRESS
         private const string
             DB_NAME = "DB_LMS",
-            CONN_BASE = "Data Source = DESKTOP-SL438A7\\SQLEXPRESS;Integrated Security=true;",
+            CONN_BASE = "Data Source = DESKTOP-PDLDGGJ\\SQLEXPRESS;Integrated Security=true;",
             CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}",
             VERSION = "v.2.2.3-dev Frappe.";
                            

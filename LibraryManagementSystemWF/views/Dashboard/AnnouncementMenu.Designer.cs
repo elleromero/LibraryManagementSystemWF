@@ -318,6 +318,7 @@
             this.button3.TabIndex = 30;
             this.button3.Text = "find";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label7
             // 
