@@ -235,19 +235,21 @@ namespace LibraryManagementSystemWF.dao
             if (user == null) return returnResult;
 
             string query = $"SELECT COUNT(*) as row_count FROM announcement_roles WHERE role_id = {user.Role.ID}; " +
-                "SELECT *, " +
-                "STUFF((SELECT ' ' + r.name " +
-                "FROM roles r " +
-                "INNER JOIN announcement_roles ar ON ar.role_id = r.role_id " +
-                "WHERE ar.announcement_id = a.announcement_id " +
-                "FOR XML PATH('')), 1, 1, '') AS visible_roles " +
-                "FROM announcements a " +
-                "INNER JOIN announcement_roles ar ON a.announcement_id = ar.announcement_id " +
-                "INNER JOIN users u ON u.user_id = a.user_id " +
-                "INNER JOIN members m ON m.member_id = u.member_id " +
-                "INNER JOIN roles r ON r.role_id = u.role_id " +
-                $"WHERE u.user_id = '{user.ID}' " +
-                $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
+                           "SELECT *, " +
+                           "STUFF((SELECT ' ' + r.name " +
+                           "FROM roles r " +
+                           "INNER JOIN announcement_roles ar ON ar.role_id = r.role_id " +
+                           "WHERE ar.announcement_id = a.announcement_id " +
+                           "FOR XML PATH('')), 1, 1, '') AS visible_roles " +
+                           "FROM announcements a " +
+                           "INNER JOIN announcement_roles ar ON a.announcement_id = ar.announcement_id " +
+                           "INNER JOIN users u ON u.user_id = a.user_id " +
+                           "INNER JOIN members m ON m.member_id = u.member_id " +
+                           "INNER JOIN roles r ON r.role_id = u.role_id " +
+                           $"WHERE ar.role_id = {user.Role.ID} " +
+                           $"AND u.user_id = '{user.ID}' " +
+                           $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
+
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
