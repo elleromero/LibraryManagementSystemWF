@@ -40,9 +40,13 @@
             this.subtitleLbl = new System.Windows.Forms.Label();
             this.titleLbl = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpAnnouncements = new System.Windows.Forms.FlowLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.nextBtn = new System.Windows.Forms.Button();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.prevBtn = new System.Windows.Forms.Button();
+            this.pageLbl = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -172,15 +176,18 @@
             // 
             this.flowLayoutPanel1.Location = new System.Drawing.Point(17, 219);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(443, 281);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(417, 289);
             this.flowLayoutPanel1.TabIndex = 15;
             // 
-            // flowLayoutPanel2
+            // flpAnnouncements
             // 
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(483, 219);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(208, 281);
-            this.flowLayoutPanel2.TabIndex = 16;
+            this.flpAnnouncements.AutoScroll = true;
+            this.flpAnnouncements.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flpAnnouncements.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpAnnouncements.Location = new System.Drawing.Point(440, 219);
+            this.flpAnnouncements.Name = "flpAnnouncements";
+            this.flpAnnouncements.Size = new System.Drawing.Size(251, 259);
+            this.flpAnnouncements.TabIndex = 16;
             // 
             // label7
             // 
@@ -198,20 +205,72 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(479, 199);
+            this.label8.Location = new System.Drawing.Point(440, 201);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(123, 17);
             this.label8.TabIndex = 18;
             this.label8.Text = "🎉 Annoucements";
+            // 
+            // nextBtn
+            // 
+            this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.nextBtn.Location = new System.Drawing.Point(472, 484);
+            this.nextBtn.Name = "nextBtn";
+            this.nextBtn.Size = new System.Drawing.Size(24, 24);
+            this.nextBtn.TabIndex = 19;
+            this.nextBtn.Text = ">";
+            this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel2.Location = new System.Drawing.Point(618, 201);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(73, 15);
+            this.linkLabel2.TabIndex = 21;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Publish New";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // prevBtn
+            // 
+            this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.prevBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.prevBtn.Location = new System.Drawing.Point(440, 484);
+            this.prevBtn.Name = "prevBtn";
+            this.prevBtn.Size = new System.Drawing.Size(24, 24);
+            this.prevBtn.TabIndex = 22;
+            this.prevBtn.Text = "<";
+            this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
+            // 
+            // pageLbl
+            // 
+            this.pageLbl.AutoSize = true;
+            this.pageLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.pageLbl.Location = new System.Drawing.Point(661, 484);
+            this.pageLbl.Name = "pageLbl";
+            this.pageLbl.Size = new System.Drawing.Size(30, 17);
+            this.pageLbl.TabIndex = 23;
+            this.pageLbl.Text = "1 | 1";
             // 
             // Ctrldashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.pageLbl);
+            this.Controls.Add(this.prevBtn);
+            this.Controls.Add(this.linkLabel2);
+            this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.flowLayoutPanel2);
+            this.Controls.Add(this.flpAnnouncements);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.subtitleLbl);
             this.Controls.Add(this.titleLbl);
@@ -245,8 +304,12 @@
         private Label subtitleLbl;
         private Label titleLbl;
         private FlowLayoutPanel flowLayoutPanel1;
-        private FlowLayoutPanel flowLayoutPanel2;
+        private FlowLayoutPanel flpAnnouncements;
         private Label label7;
         private Label label8;
+        private Button nextBtn;
+        private LinkLabel linkLabel2;
+        private Button prevBtn;
+        private Label pageLbl;
     }
 }

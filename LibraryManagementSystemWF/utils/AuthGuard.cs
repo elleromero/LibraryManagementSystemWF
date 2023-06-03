@@ -41,9 +41,8 @@ namespace LibraryManagementSystemWF.utils
                         }
                         else
                         {
-                            string roleName = reader.GetString(reader.GetOrdinal("name"));
-                            isAllowed = roleName.ToUpper() == roleName.ToUpper();
-
+                            string roleNameDB = reader.GetString(reader.GetOrdinal("name"));
+                            isAllowed = roleNameDB.ToUpper() == roleName.ToUpper();
                         }
                     }
                 }
