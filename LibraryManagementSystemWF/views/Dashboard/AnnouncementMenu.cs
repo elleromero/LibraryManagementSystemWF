@@ -1,6 +1,7 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,23 @@ namespace LibraryManagementSystemWF.views.Dashboard
             InitializeComponent();
 
             this.form = form;
+
+            // determine role
+            User? user = AuthService.getSignedUser();
+
+            if (user != null)
+            {
+                if (user.Role.ID == (int) RoleEnum.ADMINISTRATOR)
+                {
+                    checkBoxAdmin.Checked = true;
+                    checkBoxAdmin.Enabled = false;
+                } else if (user.Role.ID == (int)RoleEnum.LIBRARIAN)
+                {
+                    checkBoxAdmin.Enabled = false;
+                    checkBoxLibrarian.Enabled = false;
+                    checkBoxLibrarian.Checked = true;
+                }
+            }
 
             // load data grid columns
             dataGridView1.Columns.Add("ID", "ID");

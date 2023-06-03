@@ -185,9 +185,9 @@ namespace LibraryManagementSystemWF.utils
 
             if (!user.Role.HasAccess) return false;
 
-            if (user.Role.Name.ToUpper() == "ADMINISTRATOR" && roles.Any(adminAccess.Contains)) return true;
+            if (user.Role.Name.ToUpper() == "ADMINISTRATOR" && roles.Any(adminAccess.Contains) && roles.Count <= adminAccess.Length) return true;
            
-            if (user.Role.Name.ToUpper() == "LIBRARIAN" && roles.Any(librarianAccess.Contains)) return true;
+            if (user.Role.Name.ToUpper() == "LIBRARIAN" && roles.Any(librarianAccess.Contains) && roles.Count <= librarianAccess.Length) return true;
 
             return false;
         }
