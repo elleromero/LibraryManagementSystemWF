@@ -122,7 +122,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                     if (!string.IsNullOrEmpty(bookId))
                     {
                         // Call the method to create copies of the book
-                        ControllerModifyData<Loan> result = await LoanController.BorrowBook(bookId, dueDate);
+                        ControllerModifyData<Loan> result = await LoanController.BorrowBook(bookId);
 
                         if (result.IsSuccess)
                         {

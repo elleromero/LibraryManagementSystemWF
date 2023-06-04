@@ -16,7 +16,13 @@ namespace LibraryManagementSystemWF.services
             CONN_BASE = "Data Source = DESKTOP-PDLDGGJ\\SQLEXPRESS;Integrated Security=true;",
             CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}",
             VERSION = "v.2.2.3-dev Frappe.";
+        private const int BORROW_TIME_DAYS = 14;
                            
+        public static int GetBorrowTimeDays()
+        {
+            return BORROW_TIME_DAYS;
+        }
+
         public static string GetDBName()
         {
             return DB_NAME;

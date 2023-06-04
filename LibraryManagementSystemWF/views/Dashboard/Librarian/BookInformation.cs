@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             InitializeComponent();
 
             this.book = book;
+
+            // check user role
+            User? user = AuthService.getSignedUser();
+
+            if (user != null)
+            {
+                if (user.Role.Name == "USER")
+                {
+                    linkLabel1.Visible = false;
+                    linkLabel1.Enabled = false;
+                }
+            }
 
             // initialize information
             if (File.Exists(book.Cover))
