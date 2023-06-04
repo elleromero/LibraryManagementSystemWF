@@ -1,6 +1,6 @@
-﻿namespace LibraryManagementSystemWF.views.Dashboard.Librarian
+﻿namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 {
-    partial class LibrarianDashboard
+    partial class UserDashboard
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibrarianDashboard));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.mainPanel = new System.Windows.Forms.Panel();
-            this.topbar = new System.Windows.Forms.Panel();
-            this.timerLbl = new System.Windows.Forms.Label();
-            this.navLbl = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserDashboard));
             this.sidebar = new System.Windows.Forms.Panel();
             this.versionlbl = new System.Windows.Forms.Label();
             this.idLbl = new System.Windows.Forms.Label();
@@ -46,73 +41,16 @@
             this.emailLbl = new System.Windows.Forms.Label();
             this.nameLbl = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panel1.SuspendLayout();
-            this.topbar.SuspendLayout();
+            this.topbar = new System.Windows.Forms.Panel();
+            this.timerLbl = new System.Windows.Forms.Label();
+            this.navLbl = new System.Windows.Forms.Label();
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.sidebar.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.topbar.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(this.mainPanel);
-            this.panel1.Controls.Add(this.topbar);
-            this.panel1.Controls.Add(this.sidebar);
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(998, 558);
-            this.panel1.TabIndex = 0;
-            // 
-            // mainPanel
-            // 
-            this.mainPanel.BackColor = System.Drawing.Color.Transparent;
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(288, 38);
-            this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(710, 520);
-            this.mainPanel.TabIndex = 2;
-            // 
-            // topbar
-            // 
-            this.topbar.BackColor = System.Drawing.Color.White;
-            this.topbar.Controls.Add(this.timerLbl);
-            this.topbar.Controls.Add(this.navLbl);
-            this.topbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topbar.Location = new System.Drawing.Point(288, 0);
-            this.topbar.Name = "topbar";
-            this.topbar.Size = new System.Drawing.Size(710, 38);
-            this.topbar.TabIndex = 1;
-            // 
-            // timerLbl
-            // 
-            this.timerLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.timerLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timerLbl.Location = new System.Drawing.Point(336, 12);
-            this.timerLbl.Name = "timerLbl";
-            this.timerLbl.Size = new System.Drawing.Size(362, 15);
-            this.timerLbl.TabIndex = 1;
-            this.timerLbl.Text = "Sept. 14 2023. Monday. 11:00:34 AM";
-            this.timerLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // navLbl
-            // 
-            this.navLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.navLbl.AutoSize = true;
-            this.navLbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.navLbl.Location = new System.Drawing.Point(6, 9);
-            this.navLbl.Name = "navLbl";
-            this.navLbl.Size = new System.Drawing.Size(56, 21);
-            this.navLbl.TabIndex = 0;
-            this.navLbl.Text = "Books";
-            this.navLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // sidebar
             // 
@@ -126,7 +64,7 @@
             this.sidebar.Location = new System.Drawing.Point(0, 0);
             this.sidebar.Name = "sidebar";
             this.sidebar.Size = new System.Drawing.Size(288, 558);
-            this.sidebar.TabIndex = 0;
+            this.sidebar.TabIndex = 1;
             // 
             // versionlbl
             // 
@@ -179,7 +117,6 @@
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -192,11 +129,10 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(333, 43);
             this.button3.TabIndex = 1;
-            this.button3.Text = "Books";
+            this.button3.Text = "My Repo";
             this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -209,16 +145,13 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(333, 43);
             this.button2.TabIndex = 0;
-            this.button2.Text = "Home";
+            this.button2.Text = "Discover";
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -252,7 +185,7 @@
             this.emailLbl.ForeColor = System.Drawing.Color.Black;
             this.emailLbl.Location = new System.Drawing.Point(47, 28);
             this.emailLbl.Name = "emailLbl";
-            this.emailLbl.Size = new System.Drawing.Size(210, 15);
+            this.emailLbl.Size = new System.Drawing.Size(270, 15);
             this.emailLbl.TabIndex = 1;
             this.emailLbl.Text = "marklopez@gmail.com";
             // 
@@ -280,48 +213,91 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // LibrarianDashboard
+            // topbar
+            // 
+            this.topbar.BackColor = System.Drawing.Color.White;
+            this.topbar.Controls.Add(this.timerLbl);
+            this.topbar.Controls.Add(this.navLbl);
+            this.topbar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topbar.Location = new System.Drawing.Point(288, 0);
+            this.topbar.Name = "topbar";
+            this.topbar.Size = new System.Drawing.Size(710, 38);
+            this.topbar.TabIndex = 2;
+            // 
+            // timerLbl
+            // 
+            this.timerLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.timerLbl.Location = new System.Drawing.Point(336, 12);
+            this.timerLbl.Name = "timerLbl";
+            this.timerLbl.Size = new System.Drawing.Size(362, 15);
+            this.timerLbl.TabIndex = 1;
+            this.timerLbl.Text = "Sept. 14 2023. Monday. 11:00:34 AM";
+            this.timerLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // navLbl
+            // 
+            this.navLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.navLbl.AutoSize = true;
+            this.navLbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.navLbl.Location = new System.Drawing.Point(6, 9);
+            this.navLbl.Name = "navLbl";
+            this.navLbl.Size = new System.Drawing.Size(56, 21);
+            this.navLbl.TabIndex = 0;
+            this.navLbl.Text = "Books";
+            this.navLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.BackColor = System.Drawing.Color.Transparent;
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.Location = new System.Drawing.Point(288, 38);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(710, 520);
+            this.mainPanel.TabIndex = 3;
+            // 
+            // UserDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(998, 558);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.mainPanel);
+            this.Controls.Add(this.topbar);
+            this.Controls.Add(this.sidebar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "LibrarianDashboard";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AdminDashboardRevamp";
-            this.panel1.ResumeLayout(false);
-            this.topbar.ResumeLayout(false);
-            this.topbar.PerformLayout();
+            this.Name = "UserDashboard";
+            this.Text = "UserDashboard";
             this.sidebar.ResumeLayout(false);
             this.sidebar.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.topbar.ResumeLayout(false);
+            this.topbar.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Panel panel1;
         private Panel sidebar;
-        private Panel topbar;
-        private Panel mainPanel;
-        private Panel panel2;
+        private Label versionlbl;
+        private Label idLbl;
+        private Panel panel3;
+        private Button button4;
+        private Button button3;
+        private Button button2;
         private Button button1;
+        private Panel panel2;
         private Label emailLbl;
         private Label nameLbl;
         private PictureBox pictureBox1;
+        private Panel topbar;
         private Label timerLbl;
         private Label navLbl;
-        private Panel panel3;
-        private Button button3;
-        private Button button2;
-        private Label idLbl;
-        private Label versionlbl;
-        private Button button4;
+        private Panel mainPanel;
     }
 }
