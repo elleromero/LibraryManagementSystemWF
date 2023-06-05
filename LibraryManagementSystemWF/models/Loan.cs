@@ -14,5 +14,7 @@ namespace LibraryManagementSystemWF.models
         public DateTime DateBorrowed { get; set; }
         public DateTime DateDue { get; set; }
         public bool IsReturned { get; set; }
+
+        public DateTime Timestamp { get; set; }
     }
 }

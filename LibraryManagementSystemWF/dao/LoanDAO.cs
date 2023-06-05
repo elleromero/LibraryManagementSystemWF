@@ -27,8 +27,8 @@ namespace LibraryManagementSystemWF.dao
                 $"WHERE book_id = '{model.Copy.Book.ID}' AND status_id = 1; " +
                 "IF @copy_id IS NOT NULL " +
                 "BEGIN " +
-                "INSERT INTO loans (user_id, copy_id, date_borrowed, due_date, is_returned) " +
-                $"VALUES ('{model.User.ID}', @copy_id, '{model.DateBorrowed:yyyy-MM-dd HH:mm:ss.fff}', '{model.DateDue:yyyy-MM-dd HH:mm:ss.fff}', 0); " +
+                "INSERT INTO loans (user_id, copy_id, date_borrowed, due_date, is_returned, timestamp) " +
+                $"VALUES ('{model.User.ID}', @copy_id, '{model.DateBorrowed:yyyy-MM-dd HH:mm:ss.fff}', '{model.DateDue:yyyy-MM-dd HH:mm:ss.fff}', 0, '{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}'); " +
                 "UPDATE copies SET status_id = 2 WHERE copy_id = @copy_id; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
                 "g.name AS gname, g.description AS gdescription " +
@@ -134,7 +134,8 @@ namespace LibraryManagementSystemWF.dao
                 Copy = copy,
                 DateBorrowed = reader.GetDateTime(reader.GetOrdinal("date_borrowed")),
                 DateDue = reader.GetDateTime(reader.GetOrdinal("due_date")),
-                IsReturned = reader.GetBoolean(reader.GetOrdinal("is_returned"))
+                IsReturned = reader.GetBoolean(reader.GetOrdinal("is_returned")),
+                Timestamp = reader.GetDateTime(reader.GetOrdinal("timestamp"))
             };
         }
 
@@ -160,7 +161,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"WHERE l.user_id = '{model.User.ID}' " +
                 "AND is_returned = 0" +
-                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+                $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -217,7 +218,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN members m ON u.member_id = m.member_id " +
                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
-                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+                $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

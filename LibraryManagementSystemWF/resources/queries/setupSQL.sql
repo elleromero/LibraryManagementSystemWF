@@ -85,6 +85,7 @@ CREATE TABLE loans (
 	date_borrowed DATETIME2 NOT NULL,
 	due_date DATETIME2 NOT NULL,
 	is_returned BIT NOT NULL,
+	timestamp DATETIME2 NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
 	FOREIGN KEY (copy_id) REFERENCES copies(copy_id) ON DELETE CASCADE,
 )
