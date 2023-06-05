@@ -15,7 +15,7 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class LoanController : BaseController
     {
-        public static async Task<ControllerModifyData<Loan>> BorrowBook(string bookId, DateTime dueDate)
+        public static async Task<ControllerModifyData<Loan>> BorrowBook(string bookId)
         {
             ControllerModifyData<Loan> returnData = new()
             {
@@ -24,6 +24,7 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
             string? userId = AuthService.getSignedUser()?.ID.ToString();
+            DateTime dueDate = DateTime.Now.AddDays(EnvService.GetBorrowTimeDays());
 
             // is not librarian
             if (!await AuthGuard.HavePermission("USER"))
@@ -45,7 +46,7 @@ namespace LibraryManagementSystemWF.controllers
             }
             if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
             if (dueDate.Date < DateTime.Now.Date) errors.Add("dueDate", "Invalid due date");
-            if (!await Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available books");
+            if (!await Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available copies for this book");
 
             if (errors.Count == 0)
             {

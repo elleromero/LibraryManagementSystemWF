@@ -57,7 +57,7 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
             }
             else MessageBox.Show("Can't fetch announcements at the moment");
         }
-    
+
         private async void LoadStats()
         {
             ControllerModifyData<Stats> res = await StatsController.GetStats();

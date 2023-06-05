@@ -222,5 +222,17 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 MessageBox.Show("Announcement can't be removed");
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // open file dialog
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string imagePath = openFileDialog.FileName;
+                txtCover.Text = imagePath;
+            }
+        }
     }
 }

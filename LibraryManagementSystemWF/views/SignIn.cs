@@ -2,6 +2,7 @@
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.views.Dashboard.Admin;
+using LibraryManagementSystemWF.views.Dashboard.GeneralUser;
 using LibraryManagementSystemWF.views.Dashboard.Librarian;
 
 namespace LibraryManagementSystemWF.views
@@ -51,7 +52,7 @@ namespace LibraryManagementSystemWF.views
                 {
                     MessageBox.Show("LOGIN SUCCESS!!!! WELCOME USER!!!");
 
-                    UserDb userDb = new UserDb();
+                    UserDashboard userDb = new();
                     userDb.Show();
                     this.Hide();
                 }
