@@ -86,5 +86,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             mainPanel.Controls.Add(new CtrlDiscover());
             navLbl.Text = "Discover";
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button3.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlRepo());
+            navLbl.Text = "My Repo";
+        }
     }
 }
