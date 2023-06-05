@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.views.components;
 using System;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 
 namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 {
-    public partial class CtrlRepo : UserControl
+    public partial class CtrlRepo : UserControl, ICustomForm
     {
         public CtrlRepo()
         {
@@ -22,9 +23,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             LoadBorrowedBooks();
         }
 
+        public void RefreshDataGrid()
+        {
+            LoadBorrowedBooks();
+        }
+
         private async void LoadBorrowedBooks()
         {
             ControllerAccessData<Loan> res = await LoanController.GetAllBorrowedBooks();
+
+            flowLayoutPanel1.Controls.Clear();
 
             if (res.IsSuccess)
             {
@@ -32,7 +40,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 {
                     foreach (Loan loan in res.Results)
                     {
-                        flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan));
+                        flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan, this));
                     }
                 }
                 else MessageBox.Show("No records found");

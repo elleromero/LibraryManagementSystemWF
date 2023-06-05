@@ -159,6 +159,7 @@ namespace LibraryManagementSystemWF.dao
                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"WHERE l.user_id = '{model.User.ID}' " +
+                "AND is_returned = 0" +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>

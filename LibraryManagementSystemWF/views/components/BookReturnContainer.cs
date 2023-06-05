@@ -1,26 +1,21 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using LibraryManagementSystemWF.views.Dashboard.Librarian;
 
 namespace LibraryManagementSystemWF.views.components
 {
     public partial class BookReturnContainer : UserControl
     {
         private Loan loan;
+        private ICustomForm form;
 
-        public BookReturnContainer(Loan loan)
+        public BookReturnContainer(Loan loan, ICustomForm form)
         {
             InitializeComponent();
 
             this.loan = loan;
+            this.form = form;
 
             lblTitle.Text = loan.Copy.Book.Title;
             lblAuthor.Text = $"by {loan.Copy.Book.Author}";
@@ -33,12 +28,25 @@ namespace LibraryManagementSystemWF.views.components
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new BookContainer(this.loan.Copy.Book).Show();
+            new BookInformation(this.loan.Copy.Book).Show();
         }
 
         private async void button2_Click(object sender, EventArgs e)
         {
             ControllerModifyData<Loan> res = await LoanController.ReturnBook(loan.ID.ToString());
+
+            if (res.IsSuccess)
+            {
+                MessageBox.Show($"'{loan.Copy.Book.Title}' is returned successfully.\nCopyID: {loan.Copy.ID}");
+                form.RefreshDataGrid();
+            }
+            else
+            {
+                foreach (KeyValuePair<string, string> error in res.Errors)
+                {
+                    MessageBox.Show($"{error.Key}: {error.Value}");
+                }
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
 using System;
@@ -66,7 +67,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             button2.BackColor = Color.White;
             button3.BackColor = Color.White;
-            button4.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }
