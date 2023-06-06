@@ -1,6 +1,7 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.utils;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,19 +41,17 @@ namespace LibraryManagementSystemWF.views
             string phone = txtPhone.Text.Trim();
             string email = txtEmail.Text.Trim();
             string profile = txtProfile.Text;
-            Loading loading = new();
+            Loader loader = new(button3);
 
             // call loader
-            button3.Enabled = false;
-            loading.Show();
+            loader.StartLoading();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
             ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email, profile);
 
             if (res.IsSuccess)
             {
-                button3.Enabled = true;
-                loading.Close();
+                loader.StopLoading();
 
                 // CHECK IF THE REGISTRATION IS SUCCESS
                 DialogBuilder.Show("Registered Successfully. Please login.", "Registration Success", MessageBoxIcon.Information);
@@ -62,8 +61,7 @@ namespace LibraryManagementSystemWF.views
             }
             else
             {
-                button3.Enabled = true;
-                loading.Close();
+                loader.StopLoading();
 
                 // SHOWS ERROR MESSAGE
                 DialogBuilder.Show(res.Errors, "Registration Error", MessageBoxIcon.Stop);

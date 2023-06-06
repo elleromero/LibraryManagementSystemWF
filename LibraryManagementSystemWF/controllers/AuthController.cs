@@ -49,6 +49,7 @@ namespace LibraryManagementSystemWF.controllers
                 "password",
                 "Password is too short"
                 );
+            if (!await Validator.IsNameUnique("members", "phone", phone)) errors.Add("phone", "Phone was already registered");
 
             // register user if theres no error
             if (errors.Count == 0)
