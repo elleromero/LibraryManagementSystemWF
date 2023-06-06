@@ -63,6 +63,8 @@ namespace LibraryManagementSystemWF.utils
             // Check if the username is not too long (50 characters or less)
             if (username.Length > 50) return false;
 
+            if (username.Length < 5) return false;
+
             return true;
         }
 

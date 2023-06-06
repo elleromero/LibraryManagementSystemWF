@@ -79,5 +79,13 @@ namespace LibraryManagementSystemWF.views
                 pictureBox1.Image = Image.FromFile(imagePath);
             }
         }
+
+        private void txtPhone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

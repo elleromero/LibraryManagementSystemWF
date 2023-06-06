@@ -97,6 +97,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(231, 29);
             this.txtPhone.TabIndex = 5;
+            this.txtPhone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhone_KeyPress);
             // 
             // txtEmail
             // 
@@ -286,6 +287,7 @@
             this.txtProfile.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtProfile.Location = new System.Drawing.Point(825, 200);
             this.txtProfile.Name = "txtProfile";
+            this.txtProfile.PlaceholderText = "C://Images/profile-picture.png";
             this.txtProfile.ReadOnly = true;
             this.txtProfile.Size = new System.Drawing.Size(167, 29);
             this.txtProfile.TabIndex = 26;

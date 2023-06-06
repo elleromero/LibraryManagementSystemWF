@@ -39,7 +39,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmail(email)) errors.Add("email", "Email is invalid");
             if (!Validator.IsUsername(username)) errors.Add(
                 "username",
-                "Username should contain only letters, numbers, underscores, or hyphens"
+                "Username should atleast 5 characters in length and contain only letters, numbers, underscores, or hyphens"
                 );
             if (!await Validator.IsUsernameUnique(username)) errors.Add(
                 "username",
