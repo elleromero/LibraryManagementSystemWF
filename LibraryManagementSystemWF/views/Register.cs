@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,16 +15,19 @@ namespace LibraryManagementSystemWF.views
 {
     public partial class Register : Form
     {
-        public Register()
+        private Form form;
+
+        public Register(Form form)
         {
             InitializeComponent();
+
+            this.form = form;
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            SignIn signIn = new SignIn();
-            signIn.Show();
-            this.Hide();
+            this.form.Show();
+            this.Close();
         }
 
         private async void button3_Click(object sender, EventArgs e)
@@ -36,30 +40,33 @@ namespace LibraryManagementSystemWF.views
             string phone = txtPhone.Text.Trim();
             string email = txtEmail.Text.Trim();
             string profile = txtProfile.Text;
+            Loading loading = new();
+
+            // call loader
+            button3.Enabled = false;
+            loading.Show();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
             ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email, profile);
 
             if (res.IsSuccess)
             {
-                // CHECK IF THE REGISTRATION IS SUCCESS
-                MessageBox.Show("Registration Successfull!!");
+                button3.Enabled = true;
+                loading.Close();
 
-                SignIn signin = new SignIn();
-                signin.Show();
-                this.Hide();
+                // CHECK IF THE REGISTRATION IS SUCCESS
+                DialogBuilder.Show("Registered Successfully. Please login.", "Registration Success", MessageBoxIcon.Information);
+
+                this.form.Show();
+                this.Close();
             }
             else
             {
+                button3.Enabled = true;
+                loading.Close();
+
                 // SHOWS ERROR MESSAGE
-                string errors = " ";
-                foreach (var error in res.Errors)
-                {
-                    errors += error.Value + "\n";
-                }
-
-                MessageBox.Show(errors);
-
+                DialogBuilder.Show(res.Errors, "Registration Error", MessageBoxIcon.Stop);
             }
         }
 

@@ -16,7 +16,7 @@ namespace LibraryManagementSystemWF.views
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Register register = new();
+            Register register = new(this);
             register.Show();
             this.Hide();
         }
