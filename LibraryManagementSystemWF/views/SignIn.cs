@@ -70,5 +70,10 @@ namespace LibraryManagementSystemWF.views
         {
             Application.Exit();
         }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new About().ShowDialog();
+        }
     }
 }

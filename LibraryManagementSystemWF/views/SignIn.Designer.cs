@@ -206,6 +206,7 @@
             this.linkLabel3.TabIndex = 21;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "About";
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
             // SignIn
             // 
