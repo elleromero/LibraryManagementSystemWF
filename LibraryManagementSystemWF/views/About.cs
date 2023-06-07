@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagementSystemWF.services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,8 @@ namespace LibraryManagementSystemWF.views
         public About()
         {
             InitializeComponent();
+
+            lblVersion.Text = EnvService.GetVersion();
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)

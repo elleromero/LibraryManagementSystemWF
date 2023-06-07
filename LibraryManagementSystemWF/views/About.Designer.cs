@@ -34,7 +34,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -123,15 +123,15 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "License:";
             // 
-            // label6
+            // lblVersion
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(102, 43);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(179, 15);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "3.0.1 Marmalade - debug branch";
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblVersion.Location = new System.Drawing.Point(102, 43);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(179, 15);
+            this.lblVersion.TabIndex = 5;
+            this.lblVersion.Text = "3.0.1 Marmalade - debug branch";
             // 
             // label7
             // 
@@ -420,7 +420,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -454,7 +454,7 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private Label label6;
+        private Label lblVersion;
         private Label label7;
         private Label label8;
         private PictureBox pictureBox1;
