@@ -16,7 +16,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 {
     public partial class AdminMenu : Form
     {
-        private AdminDashboard adminDashboard = new();
+        private AdminDashboard adminDashboard;
         private string adminPassword = "";
         private bool isInitialized = true;
 

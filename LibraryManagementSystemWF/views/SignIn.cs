@@ -47,21 +47,21 @@ namespace LibraryManagementSystemWF.views
 
                 if (user.Role.HasAccess && user.Role.Name == "ADMINISTRATOR")
                 {
-                    AdminDashboard admin = new();
+                    AdminDashboard admin = new(this);
                     this.Hide();
-                    admin.ShowDialog();
+                    admin.Show();
                 }
                 else if (user.Role.HasAccess && user.Role.Name == "LIBRARIAN")
                 {
                     LibrarianDashboard librarian = new();
                     this.Hide();
-                    librarian.ShowDialog();
+                    librarian.Show();
                 }
                 else
                 {
                     UserDashboard userDb = new();
                     this.Hide();
-                    userDb.ShowDialog();
+                    userDb.Show();
                 }
             }
             else

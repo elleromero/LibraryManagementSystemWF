@@ -72,8 +72,8 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
         private void button2_Click(object sender, EventArgs e)
         {
-            AdminDashboard AD = new AdminDashboard();
-            AD.Show();
+            // AdminDashboard AD = new AdminDashboard();
+             // AD.Show();
             this.Hide();
         }
     }

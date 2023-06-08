@@ -25,11 +25,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private int page = 1;
         private int maxPage = 1;
         private Loader loader;
+        private Form form;
 
-        public AdminDashboard()
+        public AdminDashboard(Form form)
         {
             InitializeComponent();
 
+            this.form = form;
             this.loader = new();
 
             // Initialize version name
@@ -53,12 +55,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             timer.Start();
         }
 
+        private void setPagination(bool status)
+        {
+            prevBtn.Enabled = status;
+            prevLastBtn.Enabled = status;
+            nextBtn.Enabled = status;
+            nextLastBtn.Enabled = status;
+        }
+
         public async void LoadUsers()
         {
             ControllerAccessData<User> res = await AdminController.GetAllUsers(page);
 
             if (res.IsSuccess)
             {
+                // enable pagination
+                this.setPagination(true);
                 this.loader.StopLoading();
                 users = res.Results;
 
@@ -85,15 +97,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 // init page label
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
-
-                // init pagination buttons
-                prevLastBtn.Enabled = page > 1;
-                prevBtn.Enabled = page > 1;
-
-                nextLastBtn.Enabled = page < maxPage;
-                nextBtn.Enabled = page < maxPage;
             } else
             {
+                // enable pagination
+                this.setPagination(true);
                 this.loader.StopLoading();
                 DialogBuilder.Show(res.Errors, "Fetch Users", MessageBoxIcon.Hand);
             }
@@ -109,7 +116,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AuthController.LogOut();
-            new SignIn().Show();
+            form.Show();
             this.Close();
         }
 
@@ -120,26 +127,50 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void prevLastBtn_Click(object sender, EventArgs e)
         {
-            page = 1;
-            LoadUsers();
+            if (page > 1)
+            {
+                page = 1;
+                this.loader = new();
+                this.setPagination(false);
+                this.loader.StartLoading();
+                LoadUsers();
+            }
         }
 
         private void nextLastBtn_Click(object sender, EventArgs e)
         {
-            page = maxPage;
-            LoadUsers();
+            if (page < maxPage)
+            {
+                page = maxPage;
+                this.loader = new();
+                this.setPagination(false);
+                this.loader.StartLoading();
+                LoadUsers();
+            }
         }
 
         private void nextBtn_Click(object sender, EventArgs e)
         {
-            page += 1;
-            LoadUsers();
+            if (page < maxPage)
+            {
+                page += 1;
+                this.loader = new();
+                this.setPagination(false);
+                this.loader.StartLoading();
+                LoadUsers();
+            }
         }
 
         private void prevBtn_Click(object sender, EventArgs e)
         {
-            page -= 1;
-            LoadUsers();
+            if (page > 1)
+            {
+                page -= 1;
+                this.loader = new();
+                this.setPagination(false);
+                this.loader.StartLoading();
+                LoadUsers();
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
