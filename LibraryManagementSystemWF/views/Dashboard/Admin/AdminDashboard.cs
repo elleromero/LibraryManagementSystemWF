@@ -4,6 +4,7 @@ using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,21 +24,24 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private List<User> users = new();
         private int page = 1;
         private int maxPage = 1;
+        private Loader loader;
 
         public AdminDashboard()
         {
             InitializeComponent();
 
+            this.loader = new();
+
             // Initialize version name
             versionlbl.Text = EnvService.GetVersion();
-
-            LoadUsers();
 
             // init greeting
             User? user = AuthService.getSignedUser();
 
             if (user != null)
             {
+                this.loader.StartLoading();
+                LoadUsers();
                 titleLbl.Text = GreetingGenerator.GenerateGreeting(user.Member.FirstName, DateTime.Now.ToString());
             }
 
@@ -55,6 +59,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
             if (res.IsSuccess)
             {
+                this.loader.StopLoading();
                 users = res.Results;
 
                 subtitleLbl.Text = $"You currently have {res.rowCount} user(s) registered.";
@@ -87,6 +92,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                 nextLastBtn.Enabled = page < maxPage;
                 nextBtn.Enabled = page < maxPage;
+            } else
+            {
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Fetch Users", MessageBoxIcon.Hand);
             }
         }
 

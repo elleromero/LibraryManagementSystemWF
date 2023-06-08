@@ -10,23 +10,19 @@ namespace LibraryManagementSystemWF.views.loader
     internal class Loader
     {
         private Loading loading;
-        private Button triggerBtn;
 
-        public Loader(Button triggerBtn)
+        public Loader()
         {
             this.loading = new();
-            this.triggerBtn = triggerBtn;
         }
 
         public void StartLoading()
         {
-            this.triggerBtn.Enabled = false;
             this.loading.Show();
         }
 
         public void StopLoading()
         {
-            this.triggerBtn.Enabled = true;
             this.loading.Close();
         }
     }
