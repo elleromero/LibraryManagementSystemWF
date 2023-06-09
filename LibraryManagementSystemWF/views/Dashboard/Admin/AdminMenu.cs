@@ -1,7 +1,9 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,12 +21,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private AdminDashboard adminDashboard;
         private string adminPassword = "";
         private bool isInitialized = true;
+        private Loader loader;
+        private int page = 1;
+        private int maxPage = 1;
 
         public AdminMenu(AdminDashboard adminDashboard)
         {
             InitializeComponent();
 
             this.adminDashboard = adminDashboard;
+
+            this.loader = new();
+            this.loader.StartLoading();
 
             LoadUsers();
             LoadRoles();
@@ -59,6 +67,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
             if (res.IsSuccess)
             {
+                loader.StopLoading();
+
+                // set page
+                this.maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{page} | {maxPage}";
+                prevBtn.Enabled = true;
+                nextBtn.Enabled = true;
+
+                if (res.Results.Count == 0) DialogBuilder.Show("No Users Found", "Information", MessageBoxIcon.Information);
+
                 usersGridList.Rows.Clear(); // Clear existing rows before adding new ones
 
                 usersGridList.Columns.Add("ID", "ID");
@@ -89,7 +107,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             }
             else
             {
-                MessageBox.Show("Error retrieving users!");
+                prevBtn.Enabled = true;
+                nextBtn.Enabled = true;
+                loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Error Fetching Users", MessageBoxIcon.Hand);
             }
 
         }
@@ -115,6 +136,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            this.adminDashboard.Enabled = true;
             this.Close();
         }
 
@@ -124,7 +146,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             {
                 Role selectedRole = (Role)cmbRole.SelectedItem;
                 int selectedRoleId = selectedRole.ID;
-                string UserId = textUserID.Text;
                 string Username = textUsername.Text;
                 string Password = textPassword.Text;
                 string FirstName = textFirstName.Text;
@@ -146,32 +167,27 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     ProfilePicture
                     );
 
+                button1.Enabled = false;
+                this.loader = new();
+                this.loader.StartLoading();
+
                 if (res.IsSuccess)
                 {
-                    defaultPreview();
-
-                    cmbRole.SelectedIndex = 0;
-                    textUserID.Text = "";
-                    textUsername.Text = "";
-                    textPassword.Text = "";
-                    textFirstName.Text = "";
-                    textLastName.Text = "";
-                    textAddress.Text = "";
-                    textPhone.Text = "";
-                    textEmail.Text = "";
-                    txtProfile.Text = "";
-                    pictureBox1.Image = null;
+                    button1.Enabled = true;
+                    this.loader.StopLoading();
 
                     LoadUsers();
                     adminDashboard.LoadUsers();
                     clearBtn.PerformClick();
+
+                    DialogBuilder.Show("User added successfully", "Add User", MessageBoxIcon.Information);
                 }
                 else
                 {
-                    foreach (var error in res.Errors)
-                    {
-                        MessageBox.Show(error.Value);
-                    }
+                    button1.Enabled = true;
+                    this.loader.StopLoading();
+
+                    DialogBuilder.Show(res.Errors, "Add User Error", MessageBoxIcon.Hand);
                 }
             }
             else
@@ -212,33 +228,27 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                 this.adminPassword = "";
 
+                button2.Enabled = false;
+                this.loader = new();
+                this.loader.StartLoading();
+
                 if (res.IsSuccess)
                 {
-                    defaultPreview();
-
-                    cmbRole.SelectedIndex = 0;
-                    textUserID.Text = "";
-                    textUsername.Text = "";
-                    textPassword.Text = "";
-                    textFirstName.Text = "";
-                    textLastName.Text = "";
-                    textAddress.Text = "";
-                    textPhone.Text = "";
-                    textEmail.Text = "";
-                    txtProfile.Text = "";
-                    pictureBox1.Image = null;
+                    button2.Enabled = true;
+                    this.loader.StopLoading();
 
                     LoadUsers();
                     adminDashboard.LoadUsers();
                     clearBtn.PerformClick();
+
+                    DialogBuilder.Show("User updated successfully", "Update User", MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("ERROR");
-                    foreach (var error in res.Errors)
-                    {
-                        MessageBox.Show(error.Value);
-                    }
+                    button2.Enabled = true;
+                    this.loader.StopLoading();
+
+                    DialogBuilder.Show(res.Errors, "Update User Error", MessageBoxIcon.Hand);
                 }
             }
 
@@ -301,21 +311,28 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                         {
                             ControllerActionData deleteResult = await AdminController.RemoveById(userId, this.adminPassword);
 
+                            btnDeleteBooks.Enabled = false;
+                            this.loader = new();
+                            this.loader.StartLoading();
+
                             if (deleteResult.IsSuccess)
                             {
-                                MessageBox.Show("Row deleted successfully.");
+                                btnDeleteBooks.Enabled = true;
+                                this.loader.StopLoading();
 
                                 LoadUsers();
                                 adminDashboard.LoadUsers();
                                 clearBtn.PerformClick();
+
+                                DialogBuilder.Show("User Deleted Successfully", "Delete User", MessageBoxIcon.Information);
                             }
                             else
                             {
 
-                                foreach (KeyValuePair<string, string> error in deleteResult.Errors)
-                                {
-                                    MessageBox.Show(error.Value);
-                                }
+                                btnDeleteBooks.Enabled = true;
+                                this.loader.StopLoading();
+
+                                DialogBuilder.Show(deleteResult.Errors, "Delete User Error", MessageBoxIcon.Hand);
                             }
                         }
                         else
@@ -384,6 +401,38 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             cmbRole.Enabled = true;
 
             defaultPreview();
+        }
+
+        private void textPhone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            if (page > 1)
+            {
+                prevBtn.Enabled = false;
+                page--;
+                this.loader = new();
+                loader.StartLoading();
+                LoadUsers();
+            }
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            if (page < maxPage)
+            {
+                nextBtn.Enabled = false;
+                page++;
+                this.loader = new();
+                loader.StartLoading();
+                LoadUsers();
+            }
         }
     }
 }

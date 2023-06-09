@@ -119,6 +119,7 @@
             // 
             this.txtRegPass.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtRegPass.Location = new System.Drawing.Point(519, 295);
+            this.txtRegPass.MaxLength = 11;
             this.txtRegPass.Name = "txtRegPass";
             this.txtRegPass.Size = new System.Drawing.Size(279, 29);
             this.txtRegPass.TabIndex = 8;

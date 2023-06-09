@@ -33,6 +33,7 @@ namespace LibraryManagementSystemWF.views
             string password = txtPassword.Text;
 
             // call loader
+            this.loader = new();
             button2.Enabled = false;
             loader.StartLoading();
 

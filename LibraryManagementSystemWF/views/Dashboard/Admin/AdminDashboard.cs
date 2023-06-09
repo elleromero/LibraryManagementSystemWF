@@ -115,13 +115,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            AuthController.LogOut();
-            form.Show();
-            this.Close();
+            DialogResult dr = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                AuthController.LogOut();
+                form.Show();
+                this.Close();
+            }
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
+            this.Enabled = false;
             new AdminMenu(this).Show();
         }
 
