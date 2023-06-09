@@ -33,15 +33,16 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // validate fields
+            if (!await Validator.IsPhoneUnique(phone)) errors["phone"] = "Phone was already registered";
+            if (!await Validator.IsEmailUnique(email)) errors["email"] = "Email was already registered";
+            if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
             if (string.IsNullOrWhiteSpace(address)) errors["address"] = "Address is required";
             if (string.IsNullOrWhiteSpace(phone)) errors["phone"] = "Phone is required";
             if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmail(email)) errors["email"] = "Email is invalid";
             if (!Validator.IsUsername(username)) errors["username"] = "Username should atleast 5 characters in length and contain only letters, numbers, underscores, or hyphens";
-            if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
             if (!Validator.IsPassword(password)) errors["password"] = "Password is too short";
-            if (!await Validator.IsNameUnique("members", "phone", phone)) errors["phone"] = "Phone was already registered";
             if (phone.Length > 11 || phone.Length < 11) errors["phone"] = "Phone should not exceed or below 11 characters";
 
             // register user if theres no error
@@ -51,7 +52,7 @@ namespace LibraryManagementSystemWF.controllers
                 AuthDAO authDao = new();
                 ReturnResult<User> result = await authDao.Create(new User
                 {
-                    Username = username,
+                    Username = username.Trim(),
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
                     ProfilePicture = profilePicture,
                     Member = new Member

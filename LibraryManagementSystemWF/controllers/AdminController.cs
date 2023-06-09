@@ -44,16 +44,19 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validate fields
+            if (!await Validator.IsPhoneUnique(phone)) errors["phone"] = "Phone was already registered";
+            if (!await Validator.IsEmailUnique(email)) errors["email"] = "Email was already registered";
+            if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
+            if (!await Validator.IsRoleIdValid(roleId)) errors["roleId"] = "Invalid Role ID";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
             if (string.IsNullOrWhiteSpace(address)) errors["address"] = "Address is required";
             if (string.IsNullOrWhiteSpace(phone)) errors["phone"] = "Phone is required";
             if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmail(email)) errors["email"] = "Email is invalid";
             if (!Validator.IsUsername(username)) errors["username"] = "Username should atleast 5 characters in length and contain only letters, numbers, underscores, or hyphens";
-            if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
             if (!Validator.IsPassword(password)) errors["password"] = "Password is too short";
-            if (!await Validator.IsNameUnique("members", "phone", phone)) errors["phone"] = "Phone was already registered";
             if (phone.Length > 11 || phone.Length < 11) errors["phone"] = "Phone should not exceed or below 11 characters";
+
 
             // register user if theres no error
             if (errors.Count == 0)
@@ -62,7 +65,7 @@ namespace LibraryManagementSystemWF.controllers
                 AdminDAO adminDao = new();
                 ReturnResult<User> result = await adminDao.Create(new User
                 {
-                    Username = username,
+                    Username = username.Trim(),
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
                     ProfilePicture = profilePicture,
                     Member = new Member
@@ -122,23 +125,23 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validate fields
-            if (!Validator.IsName(firstName)) errors.Add("first_name", "Name is invalid");
-            if (!Validator.IsName(lastName)) errors.Add("last_name", "Name is invalid");
-            if (string.IsNullOrWhiteSpace(address)) errors.Add("address", "Address is required");
-            if (string.IsNullOrWhiteSpace(phone)) errors.Add("phone", "Phone is required");
-            if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmail(email)) errors.Add("email", "Email is invalid");
-            if (!Validator.IsUsername(username)) errors.Add(
-                "username",
-                "Username should contain only letters, numbers, underscores, or hyphens"
-                );
-            if (!Validator.IsPassword(password)) errors.Add(
-                "password",
-                "Password is too short"
-                );
+            if (!await Validator.IsPhoneUnique(phone, userId)) errors["phone"] = "Phone was already registered";
+            if (!await Validator.IsEmailUnique(email, userId)) errors["email"] = "Email was already registered";
+            if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
+            if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
+            if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
+            if (string.IsNullOrWhiteSpace(address)) errors["address"] = "Address is required";
+            if (string.IsNullOrWhiteSpace(phone)) errors["phone"] = "Phone is required";
+            if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmail(email)) errors["email"] = "Email is invalid";
+            if (!Validator.IsUsername(username)) errors["username"] = "Username should atleast 5 characters in length and contain only letters, numbers, underscores, or hyphens";
+            if (!Validator.IsPassword(password)) errors["password"] = "Password is too short";
+            if (phone.Length > 11 || phone.Length < 11) errors["phone"] = "Phone should not exceed or below 11 characters";
+
 
             // update user if theres no error
             if (errors.Count == 0)
             {
+                TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
                 AdminDAO adminDao = new();
 
                 // check if user with access exists
@@ -156,16 +159,16 @@ namespace LibraryManagementSystemWF.controllers
                 ReturnResult<User> result = await adminDao.Update(new User
                 {
                     ID = new Guid(userId),
-                    Username = username,
+                    Username = username.Trim(),
                     PasswordHash = Argon2.Hash(password), // This method consumes some time (2-10 secs.)
                     ProfilePicture = profilePicture,
                     Member = new Member
                     {
-                        FirstName = firstName,
-                        LastName = lastName,
-                        Address = address,
-                        Phone = phone,
-                        Email = email
+                        FirstName = textInfo.ToTitleCase(firstName.Trim()),
+                        LastName = textInfo.ToTitleCase(lastName.Trim()),
+                        Address = address.Trim(),
+                        Phone = phone.Trim(),
+                        Email = email.Trim()
                     }
                 });
 

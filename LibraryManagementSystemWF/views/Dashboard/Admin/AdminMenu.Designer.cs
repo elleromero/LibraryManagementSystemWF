@@ -195,6 +195,7 @@
             // 
             this.usersGridList.AllowUserToAddRows = false;
             this.usersGridList.AllowUserToDeleteRows = false;
+            this.usersGridList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.usersGridList.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.usersGridList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.usersGridList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;

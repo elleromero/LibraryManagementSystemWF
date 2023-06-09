@@ -102,25 +102,132 @@ namespace LibraryManagementSystemWF.utils
             return isUnique;
         }
 
-        public static async Task<bool> IsUsernameUnique(string username)
+        public static async Task<bool> IsPhoneUnique(string phone, string userId = "")
+        {
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(userId) ?
+                    $"SELECT phone FROM members WHERE phone = '{phone}'" :
+                    $"SELECT phone FROM users u JOIN members m ON m.member_id = u.member_id WHERE m.phone = '{phone}' AND u.user_id != '{userId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("phone"));
+
+                        if (name.Equals(phone)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
+
+        public static async Task<bool> IsEmailUnique(string email, string userId = "")
+        {
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(userId) ?
+                    $"SELECT email FROM members WHERE email = '{email}'" :
+                    $"SELECT email FROM users u JOIN members m ON m.member_id = u.member_id WHERE m.email = '{email}' AND u.user_id != '{userId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("email"));
+
+                        if (name.Equals(email)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
+
+        public static async Task<bool> IsISBNUnique(string isbn, string bookId = "")
+        {
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(bookId) ?
+                    $"SELECT isbn FROM books WHERE isbn = '{isbn}'" :
+                    $"SELECT isbn FROM books WHERE isbn = '{isbn}' AND book_id != '{bookId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("isbn"));
+
+                        if (name.Equals(isbn)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
+
+        public static async Task<bool> IsUsernameUnique(string username, string userId = "")
         {
             // Check if username is unique
             bool isUnique = false;
-            
+
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
+                SqlDataReader? reader = null;
+
                 try
                 {
-                    int count = 0;
                     if (error != null) return;
 
-                    string query = $"SELECT COUNT(*) FROM users WHERE username = '{username}'";
+                    string query = string.IsNullOrWhiteSpace(userId) ?
+                    $"SELECT username FROM users WHERE user = '{username}'" :
+                    $"SELECT username FROM users WHERE username = '{username}' AND user_id != '{userId}'";
                     SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
 
-                    object? v = await command.ExecuteScalarAsync();
-                    if (v != null) count = (int)v;
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("username"));
 
-                    isUnique = count == 0;
+                        if (name.Equals(username)) return;
+                    }
+
+                    isUnique = true;
                 }
                 catch { return; }
             });
@@ -159,6 +266,34 @@ namespace LibraryManagementSystemWF.utils
 
                     isValid = count > 0;
                 } catch { return; }
+            });
+
+            return isValid;
+        }
+
+        public static async Task<bool> IsRoleIdValid(int? roleId)
+        {
+            bool isValid = false;
+
+            if (roleId == null) return isValid;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                try
+                {
+                    int count = 0;
+                    if (error != null) return;
+
+                    string query = $"SELECT COUNT(*) FROM roles WHERE role_id = {roleId}";
+                    SqlCommand command = new(query, conn);
+
+                    object? v = await command.ExecuteScalarAsync();
+                    if (v != null) count = (int)v;
+
+
+                    isValid = count > 0;
+                }
+                catch { return; }
             });
 
             return isValid;
