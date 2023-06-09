@@ -311,52 +311,55 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 {
                     DialogResult result = MessageBox.Show("Are you sure you want to delete the selected row?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    // show password confirmation dialog
-                    PasswordProtected passProtected = new(this);
-
-                    if ((passProtected.ShowDialog() == DialogResult.OK) && (result == DialogResult.Yes))
+                    if (result == DialogResult.Yes)
                     {
-                        DataGridViewRow selectedRow = usersGridList.SelectedRows[0];
+                        // show password confirmation dialog
+                        PasswordProtected passProtected = new(this);
 
-                        string userId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
-
-                        // Call the appropriate method from your controller to delete the book by its ID
-                        if (userId != null)
+                        if ((passProtected.ShowDialog() == DialogResult.OK) && (result == DialogResult.Yes))
                         {
+                            DataGridViewRow selectedRow = usersGridList.SelectedRows[0];
 
-                            setActionButtons(false);
-                            this.loader = new();
-                            this.loader.StartLoading();
+                            string userId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
 
-                            ControllerActionData deleteResult = await AdminController.RemoveById(userId, this.adminPassword);
-
-                            btnDeleteBooks.Enabled = false;
-                            this.loader = new();
-                            this.loader.StartLoading();
-
-                            if (deleteResult.IsSuccess)
+                            // Call the appropriate method from your controller to delete the book by its ID
+                            if (userId != null)
                             {
-                                setActionButtons(true);
-                                this.loader.StopLoading();
 
-                                LoadUsers();
-                                adminDashboard.LoadUsers();
-                                clearBtn.PerformClick();
+                                setActionButtons(false);
+                                this.loader = new();
+                                this.loader.StartLoading();
 
-                                DialogBuilder.Show("User Deleted Successfully", "Delete User", MessageBoxIcon.Information);
+                                ControllerActionData deleteResult = await AdminController.RemoveById(userId, this.adminPassword);
+
+                                btnDeleteBooks.Enabled = false;
+                                this.loader = new();
+                                this.loader.StartLoading();
+
+                                if (deleteResult.IsSuccess)
+                                {
+                                    setActionButtons(true);
+                                    this.loader.StopLoading();
+
+                                    LoadUsers();
+                                    adminDashboard.LoadUsers();
+                                    clearBtn.PerformClick();
+
+                                    DialogBuilder.Show("User Deleted Successfully", "Delete User", MessageBoxIcon.Information);
+                                }
+                                else
+                                {
+
+                                    setActionButtons(true);
+                                    this.loader.StopLoading();
+
+                                    DialogBuilder.Show(deleteResult.Errors, "Delete User Error", MessageBoxIcon.Hand);
+                                }
                             }
                             else
                             {
-
-                                setActionButtons(true);
-                                this.loader.StopLoading();
-
-                                DialogBuilder.Show(deleteResult.Errors, "Delete User Error", MessageBoxIcon.Hand);
+                                MessageBox.Show("Unable to retrieve the book ID. Please try again.");
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Unable to retrieve the book ID. Please try again.");
                         }
                     }
                 }
