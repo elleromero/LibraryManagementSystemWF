@@ -235,6 +235,40 @@ namespace LibraryManagementSystemWF.utils
             return isUnique;
         }
 
+        public static async Task<bool> IsAnnouncementTitleUnique(string annTitle, string annId = "")
+        {
+            // Check if username is unique
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(annId) ?
+                    $"SELECT announcement_title FROM announcements WHERE announcement_title = '{annTitle}'" :
+                    $"SELECT announcement_title FROM announcements WHERE announcement_title = '{annTitle}' AND announcement_id != '{annId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("announcement_title"));
+
+                        if (name.Equals(annTitle)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
+
         public static bool IsPassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password)) return false;

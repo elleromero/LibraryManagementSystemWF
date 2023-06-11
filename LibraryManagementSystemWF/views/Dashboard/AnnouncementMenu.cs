@@ -20,7 +20,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
     {
         private List<Announcement> announcements = new();
         private ICustomForm form;
-        private Form formCoverted;
+        private Form formConverted;
         private Loader loader;
 
         public AnnouncementMenu(ICustomForm form)
@@ -28,9 +28,9 @@ namespace LibraryManagementSystemWF.views.Dashboard
             InitializeComponent();
 
             this.form = form;
-            this.formCoverted = (Form)this.form;
+            this.formConverted = (Form)this.form;
 
-            this.formCoverted.Enabled = false;
+            this.formConverted.Enabled = false;
 
             // determine role
             User? user = AuthService.getSignedUser();

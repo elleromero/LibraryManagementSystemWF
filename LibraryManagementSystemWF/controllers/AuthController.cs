@@ -110,8 +110,8 @@ namespace LibraryManagementSystemWF.controllers
                     returnData.Result = result.Result;
                     isSuccess = true;
                 }
-                else errors.Add("password", "Incorrect password");
-            } else errors.Add("username", "Username did not exist");
+                else errors["password"] = "Incorrect password";
+            } else errors["username"] = "Username did not exist";
 
             returnData.Errors = errors;
             returnData.IsSuccess = isSuccess;

@@ -36,7 +36,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not admin
             if (!await AuthGuard.HavePermission("ADMINISTRATOR"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -117,7 +117,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not admin
             if (!await AuthGuard.HavePermission("ADMINISTRATOR", true, adminPassword))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -125,6 +125,7 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validate fields
+            if(string.IsNullOrWhiteSpace(phone)) errors["user_id"] = "User ID is required";
             if (!await Validator.IsPhoneUnique(phone, userId)) errors["phone"] = "Phone was already registered";
             if (!await Validator.IsEmailUnique(email, userId)) errors["email"] = "Email was already registered";
             if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
@@ -196,7 +197,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not admin
             if (!await AuthGuard.HavePermission("ADMINISTRATOR"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -204,7 +205,7 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validate fields
-            if (string.IsNullOrWhiteSpace(id)) errors.Add("id", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(id)) errors["id"] = "ID is invalid";
 
             if (errors.Count == 0)
             {
@@ -236,14 +237,14 @@ namespace LibraryManagementSystemWF.controllers
             // is not admin
             if (!await AuthGuard.HavePermission("ADMINISTRATOR"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
                 return returnData;
             }
 
-            if (page <= 0) errors.Add("page", "Invalid page");
+            if (page <= 0) errors["page"] = "Invalid page";
 
             if (errors.Count == 0)
             {
@@ -271,13 +272,15 @@ namespace LibraryManagementSystemWF.controllers
             // is not admin
             if (!await AuthGuard.HavePermission("ADMINISTRATOR", true, password))
             {
-                returnResult.Errors.Add("permission", "Forbidden");
+                returnResult.Errors["permission"] = "Forbidden";
 
                 return returnResult;
             }
 
-            if (AuthGuard.IsLoggedIn(id)) returnResult.Errors.Add("auth", "Cannot remove logged in user"); 
-            
+            if (AuthGuard.IsLoggedIn(id)) returnResult.Errors["auth"] = "Cannot remove logged in user";
+
+            if (string.IsNullOrWhiteSpace(id)) returnResult.Errors["id"] = "ID is required";
+
             if (returnResult.Errors.Count == 0)
             {
                 AdminDAO adminDao = new();
