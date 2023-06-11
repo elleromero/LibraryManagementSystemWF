@@ -249,8 +249,8 @@ namespace LibraryManagementSystemWF.utils
                     if (error != null) return;
 
                     string query = string.IsNullOrWhiteSpace(annId) ?
-                    $"SELECT announcement_title FROM announcements WHERE announcement_title = '{annTitle}'" :
-                    $"SELECT announcement_title FROM announcements WHERE announcement_title = '{annTitle}' AND announcement_id != '{annId}'";
+                    $"SELECT announcement_header FROM announcements WHERE announcement_header = '{annTitle}'" :
+                    $"SELECT announcement_header FROM announcements WHERE announcement_header = '{annTitle}' AND announcement_id != '{annId}'";
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();
 

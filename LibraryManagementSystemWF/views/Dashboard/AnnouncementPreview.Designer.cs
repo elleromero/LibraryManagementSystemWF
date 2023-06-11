@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnnouncementPreview));
-            this.rtbBody = new System.Windows.Forms.RichTextBox();
             this.headerLbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.coverPictureBox = new System.Windows.Forms.PictureBox();
@@ -37,21 +36,9 @@
             this.announcedByLbl = new System.Windows.Forms.Label();
             this.announcedOnLbl = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.rtbBody = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.coverPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // rtbBody
-            // 
-            this.rtbBody.BackColor = System.Drawing.Color.White;
-            this.rtbBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbBody.Location = new System.Drawing.Point(12, 170);
-            this.rtbBody.Name = "rtbBody";
-            this.rtbBody.ReadOnly = true;
-            this.rtbBody.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbBody.ShortcutsEnabled = false;
-            this.rtbBody.Size = new System.Drawing.Size(864, 289);
-            this.rtbBody.TabIndex = 0;
-            this.rtbBody.Text = "Empty announcement";
             // 
             // headerLbl
             // 
@@ -125,12 +112,25 @@
             this.linkLabel2.Text = "Go Back";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
+            // rtbBody
+            // 
+            this.rtbBody.BackColor = System.Drawing.Color.White;
+            this.rtbBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbBody.Enabled = false;
+            this.rtbBody.Location = new System.Drawing.Point(12, 170);
+            this.rtbBody.Multiline = true;
+            this.rtbBody.Name = "rtbBody";
+            this.rtbBody.ReadOnly = true;
+            this.rtbBody.Size = new System.Drawing.Size(864, 289);
+            this.rtbBody.TabIndex = 22;
+            // 
             // AnnouncementPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(888, 522);
+            this.Controls.Add(this.rtbBody);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.announcedOnLbl);
             this.Controls.Add(this.announcedByLbl);
@@ -138,7 +138,6 @@
             this.Controls.Add(this.coverPictureBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.headerLbl);
-            this.Controls.Add(this.rtbBody);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AnnouncementPreview";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -150,8 +149,6 @@
         }
 
         #endregion
-
-        private RichTextBox rtbBody;
         private Label headerLbl;
         private Label label2;
         private PictureBox coverPictureBox;
@@ -159,5 +156,6 @@
         private Label announcedByLbl;
         private Label announcedOnLbl;
         private LinkLabel linkLabel2;
+        private TextBox rtbBody;
     }
 }

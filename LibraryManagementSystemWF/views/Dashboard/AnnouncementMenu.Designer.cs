@@ -52,6 +52,9 @@
             this.txtCover = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textAnnouncementID = new System.Windows.Forms.TextBox();
+            this.nextBtn = new System.Windows.Forms.Button();
+            this.prevBtn = new System.Windows.Forms.Button();
+            this.pageLbl = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -207,6 +210,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView1.GridColor = System.Drawing.Color.Black;
             this.dataGridView1.Location = new System.Drawing.Point(155, 0);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -370,13 +374,51 @@
             this.textAnnouncementID.Size = new System.Drawing.Size(280, 29);
             this.textAnnouncementID.TabIndex = 31;
             // 
+            // nextBtn
+            // 
+            this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.nextBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextBtn.Location = new System.Drawing.Point(944, 173);
+            this.nextBtn.Name = "nextBtn";
+            this.nextBtn.Size = new System.Drawing.Size(24, 24);
+            this.nextBtn.TabIndex = 47;
+            this.nextBtn.Text = ">";
+            this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
+            // 
+            // prevBtn
+            // 
+            this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.prevBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.prevBtn.Location = new System.Drawing.Point(880, 173);
+            this.prevBtn.Name = "prevBtn";
+            this.prevBtn.Size = new System.Drawing.Size(24, 24);
+            this.prevBtn.TabIndex = 46;
+            this.prevBtn.Text = "<";
+            this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
+            // 
+            // pageLbl
+            // 
+            this.pageLbl.AutoSize = true;
+            this.pageLbl.Location = new System.Drawing.Point(910, 178);
+            this.pageLbl.Name = "pageLbl";
+            this.pageLbl.Size = new System.Drawing.Size(28, 15);
+            this.pageLbl.TabIndex = 45;
+            this.pageLbl.Text = "1 | 1";
+            // 
             // AnnouncementMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(980, 556);
+            this.Controls.Add(this.nextBtn);
+            this.Controls.Add(this.prevBtn);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.pageLbl);
             this.Controls.Add(this.textAnnouncementID);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label7);
@@ -429,5 +471,8 @@
         private TextBox txtCover;
         private Label label1;
         private TextBox textAnnouncementID;
+        private Button nextBtn;
+        private Button prevBtn;
+        private Label pageLbl;
     }
 }

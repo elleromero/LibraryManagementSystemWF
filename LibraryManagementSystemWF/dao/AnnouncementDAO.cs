@@ -59,7 +59,6 @@ namespace LibraryManagementSystemWF.dao
                 "INNER JOIN roles r ON r.role_id = u.role_id " +
                 "WHERE a.announcement_id = @announcement_id;";
             string query = $"{declareQuery} {insertQuery} {insertAncmtRolesQuery} {selectQuery}";
-            MessageBox.Show(query);
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

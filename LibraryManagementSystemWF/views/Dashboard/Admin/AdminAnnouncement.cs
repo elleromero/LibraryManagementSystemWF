@@ -34,7 +34,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             this.loader = new(this);
             this.loader.StartLoading();
 
-
             dataGridView1.Columns.Add("ID", "ID");
             dataGridView1.Columns.Add("Header", "Header");
             dataGridView1.Columns.Add("Preview", "Preview");
@@ -97,7 +96,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 {
                     if (ann.ID.ToString() == annId) 
                     {
-                        new AnnouncementPreview(ann).Show();
+                        new AnnouncementPreview(ann).ShowDialog();
                         break;
                     }
                 }
