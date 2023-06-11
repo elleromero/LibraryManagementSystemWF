@@ -85,17 +85,19 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
                 if (announcements.Count == 0) DialogBuilder.Show("No announcements yet", "No announcements", MessageBoxIcon.Information);
 
-                foreach (Announcement ann in announcements)
+                for (int i = 0; i < announcements.Count; i++)
                 {
                     dataGridView1.Rows.Add(
-                        ann.ID,
-                        ann.Header,
-                        ann.Body,
-                        ann.Due.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                        ann.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                        ann.Cover,
-                        string.Join(" ", ann.VisibleRoles)
+                        announcements[i].ID,
+                        announcements[i].Header,
+                        announcements[i].Body,
+                        announcements[i].Due.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                        announcements[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                        announcements[i].Cover,
+                        string.Join(" ", announcements[i].VisibleRoles)
                         );
+
+                    if (announcements[i].IsPriority) dataGridView1.Rows[i].DefaultCellStyle.BackColor = ColorTranslator.FromHtml("#fece2f");
                 }
             } else
             {

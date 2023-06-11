@@ -63,13 +63,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                 annList = res.Results;
 
-                foreach (Announcement ann in annList)
+                for (int i = 0; i < annList.Count; i++)
                 {
                     dataGridView1.Rows.Add(
-                        ann.ID,
-                        ann.Header,
-                        ann.Body.Substring(0, Math.Min(100, ann.Body.Length))
+                        annList[i].ID,
+                        annList[i].Header,
+                        annList[i].Body.Substring(0, Math.Min(100, annList[i].Body.Length))
                         );
+
+                    if (annList[i].IsPriority) dataGridView1.Rows[i].DefaultCellStyle.BackColor = ColorTranslator.FromHtml("#fece2f");
                 }
             }
             else
