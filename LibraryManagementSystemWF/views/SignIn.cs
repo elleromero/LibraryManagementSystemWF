@@ -17,7 +17,7 @@ namespace LibraryManagementSystemWF.views
         {
             InitializeComponent();
 
-            this.loader = new();
+            this.loader = new(this);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -33,8 +33,7 @@ namespace LibraryManagementSystemWF.views
             string password = txtPassword.Text;
 
             // call loader
-            this.loader = new();
-            button2.Enabled = false;
+            this.loader = new(this);
             loader.StartLoading();
 
             ControllerModifyData<User> res = await AuthController.SignIn(username, password);
@@ -43,7 +42,6 @@ namespace LibraryManagementSystemWF.views
 
             if (res.IsSuccess)
             {
-                button2.Enabled = true;
                 loader.StopLoading();
 
                 if (user.Role.HasAccess && user.Role.Name == "ADMINISTRATOR")
@@ -67,7 +65,6 @@ namespace LibraryManagementSystemWF.views
             }
             else
             {
-                button2.Enabled = true;
                 loader.StopLoading();
                 DialogBuilder.Show(res.Errors, "Authentication Error", MessageBoxIcon.Stop);
             }

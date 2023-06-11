@@ -54,6 +54,9 @@
             this.titleLbl.TabIndex = 1;
             this.titleLbl.Text = "John Doe (admin)";
             this.titleLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.titleLbl.Click += new System.EventHandler(this.titleLbl_Click);
+            this.titleLbl.MouseEnter += new System.EventHandler(this.titleLbl_MouseEnter);
+            this.titleLbl.MouseLeave += new System.EventHandler(this.titleLbl_MouseLeave);
             // 
             // subtitleLbl
             // 

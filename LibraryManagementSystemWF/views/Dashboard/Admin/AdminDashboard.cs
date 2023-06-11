@@ -32,7 +32,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             InitializeComponent();
 
             this.form = form;
-            this.loader = new();
+            this.loader = new(this);
 
             // Initialize version name
             versionlbl.Text = EnvService.GetVersion();
@@ -55,22 +55,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             timer.Start();
         }
 
-        private void setPagination(bool status)
-        {
-            prevBtn.Enabled = status;
-            prevLastBtn.Enabled = status;
-            nextBtn.Enabled = status;
-            nextLastBtn.Enabled = status;
-        }
-
         public async void LoadUsers()
         {
             ControllerAccessData<User> res = await AdminController.GetAllUsers(page);
 
             if (res.IsSuccess)
             {
-                // enable pagination
-                this.setPagination(true);
                 this.loader.StopLoading();
                 users = res.Results;
 
@@ -99,8 +89,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 pageLbl.Text = $"{page} | {maxPage}";
             } else
             {
-                // enable pagination
-                this.setPagination(true);
                 this.loader.StopLoading();
                 DialogBuilder.Show(res.Errors, "Fetch Users", MessageBoxIcon.Hand);
             }
@@ -135,8 +123,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             if (page > 1)
             {
                 page = 1;
-                this.loader = new();
-                this.setPagination(false);
+                this.loader = new(this);
                 this.loader.StartLoading();
                 LoadUsers();
             }
@@ -147,8 +134,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             if (page < maxPage)
             {
                 page = maxPage;
-                this.loader = new();
-                this.setPagination(false);
+                this.loader = new(this);
                 this.loader.StartLoading();
                 LoadUsers();
             }
@@ -159,8 +145,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             if (page < maxPage)
             {
                 page += 1;
-                this.loader = new();
-                this.setPagination(false);
+                this.loader = new(this);
                 this.loader.StartLoading();
                 LoadUsers();
             }
@@ -171,8 +156,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             if (page > 1)
             {
                 page -= 1;
-                this.loader = new();
-                this.setPagination(false);
+                this.loader = new(this);
                 this.loader.StartLoading();
                 LoadUsers();
             }
@@ -180,7 +164,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new AdminAnnouncement().Show();
+            new AdminAnnouncement(this).Show();
         }
     }
 }

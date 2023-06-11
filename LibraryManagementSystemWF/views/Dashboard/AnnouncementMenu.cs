@@ -2,6 +2,8 @@
 using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
+using LibraryManagementSystemWF.utils;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,12 +20,17 @@ namespace LibraryManagementSystemWF.views.Dashboard
     {
         private List<Announcement> announcements = new();
         private ICustomForm form;
+        private Form formCoverted;
+        private Loader loader;
 
         public AnnouncementMenu(ICustomForm form)
         {
             InitializeComponent();
 
             this.form = form;
+            this.formCoverted = (Form)this.form;
+
+            this.formCoverted.Enabled = false;
 
             // determine role
             User? user = AuthService.getSignedUser();
@@ -51,6 +58,9 @@ namespace LibraryManagementSystemWF.views.Dashboard
             dataGridView1.Columns.Add("Cover", "Cover");
             dataGridView1.Columns.Add("Audience", "Audience");
 
+            this.loader = new(this);
+            this.loader.StartLoading();
+
             LoadAnnouncements();
         }
 
@@ -60,13 +70,17 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
             if (res.IsSuccess)
             {
+                this.loader.StopLoading();
+
                 // clear data grid
                 dataGridView1.Rows.Clear();
 
                 announcements = res.Results;
+
+                if (announcements.Count == 0) DialogBuilder.Show("No announcements yet", "No announcements", MessageBoxIcon.Information);
+
                 foreach (Announcement ann in announcements)
                 {
-
                     dataGridView1.Rows.Add(
                         ann.ID,
                         ann.Header,
@@ -77,6 +91,10 @@ namespace LibraryManagementSystemWF.views.Dashboard
                         string.Join(" ", ann.VisibleRoles)
                         );
                 }
+            } else
+            {
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Fetch Announcements Error", MessageBoxIcon.Hand);
             }
 
         }
@@ -98,6 +116,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            this.formCoverted.Enabled = true;
             this.Close();
         }
 
@@ -170,37 +189,45 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            // update announcement
-            List<RoleEnum> publishToRoles = new();
-
-            if (checkBoxAdmin.Checked) publishToRoles.Add(RoleEnum.ADMINISTRATOR);
-            if (checkBoxLibrarian.Checked) publishToRoles.Add(RoleEnum.LIBRARIAN);
-            if (checkBoxUser.Checked) publishToRoles.Add(RoleEnum.USER);
-
-            ControllerModifyData<Announcement> res = await AnnouncementController.Update(
-                textAnnouncementID.Text,
-                txtHeader.Text,
-                txtBody.Text,
-                dtpAnnouncementDue.Value,
-                publishToRoles,
-                txtCover.Text,
-                checkBoxImportant.Checked
-                );
-
-            if (res.IsSuccess)
+            if (dataGridView1.SelectedCells.Count > 0)
             {
-                MessageBox.Show("Announcement is updated!");
-                this.Clear();
-                LoadAnnouncements();
-                form.RefreshDataGrid();
-            }
-            else
-            {
-                foreach (KeyValuePair<string, string> error in res.Errors)
+                // update announcement
+                List<RoleEnum> publishToRoles = new();
+
+                if (checkBoxAdmin.Checked) publishToRoles.Add(RoleEnum.ADMINISTRATOR);
+                if (checkBoxLibrarian.Checked) publishToRoles.Add(RoleEnum.LIBRARIAN);
+                if (checkBoxUser.Checked) publishToRoles.Add(RoleEnum.USER);
+
+                this.loader = new(this);
+                this.loader.StartLoading();
+
+                ControllerModifyData<Announcement> res = await AnnouncementController.Update(
+                    textAnnouncementID.Text,
+                    txtHeader.Text,
+                    txtBody.Text,
+                    dtpAnnouncementDue.Value,
+                    publishToRoles,
+                    txtCover.Text,
+                    checkBoxImportant.Checked
+                    );
+
+                if (res.IsSuccess)
                 {
-                    MessageBox.Show($"{error.Key}: {error.Value}");
+                    MessageBox.Show("Announcement is updated!");
+                    this.Clear();
+                    LoadAnnouncements();
+                    form.RefreshDataGrid();
+                }
+                else
+                {
+                    foreach (KeyValuePair<string, string> error in res.Errors)
+                    {
+                        MessageBox.Show($"{error.Key}: {error.Value}");
+                    }
                 }
             }
+            else DialogBuilder.Show("No announcement selected", "Nothing Selected", MessageBoxIcon.Hand);
+ 
         }
 
         private async void btnDelete_Click(object sender, EventArgs e)

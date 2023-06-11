@@ -41,10 +41,9 @@ namespace LibraryManagementSystemWF.views
             string phone = txtPhone.Text.Trim();
             string email = txtEmail.Text.Trim();
             string profile = txtProfile.Text;
-            Loader loader = new();
+            Loader loader = new(this);
 
             // call loader
-            button3.Enabled = false;
             loader.StartLoading();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
@@ -52,7 +51,6 @@ namespace LibraryManagementSystemWF.views
 
             if (res.IsSuccess)
             {
-                button3.Enabled = true;
                 loader.StopLoading();
 
                 // CHECK IF THE REGISTRATION IS SUCCESS
@@ -63,7 +61,6 @@ namespace LibraryManagementSystemWF.views
             }
             else
             {
-                button3.Enabled = true;
                 loader.StopLoading();
 
                 // SHOWS ERROR MESSAGE

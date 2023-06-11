@@ -42,7 +42,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             usersGridList.Columns.Add("Email", "Email");
             usersGridList.Columns.Add("Profile Picture", "Profile Picture");
 
-            this.loader = new();
+            this.loader = new(this);
             this.loader.StartLoading();
 
             LoadUsers();
@@ -141,17 +141,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             this.Close();
         }
 
-        private void setActionButtons(bool status)
-        {
-            prevBtn.Enabled = status;
-            nextBtn.Enabled = status;
-            clearBtn.Enabled = status;
-            btnDeleteBooks.Enabled = status;
-            button1.Enabled = status;
-            button2.Enabled = status;
-
-        }
-
         private async void button1_Click(object sender, EventArgs e)
         {
             if (cmbRole.SelectedItem != null)
@@ -167,9 +156,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 string Email = textEmail.Text;
                 string ProfilePicture = txtProfile.Text;
 
-
-                setActionButtons(false);
-                this.loader = new();
+                this.loader = new(this);
                 this.loader.StartLoading();
 
                 ControllerModifyData<User> res = await AdminController.CreateUser(
@@ -186,7 +173,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                 if (res.IsSuccess)
                 {
-                    setActionButtons(true);
                     this.loader.StopLoading();
 
                     LoadUsers();
@@ -197,7 +183,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 }
                 else
                 {
-                    setActionButtons(true);
                     this.loader.StopLoading();
 
                     DialogBuilder.Show(res.Errors, "Add User Error", MessageBoxIcon.Hand);
@@ -226,9 +211,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
             if (passProtected.ShowDialog() == DialogResult.OK)
             {
-
-                setActionButtons(false);
-                this.loader = new();
+                this.loader = new(this);
                 this.loader.StartLoading();
 
                 ControllerModifyData<User> res = await AdminController.UpdateUser(
@@ -248,7 +231,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
                 if (res.IsSuccess)
                 {
-                    setActionButtons(true);
                     this.loader.StopLoading();
 
                     LoadUsers();
@@ -259,7 +241,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 }
                 else
                 {
-                    setActionButtons(true);
                     this.loader.StopLoading();
 
                     DialogBuilder.Show(res.Errors, "Update User Error", MessageBoxIcon.Hand);
@@ -326,19 +307,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                             if (userId != null)
                             {
 
-                                setActionButtons(false);
-                                this.loader = new();
+                                this.loader = new(this);
                                 this.loader.StartLoading();
 
                                 ControllerActionData deleteResult = await AdminController.RemoveById(userId, this.adminPassword);
 
-                                btnDeleteBooks.Enabled = false;
-                                this.loader = new();
-                                this.loader.StartLoading();
-
                                 if (deleteResult.IsSuccess)
                                 {
-                                    setActionButtons(true);
                                     this.loader.StopLoading();
 
                                     LoadUsers();
@@ -349,8 +324,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                                 }
                                 else
                                 {
-
-                                    setActionButtons(true);
                                     this.loader.StopLoading();
 
                                     DialogBuilder.Show(deleteResult.Errors, "Delete User Error", MessageBoxIcon.Hand);
@@ -439,7 +412,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             {
                 prevBtn.Enabled = false;
                 page--;
-                this.loader = new();
+                this.loader = new(this);
                 loader.StartLoading();
                 LoadUsers();
             }
@@ -451,7 +424,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             {
                 nextBtn.Enabled = false;
                 page++;
-                this.loader = new();
+                this.loader = new(this);
                 loader.StartLoading();
                 LoadUsers();
             }

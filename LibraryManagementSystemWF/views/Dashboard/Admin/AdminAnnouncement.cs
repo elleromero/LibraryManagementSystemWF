@@ -1,6 +1,8 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,10 +21,23 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private int currentPage = 1;
         private int maxPage = 1;
         private List<Announcement> annList = new();
+        private Form form;
+        private Loader loader;
 
-        public AdminAnnouncement()
+        public AdminAnnouncement(Form form)
         {
             InitializeComponent();
+
+            this.form = form;
+            this.form.Enabled = false;
+
+            this.loader = new(this);
+            this.loader.StartLoading();
+
+
+            dataGridView1.Columns.Add("ID", "ID");
+            dataGridView1.Columns.Add("Header", "Header");
+            dataGridView1.Columns.Add("Preview", "Preview");
 
             LoadAnnouncements();
         }
@@ -31,15 +46,17 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             dataGridView1.Rows.Clear(); // Clear existing rows before adding new ones
 
-            dataGridView1.Columns.Add("ID", "ID");
-            dataGridView1.Columns.Add("Header", "Header");
-            dataGridView1.Columns.Add("Preview", "Preview");
-
             ControllerAccessData<Announcement> res = await AnnouncementController.GetAll(currentPage);
 
             if (res.IsSuccess)
             {
-                if (res.rowCount == 0) MessageBox.Show("No records found.");
+                this.loader.StopLoading();
+
+                if (res.rowCount == 0)
+                {
+                    DialogBuilder.Show("No announcements for now", "No Announcements", MessageBoxIcon.Information);
+                    dataGridView1.Rows.Add(string.Empty, "No announcements for now");
+                }
 
                 // init page label
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 20));
@@ -56,11 +73,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                         );
                 }
             }
-            else MessageBox.Show("Can't fetch announcements at the moment.");
+            else
+            {
+                this.loader.StopLoading();
+                MessageBox.Show("Can't fetch announcements at the moment.");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.form.Enabled = true;
             this.Close();
         }
 
@@ -88,6 +110,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             if (currentPage > 1)
             {
                 currentPage--;
+                this.loader = new(this);
+                this.loader.StartLoading();
                 LoadAnnouncements();
             }
         }
@@ -97,6 +121,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             if (currentPage < maxPage)
             {
                 currentPage++;
+                this.loader = new(this);
+                this.loader.StartLoading();
                 LoadAnnouncements();
             }
         }
