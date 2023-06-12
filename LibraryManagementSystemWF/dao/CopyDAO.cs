@@ -29,7 +29,8 @@ namespace LibraryManagementSystemWF.dao
                 "SET @counter = @counter + 1; " +
                 "END;";
             string selectQuery = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
-                "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+                "g.name AS genre_name, g.description AS genre_description, " +
+                "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                 "JOIN books b ON b.book_id = c.book_id " +
                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                 "JOIN statuses s ON s.status_id = c.status_id " +
@@ -89,7 +90,8 @@ namespace LibraryManagementSystemWF.dao
                 PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
                 ISBN = reader.GetString(reader.GetOrdinal("isbn")),
                 AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
-                Genre = genre
+                Genre = genre,
+                AvailableCopies = reader.GetInt32(reader.GetOrdinal("available_copies"))
             };
 
             Status? status = new Status
@@ -120,7 +122,8 @@ namespace LibraryManagementSystemWF.dao
 
             string query = "SELECT COUNT(*) as row_count FROM copies; " +
                            "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
-                           "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+                           "g.name AS genre_name, g.description AS genre_description, " +
+                           "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                            "JOIN books b ON b.book_id = c.book_id " +
                            "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                            "JOIN statuses s ON s.status_id = c.status_id " +
@@ -172,7 +175,8 @@ namespace LibraryManagementSystemWF.dao
 
             string query = "SELECT COUNT(*) as row_count FROM copies; " +
                            "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
-                           "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+                           "g.name AS genre_name, g.description AS genre_description," +
+                           "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                            "JOIN books b ON b.book_id = c.book_id " +
                            "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                            "JOIN statuses s ON s.status_id = c.status_id " +
@@ -223,7 +227,8 @@ namespace LibraryManagementSystemWF.dao
             };
 
             string query = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
-               "g.name AS genre_name, g.description AS genre_description FROM copies c " +
+               "g.name AS genre_name, g.description AS genre_description," +
+               "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                "JOIN books b ON b.book_id = c.book_id " +
                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
                "JOIN statuses s ON s.status_id = c.status_id " +

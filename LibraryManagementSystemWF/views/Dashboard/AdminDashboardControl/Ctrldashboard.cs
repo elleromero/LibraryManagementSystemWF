@@ -5,6 +5,7 @@ using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
 using LibraryManagementSystemWF.views.Dashboard;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,7 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
         private int currentPage = 1;
         private int maxPage = 1;
         private Form form;
+        private Loader loader;
 
         public Ctrldashboard(Form form)
         {
@@ -38,14 +40,15 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
             }
 
             // start loading
-
+            this.loader = new(this.form);
+            this.loader.StartLoading();
 
             LoadRecentBooks();
             LoadStats();
             LoadAnnouncements();
         }
 
-        private async void LoadRecentBooks()
+        public async void LoadRecentBooks()
         {
             ControllerAccessData<Book> res = await BookController.GetAllBooks(1);
 
@@ -53,6 +56,10 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
             if (res.IsSuccess)
             {
+                this.loader.StopLoading();
+
+                flowLayoutPanel1.Controls.Clear();
+
                 if (res.Results.Count == 0)
                 {
                     label.Text = "No recent books";
@@ -62,12 +69,14 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
                     return;
                 }
 
-                for (int i = 0; i < Math.Max(0, res.Results.Count); i++)
+                for (int i = 0; i < Math.Min(5, res.Results.Count); i++)
                 {
-                    flowLayoutPanel1.Controls.Add(new BookContainer(res.Results[i]));
+                    flowLayoutPanel1.Controls.Add(new BookContainer(res.Results[i], false, this.form, this));
                 }
             } else
             {
+                this.loader.StopLoading();
+
                 label.Text = "Error fetching recent books";
 
                 DialogBuilder.Show("Error on fetching recent books", "Fetch Books Error", MessageBoxIcon.Hand);
@@ -82,18 +91,33 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
             if (res.IsSuccess)
             {
+                this.loader.StopLoading();
+
+                flpAnnouncements.Controls.Clear();
+
+                if (res.Results.Count == 0)
+                {
+                    Label label = new();
+                    label.Text = "No announcements yet";
+                    label.Width = 200;
+
+                    flpAnnouncements.Controls.Add(label);
+                }
+
                 // set page
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
                 pageLbl.Text = $"{currentPage} | {maxPage}";
-
-                flpAnnouncements.Controls.Clear();
 
                 foreach (Announcement ann in res.Results)
                 {
                     flpAnnouncements.Controls.Add(new AnnouncementContainer(ann));
                 }
             }
-            else MessageBox.Show("Can't fetch announcements at the moment");
+            else
+            {
+                this.loader.StopLoading();
+                MessageBox.Show("Can't fetch announcements at the moment");
+            }
         }
 
         private async void LoadStats()
@@ -102,9 +126,14 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
             if (res.IsSuccess && res.Result != null)
             {
+                this.loader.StopLoading();
+
                 totalBooksLbl.Text = res.Result.TotalBooks.ToString();
                 btrRatioLbl.Text = $"{res.Result.TotalBorrowedBooks} : {res.Result.TotalReturnedBooks}";
                 availableCopiesLbl.Text = res.Result.TotalAvailableCopies.ToString();
+            } else
+            {
+                this.loader.StopLoading();
             }
         }
 
@@ -113,6 +142,8 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
             if (currentPage > 1)
             {
                 currentPage--;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
                 LoadAnnouncements();
             }
         }
@@ -122,6 +153,8 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
             if (currentPage < maxPage)
             {
                 currentPage++;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
                 LoadAnnouncements();
             }
         }

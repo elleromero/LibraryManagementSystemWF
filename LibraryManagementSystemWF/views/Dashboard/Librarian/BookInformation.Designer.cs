@@ -43,6 +43,9 @@
             this.genreLbl = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.availableCopiesLbl = new System.Windows.Forms.Label();
+            this.addedOnLbl = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.coverPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookCoverPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
@@ -73,7 +76,7 @@
             // 
             this.titleLbl.AutoEllipsis = true;
             this.titleLbl.Font = new System.Drawing.Font("Segoe UI Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.titleLbl.Location = new System.Drawing.Point(139, 130);
+            this.titleLbl.Location = new System.Drawing.Point(139, 119);
             this.titleLbl.Name = "titleLbl";
             this.titleLbl.Size = new System.Drawing.Size(472, 38);
             this.titleLbl.TabIndex = 2;
@@ -84,7 +87,7 @@
             // 
             this.authorLbl.AutoSize = true;
             this.authorLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.authorLbl.Location = new System.Drawing.Point(142, 169);
+            this.authorLbl.Location = new System.Drawing.Point(142, 157);
             this.authorLbl.Name = "authorLbl";
             this.authorLbl.Size = new System.Drawing.Size(91, 17);
             this.authorLbl.TabIndex = 3;
@@ -96,7 +99,7 @@
             this.datePublishedLbl.AutoSize = true;
             this.datePublishedLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.datePublishedLbl.ForeColor = System.Drawing.Color.Gray;
-            this.datePublishedLbl.Location = new System.Drawing.Point(142, 196);
+            this.datePublishedLbl.Location = new System.Drawing.Point(142, 184);
             this.datePublishedLbl.Name = "datePublishedLbl";
             this.datePublishedLbl.Size = new System.Drawing.Size(89, 17);
             this.datePublishedLbl.TabIndex = 4;
@@ -213,12 +216,48 @@
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // availableCopiesLbl
+            // 
+            this.availableCopiesLbl.AutoSize = true;
+            this.availableCopiesLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.availableCopiesLbl.ForeColor = System.Drawing.Color.Gray;
+            this.availableCopiesLbl.Location = new System.Drawing.Point(142, 212);
+            this.availableCopiesLbl.Name = "availableCopiesLbl";
+            this.availableCopiesLbl.Size = new System.Drawing.Size(124, 17);
+            this.availableCopiesLbl.TabIndex = 21;
+            this.availableCopiesLbl.Text = "No copies available";
+            this.availableCopiesLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // addedOnLbl
+            // 
+            this.addedOnLbl.AutoSize = true;
+            this.addedOnLbl.Location = new System.Drawing.Point(157, 551);
+            this.addedOnLbl.Name = "addedOnLbl";
+            this.addedOnLbl.Size = new System.Drawing.Size(167, 15);
+            this.addedOnLbl.TabIndex = 23;
+            this.addedOnLbl.Text = "September 15, 2002 at 3:00 pm";
+            this.addedOnLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(157, 526);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 17);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Added On";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // BookInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(633, 585);
+            this.Controls.Add(this.addedOnLbl);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.availableCopiesLbl);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.genreLbl);
@@ -260,5 +299,8 @@
         private Label genreLbl;
         private Button button11;
         private LinkLabel linkLabel1;
+        private Label availableCopiesLbl;
+        private Label addedOnLbl;
+        private Label label2;
     }
 }

@@ -31,7 +31,7 @@ namespace LibraryManagementSystemWF.dao
                 $"VALUES ('{model.User.ID}', @copy_id, '{model.DateBorrowed:yyyy-MM-dd HH:mm:ss.fff}', '{model.DateDue:yyyy-MM-dd HH:mm:ss.fff}', 0, '{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}'); " +
                 "UPDATE copies SET status_id = 2 WHERE copy_id = @copy_id; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
-                "g.name AS gname, g.description AS gdescription " +
+                "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
                 "FROM loans l " +
                 "JOIN users u ON u.user_id = l.user_id " +
                 "JOIN copies c ON c.copy_id = l.copy_id " +
@@ -90,7 +90,8 @@ namespace LibraryManagementSystemWF.dao
                 PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
                 ISBN = reader.GetString(reader.GetOrdinal("isbn")),
                 AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
-                Genre = genre
+                Genre = genre,
+                AvailableCopies = reader.GetInt32(reader.GetOrdinal("available_copies"))
             };
 
             Status? status = new()
@@ -151,7 +152,7 @@ namespace LibraryManagementSystemWF.dao
 
             string query = "SELECT COUNT(*) as row_count FROM loans; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
-                "g.name AS gname, g.description AS gdescription " +
+                "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
                 "FROM loans l " +
                 "JOIN users u ON u.user_id = l.user_id " +
                 "JOIN copies c ON c.copy_id = l.copy_id " +
@@ -210,7 +211,7 @@ namespace LibraryManagementSystemWF.dao
 
             string query = "SELECT COUNT(*) as row_count FROM loans; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
-                "g.name AS gname, g.description AS gdescription " +
+                "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
                 "FROM loans l " +
                 "JOIN users u ON u.user_id = l.user_id " +
                 "JOIN copies c ON c.copy_id = l.copy_id " +
@@ -265,7 +266,7 @@ namespace LibraryManagementSystemWF.dao
             };
 
             string query = "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
-                "g.name AS gname, g.description AS gdescription " +
+                "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
                 "FROM loans l " +
                 "JOIN users u ON u.user_id = l.user_id " +
                 "JOIN copies c ON c.copy_id = l.copy_id " +
@@ -322,7 +323,7 @@ namespace LibraryManagementSystemWF.dao
                            "UPDATE copies SET status_id = 1 " +
                            "WHERE copy_id = (SELECT TOP 1 copy_id FROM @copy); " +
                            "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
-                           "g.name AS gname, g.description AS gdescription " +
+                           "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
                            "FROM loans l " +
                            "JOIN users u ON u.user_id = l.user_id " +
                            "JOIN copies c ON c.copy_id = l.copy_id " +

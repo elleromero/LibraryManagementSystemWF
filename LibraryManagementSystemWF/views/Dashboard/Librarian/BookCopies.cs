@@ -18,12 +18,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private string bookId;
         private int maxPage = 1;
         private int currentPage = 1;
+        private BookInformation form;
 
-        public BookCopies(string bookId)
+        public BookCopies(string bookId, BookInformation form)
         {
             InitializeComponent();
 
             this.bookId = bookId;
+            this.form = form;
             this.LoadCopies();
         }
 
@@ -95,6 +97,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            this.form.Enabled = true;
             this.Close();
         }
 
@@ -129,7 +132,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                             ControllerActionData deleteResult = await CopyController.RemoveById(copyId);
 
                             if (deleteResult.IsSuccess)
-                            {
+                                this.form.RefreshBook();
                                 MessageBox.Show("Row deleted successfully.");
 
                                 // Remove the selected row from the DataGridView
@@ -140,10 +143,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                                 MessageBox.Show("Error deleting the row. Please try again.");
                             }
                         }
-                        else
-                        {
-                            MessageBox.Show("Unable to retrieve the copy ID. Please try again.");
-                        }
+                    else
+                    {
+                        MessageBox.Show("Unable to retrieve the copy ID. Please try again.");
                     }
                 }
             }
@@ -155,46 +157,23 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            int copies = Convert.ToInt32(numCopies.Value);
+
+            // Call the method to create copies of the book
+            ControllerModifyData<Copy> result = await CopyController.CreateCopies(this.bookId, copies);
+
+            if (result.IsSuccess && result.Result != null)
             {
-                try
-                {
-                    // Get the selected book's ID
-                    string bookId = dataGridView1.SelectedRows[0].Cells["BookId"]?.Value?.ToString();
-
-                    if (bookId != null)
-                    {
-                        int copies = Convert.ToInt32(numCopies.Value);
-
-                        // Call the method to create copies of the book
-                        ControllerModifyData<Copy> result = await CopyController.CreateCopies(bookId, copies);
-
-                        if (result.IsSuccess)
-                        {
-                            MessageBox.Show($"{copies} copies of the book have been created successfully.");
-                            LoadCopies();
-                        }
-                        else
-                        {
-                            foreach (var error in result.Errors)
-                            {
-                                MessageBox.Show(error.Value);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Unable to retrieve the book ID. Please try again.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("An error occurred while creating copies: " + ex.Message);
-                }
+                this.form.RefreshBook();
+                MessageBox.Show($"{copies} copies of the book have been created successfully.");
+                LoadCopies();
             }
             else
             {
-                MessageBox.Show("Please select a book to create copies.");
+                foreach (var error in result.Errors)
+                {
+                    MessageBox.Show(error.Value);
+                }
             }
         }
     }

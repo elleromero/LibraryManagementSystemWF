@@ -31,7 +31,7 @@ namespace LibraryManagementSystemWF.views.components
 
         private void viewMoreBtn_Click(object sender, EventArgs e)
         {
-            new BookInformation(this.book).Show();
+            //new BookInformation(this.book).Show();
         }
 
         private async void borrowBtn_Click(object sender, EventArgs e)

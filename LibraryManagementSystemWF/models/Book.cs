@@ -18,5 +18,6 @@ namespace LibraryManagementSystemWF.models
         public DateTime PublicationDate { get; set; }
         public string ISBN { get; set; } = string.Empty;
         public DateTime AddedOn { get; set; }
+        public int AvailableCopies { get; set; }
     }
 }
