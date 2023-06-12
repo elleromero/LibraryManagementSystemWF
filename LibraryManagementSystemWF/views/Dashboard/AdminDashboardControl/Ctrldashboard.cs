@@ -63,8 +63,8 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
                 if (res.Results.Count == 0)
                 {
                     label.Text = "No recent books";
-                    DialogBuilder.Show("No recent books found", "Fetch Books", MessageBoxIcon.Information);
                     flowLayoutPanel1.Controls.Add(label);
+                    DialogBuilder.Show("No recent books found", "Fetch Books", MessageBoxIcon.Information);
 
                     return;
                 }

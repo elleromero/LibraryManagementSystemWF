@@ -1,7 +1,9 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
 using LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBooks;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,10 +21,17 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         private List<Book> books = new();
         private int page = 1;
         private int maxPage = 1;
+        private Loader loader;
+        private Form form;
 
-        public Ctrlbooksrevamp()
+        public Ctrlbooksrevamp(Form form)
         {
             InitializeComponent();
+
+            this.form = form;
+            this.loader = new(this.form);
+            this.loader.StartLoading();
+
             LoadBooks();
         }
 
@@ -32,6 +41,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             
             if (res.IsSuccess)
             {
+                this.loader.StopLoading();
+
                 books = res.Results;
 
                 subtitleLbl.Text = $"You currently have {res.rowCount} book(s) registered.";
@@ -44,7 +55,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                     // loop through results
                     foreach (Book book in books)
                     {
-                        flowLayoutPanel1.Controls.Add(new BookContainer(book));
+                        flowLayoutPanel1.Controls.Add(new BookContainer(book, false, this.form));
                     }
                 }
                 else
@@ -57,14 +68,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 // init page label
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
-
-                // init pagination buttons
-                prevLastBtn.Enabled = page > 1;
-                prevBtn.Enabled = page > 1;
-
-                nextLastBtn.Enabled = page < maxPage;
-                nextBtn.Enabled = page < maxPage;
-
+            } else
+            {
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Fetch Books", MessageBoxIcon.Hand);
             }
         }
 
@@ -75,26 +82,46 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
         private void prevLastBtn_Click(object sender, EventArgs e)
         {
-            page = 1;
-            LoadBooks();
+            if (page > 1)
+            {
+                page = 1;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                LoadBooks();
+            }
         }
 
         private void nextLastBtn_Click(object sender, EventArgs e)
         {
-            page = maxPage;
-            LoadBooks();
+            if (page < maxPage)
+            {
+                page = maxPage;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                LoadBooks();
+            }
         }
 
         private void nextBtn_Click(object sender, EventArgs e)
         {
-            page += 1;
-            LoadBooks();
+            if (page < maxPage)
+            {
+                page++;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                LoadBooks();
+            }
         }
 
         private void prevBtn_Click(object sender, EventArgs e)
         {
-            page -= 1;
-            LoadBooks();
+            if (page > 1)
+            {
+                page--;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                LoadBooks();
+            }
         }
     }
 }

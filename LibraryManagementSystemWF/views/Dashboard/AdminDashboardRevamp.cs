@@ -17,7 +17,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
             InitializeComponent();
 
             this.dashboard = new(this);
-            this.books = new();
+            this.books = new(this);
 
             mainPanel.Controls.Add(dashboard);
             mainPanel.Controls.Add(books);

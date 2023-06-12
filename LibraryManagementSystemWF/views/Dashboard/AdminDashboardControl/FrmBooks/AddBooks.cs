@@ -22,7 +22,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
     {
         private List<Genre> genresList = new List<Genre>();
         private List<Book> booksList = new List<Book>();
-        private Ctrlbooksrevamp ctrlbookRevamp = new();
+        private Ctrlbooksrevamp ctrlbookRevamp;
         private bool isInitialized = true;
 
         public void Show(Ctrlbooksrevamp parentForm)

@@ -86,7 +86,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button3.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new Ctrlbooksrevamp());
+            mainPanel.Controls.Add(new Ctrlbooksrevamp(this));
             navLbl.Text = "Books";
 
         }
