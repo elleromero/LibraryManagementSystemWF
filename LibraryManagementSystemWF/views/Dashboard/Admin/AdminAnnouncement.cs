@@ -130,7 +130,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void button3_Click(object sender, EventArgs e)
         {
-            new AnnouncementMenu(this).Show();
+            this.Enabled = false;
+            new AnnouncementMenu(this, this).Show();
         }
 
         public void RefreshDataGrid()

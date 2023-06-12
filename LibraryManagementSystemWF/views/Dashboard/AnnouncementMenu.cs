@@ -20,19 +20,17 @@ namespace LibraryManagementSystemWF.views.Dashboard
     {
         private List<Announcement> announcements = new();
         private ICustomForm form;
-        private Form formConverted;
+        private Form? parentForm;
         private Loader loader;
         private int page = 1;
         private int maxPage = 1;
 
-        public AnnouncementMenu(ICustomForm form)
+        public AnnouncementMenu(ICustomForm form, Form? parentForm = null)
         {
             InitializeComponent();
 
             this.form = form;
-            this.formConverted = (Form)this.form;
-
-            this.formConverted.Enabled = false;
+            this.parentForm = parentForm;
 
             // determine role
             User? user = AuthService.getSignedUser();
@@ -124,7 +122,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            this.formConverted.Enabled = true;
+            if (this.parentForm != null) this.parentForm.Enabled = true;
             this.Close();
         }
 

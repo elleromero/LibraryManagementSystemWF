@@ -116,11 +116,11 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
             else
             {
                 this.loader.StopLoading();
-                MessageBox.Show("Can't fetch announcements at the moment");
+                DialogBuilder.Show("Can't fetch announcements at the moment", "Fetch Announcement Error", MessageBoxIcon.Hand);
             }
         }
 
-        private async void LoadStats()
+        public async void LoadStats()
         {
             ControllerModifyData<Stats> res = await StatsController.GetStats();
 
@@ -161,7 +161,8 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new AnnouncementMenu(this).Show();
+            this.form.Enabled = false;
+            new AnnouncementMenu(this, this.form).Show();
         }
 
         public void RefreshDataGrid()

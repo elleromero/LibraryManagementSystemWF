@@ -44,7 +44,7 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validate fields
-            if (!await Validator.IsAnnouncementTitleUnique(header)) errors["header"] = "Header already exists";
+            // if (!await Validator.IsAnnouncementTitleUnique(header)) errors["header"] = "Header already exists";
             if (string.IsNullOrWhiteSpace(header)) errors["header"] = "Header is required";
             if (string.IsNullOrWhiteSpace(body)) errors["body"] = "Body is required";
             if (!Validator.IsDateAfter(announcementDue)) errors["announcementDue"] = "Datetime must be after the present date";
@@ -105,7 +105,7 @@ namespace LibraryManagementSystemWF.controllers
 
             // validate fields
             if (string.IsNullOrWhiteSpace(announcementId)) errors["announcementId"] = "Announcement ID is required";
-            if (!await Validator.IsAnnouncementTitleUnique(header, announcementId)) errors["header"] = "Header already exists";
+           //  if (!await Validator.IsAnnouncementTitleUnique(header, announcementId)) errors["header"] = "Header already exists";
             if (string.IsNullOrWhiteSpace(header)) errors["header"] = "Header is required";
             if (string.IsNullOrWhiteSpace(body)) errors["body"] = "Body is required";    
             if (!Validator.IsDateAfter(announcementDue)) errors["announcementDue"] = "Datetime must be after the present date";

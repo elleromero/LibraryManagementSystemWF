@@ -104,8 +104,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private void button11_Click(object sender, EventArgs e)
         {
             if (this.form != null) this.form.Enabled = true;
-            if (this.db != null) this.db.LoadRecentBooks();
-            this.Close();
+            if (this.db != null)
+            {
+                this.db.LoadStats();
+                this.db.LoadRecentBooks();
+            }
+                this.Close();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
