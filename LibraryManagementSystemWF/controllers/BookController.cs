@@ -20,6 +20,7 @@ namespace LibraryManagementSystemWF.controllers
             string publisher,
             DateTime publicationDate,
             string isbn,
+            int copies = 1,
             string coverPath = "",
             string sypnosis = "No sypnosis available"
             )
@@ -42,13 +43,15 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (!await Validator.IsNameUnique("books", "title", title)) errors.Add("title", "Title already exists");
+            if (!await Validator.IsBookTitleUnique(title)) errors.Add("title", "Title already exists");
             if (!await Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
+            if (!await Validator.IsISBNUnique(isbn)) errors.Add("isbn", "ISBN was already registered");
             if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
             if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
             if (string.IsNullOrWhiteSpace(publisher)) errors.Add("publisher", "Publisher is required");
             if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors.Add("publicationDate", "Datetime must be before or on the present date");
             if (!Validator.IsValidISBN(isbn)) errors.Add("isbn", "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format");
+            if (!(copies > 0 && copies <= 50)) errors.Add("copies", "Should at least have a single copy and should not exceed 50 copies");
 
             if (errors.Count == 0)
             {
@@ -56,12 +59,13 @@ namespace LibraryManagementSystemWF.controllers
                 ReturnResult<Book> result = await bookDao.Create(new Book
                 {
                     Title = title,
-                    Sypnosis = sypnosis,
+                    Sypnosis = string.IsNullOrWhiteSpace(sypnosis) ? "No sypnosis available" : sypnosis,
                     Author = author,
                     Cover = coverPath,
                     Publisher = publisher,
                     PublicationDate = publicationDate,
                     ISBN = isbn,
+                    AvailableCopies = copies,
                     Genre = new Genre
                     {
                         ID = genreId

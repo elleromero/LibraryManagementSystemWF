@@ -69,7 +69,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 {
                     Name = "ADMINISTRATOR"
                 }
-            }));
+            }, true));
         }
 
         private async void LoadUsers()
@@ -362,7 +362,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     {
                         Name = cmbRole.Text
                     }
-                }));
+                }, true));
             }
 
             isInitialized = false;

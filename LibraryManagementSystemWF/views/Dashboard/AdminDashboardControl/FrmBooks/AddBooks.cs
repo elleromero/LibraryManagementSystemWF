@@ -162,8 +162,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string ISBN = txtISBN.Text;
                 string Cover = txtCover.Text;
                 string Sypnosis = txtSynopsis.Text;
+                int copies = (int)numCopies.Value;
 
-                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, copies, Cover, Sypnosis);
 
                 if (result.IsSuccess)
                 {

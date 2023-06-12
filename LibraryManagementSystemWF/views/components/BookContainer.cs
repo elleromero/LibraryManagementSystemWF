@@ -39,18 +39,21 @@ namespace LibraryManagementSystemWF.views.components
 
         private void titleLbl_Click(object sender, EventArgs e)
         {
-            if (this.form != null) this.form.Enabled = false;
-            new BookInformation(this.book, this.form, this.db).Show();
+            if (!isPreview)
+            {
+                if (this.form != null) this.form.Enabled = false;
+                new BookInformation(this.book, this.form, this.db).Show();
+            }
         }
 
         private void titleLbl_MouseEnter(object sender, EventArgs e)
         {
-            titleLbl.ForeColor = Color.Gray;
+            if (!isPreview) titleLbl.ForeColor = Color.Gray;
         }
 
         private void titleLbl_MouseLeave(object sender, EventArgs e)
         {
-            titleLbl.ForeColor = Color.Black;
+            if (!isPreview) titleLbl.ForeColor = Color.Black;
         }
     }
 }

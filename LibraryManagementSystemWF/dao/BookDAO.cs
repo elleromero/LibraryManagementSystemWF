@@ -22,14 +22,21 @@ namespace LibraryManagementSystemWF.dao
                 IsSuccess = false
             };
 
+            string copies = "";
+            for (int i = 0; i < model.AvailableCopies; i++)
+            {
+                copies += "(@book_id, 1), ";
+            }
+            copies = copies.Trim();
+
             string declareQuery = "DECLARE @book_id UNIQUEIDENTIFIER; SET @book_id = NEWID();";
             string insertQuery = "INSERT INTO books (book_id, genre_id, title, sypnosis, cover, author, publication_date, publisher, isbn, added_on) " +
                 $"VALUES (@book_id, {model.Genre.ID}, '{model.Title}', '{model.Sypnosis}', '{model.Cover}', '{model.Author}', '{model.PublicationDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}', '{model.Publisher}', '{model.ISBN}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}');";
-            string copyQuery = "INSERT INTO copies (book_id, status_id) VALUES (@book_id, 1);";
+            string copyQuery = $"INSERT INTO copies (book_id, status_id) VALUES {copies.Substring(0, copies.Length - 1)};";
             string selectQuery = "SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = @book_id AND co.status_id = 1) AS available_copies " +
                 "FROM books b JOIN genres g ON g.genre_id = b.genre_id WHERE book_id = @book_id;";
             string query = $"{declareQuery} {insertQuery} {copyQuery} {selectQuery}";
-
+            MessageBox.Show(query);
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
                 if (error != null) return;
@@ -47,7 +54,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != null;
                     }
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 

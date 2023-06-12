@@ -28,7 +28,7 @@ namespace LibraryManagementSystemWF.views.components
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //new BookInformation(this.loan.Copy.Book).Show();
+            new BookInformation(this.loan.Copy.Book).Show();
         }
 
         private async void button2_Click(object sender, EventArgs e)

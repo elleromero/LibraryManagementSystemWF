@@ -55,10 +55,10 @@ namespace LibraryManagementSystemWF.controllers
                 AnnouncementDAO announcementDao = new();
                 ReturnResult<Announcement> result = await announcementDao.Create(new Announcement
                 {
-                    Header = header,
-                    Body = body,
+                    Header = header.Trim(),
+                    Body = body.Trim(),
                     Due = announcementDue,
-                    Cover = cover,
+                    Cover = cover.Trim(),
                     IsPriority = isPriority,
                     User = new User()
                     {
@@ -117,10 +117,10 @@ namespace LibraryManagementSystemWF.controllers
                 ReturnResult<Announcement> result = await announcementDao.Update(new Announcement
                 {
                     ID = new Guid(announcementId),
-                    Header = header,
-                    Body = body,
+                    Header = header.Trim(),
+                    Body = body.Trim(),
                     Due = announcementDue,
-                    Cover = cover,
+                    Cover = cover.Trim(),
                     IsPriority = isPriority,
                     User = new User()
                     {

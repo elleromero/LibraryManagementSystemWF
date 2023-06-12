@@ -102,6 +102,39 @@ namespace LibraryManagementSystemWF.utils
             return isUnique;
         }
 
+        public static async Task<bool> IsBookTitleUnique(string title, string bookId = "")
+        {
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(bookId) ?
+                    $"SELECT title FROM books WHERE title = '{title}'" :
+                    $"SELECT title FROM books WHERE title = '{title}' AND book_id != '{bookId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("title"));
+
+                        if (name.Equals(title)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
+
         public static async Task<bool> IsPhoneUnique(string phone, string userId = "")
         {
             bool isUnique = false;
