@@ -54,130 +54,132 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(254, 206, 47);
-            panel1.Controls.Add(totalBooksLbl);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(17, 15);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(208, 100);
-            panel1.TabIndex = 0;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.panel1.Controls.Add(this.totalBooksLbl);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(17, 15);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(208, 100);
+            this.panel1.TabIndex = 0;
             // 
             // totalBooksLbl
             // 
-            totalBooksLbl.AutoEllipsis = true;
-            totalBooksLbl.Dock = DockStyle.Bottom;
-            totalBooksLbl.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point);
-            totalBooksLbl.Location = new Point(0, 32);
-            totalBooksLbl.Name = "totalBooksLbl";
-            totalBooksLbl.Size = new Size(208, 68);
-            totalBooksLbl.TabIndex = 3;
-            totalBooksLbl.Text = "N/A";
+            this.totalBooksLbl.AutoEllipsis = true;
+            this.totalBooksLbl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.totalBooksLbl.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.totalBooksLbl.Location = new System.Drawing.Point(0, 32);
+            this.totalBooksLbl.Name = "totalBooksLbl";
+            this.totalBooksLbl.Size = new System.Drawing.Size(208, 68);
+            this.totalBooksLbl.TabIndex = 3;
+            this.totalBooksLbl.Text = "N/A";
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Dock = DockStyle.Top;
-            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(0, 0);
-            label1.Name = "label1";
-            label1.Padding = new Padding(5);
-            label1.Size = new Size(105, 27);
-            label1.TabIndex = 0;
-            label1.Text = "TOTAL BOOKS";
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(5);
+            this.label1.Size = new System.Drawing.Size(105, 27);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "TOTAL BOOKS";
             // 
             // panel2
             // 
-            panel2.BackColor = Color.FromArgb(254, 206, 47);
-            panel2.Controls.Add(btrRatioLbl);
-            panel2.Controls.Add(label2);
-            panel2.Location = new Point(252, 15);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(208, 100);
-            panel2.TabIndex = 1;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.panel2.Controls.Add(this.btrRatioLbl);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Location = new System.Drawing.Point(252, 15);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(208, 100);
+            this.panel2.TabIndex = 1;
             // 
             // btrRatioLbl
             // 
-            btrRatioLbl.AutoEllipsis = true;
-            btrRatioLbl.Dock = DockStyle.Bottom;
-            btrRatioLbl.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point);
-            btrRatioLbl.Location = new Point(0, 32);
-            btrRatioLbl.Name = "btrRatioLbl";
-            btrRatioLbl.Size = new Size(208, 68);
-            btrRatioLbl.TabIndex = 3;
-            btrRatioLbl.Text = "N/A";
+            this.btrRatioLbl.AutoEllipsis = true;
+            this.btrRatioLbl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btrRatioLbl.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btrRatioLbl.Location = new System.Drawing.Point(0, 32);
+            this.btrRatioLbl.Name = "btrRatioLbl";
+            this.btrRatioLbl.Size = new System.Drawing.Size(208, 68);
+            this.btrRatioLbl.TabIndex = 3;
+            this.btrRatioLbl.Text = "N/A";
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Top;
-            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(0, 0);
-            label2.Name = "label2";
-            label2.Padding = new Padding(5);
-            label2.Size = new Size(193, 27);
-            label2.TabIndex = 1;
-            label2.Text = "BORROW TO RETURN RATIO";
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(5);
+            this.label2.Size = new System.Drawing.Size(193, 27);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "BORROW TO RETURN RATIO";
             // 
             // panel3
             // 
-            panel3.BackColor = Color.FromArgb(254, 206, 47);
-            panel3.Controls.Add(availableCopiesLbl);
-            panel3.Controls.Add(label3);
-            panel3.Location = new Point(483, 15);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(208, 100);
-            panel3.TabIndex = 2;
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.panel3.Controls.Add(this.availableCopiesLbl);
+            this.panel3.Controls.Add(this.label3);
+            this.panel3.Location = new System.Drawing.Point(483, 15);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(208, 100);
+            this.panel3.TabIndex = 2;
             // 
             // availableCopiesLbl
             // 
-            availableCopiesLbl.AutoEllipsis = true;
-            availableCopiesLbl.Dock = DockStyle.Bottom;
-            availableCopiesLbl.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point);
-            availableCopiesLbl.Location = new Point(0, 32);
-            availableCopiesLbl.Name = "availableCopiesLbl";
-            availableCopiesLbl.Size = new Size(208, 68);
-            availableCopiesLbl.TabIndex = 3;
-            availableCopiesLbl.Text = "N/A";
+            this.availableCopiesLbl.AutoEllipsis = true;
+            this.availableCopiesLbl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.availableCopiesLbl.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.availableCopiesLbl.Location = new System.Drawing.Point(0, 32);
+            this.availableCopiesLbl.Name = "availableCopiesLbl";
+            this.availableCopiesLbl.Size = new System.Drawing.Size(208, 68);
+            this.availableCopiesLbl.TabIndex = 3;
+            this.availableCopiesLbl.Text = "N/A";
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Dock = DockStyle.Top;
-            label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(0, 0);
-            label3.Name = "label3";
-            label3.Padding = new Padding(5);
-            label3.Size = new Size(177, 27);
-            label3.TabIndex = 2;
-            label3.Text = "TOTAL AVAILABLE COPIES";
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(5);
+            this.label3.Size = new System.Drawing.Size(177, 27);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "TOTAL AVAILABLE COPIES";
             // 
             // subtitleLbl
             // 
-            subtitleLbl.AutoSize = true;
-            subtitleLbl.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            subtitleLbl.ForeColor = Color.Gray;
-            subtitleLbl.Location = new Point(15, 164);
-            subtitleLbl.Name = "subtitleLbl";
-            subtitleLbl.Size = new Size(182, 17);
-            subtitleLbl.TabIndex = 14;
-            subtitleLbl.Text = "Welcome to your dashboard";
+            this.subtitleLbl.AutoSize = true;
+            this.subtitleLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.subtitleLbl.ForeColor = System.Drawing.Color.Gray;
+            this.subtitleLbl.Location = new System.Drawing.Point(15, 164);
+            this.subtitleLbl.Name = "subtitleLbl";
+            this.subtitleLbl.Size = new System.Drawing.Size(182, 17);
+            this.subtitleLbl.TabIndex = 14;
+            this.subtitleLbl.Text = "Welcome to your dashboard";
             // 
             // titleLbl
             // 
-            titleLbl.AutoSize = true;
-            titleLbl.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            titleLbl.Location = new Point(12, 134);
-            titleLbl.Name = "titleLbl";
-            titleLbl.Size = new Size(114, 30);
-            titleLbl.TabIndex = 13;
-            titleLbl.Text = "Greetings!";
+            this.titleLbl.AutoSize = true;
+            this.titleLbl.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.titleLbl.Location = new System.Drawing.Point(12, 134);
+            this.titleLbl.Name = "titleLbl";
+            this.titleLbl.Size = new System.Drawing.Size(114, 30);
+            this.titleLbl.TabIndex = 13;
+            this.titleLbl.Text = "Greetings!";
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(17, 219);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(417, 289);
             this.flowLayoutPanel1.TabIndex = 15;
+            this.flowLayoutPanel1.WrapContents = false;
             // 
             // flpAnnouncements
             // 
@@ -191,14 +193,14 @@
             // 
             // label7
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label7.ForeColor = Color.Black;
-            label7.Location = new Point(15, 199);
-            label7.Name = "label7";
-            label7.Size = new Size(103, 17);
-            label7.TabIndex = 17;
-            label7.Text = "Recently Added";
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(15, 199);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(103, 17);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Recently Added";
             // 
             // label8
             // 

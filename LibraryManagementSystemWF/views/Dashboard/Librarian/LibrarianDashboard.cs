@@ -27,7 +27,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             this.ClearAndHide();
 
-            mainPanel.Controls.Add(new Ctrldashboard());
+            mainPanel.Controls.Add(new Ctrldashboard(this));
 
             button2.BackColor = SystemColors.Control;
             navLbl.Text = "Home";
@@ -77,7 +77,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button2.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new Ctrldashboard());
+            mainPanel.Controls.Add(new Ctrldashboard(this));
             navLbl.Text = "Home";
         }
 

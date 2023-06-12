@@ -66,6 +66,7 @@ CREATE TABLE books (
 	cover VARCHAR(500) NOT NULL,
 	publisher VARCHAR(40) NOT NULL,
 	publication_date DATETIME2 NOT NULL,
+	added_on DATETIME2 NOT NULL,
 	isbn VARCHAR(100) NOT NULL,
 	FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
 )

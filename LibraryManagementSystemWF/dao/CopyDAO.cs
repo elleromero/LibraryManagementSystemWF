@@ -88,6 +88,7 @@ namespace LibraryManagementSystemWF.dao
                 Publisher = reader.GetString(reader.GetOrdinal("publisher")),
                 PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
                 ISBN = reader.GetString(reader.GetOrdinal("isbn")),
+                AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
                 Genre = genre
             };
 

@@ -21,10 +21,13 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
     {
         private int currentPage = 1;
         private int maxPage = 1;
+        private Form form;
 
-        public Ctrldashboard()
+        public Ctrldashboard(Form form)
         {
             InitializeComponent();
+
+            this.form = form;
 
             // init greeting
             User? user = AuthService.getSignedUser();
@@ -34,8 +37,43 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
                 titleLbl.Text = GreetingGenerator.GenerateGreeting(user.Member.FirstName, DateTime.Now.ToString());
             }
 
+            // start loading
+
+
+            LoadRecentBooks();
             LoadStats();
             LoadAnnouncements();
+        }
+
+        private async void LoadRecentBooks()
+        {
+            ControllerAccessData<Book> res = await BookController.GetAllBooks(1);
+
+            Label label = new();
+
+            if (res.IsSuccess)
+            {
+                if (res.Results.Count == 0)
+                {
+                    label.Text = "No recent books";
+                    DialogBuilder.Show("No recent books found", "Fetch Books", MessageBoxIcon.Information);
+                    flowLayoutPanel1.Controls.Add(label);
+
+                    return;
+                }
+
+                for (int i = 0; i < Math.Max(0, res.Results.Count); i++)
+                {
+                    flowLayoutPanel1.Controls.Add(new BookContainer(res.Results[i]));
+                }
+            } else
+            {
+                label.Text = "Error fetching recent books";
+
+                DialogBuilder.Show("Error on fetching recent books", "Fetch Books Error", MessageBoxIcon.Hand);
+
+                flowLayoutPanel1.Controls.Add(label);
+            }
         }
 
         private async void LoadAnnouncements()

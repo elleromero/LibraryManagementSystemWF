@@ -23,8 +23,8 @@ namespace LibraryManagementSystemWF.dao
             };
 
             string declareQuery = "DECLARE @book_id UNIQUEIDENTIFIER; SET @book_id = NEWID();";
-            string insertQuery = "INSERT INTO books (book_id, genre_id, title, sypnosis, cover, author, publication_date, publisher, isbn) " +
-                $"VALUES (@book_id, {model.Genre.ID}, '{model.Title}', '{model.Sypnosis}', '{model.Cover}', '{model.Author}', '{model.PublicationDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}', '{model.Publisher}', '{model.ISBN}');";
+            string insertQuery = "INSERT INTO books (book_id, genre_id, title, sypnosis, cover, author, publication_date, publisher, isbn, added_on) " +
+                $"VALUES (@book_id, {model.Genre.ID}, '{model.Title}', '{model.Sypnosis}', '{model.Cover}', '{model.Author}', '{model.PublicationDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}', '{model.Publisher}', '{model.ISBN}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}');";
             string copyQuery = "INSERT INTO copies (book_id, status_id) VALUES (@book_id, 1);";
             string selectQuery = "SELECT * FROM books b JOIN genres g ON g.genre_id = b.genre_id WHERE book_id = @book_id;";
             string query = $"{declareQuery} {insertQuery} {copyQuery} {selectQuery}";
@@ -74,6 +74,7 @@ namespace LibraryManagementSystemWF.dao
                 Publisher = reader.GetString(reader.GetOrdinal("publisher")),
                 PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
                 ISBN = reader.GetString(reader.GetOrdinal("isbn")),
+                AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
                 Genre = genre
             };
 
@@ -92,7 +93,7 @@ namespace LibraryManagementSystemWF.dao
             string query = "SELECT COUNT(*) as row_count FROM books; " +
                 "SELECT * FROM books b " +
                 "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
-                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+                $"ORDER BY added_on DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

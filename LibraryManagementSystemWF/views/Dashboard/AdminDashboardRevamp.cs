@@ -8,13 +8,16 @@ namespace LibraryManagementSystemWF.views.Dashboard
 {
     public partial class LibrarianDashboard : Form
     {
-        private Ctrldashboard dashboard = new();
-        private Ctrlbooksrevamp books = new();
+        private Ctrldashboard dashboard;
+        private Ctrlbooksrevamp books;
         private User? user;
 
         public LibrarianDashboard()
         {
             InitializeComponent();
+
+            this.dashboard = new(this);
+            this.books = new();
 
             mainPanel.Controls.Add(dashboard);
             mainPanel.Controls.Add(books);

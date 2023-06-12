@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             this.emailLbl.Text = string.IsNullOrWhiteSpace(user.Member.Email) ? "No email provided" : user.Member.Email;
             this.phoneLbl.Text = user.Member.Phone;
             this.addressLbl.Text = user.Member.Address;
+            this.coverColor.BackColor = ColorTranslator.FromHtml(PastelColorGenerator.GeneratePastelColor(user.Username));
+
+            if (File.Exists(user.ProfilePicture)) this.profilePicture.Image = Image.FromFile(user.ProfilePicture);
         }
     }
 }
