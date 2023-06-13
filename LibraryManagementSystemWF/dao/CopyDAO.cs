@@ -173,7 +173,7 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 1
             };
 
-            string query = "SELECT COUNT(*) as row_count FROM copies; " +
+            string query = $"SELECT COUNT(*) as row_count FROM copies WHERE book_id = '{bookId}'; " +
                            "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
                            "g.name AS genre_name, g.description AS genre_description," +
                            "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +

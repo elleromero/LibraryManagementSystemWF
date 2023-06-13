@@ -248,23 +248,28 @@ namespace LibraryManagementSystemWF.views.Dashboard
                     this.loader = new(this);
                     this.loader.StartLoading();
 
-                    // remove announcement
-                    ControllerActionData res = await AnnouncementController.RemoveById(
-                        textAnnouncementID.Text
-                        );
+                    string? annId = dataGridView1.SelectedRows[0].Cells["ID"]?.Value?.ToString();
 
-                    if (res.IsSuccess)
+                    if (annId != null)
                     {
-                        this.loader.StopLoading();
-                        DialogBuilder.Show("Announcement removed successfully", "Remove Announcement", MessageBoxIcon.Information);
-                        this.Clear();
-                        LoadAnnouncements();
-                        form.RefreshDataGrid();
-                    }
-                    else
-                    {
-                        this.loader.StopLoading();
-                        DialogBuilder.Show(res.Errors, "Remove Announcement", MessageBoxIcon.Information);
+                        // remove announcement
+                        ControllerActionData res = await AnnouncementController.RemoveById(
+                            annId
+                            );
+
+                        if (res.IsSuccess)
+                        {
+                            this.loader.StopLoading();
+                            DialogBuilder.Show("Announcement removed successfully", "Remove Announcement", MessageBoxIcon.Information);
+                            this.Clear();
+                            LoadAnnouncements();
+                            form.RefreshDataGrid();
+                        }
+                        else
+                        {
+                            this.loader.StopLoading();
+                            DialogBuilder.Show(res.Errors, "Remove Announcement", MessageBoxIcon.Information);
+                        }
                     }
                 }
             } else DialogBuilder.Show("No announcement selected", "Nothing Selected", MessageBoxIcon.Hand);

@@ -28,7 +28,7 @@ namespace LibraryManagementSystemWF.views.components
 
         private void lblHeader_Click(object sender, EventArgs e)
         {
-            new AnnouncementPreview(this.ann).Show();
+            new AnnouncementPreview(this.ann).ShowDialog();
         }
     }
 }

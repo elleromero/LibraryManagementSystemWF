@@ -35,7 +35,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -43,15 +43,15 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (!await Validator.IsBookTitleUnique(title)) errors.Add("title", "Title already exists");
-            if (!await Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
-            if (!await Validator.IsISBNUnique(isbn)) errors.Add("isbn", "ISBN was already registered");
-            if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
-            if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
-            if (string.IsNullOrWhiteSpace(publisher)) errors.Add("publisher", "Publisher is required");
-            if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors.Add("publicationDate", "Datetime must be before or on the present date");
-            if (!Validator.IsValidISBN(isbn)) errors.Add("isbn", "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format");
-            if (!(copies > 0 && copies <= 50)) errors.Add("copies", "Should at least have a single copy and should not exceed 50 copies");
+            if (!await Validator.IsBookTitleUnique(title)) errors["title"] = "Title already exists";
+            if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "ID is invalid";
+            if (!await Validator.IsISBNUnique(isbn)) errors["isbn"] = "ISBN was already registered";
+            if (string.IsNullOrWhiteSpace(title)) errors["title"] = "Title is required";
+            if (string.IsNullOrWhiteSpace(author)) errors["author"] = "Author is required";
+            if (string.IsNullOrWhiteSpace(publisher)) errors["publisher"] = "Publisher is required";
+            if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors["publicationDate"] = "Datetime must be before or on the present date";
+            if (!Validator.IsValidISBN(isbn)) errors["isbn"] = "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format";
+            if (!(copies > 0 && copies <= 50)) errors["copies"] = "Should at least have a single copy and should not exceed 50 copies";
 
             if (errors.Count == 0)
             {
@@ -103,7 +103,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -111,12 +111,13 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (!await Validator.IsGenreIdValid(genreId)) errors.Add("genreId", "ID is invalid");
-            if (string.IsNullOrWhiteSpace(title)) errors.Add("title", "Title is required");
-            if (string.IsNullOrWhiteSpace(author)) errors.Add("author", "Author is required");
-            if (string.IsNullOrWhiteSpace(publisher)) errors.Add("publisher", "Publisher is required");
-            if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors.Add("publicationDate", "Datetime must be before or on the present date");
-            if (!Validator.IsValidISBN(isbn)) errors.Add("isbn", "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format");
+            if (string.IsNullOrWhiteSpace(bookId)) errors["bookId"] = "Book ID is required";
+            if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "ID is invalid";
+            if (string.IsNullOrWhiteSpace(title)) errors["title"] = "Title is required";
+            if (string.IsNullOrWhiteSpace(author)) errors["author"] = "Author is required";
+            if (string.IsNullOrWhiteSpace(publisher)) errors["publisher"] = "Publisher is required";
+            if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors["publicationDate"] = "Datetime must be before or on the present date";
+            if (!Validator.IsValidISBN(isbn)) errors["isbn"] = "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format";
 
             // update if theres no error
             if (errors.Count == 0)
@@ -128,7 +129,7 @@ namespace LibraryManagementSystemWF.controllers
 
                 if (!book.IsSuccess)
                 {
-                    errors.Add("bookId", "Book not found");
+                    errors["bookId"] = "Book not found";
 
                     returnData.Errors = errors;
                     returnData.IsSuccess = isSuccess;
@@ -174,7 +175,7 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // validate fields
-            if (string.IsNullOrWhiteSpace(id)) errors.Add("id", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(id)) errors["id"] = "ID is invalid";
 
             if (errors.Count == 0)
             {
@@ -203,7 +204,7 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            if (page <= 0) errors.Add("page", "Invalid page");
+            if (page <= 0) errors["page"] = "Invalid page";
 
             if (errors.Count == 0)
             {
@@ -231,10 +232,12 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                returnResult.Errors.Add("permission", "Forbidden");
+                returnResult.Errors["permission"] = "Forbidden";
 
                 return returnResult;
             }
+
+            if (string.IsNullOrWhiteSpace(id)) returnResult.Errors["id"] = "ID is required";
 
             if (returnResult.Errors.Count == 0)
             {

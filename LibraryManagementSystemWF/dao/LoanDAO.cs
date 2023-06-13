@@ -150,7 +150,7 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 1
             };
 
-            string query = "SELECT COUNT(*) as row_count FROM loans; " +
+            string query = $"SELECT COUNT(*) as row_count FROM loans WHERE user_id = '{model.User.ID}'; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
                 "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
                 "FROM loans l " +
