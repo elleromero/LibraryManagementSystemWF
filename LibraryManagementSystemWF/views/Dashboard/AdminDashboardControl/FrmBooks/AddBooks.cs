@@ -25,6 +25,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         private List<Book> booksList = new List<Book>();
         private Ctrlbooksrevamp ctrlbookRevamp;
         private bool isInitialized = true;
+        private int currentPage = 1;
+        private int maxPage = 1;
 
         public void Show(Ctrlbooksrevamp parentForm)
         {
@@ -56,6 +58,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             if (books.IsSuccess)
             {
+                // init page label
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)books.rowCount / 20));
+                pageLbl.Text = $"{currentPage} | {maxPage}";
+
                 booksList.Clear();
                 booksList.AddRange(books.Results);
                 dataGridView1.Rows.Clear(); // Clear existing rows before adding new ones
@@ -392,6 +398,24 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             else
             {
                 MessageBox.Show("Please select a book to create copies.");
+            }
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                LoadBooks();
+            }
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPage < maxPage)
+            {
+                currentPage++;
+                LoadBooks();
             }
         }
     }

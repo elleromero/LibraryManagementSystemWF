@@ -509,6 +509,7 @@
             this.nextBtn.TabIndex = 47;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // prevBtn
             // 
@@ -521,6 +522,7 @@
             this.prevBtn.TabIndex = 46;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // pageLbl
             // 
