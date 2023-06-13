@@ -4,6 +4,7 @@ using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,12 +28,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         private bool isInitialized = true;
         private int currentPage = 1;
         private int maxPage = 1;
-
-        public void Show(Ctrlbooksrevamp parentForm)
-        {
-            this.ctrlbookRevamp = parentForm;
-            base.Show();
-        }
+        private Loader loader;
 
         private void defaultPreview()
         {
@@ -58,6 +54,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             if (books.IsSuccess)
             {
+                this.loader.StopLoading();
+
                 // init page label
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)books.rowCount / 20));
                 pageLbl.Text = $"{currentPage} | {maxPage}";
@@ -86,6 +84,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             }
             else
             {
+                this.loader.StopLoading();
                 MessageBox.Show("Error retrieving books!");
             }
 
@@ -119,9 +118,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
         }
 
-        public AddBooks()
+        public AddBooks(Ctrlbooksrevamp parentForm)
         {
             InitializeComponent();
+
+            this.ctrlbookRevamp = parentForm;
+            this.ctrlbookRevamp.Enabled = false;
 
             dataGridView1.Columns.Add("ID", "ID");
             dataGridView1.Columns.Add("Copies", "Copies");
@@ -133,6 +135,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             dataGridView1.Columns.Add("PubDate", "Publication Date");
             dataGridView1.Columns.Add("ISBN", "ISBN");
             dataGridView1.Columns.Add("Cover", "Cover");
+
+            this.loader = new(this);
+            this.loader.StartLoading();
 
             LoadBooks();
             LoadGenres();
@@ -155,6 +160,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string Sypnosis = txtSynopsis.Text;
                 int copies = (int)numCopies.Value;
 
+                this.loader = new(this);
+                this.loader.StartLoading();
+
                 ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, copies, Cover, Sypnosis);
 
                 if (result.IsSuccess)
@@ -167,6 +175,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 }
                 else
                 {
+                    this.loader.StopLoading();
                     DialogBuilder.Show(result.Errors, "Create Book Failed", MessageBoxIcon.Hand);
                 }
             }
@@ -193,7 +202,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string Cover = txtCover.Text;
                 string Sypnosis = txtSynopsis.Text;
 
-                Console.WriteLine(BookId);
+                this.loader = new(this);
+                this.loader.StartLoading();
 
                 ControllerModifyData<Book> result = await BookController.UpdateBook(
                     BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
@@ -220,6 +230,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 }
                 else
                 {
+                    this.loader.StopLoading();
                     DialogBuilder.Show(result.Errors, "Update Book Failed", MessageBoxIcon.Hand);
                 }
             }
@@ -244,6 +255,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     // Call the appropriate method from your controller to delete the book by its ID
                     if (bookId != null)
                     {
+                        this.loader = new(this);
+                        this.loader.StartLoading();
+
                         ControllerActionData deleteResult = await BookController.RemoveById(bookId);
 
                         if (deleteResult.IsSuccess)
@@ -259,6 +273,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                         }
                         else
                         {
+                            this.loader.StopLoading();
                             DialogBuilder.Show(deleteResult.Errors, "Remove Book Failed", MessageBoxIcon.Hand);
                         }
                     }
@@ -270,9 +285,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         private void btnBack_Click(object sender, EventArgs e)
         {
 
-            Ctrlbooks ctrlbooks = new Ctrlbooks();
-            ctrlbooks.Show();
-            this.Hide();
+            this.ctrlbookRevamp.Enabled = true;
+            this.Close();
 
         }
 
@@ -287,8 +301,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 coverImg.Image = Image.FromFile(imagePath);
             }
         }
-
-
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -406,6 +418,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             if (currentPage > 1)
             {
                 currentPage--;
+                this.loader = new(this);
+                this.loader.StartLoading();
                 LoadBooks();
             }
         }
@@ -415,6 +429,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             if (currentPage < maxPage)
             {
                 currentPage++;
+                this.loader = new(this);
+                this.loader.StartLoading();
                 LoadBooks();
             }
         }

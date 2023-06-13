@@ -50,24 +50,24 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
 
         private void btnAddForm_Click(object sender, EventArgs e)
         {
-            AddBooks addbooks = new AddBooks();
+            //AddBooks addbooks = new AddBooks();
 
-            addbooks.Show();
+            //addbooks.Show();
 
         }
 
         private void btnupdate_Click(object sender, EventArgs e)
         {
-            AddBooks addbooks = new AddBooks();
+            //AddBooks addbooks = new AddBooks();
 
-            addbooks.Show();
+            //addbooks.Show();
         }
 
         private void btnremove_Click(object sender, EventArgs e)
         {
-            AddBooks addbooks = new AddBooks();
+            // AddBooks addbooks = new AddBooks();
 
-            addbooks.Show();
+            // addbooks.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)

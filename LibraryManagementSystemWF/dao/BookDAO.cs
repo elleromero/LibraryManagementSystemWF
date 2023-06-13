@@ -36,7 +36,7 @@ namespace LibraryManagementSystemWF.dao
             string selectQuery = "SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = @book_id AND co.status_id = 1) AS available_copies " +
                 "FROM books b JOIN genres g ON g.genre_id = b.genre_id WHERE book_id = @book_id;";
             string query = $"{declareQuery} {insertQuery} {copyQuery} {selectQuery}";
-            MessageBox.Show(query);
+
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
                 if (error != null) return;
@@ -54,7 +54,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != null;
                     }
                 }
-                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
+                catch { return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
