@@ -77,7 +77,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
         private void button11_Click(object sender, EventArgs e)
         {
-            new AddBooks(this).Show();
+            new AddBooks(this, this.form).Show();
         }
 
         private void prevLastBtn_Click(object sender, EventArgs e)

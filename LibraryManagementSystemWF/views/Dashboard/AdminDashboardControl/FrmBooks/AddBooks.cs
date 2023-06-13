@@ -25,6 +25,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         private List<Genre> genresList = new List<Genre>();
         private List<Book> booksList = new List<Book>();
         private Ctrlbooksrevamp ctrlbookRevamp;
+        private Form parentForm;
         private bool isInitialized = true;
         private int currentPage = 1;
         private int maxPage = 1;
@@ -55,6 +56,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             if (books.IsSuccess)
             {
                 this.loader.StopLoading();
+
+                if (books.Results.Count == 0) DialogBuilder.Show("No books found", "Fetch Books", MessageBoxIcon.Information);
 
                 // init page label
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)books.rowCount / 20));
@@ -87,9 +90,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 this.loader.StopLoading();
                 MessageBox.Show("Error retrieving books!");
             }
-
-
-
         }
 
         public async void LoadGenres()
@@ -101,6 +101,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             if (genres.IsSuccess)
             {
+                if (genresList.Count == 0) DialogBuilder.Show("No genres found", "Fetch Genres", MessageBoxIcon.Information);
+
                 for (int i = 0; i < genres.Results.Count; i++)
                 {
                     Genre genre = genresList[i];
@@ -110,20 +112,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 }
             }
-            else
-            {
-                MessageBox.Show("Error retrieving genres!");
-            }
-
-
         }
 
-        public AddBooks(Ctrlbooksrevamp parentForm)
+        public AddBooks(Ctrlbooksrevamp ctrlbookrevamp, Form form)
         {
             InitializeComponent();
 
-            this.ctrlbookRevamp = parentForm;
-            this.ctrlbookRevamp.Enabled = false;
+            this.ctrlbookRevamp = ctrlbookrevamp;
+            this.parentForm = form;
+            this.parentForm.Enabled = false;
 
             dataGridView1.Columns.Add("ID", "ID");
             dataGridView1.Columns.Add("Copies", "Copies");
@@ -284,8 +281,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-
-            this.ctrlbookRevamp.Enabled = true;
+            this.parentForm.Enabled = true;
             this.Close();
 
         }
