@@ -214,5 +214,40 @@ namespace LibraryManagementSystemWF.controllers
             returnData.IsSuccess = isSuccess;
             return returnData;
         }
+
+        public static async Task<ControllerAccessData<Genre>> GetAllGenres()
+        {
+            ControllerAccessData<Genre> returnData = new()
+            {
+                Results = new List<Genre>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
+            if (errors.Count == 0)
+            {
+                GenreDAO genreDao = new();
+                ReturnResultArr<Genre> result = await genreDao.GetAll();
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
     }
 }
