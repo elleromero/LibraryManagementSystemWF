@@ -318,6 +318,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 // disable num copies
                 numCopies.Enabled = false;
+                numCopies.Maximum = 32418;
 
                 // update image
                 if (File.Exists(txtCover.Text))
@@ -344,6 +345,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             // enable num copies
             numCopies.Enabled = true;
+            numCopies.Maximum = 50;
 
             defaultPreview();
         }
@@ -428,6 +430,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 this.loader = new(this);
                 this.loader.StartLoading();
                 LoadBooks();
+            }
+        }
+
+        private void txtISBN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && e.KeyChar != '-' && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }

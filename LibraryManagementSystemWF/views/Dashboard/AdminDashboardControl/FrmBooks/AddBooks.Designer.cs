@@ -140,6 +140,7 @@
             this.txtISBN.PlaceholderText = "ISBN 10 or ISBN 13";
             this.txtISBN.Size = new System.Drawing.Size(280, 29);
             this.txtISBN.TabIndex = 1;
+            this.txtISBN.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtISBN_KeyPress);
             // 
             // txtCover
             // 
