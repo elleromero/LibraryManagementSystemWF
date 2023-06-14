@@ -2,6 +2,7 @@
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         private int maxPage = 1;
         private int currentPage = 1;
         private Form form;
+        private Loader loader;
 
         public void SelectGenre(Genre genre)
         {
@@ -40,26 +42,39 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
             if (genres.IsSuccess)
             {
+                this.loader.StopLoading();
+
                 genresList = genres.Results;
 
-                if (genresList.Count == 0) DialogBuilder.Show("No genres found", "Fetch Genres", MessageBoxIcon.Information);
+                if (genresList.Count == 0)
+                {
+                    Label lbl = new();
+                    lbl.Text = "No genres found";
+                    DialogBuilder.Show("No genres found", "Fetch Genres", MessageBoxIcon.Information);
+                }
 
                 this.maxPage = Math.Max(1, (int)Math.Ceiling((double)genres.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
 
                 // Load genres on flow layout panel
                 flowLayoutPanel1.Controls.Clear();
-                
+
                 foreach (Genre genre in genresList)
                 {
                     flowLayoutPanel1.Controls.Add(new GenreContainer(genre, this));
                 }
             }
+            else this.loader.StopLoading();
         }
 
-        public CtrlGenre()
+        public CtrlGenre(Form form)
         {
             InitializeComponent();
+
+            this.form = form;
+
+            this.loader = new(this.form);
+            this.loader.StartLoading();
 
             LoadGenres(currentPage);
 
@@ -82,10 +97,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             string name = txtName.Text;
             string description = txtDescription.Text;
 
+            this.loader = new(this.form);
+            this.loader.StartLoading();
+
             ControllerModifyData<Genre> result = await GenreController.CreateGenre(name, description);
 
             if (result.IsSuccess && result.Result != null)
             {
+                this.loader.StopLoading();
+
                 Genre genre = result.Result;
                 genresList.Add(genre);
 
@@ -98,6 +118,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             }
             else
             {
+                this.loader.StopLoading();
                 DialogBuilder.Show(result.Errors, "Create Genre Failed", MessageBoxIcon.Hand);
             }
         }
@@ -109,11 +130,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             string description = txtDescription.Text;
             int genreId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
 
+            this.loader = new(this.form);
+            this.loader.StartLoading();
+
             // Update the genre
             ControllerModifyData<Genre> result = await GenreController.UpdateGenre(genreId, name, description);
 
             if (result.IsSuccess && result.Result != null)
             {
+                this.loader.StopLoading();
+
                 // Update the genresList with the modified genre
                 Genre updatedGenre = result.Result;
                 int index = genresList.FindIndex(g => g.ID == genreId);
@@ -131,6 +157,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             }
             else
             {
+                this.loader.StopLoading();
                 DialogBuilder.Show(result.Errors, "Update Genre Failed", MessageBoxIcon.Hand);
             }
 
@@ -141,6 +168,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             if (currentPage < maxPage)
             {
                 currentPage++;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
                 LoadGenres(currentPage);
             }
         }
@@ -150,6 +179,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             if (currentPage > 1)
             {
                 currentPage--;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
                 LoadGenres(currentPage);
             }
         }
@@ -157,6 +188,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         private async void btnDelete_Click(object sender, EventArgs e)
         {
             int genreId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
+
+            this.loader = new(this.form);
+            this.loader.StartLoading();
 
             // Call the appropriate method from your controller to delete the genre by its ID
             ControllerActionData deleteResult = await GenreController.RemoveById(genreId);
@@ -166,12 +200,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 // Optional: Reload the data to refresh the DataGridView
                 LoadGenres(currentPage);
 
+                this.loader.StopLoading();
+
                 this.Clear();
 
                 DialogBuilder.Show("Genre successfully removed", "Remove Genre", MessageBoxIcon.Information);
             }
             else
             {
+                this.loader.StopLoading();
                 DialogBuilder.Show(deleteResult.Errors, "Remove Genre", MessageBoxIcon.Hand);
             }
         }

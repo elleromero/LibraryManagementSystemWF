@@ -105,7 +105,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button4.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlGenre());
+            mainPanel.Controls.Add(new CtrlGenre(this));
             navLbl.Text = "Genres";
         }
 

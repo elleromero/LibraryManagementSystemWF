@@ -317,7 +317,7 @@ namespace LibraryManagementSystemWF.utils
 
                     string query = string.IsNullOrWhiteSpace(genreId) ?
                     $"SELECT name FROM genres WHERE name = '{genreName}'" :
-                    $"SELECT name FROM genres WHERE name = '{genreName}' AND genre_id != '{genreId}'";
+                    $"SELECT name FROM genres WHERE name = '{genreName}' AND genre_id != {genreId}";
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();
 

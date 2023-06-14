@@ -101,7 +101,7 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (!await Validator.IsGenreNameUnique(name)) errors["name"] = "Name already exists";
+            if (!await Validator.IsGenreNameUnique(name, genreId.ToString())) errors["name"] = "Name already exists";
             if (genreId < 0) errors["genreId"] = "ID is invalid";
             if (string.IsNullOrWhiteSpace(name)) errors["name"] = "Name is required";
             if (string.IsNullOrWhiteSpace(description)) errors["description"] = "Description is required";
