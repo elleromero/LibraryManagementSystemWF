@@ -23,7 +23,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -31,9 +31,9 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (string.IsNullOrWhiteSpace(name)) errors.Add("name", "Name is required");
-            if (string.IsNullOrWhiteSpace(description)) errors.Add("description", "Description is required");
-            if (!await Validator.IsNameUnique("genres", "name", name)) errors.Add("name", "Name already exists");
+            if (string.IsNullOrWhiteSpace(name)) errors["name"] = "Name is required";
+            if (string.IsNullOrWhiteSpace(description)) errors["description"] = "Description is required";
+            if (!await Validator.IsGenreNameUnique(name)) errors["name"] = "Name already exists";
 
             if (errors.Count == 0)
             {
@@ -64,11 +64,13 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                returnResult.Errors.Add("permission", "Forbidden");
+                returnResult.Errors["permission"] = "Forbidden";
                 returnResult.IsSuccess = false;
 
                 return returnResult;
             }
+
+            if (id < 0) returnResult.Errors["id"] = "ID is invalid";
 
             if (returnResult.Errors.Count == 0)
             {
@@ -91,7 +93,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -99,9 +101,10 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (genreId < 0) errors.Add("genreId", "ID is invalid");
-            if (string.IsNullOrWhiteSpace(name)) errors.Add("name", "Name is required");
-            if (string.IsNullOrWhiteSpace(description)) errors.Add("description", "Description is required");
+            if (!await Validator.IsGenreNameUnique(name)) errors["name"] = "Name already exists";
+            if (genreId < 0) errors["genreId"] = "ID is invalid";
+            if (string.IsNullOrWhiteSpace(name)) errors["name"] = "Name is required";
+            if (string.IsNullOrWhiteSpace(description)) errors["description"] = "Description is required";
 
             // update if theres no error
             if (errors.Count == 0)
@@ -113,7 +116,7 @@ namespace LibraryManagementSystemWF.controllers
 
                 if (!genre.IsSuccess)
                 {
-                    errors.Add("genreId", "Genre not found");
+                    errors["genreId"] = "Genre not found";
                     returnData.Errors = errors;
                     returnData.IsSuccess = isSuccess;
                     return returnData;
@@ -149,12 +152,12 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // validate fields
-            if (id < 0) errors.Add("id", "ID is invalid");
+            if (id < 0) errors["id"] = "ID is invalid";
 
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -188,12 +191,12 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            if (page <= 0) errors.Add("page", "Invalid page");
+            if (page <= 0) errors["page"] = "Invalid page";
 
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -228,7 +231,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 

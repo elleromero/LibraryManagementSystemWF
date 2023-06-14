@@ -302,6 +302,40 @@ namespace LibraryManagementSystemWF.utils
             return isUnique;
         }
 
+        public static async Task<bool> IsGenreNameUnique(string genreName, string genreId = "")
+        {
+            // Check if username is unique
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(genreId) ?
+                    $"SELECT name FROM genres WHERE name = '{genreName}'" :
+                    $"SELECT name FROM genres WHERE name = '{genreName}' AND genre_id != '{genreId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("name"));
+
+                        if (name.Equals(genreName)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        } 
+
         public static bool IsPassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password)) return false;

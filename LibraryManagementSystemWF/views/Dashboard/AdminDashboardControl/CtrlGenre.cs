@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         private List<Genre> genresList = new List<Genre>();
         private int maxPage = 1;
         private int currentPage = 1;
+        private Form form;
 
         public void SelectGenre(Genre genre)
         {
@@ -39,6 +41,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             if (genres.IsSuccess)
             {
                 genresList = genres.Results;
+
+                if (genresList.Count == 0) DialogBuilder.Show("No genres found", "Fetch Genres", MessageBoxIcon.Information);
+
                 this.maxPage = Math.Max(1, (int)Math.Ceiling((double)genres.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
 
@@ -50,11 +55,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                     flowLayoutPanel1.Controls.Add(new GenreContainer(genre, this));
                 }
             }
-            else
-            {
-                MessageBox.Show("Error retrieving genres!");
-            }
-
         }
 
         public CtrlGenre()
@@ -93,11 +93,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
                 // Clear input fields
                 this.Clear();
+
+                DialogBuilder.Show("Genre successfully created", "Create Genre", MessageBoxIcon.Information);
             }
             else
             {
-                string errorMessage = result.Errors.FirstOrDefault().Value;
-                MessageBox.Show("Failed to create genre: " + errorMessage);
+                DialogBuilder.Show(result.Errors, "Create Genre Failed", MessageBoxIcon.Hand);
             }
         }
 
@@ -106,7 +107,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             // Retrieve the updated values from the input fields
             string name = txtName.Text;
             string description = txtDescription.Text;
-            int genreId = Convert.ToInt32(txtID.Text);
+            int genreId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
 
             // Update the genre
             ControllerModifyData<Genre> result = await GenreController.UpdateGenre(genreId, name, description);
@@ -125,11 +126,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
                 // Clear input fields
                 this.Clear();
+
+                DialogBuilder.Show("Genre successfully updated", "Update Genre", MessageBoxIcon.Information);
             }
             else
             {
-                string errorMessage = result.Errors.FirstOrDefault().Value;
-                MessageBox.Show("Failed to update genre: " + errorMessage);
+                DialogBuilder.Show(result.Errors, "Update Genre Failed", MessageBoxIcon.Hand);
             }
 
         }
@@ -154,21 +156,23 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            int genreId = Convert.ToInt32(txtID.Text);
+            int genreId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
 
             // Call the appropriate method from your controller to delete the genre by its ID
             ControllerActionData deleteResult = await GenreController.RemoveById(genreId);
 
             if (deleteResult.IsSuccess)
             {
-                MessageBox.Show("Row deleted successfully.");
-
                 // Optional: Reload the data to refresh the DataGridView
                 LoadGenres(currentPage);
+
+                this.Clear();
+
+                DialogBuilder.Show("Genre successfully removed", "Remove Genre", MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Error deleting the row. Please try again.");
+                DialogBuilder.Show(deleteResult.Errors, "Remove Genre", MessageBoxIcon.Hand);
             }
         }
 
