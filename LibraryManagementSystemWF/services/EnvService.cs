@@ -15,7 +15,7 @@ namespace LibraryManagementSystemWF.services
             DB_NAME = "DB_LMS",
             CONN_BASE = "Data Source = DESKTOP-PDLDGGJ\\SQLEXPRESS;Integrated Security=true;",
             CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}",
-            VERSION = "3.2.0 Marmalade - debug branch";
+            VERSION = "3.3.0 Marmalade - debug branch";
         private const int BORROW_TIME_DAYS = 14;
                            
         public static int GetBorrowTimeDays()
