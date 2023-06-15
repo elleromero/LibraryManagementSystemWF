@@ -74,7 +74,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private async void LoadUsers()
         {
-            ControllerAccessData<User> res = await AdminController.GetAllUsers();
+            ControllerAccessData<User> res = await AdminController.GetAllUsers(page);
 
             if (res.IsSuccess)
             {
@@ -83,8 +83,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 // set page
                 this.maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
-                prevBtn.Enabled = true;
-                nextBtn.Enabled = true;
 
                 if (res.Results.Count == 0) DialogBuilder.Show("No Users Found", "Information", MessageBoxIcon.Information);
 
@@ -108,8 +106,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             }
             else
             {
-                prevBtn.Enabled = true;
-                nextBtn.Enabled = true;
                 loader.StopLoading();
                 DialogBuilder.Show(res.Errors, "Error Fetching Users", MessageBoxIcon.Hand);
             }
@@ -128,10 +124,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     cmbRole.DisplayMember = nameof(Genre.Name);
                     cmbRole.DataSource = res.Results;
                 }
-            }
-            else
-            {
-                MessageBox.Show("Error retrieving roles!");
             }
         }
 
@@ -175,8 +167,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 {
                     this.loader.StopLoading();
 
+                    this.page = 1;
                     LoadUsers();
-                    adminDashboard.LoadUsers();
+                    adminDashboard.RefreshDataGrid();
                     clearBtn.PerformClick();
 
                     DialogBuilder.Show("User added successfully", "Add User", MessageBoxIcon.Information);
@@ -233,8 +226,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 {
                     this.loader.StopLoading();
 
+                    this.page = 1;
                     LoadUsers();
-                    adminDashboard.LoadUsers();
+                    adminDashboard.RefreshDataGrid();
                     clearBtn.PerformClick();
 
                     DialogBuilder.Show("User updated successfully", "Update User", MessageBoxIcon.Information);
@@ -286,60 +280,54 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private async void btnDeleteBooks_Click(object sender, EventArgs e)
         {
-            try
+            if (usersGridList.SelectedRows.Count > 0)
             {
-                if (usersGridList.SelectedRows.Count > 0)
+                DialogResult result = MessageBox.Show("Are you sure you want to delete the selected row?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    DialogResult result = MessageBox.Show("Are you sure you want to delete the selected row?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    // show password confirmation dialog
+                    PasswordProtected passProtected = new(this);
 
-                    if (result == DialogResult.Yes)
+                    if ((passProtected.ShowDialog() == DialogResult.OK) && (result == DialogResult.Yes))
                     {
-                        // show password confirmation dialog
-                        PasswordProtected passProtected = new(this);
+                        DataGridViewRow selectedRow = usersGridList.SelectedRows[0];
 
-                        if ((passProtected.ShowDialog() == DialogResult.OK) && (result == DialogResult.Yes))
+                        string userId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
+
+                        // Call the appropriate method from your controller to delete the book by its ID
+                        if (userId != null)
                         {
-                            DataGridViewRow selectedRow = usersGridList.SelectedRows[0];
 
-                            string userId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
+                            this.loader = new(this);
+                            this.loader.StartLoading();
 
-                            // Call the appropriate method from your controller to delete the book by its ID
-                            if (userId != null)
+                            ControllerActionData deleteResult = await AdminController.RemoveById(userId, this.adminPassword);
+
+                            if (deleteResult.IsSuccess)
                             {
+                                this.loader.StopLoading();
 
-                                this.loader = new(this);
-                                this.loader.StartLoading();
+                                this.page = 1;
+                                LoadUsers();
+                                adminDashboard.RefreshDataGrid();
+                                clearBtn.PerformClick();
 
-                                ControllerActionData deleteResult = await AdminController.RemoveById(userId, this.adminPassword);
-
-                                if (deleteResult.IsSuccess)
-                                {
-                                    this.loader.StopLoading();
-
-                                    LoadUsers();
-                                    adminDashboard.LoadUsers();
-                                    clearBtn.PerformClick();
-
-                                    DialogBuilder.Show("User Deleted Successfully", "Delete User", MessageBoxIcon.Information);
-                                }
-                                else
-                                {
-                                    this.loader.StopLoading();
-
-                                    DialogBuilder.Show(deleteResult.Errors, "Delete User Error", MessageBoxIcon.Hand);
-                                }
+                                DialogBuilder.Show("User Deleted Successfully", "Delete User", MessageBoxIcon.Information);
                             }
                             else
                             {
-                                MessageBox.Show("Unable to retrieve the book ID. Please try again.");
+                                this.loader.StopLoading();
+
+                                DialogBuilder.Show(deleteResult.Errors, "Delete User Error", MessageBoxIcon.Hand);
                             }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Unable to retrieve the book ID. Please try again.");
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred while deleting the record: " + ex.Message);
             }
         }
 
@@ -410,7 +398,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             if (page > 1)
             {
-                prevBtn.Enabled = false;
                 page--;
                 this.loader = new(this);
                 loader.StartLoading();
@@ -422,7 +409,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             if (page < maxPage)
             {
-                nextBtn.Enabled = false;
                 page++;
                 this.loader = new(this);
                 loader.StartLoading();

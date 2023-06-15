@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
@@ -16,19 +17,21 @@ using System.Windows.Forms;
 
 namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 {
-    public partial class Ctrlbooksrevamp : UserControl
+    public partial class Ctrlbooksrevamp : UserControl, ICustomForm
     {
         private List<Book> books = new();
         private int page = 1;
         private int maxPage = 1;
         private Loader loader;
         private Form form;
+        private bool isSearch;
 
         public Ctrlbooksrevamp(Form form)
         {
             InitializeComponent();
 
             this.form = form;
+            this.isSearch = false;
             this.loader = new(this.form);
             this.loader.StartLoading();
 
@@ -185,6 +188,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 this.page = 1;
                 LoadBooks();
             }
+        }
+
+        public void RefreshDataGrid()
+        {
+            this.page = 1;
+            LoadBooks();
         }
     }
 }

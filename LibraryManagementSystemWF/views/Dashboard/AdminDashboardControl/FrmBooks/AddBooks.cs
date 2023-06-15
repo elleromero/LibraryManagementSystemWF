@@ -167,7 +167,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     DialogBuilder.Show("Book created successfully", "Create Book", MessageBoxIcon.Information);
 
                     LoadBooks();
-                    ctrlbookRevamp.LoadBooks();
+                    ctrlbookRevamp.RefreshDataGrid();
                     clearBtn.PerformClick();
                 }
                 else
@@ -222,7 +222,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     DialogBuilder.Show("Book updated successfully", "Update Book", MessageBoxIcon.Information);
 
                     LoadBooks();
-                    ctrlbookRevamp.LoadBooks();
+                    ctrlbookRevamp.RefreshDataGrid();
                     clearBtn.PerformClick();
                 }
                 else
@@ -265,7 +265,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                             booksList.RemoveAt(selectedRow.Index);
 
                             LoadBooks();
-                            ctrlbookRevamp.LoadBooks();
+                            ctrlbookRevamp.RefreshDataGrid();
                             clearBtn.PerformClick();
                         }
                         else

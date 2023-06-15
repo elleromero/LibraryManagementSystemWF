@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
@@ -19,19 +20,21 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace LibraryManagementSystemWF.views.Dashboard.Admin
 {
-    public partial class AdminDashboard : Form
+    public partial class AdminDashboard : Form, ICustomForm
     {
         private List<User> users = new();
         private int page = 1;
         private int maxPage = 1;
         private Loader loader;
         private Form form;
+        private bool isSearch;
 
         public AdminDashboard(Form form)
         {
             InitializeComponent();
 
             this.form = form;
+            this.isSearch = false;
             this.loader = new(this);
 
             // Initialize version name
@@ -211,6 +214,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = true;
                 this.loader = new(this);
                 this.loader.StartLoading();
                 this.page = 1;
@@ -222,11 +226,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = false;
                 this.loader = new(this);
                 this.loader.StartLoading();
                 this.page = 1;
                 LoadUsers();
             }
+        }
+
+        public void RefreshDataGrid()
+        {
+            this.page = 1;
+            if (this.isSearch) LoadSearchUsers(); else LoadUsers();
         }
     }
 }
