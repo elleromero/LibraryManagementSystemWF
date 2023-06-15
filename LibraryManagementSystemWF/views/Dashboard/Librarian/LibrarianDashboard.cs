@@ -114,7 +114,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button5.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlTransactions());
+            mainPanel.Controls.Add(new CtrlTransactions(this));
             navLbl.Text = "Loans";
         }
     }

@@ -304,6 +304,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
+                // disable num copies
+                numCopies.Enabled = false;
+                numCopies.Maximum = 32418;
+                numCopies.Minimum = 0;
+
                 // Set the values of the text boxes to the values in the clicked row
                 textBookID.Text = row.Cells["ID"].Value.ToString();
                 txtTitle.Text = row.Cells["Title"].Value.ToString();
@@ -315,10 +320,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 txtSynopsis.Text = row.Cells["Sypnosis"].Value.ToString();
                 numCopies.Value = (int)row.Cells["Copies"].Value;
                 cmbGenre.Text = row.Cells["Genre"].Value.ToString();
-
-                // disable num copies
-                numCopies.Enabled = false;
-                numCopies.Maximum = 32418;
 
                 // update image
                 if (File.Exists(txtCover.Text))
@@ -346,6 +347,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             // enable num copies
             numCopies.Enabled = true;
             numCopies.Maximum = 50;
+            numCopies.Minimum = 1;
 
             defaultPreview();
         }
