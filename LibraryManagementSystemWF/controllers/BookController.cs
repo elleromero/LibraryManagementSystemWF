@@ -248,6 +248,31 @@ namespace LibraryManagementSystemWF.controllers
             return returnResult;
         }
 
-        
+        public static async Task<ControllerAccessData<Book>> Search(string keyword, int page = 1)
+        {
+            ControllerAccessData<Book> returnData = new()
+            {
+                Results = new List<Book>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+
+            if (page <= 0) errors["page"] = "Invalid page";
+
+            if (errors.Count == 0)
+            {
+                BookDAO bookDao = new();
+                ReturnResultArr<Book> result = await bookDao.GetSearchResults(keyword, page);
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
     }
 }

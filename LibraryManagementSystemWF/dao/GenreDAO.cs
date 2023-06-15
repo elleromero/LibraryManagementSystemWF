@@ -250,5 +250,9 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
+        public Task<ReturnResultArr<Genre>> GetSearchResults(string searchText, int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

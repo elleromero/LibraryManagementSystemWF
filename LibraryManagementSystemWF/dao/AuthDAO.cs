@@ -133,5 +133,10 @@ namespace LibraryManagementSystemWF.dao
             };
             return user;
         }
+
+        public Task<ReturnResultArr<User>> GetSearchResults(string searchText, int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

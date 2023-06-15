@@ -240,5 +240,54 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
+        public async Task<ReturnResultArr<Book>> GetSearchResults(string searchText, int page)
+        {
+            ReturnResultArr<Book> returnResult = new()
+            {
+                Results = new List<Book>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
+
+            string query = $"SELECT COUNT(*) as row_count FROM books WHERE title LIKE '%{searchText}%'; " +
+                "SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM books b " +
+                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                $"WHERE title LIKE '%{searchText}%' " +
+                $"ORDER BY added_on DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // add row count
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
+
+                    // fill data
+                    await reader.NextResultAsync();
+                    while (await reader.ReadAsync())
+                    {
+                        Book? book = Fill(reader);
+
+                        if (book != null) returnResult.Results.Add(book);
+                    }
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
+        }
     }
 }

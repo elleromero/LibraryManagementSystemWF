@@ -286,5 +286,10 @@ namespace LibraryManagementSystemWF.dao
         {
             throw new NotImplementedException();
         }
+
+        public Task<ReturnResultArr<Copy>> GetSearchResults(string searchText, int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

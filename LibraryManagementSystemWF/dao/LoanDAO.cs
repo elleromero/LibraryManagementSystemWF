@@ -358,5 +358,71 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
+        public async Task<ReturnResultArr<Loan>> GetSearchResults(string userId, string searchText, int page)
+        {
+            ReturnResultArr<Loan> returnResult = new()
+            {
+                Results = new List<Loan>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
+
+            string query = $"SELECT COUNT(*) as row_count FROM loans l " +
+                "JOIN copies c ON c.copy_id = l.copy_id " +
+                "JOIN books b ON c.book_id = b.book_id " +
+                $"WHERE l.user_id = '{userId}' AND b.title = '%{searchText}%'; " +
+                "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
+                "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
+                "FROM loans l " +
+                "JOIN users u ON u.user_id = l.user_id " +
+                "JOIN copies c ON c.copy_id = l.copy_id " +
+                "JOIN books b ON c.book_id = b.book_id " +
+                "JOIN roles r ON u.role_id = r.role_id " +
+                "JOIN members m ON u.member_id = m.member_id " +
+                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN statuses s ON c.status_id = s.status_id " +
+                $"WHERE l.user_id = '{userId}' " +
+                "AND is_returned = 0" +
+                $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // add row count
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
+
+                    // fill data
+                    await reader.NextResultAsync();
+                    while (reader.Read())
+                    {
+                        Loan? loan = Fill(reader);
+
+                        if (loan != null) returnResult.Results.Add(loan);
+                    }
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
+        }
+
+        public Task<ReturnResultArr<Loan>> GetSearchResults(string searchText, int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

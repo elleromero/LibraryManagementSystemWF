@@ -252,5 +252,45 @@ namespace LibraryManagementSystemWF.controllers
             returnData.IsSuccess = isSuccess;
             return returnData;
         }
+
+        public static async Task<ControllerAccessData<Loan>> Search(string keyword, int page = 1)
+        {
+            ControllerAccessData<Loan> returnData = new()
+            {
+                Results = new List<Loan>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+            string? userId = AuthService.getSignedUser()?.ID.ToString();
+
+            // is not user
+            if (!await AuthGuard.HavePermission("USER"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
+            // validate
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
+            if (page <= 0) errors.Add("page", "Invalid page");
+
+            if (errors.Count == 0 && userId != null)
+            {
+                LoanDAO loanDao = new();
+                ReturnResultArr<Loan> result = await loanDao.GetSearchResults(userId, keyword, page);
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
     }
 }
