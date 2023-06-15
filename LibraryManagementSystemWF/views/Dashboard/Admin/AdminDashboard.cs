@@ -83,8 +83,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 else
                 {
                     // add empty template
-                    flowLayoutPanel1.Margin = Padding.Empty;
-                    flowLayoutPanel1.Controls.Add(new CtrlEmpty());
+                    Label lbl = new();
+                    lbl.Text = "No user(s) found";
+                    flowLayoutPanel1.Controls.Add(lbl);
+                    DialogBuilder.Show("No user(s) found", "Search Users", MessageBoxIcon.Information);
                 }
 
                 // init page label
@@ -123,8 +125,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 else
                 {
                     // add empty template
-                    flowLayoutPanel1.Margin = Padding.Empty;
-                    flowLayoutPanel1.Controls.Add(new CtrlEmpty());
+                    Label lbl = new();
+                    lbl.Text = "No user(s) found";
+                    flowLayoutPanel1.Controls.Add(lbl);
+                    DialogBuilder.Show("No user(s) found", "Search Users", MessageBoxIcon.Information);
                 }
 
                 // init page label
@@ -168,7 +172,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 page = 1;
                 this.loader = new(this);
                 this.loader.StartLoading();
-                LoadUsers();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
             }
         }
 
@@ -179,7 +183,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 page = maxPage;
                 this.loader = new(this);
                 this.loader.StartLoading();
-                LoadUsers();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
             }
         }
 
@@ -190,7 +194,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 page += 1;
                 this.loader = new(this);
                 this.loader.StartLoading();
-                LoadUsers();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
             }
         }
 
@@ -201,7 +205,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 page -= 1;
                 this.loader = new(this);
                 this.loader.StartLoading();
-                LoadUsers();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
             }
         }
 
@@ -236,6 +240,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         public void RefreshDataGrid()
         {
+            this.txtSearch.Clear();
             this.page = 1;
             if (this.isSearch) LoadSearchUsers(); else LoadUsers();
         }

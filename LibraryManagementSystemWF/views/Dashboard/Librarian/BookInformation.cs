@@ -109,7 +109,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 this.db.LoadStats();
                 this.db.LoadRecentBooks();
             }
-                this.Close();
+            this.Close();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

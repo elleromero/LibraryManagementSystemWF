@@ -109,6 +109,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 Genre genre = result.Result;
                 genresList.Add(genre);
 
+                this.currentPage = 1;
                 LoadGenres(currentPage);
 
                 // Clear input fields
@@ -148,6 +149,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                     genresList[index] = updatedGenre;
                 }
 
+                this.currentPage = 1;
                 LoadGenres(currentPage);
 
                 // Clear input fields
@@ -197,10 +199,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
             if (deleteResult.IsSuccess)
             {
-                // Optional: Reload the data to refresh the DataGridView
-                LoadGenres(currentPage);
 
                 this.loader.StopLoading();
+
+                this.currentPage = 1;
+                LoadGenres(currentPage);
 
                 this.Clear();
 

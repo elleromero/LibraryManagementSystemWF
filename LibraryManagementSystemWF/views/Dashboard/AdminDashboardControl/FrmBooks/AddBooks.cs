@@ -166,6 +166,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 {
                     DialogBuilder.Show("Book created successfully", "Create Book", MessageBoxIcon.Information);
 
+                    this.currentPage = 1;
                     LoadBooks();
                     ctrlbookRevamp.RefreshDataGrid();
                     clearBtn.PerformClick();
@@ -221,6 +222,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                     DialogBuilder.Show("Book updated successfully", "Update Book", MessageBoxIcon.Information);
 
+                    this.currentPage = 1;
                     LoadBooks();
                     ctrlbookRevamp.RefreshDataGrid();
                     clearBtn.PerformClick();
@@ -264,6 +266,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                             // Remove the selected row from the BindingList
                             booksList.RemoveAt(selectedRow.Index);
 
+                            this.currentPage = 1;
                             LoadBooks();
                             ctrlbookRevamp.RefreshDataGrid();
                             clearBtn.PerformClick();

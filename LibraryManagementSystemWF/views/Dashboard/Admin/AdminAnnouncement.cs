@@ -136,6 +136,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         public void RefreshDataGrid()
         {
+            this.currentPage = 1;
             LoadAnnouncements();
         }
     }

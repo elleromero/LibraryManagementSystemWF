@@ -131,7 +131,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 page = 1;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -142,7 +142,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 page = maxPage;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -153,7 +153,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 page++;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -164,7 +164,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 page--;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -172,6 +172,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = true;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
                 this.page = 1;
@@ -183,6 +184,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = false;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
                 this.page = 1;
@@ -192,8 +194,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
         public void RefreshDataGrid()
         {
+            this.txtSearch.Clear();
             this.page = 1;
-            LoadBooks();
+            if (this.isSearch) LoadSearchBooks(); else LoadBooks();
         }
     }
 }

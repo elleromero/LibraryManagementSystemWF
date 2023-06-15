@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.controllers;
+using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.Dashboard.GeneralUser;
@@ -18,16 +19,16 @@ namespace LibraryManagementSystemWF.views.components
 {
     public partial class BookBorrowContainer : UserControl
     {
-        private CtrlDiscover ctrlDiscover;
+        private ICustomForm customForm;
         private Form form;
         private Book book;
         private Loader loader;
 
-        public BookBorrowContainer(Book book, CtrlDiscover ctrlDiscover, Form form)
+        public BookBorrowContainer(Book book, ICustomForm customForm, Form form)
         {
             InitializeComponent();
 
-            this.ctrlDiscover = ctrlDiscover;
+            this.customForm = customForm;
             this.form = form;
             this.book = book;
             this.loader = new(this.form);
@@ -71,7 +72,7 @@ namespace LibraryManagementSystemWF.views.components
             if (res.IsSuccess)
             {
                 this.loader.StopLoading();
-                this.ctrlDiscover.LoadBooks();
+                this.customForm.RefreshDataGrid();
                 DialogBuilder.Show($"'{book.Title}' is borrowed succesfully. Check your repo.", "Borrow Book", MessageBoxIcon.Information);
             } else
             {

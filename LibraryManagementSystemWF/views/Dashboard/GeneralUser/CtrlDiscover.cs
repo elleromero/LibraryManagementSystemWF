@@ -18,18 +18,20 @@ using System.Windows.Forms;
 
 namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 {
-    public partial class CtrlDiscover : UserControl
+    public partial class CtrlDiscover : UserControl, ICustomForm
     {
         private int currentPage = 1;
         private int maxPage = 1;
         private Form form;
         private Loader loader;
+        private bool isSearch;
 
         public CtrlDiscover(Form form)
         {
             InitializeComponent();
 
             this.form = form;
+            this.isSearch = false;
             this.loader = new(this.form);
             this.loader.StartLoading();
 
@@ -114,7 +116,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 currentPage--;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -125,7 +127,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 currentPage = 1;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -136,7 +138,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 currentPage++;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -147,7 +149,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 currentPage = maxPage;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -155,6 +157,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = true;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
                 this.currentPage = 1;
@@ -166,11 +169,19 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = false;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
                 this.currentPage = 1;
                 LoadBooks();
             }
+        }
+
+        public void RefreshDataGrid()
+        {
+            this.txtSearch.Clear();
+            this.currentPage = 1;
+            if (this.isSearch) LoadSearchBooks(); else LoadBooks();
         }
     }
 }

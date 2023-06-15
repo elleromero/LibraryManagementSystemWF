@@ -23,12 +23,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         private int page = 1;
         private Loader loader;
         private Form form;
+        private bool isSearch;
 
         public CtrlRepo(Form form)
         {
             InitializeComponent();
 
             this.form = form;
+            this.isSearch = false;
             this.loader = new(this.form);
             this.loader.StartLoading();
 
@@ -38,7 +40,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
         public void RefreshDataGrid()
         {
-            LoadBorrowedBooks();
+            this.txtSearch.Clear();
+            this.page = 1;
+            if (this.isSearch) LoadSearchBorrowedBooks(); else LoadBorrowedBooks();
         }
 
         private async void LoadSearchBorrowedBooks()
@@ -112,7 +116,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 page = 1;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBorrowedBooks();
+                if (this.isSearch) LoadSearchBorrowedBooks(); else LoadBorrowedBooks();
             }
         }
 
@@ -123,7 +127,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 page++;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBorrowedBooks();
+                if (this.isSearch) LoadSearchBorrowedBooks(); else LoadBorrowedBooks();
             }
         }
 
@@ -134,7 +138,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 page = maxPage;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadBorrowedBooks();
+                if (this.isSearch) LoadSearchBorrowedBooks(); else LoadBorrowedBooks();
             }
         }
 
@@ -142,6 +146,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             if (!string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = true;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
                 this.page = 1;
@@ -153,6 +158,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             if (string.IsNullOrEmpty(txtSearch.Text))
             {
+                this.isSearch = false;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
                 this.page = 1;
