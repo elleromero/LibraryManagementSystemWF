@@ -27,7 +27,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
             this.ClearAndHide();
 
-            mainPanel.Controls.Add(new CtrlDiscover());
+            mainPanel.Controls.Add(new CtrlDiscover(this));
 
             button2.BackColor = SystemColors.Control;
             navLbl.Text = "Discover";
@@ -87,7 +87,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             this.ClearAndHide();
             button2.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlDiscover());
+            mainPanel.Controls.Add(new CtrlDiscover(this));
             navLbl.Text = "Discover";
         }
 
@@ -96,7 +96,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             this.ClearAndHide();
             button3.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlRepo());
+            mainPanel.Controls.Add(new CtrlRepo(this));
             navLbl.Text = "My Repo";
         }
     }

@@ -77,6 +77,8 @@
             // lblDueDate
             // 
             this.lblDueDate.AutoEllipsis = true;
+            this.lblDueDate.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblDueDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
             this.lblDueDate.Location = new System.Drawing.Point(109, 136);
             this.lblDueDate.Name = "lblDueDate";
             this.lblDueDate.Size = new System.Drawing.Size(195, 15);
@@ -107,6 +109,7 @@
             // lblCopyId
             // 
             this.lblCopyId.AutoEllipsis = true;
+            this.lblCopyId.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblCopyId.Location = new System.Drawing.Point(109, 121);
             this.lblCopyId.Name = "lblCopyId";
             this.lblCopyId.Size = new System.Drawing.Size(195, 15);

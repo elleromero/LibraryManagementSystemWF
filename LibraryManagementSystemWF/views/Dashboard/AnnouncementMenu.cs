@@ -73,7 +73,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 this.loader.StopLoading();
 
                 // set pages
-                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 20));
                 pageLbl.Text = $"{page} | {maxPage}";
 
                 // clear data grid

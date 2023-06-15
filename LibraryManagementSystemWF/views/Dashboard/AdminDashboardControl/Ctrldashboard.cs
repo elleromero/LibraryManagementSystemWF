@@ -105,7 +105,7 @@ namespace LibraryManagementSystemWF.Dashboard.AdminDashboardControl
                 }
 
                 // set page
-                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 20));
                 pageLbl.Text = $"{currentPage} | {maxPage}";
 
                 foreach (Announcement ann in res.Results)

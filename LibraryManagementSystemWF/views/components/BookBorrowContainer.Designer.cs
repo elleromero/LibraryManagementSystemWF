@@ -35,6 +35,7 @@
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.borrowBtn = new System.Windows.Forms.Button();
             this.viewMoreBtn = new System.Windows.Forms.Button();
+            this.availableCopiesLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,7 +79,7 @@
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
-            this.txtDescription.Size = new System.Drawing.Size(195, 90);
+            this.txtDescription.Size = new System.Drawing.Size(195, 68);
             this.txtDescription.TabIndex = 3;
             // 
             // borrowBtn
@@ -105,11 +106,24 @@
             this.viewMoreBtn.UseVisualStyleBackColor = false;
             this.viewMoreBtn.Click += new System.EventHandler(this.viewMoreBtn_Click);
             // 
+            // availableCopiesLbl
+            // 
+            this.availableCopiesLbl.AutoSize = true;
+            this.availableCopiesLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.availableCopiesLbl.ForeColor = System.Drawing.Color.Gray;
+            this.availableCopiesLbl.Location = new System.Drawing.Point(109, 132);
+            this.availableCopiesLbl.Name = "availableCopiesLbl";
+            this.availableCopiesLbl.Size = new System.Drawing.Size(124, 17);
+            this.availableCopiesLbl.TabIndex = 22;
+            this.availableCopiesLbl.Text = "No copies available";
+            this.availableCopiesLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // BookBorrowContainer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.availableCopiesLbl);
             this.Controls.Add(this.viewMoreBtn);
             this.Controls.Add(this.borrowBtn);
             this.Controls.Add(this.txtDescription);
@@ -132,5 +146,6 @@
         private TextBox txtDescription;
         private Button borrowBtn;
         private Button viewMoreBtn;
+        private Label availableCopiesLbl;
     }
 }

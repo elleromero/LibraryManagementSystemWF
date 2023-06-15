@@ -16,8 +16,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 {
     public partial class CtrlTransactions : UserControl
     {
-        private int page;
-        private int maxPage;
+        private int page = 1;
+        private int maxPage = 1;
         private Form form;
         private Loader loader;
 
@@ -47,6 +47,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 this.loader.StopLoading();
 
                 if (res.Results.Count == 0) DialogBuilder.Show("No transactions recorded yet", "Fetch Transactions", MessageBoxIcon.Information);
+
+                // init page label
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{page} | {maxPage}";
 
                 foreach (Loan loan in res.Results)
                 {

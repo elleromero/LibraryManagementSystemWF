@@ -88,6 +88,7 @@
             this.nextLastBtn.TabIndex = 23;
             this.nextLastBtn.Text = ">>";
             this.nextLastBtn.UseVisualStyleBackColor = false;
+            this.nextLastBtn.Click += new System.EventHandler(this.nextLastBtn_Click);
             // 
             // nextBtn
             // 
@@ -100,6 +101,7 @@
             this.nextBtn.TabIndex = 22;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // prevBtn
             // 
@@ -112,6 +114,7 @@
             this.prevBtn.TabIndex = 21;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // prevLastBtn
             // 
@@ -124,6 +127,7 @@
             this.prevLastBtn.TabIndex = 20;
             this.prevLastBtn.Text = "<<";
             this.prevLastBtn.UseVisualStyleBackColor = false;
+            this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
             // CtrlDiscover
             // 
