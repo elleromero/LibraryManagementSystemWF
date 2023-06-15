@@ -60,8 +60,8 @@ namespace LibraryManagementSystemWF.utils
             // Check if the username contains only letters, numbers, underscores, or hyphens
             if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_-]+$")) return false;
 
-            // Check if the username is not too long (50 characters or less)
-            if (username.Length > 50) return false;
+            // Check if the username is not too long (16 characters or less)
+            if (username.Length > 16) return false;
 
             if (username.Length < 5) return false;
 

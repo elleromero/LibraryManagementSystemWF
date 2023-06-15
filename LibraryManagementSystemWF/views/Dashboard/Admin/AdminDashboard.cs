@@ -55,6 +55,46 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             timer.Start();
         }
 
+        private async void LoadSearchUsers()
+        {
+            ControllerAccessData<User> res = await AdminController.Search(txtSearch.Text, page);
+
+            if (res.IsSuccess)
+            {
+                this.loader.StopLoading();
+                users = res.Results;
+
+                subtitleLbl.Text = $"{res.rowCount} user(s) found.";
+
+                // Fill books
+                flowLayoutPanel1.Controls.Clear();
+                if (res.Results.Count > 0)
+                {
+                    flowLayoutPanel1.Margin = new Padding(3);
+                    // loop through results
+                    foreach (User user in users)
+                    {
+                        flowLayoutPanel1.Controls.Add(new UserContainer(user));
+                    }
+                }
+                else
+                {
+                    // add empty template
+                    flowLayoutPanel1.Margin = Padding.Empty;
+                    flowLayoutPanel1.Controls.Add(new CtrlEmpty());
+                }
+
+                // init page label
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{page} | {maxPage}";
+            }
+            else
+            {
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Search Users", MessageBoxIcon.Hand);
+            }
+        }
+
         public async void LoadUsers()
         {
             ControllerAccessData<User> res = await AdminController.GetAllUsers(page);
@@ -165,6 +205,28 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             new AdminAnnouncement(this).Show();
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.page = 1;
+                LoadSearchUsers();
+            }
+        }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.page = 1;
+                LoadUsers();
+            }
         }
     }
 }

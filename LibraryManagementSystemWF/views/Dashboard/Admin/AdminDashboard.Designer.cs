@@ -44,6 +44,8 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.versionlbl = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.searchBtn = new System.Windows.Forms.Button();
             this.topbar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -136,9 +138,9 @@
             // 
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 115);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(15, 111);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1155, 434);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1155, 438);
             this.flowLayoutPanel1.TabIndex = 14;
             // 
             // pageLbl
@@ -237,12 +239,39 @@
             this.linkLabel1.Text = "View Annoucements";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // txtSearch
+            // 
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtSearch.Location = new System.Drawing.Point(596, 56);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search username";
+            this.txtSearch.Size = new System.Drawing.Size(432, 27);
+            this.txtSearch.TabIndex = 24;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
+            // 
+            // searchBtn
+            // 
+            this.searchBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.searchBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.searchBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.searchBtn.Location = new System.Drawing.Point(1034, 56);
+            this.searchBtn.Name = "searchBtn";
+            this.searchBtn.Size = new System.Drawing.Size(27, 27);
+            this.searchBtn.TabIndex = 25;
+            this.searchBtn.Text = "🔎";
+            this.searchBtn.UseVisualStyleBackColor = false;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
+            // 
             // AdminDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1182, 629);
+            this.Controls.Add(this.searchBtn);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.versionlbl);
             this.Controls.Add(this.linkLabel2);
@@ -285,5 +314,7 @@
         private LinkLabel linkLabel2;
         private Label versionlbl;
         private LinkLabel linkLabel1;
+        private TextBox txtSearch;
+        private Button searchBtn;
     }
 }
