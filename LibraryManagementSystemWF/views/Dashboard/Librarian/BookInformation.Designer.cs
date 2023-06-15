@@ -53,6 +53,7 @@
             // 
             // coverPictureBox
             // 
+            this.coverPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.coverPictureBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.coverPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("coverPictureBox.Image")));
             this.coverPictureBox.Location = new System.Drawing.Point(0, 0);
