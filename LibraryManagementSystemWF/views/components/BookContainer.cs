@@ -1,4 +1,6 @@
-﻿using LibraryManagementSystemWF.models;
+﻿using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
+using LibraryManagementSystemWF.interfaces;
+using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.views.Dashboard.Librarian;
 using System;
 using System.Collections.Generic;
@@ -16,8 +18,10 @@ namespace LibraryManagementSystemWF.views.components
     {
         private Book book = new();
         private bool isPreview;
+        private Form? form;
+        private Ctrldashboard? db;
 
-        public BookContainer(Book book, bool isPreview = false)
+        public BookContainer(Book book, bool isPreview = false, Form? form = null, Ctrldashboard? db = null)
         {
             InitializeComponent();
 
@@ -27,36 +31,29 @@ namespace LibraryManagementSystemWF.views.components
             titleLbl.Text = book.Title;
             authorLbl.Text = book.Author;
 
+            this.form = form;
+            this.db = db;
+
             if (File.Exists(book.Cover)) pictureBox1.Image = Image.FromFile(book.Cover);
-        }
-
-        private void pictureBox1_MouseLeave(object sender, EventArgs e)
-        {
-            if (!isPreview) topPanel.Visible = false;
-        }
-
-        private void pictureBox1_MouseEnter(object sender, EventArgs e)
-        {
-            if (!isPreview)
-            {
-                topPanel.Visible = true;
-                topPanel.BringToFront();
-            }
         }
 
         private void titleLbl_Click(object sender, EventArgs e)
         {
-            new BookInformation(this.book).Show();
+            if (!isPreview)
+            {
+                if (this.form != null) this.form.Enabled = false;
+                new BookInformation(this.book, this.form, this.db).Show();
+            }
         }
 
         private void titleLbl_MouseEnter(object sender, EventArgs e)
         {
-            titleLbl.ForeColor = Color.Gray;
+            if (!isPreview) titleLbl.ForeColor = Color.Gray;
         }
 
         private void titleLbl_MouseLeave(object sender, EventArgs e)
         {
-            titleLbl.ForeColor = Color.Black;
+            if (!isPreview) titleLbl.ForeColor = Color.Black;
         }
     }
 }

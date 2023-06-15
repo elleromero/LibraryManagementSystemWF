@@ -87,5 +87,10 @@ namespace LibraryManagementSystemWF.dao
         {
             throw new NotImplementedException();
         }
+
+        public Task<ReturnResultArr<Stats>> GetSearchResults(string searchText, int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

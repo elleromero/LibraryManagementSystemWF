@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,19 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 {
     public partial class UserInformation : Form
     {
-        public UserInformation()
+        public UserInformation(User user)
         {
             InitializeComponent();
+
+            this.nameLbl.Text = $"{user.Member.FirstName} {user.Member.LastName}";
+            this.usernameLbl.Text = $"@{user.Username}";
+            this.roleLbl.Text = user.Role.Name.ToUpper();
+            this.emailLbl.Text = string.IsNullOrWhiteSpace(user.Member.Email) ? "No email provided" : user.Member.Email;
+            this.phoneLbl.Text = user.Member.Phone;
+            this.addressLbl.Text = user.Member.Address;
+            this.coverColor.BackColor = ColorTranslator.FromHtml(PastelColorGenerator.GeneratePastelColor(user.Username));
+
+            if (File.Exists(user.ProfilePicture)) this.profilePicture.Image = Image.FromFile(user.ProfilePicture);
         }
     }
 }

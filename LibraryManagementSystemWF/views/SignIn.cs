@@ -1,22 +1,28 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.Dashboard.Admin;
 using LibraryManagementSystemWF.views.Dashboard.GeneralUser;
 using LibraryManagementSystemWF.views.Dashboard.Librarian;
+using LibraryManagementSystemWF.views.loader;
 
 namespace LibraryManagementSystemWF.views
 {
     public partial class SignIn : Form
     {
+        private Loader loader;
+
         public SignIn()
         {
             InitializeComponent();
+
+            this.loader = new(this);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Register register = new();
+            Register register = new(this);
             register.Show();
             this.Hide();
         }
@@ -26,40 +32,41 @@ namespace LibraryManagementSystemWF.views
             string username = txtUsername.Text;
             string password = txtPassword.Text;
 
+            // call loader
+            this.loader = new(this);
+            loader.StartLoading();
+
             ControllerModifyData<User> res = await AuthController.SignIn(username, password);
             User? user = AuthService.getSignedUser();
 
 
             if (res.IsSuccess)
             {
+                loader.StopLoading();
+
                 if (user.Role.HasAccess && user.Role.Name == "ADMINISTRATOR")
                 {
-                    MessageBox.Show("LOGIN SUCCESS!!!! WELCOME ADMIN!!!");
-
-                    // AdminDashboard admin = new AdminDashboard();
-                    // AdminDashboardRevamp admin = new(); // ssshhh
-                    AdminDashboard admin = new();
-                    admin.Show();
+                    AdminDashboard admin = new(this);
                     this.Hide();
+                    admin.Show();
                 }
                 else if (user.Role.HasAccess && user.Role.Name == "LIBRARIAN")
                 {
                     LibrarianDashboard librarian = new();
-                    librarian.Show();
                     this.Hide();
+                    librarian.Show();
                 }
                 else
                 {
-                    MessageBox.Show("LOGIN SUCCESS!!!! WELCOME USER!!!");
-
                     UserDashboard userDb = new();
-                    userDb.Show();
                     this.Hide();
+                    userDb.Show();
                 }
             }
             else
             {
-                MessageBox.Show("WRONG INPUT!!!");
+                loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Authentication Error", MessageBoxIcon.Stop);
             }
 
             txtUsername.Text = "";
@@ -69,6 +76,11 @@ namespace LibraryManagementSystemWF.views
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new About().ShowDialog();
         }
     }
 }

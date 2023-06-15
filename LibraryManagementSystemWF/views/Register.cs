@@ -1,5 +1,7 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,16 +16,19 @@ namespace LibraryManagementSystemWF.views
 {
     public partial class Register : Form
     {
-        public Register()
+        private Form form;
+
+        public Register(Form form)
         {
             InitializeComponent();
+
+            this.form = form;
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            SignIn signIn = new SignIn();
-            signIn.Show();
-            this.Hide();
+            this.form.Show();
+            this.Close();
         }
 
         private async void button3_Click(object sender, EventArgs e)
@@ -36,30 +41,30 @@ namespace LibraryManagementSystemWF.views
             string phone = txtPhone.Text.Trim();
             string email = txtEmail.Text.Trim();
             string profile = txtProfile.Text;
+            Loader loader = new(this);
+
+            // call loader
+            loader.StartLoading();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
             ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email, profile);
 
             if (res.IsSuccess)
             {
-                // CHECK IF THE REGISTRATION IS SUCCESS
-                MessageBox.Show("Registration Successfull!!");
+                loader.StopLoading();
 
-                SignIn signin = new SignIn();
-                signin.Show();
-                this.Hide();
+                // CHECK IF THE REGISTRATION IS SUCCESS
+                DialogBuilder.Show("Registered Successfully. Please login.", "Registration Success", MessageBoxIcon.Information);
+
+                this.form.Show();
+                this.Close();
             }
             else
             {
+                loader.StopLoading();
+
                 // SHOWS ERROR MESSAGE
-                string errors = " ";
-                foreach (var error in res.Errors)
-                {
-                    errors += error.Value + "\n";
-                }
-
-                MessageBox.Show(errors);
-
+                DialogBuilder.Show(res.Errors, "Registration Error", MessageBoxIcon.Stop);
             }
         }
 
@@ -72,6 +77,14 @@ namespace LibraryManagementSystemWF.views
                 string imagePath = openFileDialog.FileName;
                 txtProfile.Text = imagePath;
                 pictureBox1.Image = Image.FromFile(imagePath);
+            }
+        }
+
+        private void txtPhone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }

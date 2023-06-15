@@ -36,6 +36,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.subtitleLbl = new System.Windows.Forms.Label();
             this.titleLbl = new System.Windows.Forms.Label();
+            this.searchBtn = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // pageLbl
@@ -60,6 +62,7 @@
             this.nextLastBtn.TabIndex = 31;
             this.nextLastBtn.Text = ">>";
             this.nextLastBtn.UseVisualStyleBackColor = false;
+            this.nextLastBtn.Click += new System.EventHandler(this.nextLastBtn_Click);
             // 
             // nextBtn
             // 
@@ -72,6 +75,7 @@
             this.nextBtn.TabIndex = 30;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // prevBtn
             // 
@@ -84,6 +88,7 @@
             this.prevBtn.TabIndex = 29;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // prevLastBtn
             // 
@@ -96,10 +101,12 @@
             this.prevLastBtn.TabIndex = 28;
             this.prevLastBtn.Text = "<<";
             this.prevLastBtn.UseVisualStyleBackColor = false;
+            this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(8, 69);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(698, 409);
@@ -126,10 +133,37 @@
             this.titleLbl.TabIndex = 25;
             this.titleLbl.Text = "Your Repo";
             // 
+            // searchBtn
+            // 
+            this.searchBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.searchBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.searchBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.searchBtn.Location = new System.Drawing.Point(679, 12);
+            this.searchBtn.Name = "searchBtn";
+            this.searchBtn.Size = new System.Drawing.Size(27, 27);
+            this.searchBtn.TabIndex = 34;
+            this.searchBtn.Text = "🔎";
+            this.searchBtn.UseVisualStyleBackColor = false;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtSearch.Location = new System.Drawing.Point(410, 12);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search book title";
+            this.txtSearch.Size = new System.Drawing.Size(263, 27);
+            this.txtSearch.TabIndex = 33;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
+            // 
             // CtrlRepo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.searchBtn);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.pageLbl);
             this.Controls.Add(this.nextLastBtn);
             this.Controls.Add(this.nextBtn);
@@ -155,5 +189,7 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Label subtitleLbl;
         private Label titleLbl;
+        private Button searchBtn;
+        private TextBox txtSearch;
     }
 }

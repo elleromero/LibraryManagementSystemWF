@@ -43,18 +43,16 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Enabled = false;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 62);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 76);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(698, 418);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 396);
             this.dataGridView1.TabIndex = 0;
             // 
             // subtitleLbl
@@ -82,7 +80,7 @@
             // 
             this.pageLbl.AutoSize = true;
             this.pageLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.pageLbl.Location = new System.Drawing.Point(340, 490);
+            this.pageLbl.Location = new System.Drawing.Point(340, 484);
             this.pageLbl.Name = "pageLbl";
             this.pageLbl.Size = new System.Drawing.Size(30, 17);
             this.pageLbl.TabIndex = 37;
@@ -94,48 +92,52 @@
             this.nextLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextLastBtn.Location = new System.Drawing.Point(409, 486);
+            this.nextLastBtn.Location = new System.Drawing.Point(409, 480);
             this.nextLastBtn.Name = "nextLastBtn";
             this.nextLastBtn.Size = new System.Drawing.Size(42, 27);
             this.nextLastBtn.TabIndex = 36;
             this.nextLastBtn.Text = ">>";
             this.nextLastBtn.UseVisualStyleBackColor = false;
+            this.nextLastBtn.Click += new System.EventHandler(this.nextLastBtn_Click);
             // 
             // nextBtn
             // 
             this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextBtn.Location = new System.Drawing.Point(376, 486);
+            this.nextBtn.Location = new System.Drawing.Point(376, 480);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.Size = new System.Drawing.Size(27, 27);
             this.nextBtn.TabIndex = 35;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // prevBtn
             // 
             this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevBtn.Location = new System.Drawing.Point(307, 486);
+            this.prevBtn.Location = new System.Drawing.Point(307, 480);
             this.prevBtn.Name = "prevBtn";
             this.prevBtn.Size = new System.Drawing.Size(27, 27);
             this.prevBtn.TabIndex = 34;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // prevLastBtn
             // 
             this.prevLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevLastBtn.Location = new System.Drawing.Point(257, 486);
+            this.prevLastBtn.Location = new System.Drawing.Point(257, 480);
             this.prevLastBtn.Name = "prevLastBtn";
             this.prevLastBtn.Size = new System.Drawing.Size(42, 27);
             this.prevLastBtn.TabIndex = 33;
             this.prevLastBtn.Text = "<<";
             this.prevLastBtn.UseVisualStyleBackColor = false;
+            this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
             // CtrlTransactions
             // 

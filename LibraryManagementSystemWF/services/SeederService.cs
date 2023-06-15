@@ -115,5 +115,49 @@ namespace LibraryManagementSystemWF.services
 
             return isExists;
         }
+
+        public static async Task<bool> SeedUsers()
+        {
+            bool isSuccess = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                try
+                {
+                    string script = File.ReadAllText("../../../resources/queries/defaultUsers.sql");
+                    SqlCommand command = new(script, conn);
+
+                    await command.ExecuteScalarAsync();
+                    isSuccess = true;
+                }
+                catch { return; }
+            });
+
+            return isSuccess;
+        }
+
+        public static async Task<bool> SeedBooks()
+        {
+            bool isSuccess = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                try
+                {
+                    string script = File.ReadAllText("../../../resources/queries/defaultBooks.sql");
+                    SqlCommand command = new(script, conn);
+
+                    await command.ExecuteScalarAsync();
+                    isSuccess = true;
+                }
+                catch { return; }
+            });
+
+            return isSuccess;
+        }
     }
 }

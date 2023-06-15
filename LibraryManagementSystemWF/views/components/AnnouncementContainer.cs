@@ -22,11 +22,13 @@ namespace LibraryManagementSystemWF.views.components
 
             this.ann = ann;
             lblHeader.Text = ann.Header;
+
+            if (ann.IsPriority) this.BackColor = ColorTranslator.FromHtml("#fece2f");
         }
 
         private void lblHeader_Click(object sender, EventArgs e)
         {
-            new AnnouncementPreview(this.ann).Show();
+            new AnnouncementPreview(this.ann).ShowDialog();
         }
     }
 }

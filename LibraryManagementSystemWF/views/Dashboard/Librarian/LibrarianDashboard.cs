@@ -27,7 +27,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             this.ClearAndHide();
 
-            mainPanel.Controls.Add(new Ctrldashboard());
+            mainPanel.Controls.Add(new Ctrldashboard(this));
 
             button2.BackColor = SystemColors.Control;
             navLbl.Text = "Home";
@@ -68,6 +68,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             button2.BackColor = Color.White;
             button3.BackColor = Color.White;
             button4.BackColor = Color.White;
+            button5.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }
@@ -77,7 +78,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button2.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new Ctrldashboard());
+            mainPanel.Controls.Add(new Ctrldashboard(this));
             navLbl.Text = "Home";
         }
 
@@ -86,17 +87,20 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button3.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new Ctrlbooksrevamp());
+            mainPanel.Controls.Add(new Ctrlbooksrevamp(this));
             navLbl.Text = "Books";
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            AuthController.LogOut();
-            new SignIn().Show();
-            this.Close();
+            DialogResult dr = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                AuthController.LogOut();
+                new SignIn().Show();
+                this.Close();
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -104,8 +108,17 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button4.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlGenre());
+            mainPanel.Controls.Add(new CtrlGenre(this));
             navLbl.Text = "Genres";
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button5.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlTransactions(this));
+            navLbl.Text = "Loans";
         }
     }
 }

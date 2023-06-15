@@ -15,7 +15,12 @@ namespace LibraryManagementSystemWF.services
             try
             {
                 await SeederService.CreateDatabase();
-                await SeederService.CreateInitialTables();
+                
+                if (await SeederService.CreateInitialTables())
+                {
+                    await SeederService.SeedUsers();
+                    await SeederService.SeedBooks();
+                }
 
                 return true;
             } catch { return false; }

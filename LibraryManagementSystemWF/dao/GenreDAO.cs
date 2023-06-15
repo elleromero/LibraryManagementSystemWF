@@ -107,6 +107,53 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
+        public async Task<ReturnResultArr<Genre>> GetAll()
+        {
+            ReturnResultArr<Genre> returnResult = new()
+            {
+                Results = new List<Genre>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
+
+            string query = "SELECT COUNT(*) as row_count FROM genres; " +
+                "SELECT * FROM genres;";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // add row count
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
+
+                    // fill data
+                    await reader.NextResultAsync();
+                    while (reader.Read())
+                    {
+                        Genre? genre = this.Fill(reader);
+
+                        if (genre != null) returnResult.Results.Add(genre);
+                    }
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
+        }
+
         public async Task<ReturnResult<Genre>> GetById(string id)
         {
             ReturnResult<Genre> returnResult = new()
@@ -203,5 +250,9 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
+        public Task<ReturnResultArr<Genre>> GetSearchResults(string searchText, int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

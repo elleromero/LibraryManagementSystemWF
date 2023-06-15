@@ -2,7 +2,9 @@
 using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.Dashboard.AdminDashboardControl;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,14 +24,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
     {
         private List<Genre> genresList = new List<Genre>();
         private List<Book> booksList = new List<Book>();
-        private Ctrlbooksrevamp ctrlbookRevamp = new();
+        private Ctrlbooksrevamp ctrlbookRevamp;
+        private Form parentForm;
         private bool isInitialized = true;
-
-        public void Show(Ctrlbooksrevamp parentForm)
-        {
-            this.ctrlbookRevamp = parentForm;
-            base.Show();
-        }
+        private int currentPage = 1;
+        private int maxPage = 1;
+        private Loader loader;
 
         private void defaultPreview()
         {
@@ -55,24 +55,23 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             if (books.IsSuccess)
             {
+                this.loader.StopLoading();
+
+                if (books.Results.Count == 0) DialogBuilder.Show("No books found", "Fetch Books", MessageBoxIcon.Information);
+
+                // init page label
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)books.rowCount / 20));
+                pageLbl.Text = $"{currentPage} | {maxPage}";
+
                 booksList.Clear();
                 booksList.AddRange(books.Results);
                 dataGridView1.Rows.Clear(); // Clear existing rows before adding new ones
-
-                dataGridView1.Columns.Add("ID", "ID");
-                dataGridView1.Columns.Add("Title", "Title");
-                dataGridView1.Columns.Add("Genre", "Genre");
-                dataGridView1.Columns.Add("Author", "Author");
-                dataGridView1.Columns.Add("Publisher", "Publisher");
-                dataGridView1.Columns.Add("Sypnosis", "Sypnosis");
-                dataGridView1.Columns.Add("PubDate", "Publication Date");
-                dataGridView1.Columns.Add("ISBN", "ISBN");
-                dataGridView1.Columns.Add("Cover", "Cover");
 
                 foreach (Book book in books.Results)
                 {
                     dataGridView1.Rows.Add(
                         book.ID,
+                        book.AvailableCopies,
                         book.Title,
                         book.Genre.Name,
                         book.Author,
@@ -88,11 +87,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             }
             else
             {
+                this.loader.StopLoading();
                 MessageBox.Show("Error retrieving books!");
             }
-
-
-
         }
 
         public async void LoadGenres()
@@ -100,25 +97,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             // Creating an Instance of the GenreController class
             ControllerAccessData<Genre> genres = await GenreController.GetAllGenres();
 
-
-            /*            // Adding the result of Genre in the ComboBox
-                        if (genres.IsSuccess)
-                        {
-                            foreach (Genre genre in genres.Results)
-                            {
-                                cmbGenre.Items.Add(genre.Name);
-
-
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error retrieving genres!");
-                        }*/
             genresList = genres.Results;
 
             if (genres.IsSuccess)
             {
+                if (genresList.Count == 0) DialogBuilder.Show("No genres found", "Fetch Genres", MessageBoxIcon.Information);
+
                 for (int i = 0; i < genres.Results.Count; i++)
                 {
                     Genre genre = genresList[i];
@@ -128,17 +112,29 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 }
             }
-            else
-            {
-                MessageBox.Show("Error retrieving genres!");
-            }
-
-
         }
 
-        public AddBooks()
+        public AddBooks(Ctrlbooksrevamp ctrlbookrevamp, Form form)
         {
             InitializeComponent();
+
+            this.ctrlbookRevamp = ctrlbookrevamp;
+            this.parentForm = form;
+            this.parentForm.Enabled = false;
+
+            dataGridView1.Columns.Add("ID", "ID");
+            dataGridView1.Columns.Add("Copies", "Copies");
+            dataGridView1.Columns.Add("Title", "Title");
+            dataGridView1.Columns.Add("Genre", "Genre");
+            dataGridView1.Columns.Add("Author", "Author");
+            dataGridView1.Columns.Add("Publisher", "Publisher");
+            dataGridView1.Columns.Add("Sypnosis", "Sypnosis");
+            dataGridView1.Columns.Add("PubDate", "Publication Date");
+            dataGridView1.Columns.Add("ISBN", "ISBN");
+            dataGridView1.Columns.Add("Cover", "Cover");
+
+            this.loader = new(this);
+            this.loader.StartLoading();
 
             LoadBooks();
             LoadGenres();
@@ -146,15 +142,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             defaultPreview();
         }
 
-
-
         private async void button1_Click(object sender, EventArgs e)
         {
             if (cmbGenre.SelectedItem != null)
             {
                 Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
                 int selectedGenreId = selectedGenre.ID;
-                string BookId = textBookID.Text;
                 string Title = txtTitle.Text;
                 string Author = txtAuthor.Text;
                 string Publisher = txtPublisher.Text;
@@ -162,37 +155,31 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string ISBN = txtISBN.Text;
                 string Cover = txtCover.Text;
                 string Sypnosis = txtSynopsis.Text;
+                int copies = (int)numCopies.Value;
 
-                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+                this.loader = new(this);
+                this.loader.StartLoading();
+
+                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, copies, Cover, Sypnosis);
 
                 if (result.IsSuccess)
                 {
-                    cmbGenre.SelectedIndex = 0;
-                    textBookID.Text = "";
-                    txtTitle.Text = "";
-                    txtAuthor.Text = "";
-                    txtPublisher.Text = "";
-                    dtpPublicationDate.Value = DateTime.Now;
-                    txtISBN.Text = "";
-                    txtCover.Text = "";
-                    txtSynopsis.Text = "";
-                    coverImg.Image = null;
+                    DialogBuilder.Show("Book created successfully", "Create Book", MessageBoxIcon.Information);
 
+                    this.currentPage = 1;
                     LoadBooks();
-                    ctrlbookRevamp.LoadBooks();
+                    ctrlbookRevamp.RefreshDataGrid();
                     clearBtn.PerformClick();
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        MessageBox.Show(error.Value);
-                    }
+                    this.loader.StopLoading();
+                    DialogBuilder.Show(result.Errors, "Create Book Failed", MessageBoxIcon.Hand);
                 }
             }
             else
             {
-                MessageBox.Show("Please select a genre.");
+                DialogBuilder.Show("Please select a genre.", "Alert", MessageBoxIcon.Information);
             }
 
         }
@@ -213,7 +200,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string Cover = txtCover.Text;
                 string Sypnosis = txtSynopsis.Text;
 
-                Console.WriteLine(BookId);
+                this.loader = new(this);
+                this.loader.StartLoading();
 
                 ControllerModifyData<Book> result = await BookController.UpdateBook(
                     BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
@@ -232,79 +220,72 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     txtSynopsis.Text = "";
                     coverImg.Image = null;
 
+                    DialogBuilder.Show("Book updated successfully", "Update Book", MessageBoxIcon.Information);
+
+                    this.currentPage = 1;
                     LoadBooks();
-                    ctrlbookRevamp.LoadBooks();
+                    ctrlbookRevamp.RefreshDataGrid();
                     clearBtn.PerformClick();
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        MessageBox.Show(error.Value);
-                    }
+                    this.loader.StopLoading();
+                    DialogBuilder.Show(result.Errors, "Update Book Failed", MessageBoxIcon.Hand);
                 }
             }
             else
             {
-                MessageBox.Show("Please select a genre.");
+                DialogBuilder.Show("Please select a genre.", "Alert", MessageBoxIcon.Information);
             }
 
         }
 
         private async void btnDeleteBooks_Click(object sender, EventArgs e)
         {
-            try
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                if (dataGridView1.SelectedRows.Count > 0)
+                DialogResult result = MessageBox.Show("Are you sure you want to delete the selected row?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
                 {
-                    DialogResult result = MessageBox.Show("Are you sure you want to delete the selected row?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
+                    DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+
+                    string? bookId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
+
+                    // Call the appropriate method from your controller to delete the book by its ID
+                    if (bookId != null)
                     {
-                        DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                        this.loader = new(this);
+                        this.loader.StartLoading();
 
-                        string bookId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
+                        ControllerActionData deleteResult = await BookController.RemoveById(bookId);
 
-                        // Call the appropriate method from your controller to delete the book by its ID
-                        if (bookId != null)
+                        if (deleteResult.IsSuccess)
                         {
-                            ControllerActionData deleteResult = await BookController.RemoveById(bookId);
+                            DialogBuilder.Show("Book removed successfully", "Remove Book", MessageBoxIcon.Information);
 
-                            if (deleteResult.IsSuccess)
-                            {
-                                MessageBox.Show("Row deleted successfully.");
+                            // Remove the selected row from the BindingList
+                            booksList.RemoveAt(selectedRow.Index);
 
-                                // Remove the selected row from the BindingList
-                                booksList.RemoveAt(selectedRow.Index);
-
-                                LoadBooks();
-                                ctrlbookRevamp.LoadBooks();
-                                clearBtn.PerformClick();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Error deleting the row. Please try again.");
-                            }
+                            this.currentPage = 1;
+                            LoadBooks();
+                            ctrlbookRevamp.RefreshDataGrid();
+                            clearBtn.PerformClick();
                         }
                         else
                         {
-                            MessageBox.Show("Unable to retrieve the book ID. Please try again.");
+                            this.loader.StopLoading();
+                            DialogBuilder.Show(deleteResult.Errors, "Remove Book Failed", MessageBoxIcon.Hand);
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred while deleting the record: " + ex.Message);
             }
 
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-
-            Ctrlbooks ctrlbooks = new Ctrlbooks();
-            ctrlbooks.Show();
-            this.Hide();
+            this.parentForm.Enabled = true;
+            this.Close();
 
         }
 
@@ -320,13 +301,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             }
         }
 
-
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                // disable num copies
+                numCopies.Enabled = false;
+                numCopies.Maximum = 32418;
+                numCopies.Minimum = 0;
 
                 // Set the values of the text boxes to the values in the clicked row
                 textBookID.Text = row.Cells["ID"].Value.ToString();
@@ -337,7 +321,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 txtISBN.Text = row.Cells["ISBN"].Value.ToString();
                 txtCover.Text = row.Cells["Cover"].Value.ToString();
                 txtSynopsis.Text = row.Cells["Sypnosis"].Value.ToString();
-
+                numCopies.Value = (int)row.Cells["Copies"].Value;
                 cmbGenre.Text = row.Cells["Genre"].Value.ToString();
 
                 // update image
@@ -361,6 +345,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             txtCover.Text = "";
             txtSynopsis.Text = "";
             coverImg.Image = null;
+            numCopies.Value = 1;
+
+            // enable num copies
+            numCopies.Enabled = true;
+            numCopies.Maximum = 50;
+            numCopies.Minimum = 1;
 
             defaultPreview();
         }
@@ -423,6 +413,36 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             else
             {
                 MessageBox.Show("Please select a book to create copies.");
+            }
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                LoadBooks();
+            }
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPage < maxPage)
+            {
+                currentPage++;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                LoadBooks();
+            }
+        }
+
+        private void txtISBN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && e.KeyChar != '-' && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }

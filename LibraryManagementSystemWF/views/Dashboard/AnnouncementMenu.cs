@@ -2,6 +2,8 @@
 using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.services;
+using LibraryManagementSystemWF.utils;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,12 +20,17 @@ namespace LibraryManagementSystemWF.views.Dashboard
     {
         private List<Announcement> announcements = new();
         private ICustomForm form;
+        private Form? parentForm;
+        private Loader loader;
+        private int page = 1;
+        private int maxPage = 1;
 
-        public AnnouncementMenu(ICustomForm form)
+        public AnnouncementMenu(ICustomForm form, Form? parentForm = null)
         {
             InitializeComponent();
 
             this.form = form;
+            this.parentForm = parentForm;
 
             // determine role
             User? user = AuthService.getSignedUser();
@@ -51,32 +58,49 @@ namespace LibraryManagementSystemWF.views.Dashboard
             dataGridView1.Columns.Add("Cover", "Cover");
             dataGridView1.Columns.Add("Audience", "Audience");
 
+            this.loader = new(this);
+            this.loader.StartLoading();
+
             LoadAnnouncements();
         }
 
         private async void LoadAnnouncements()
         {
-            ControllerAccessData<Announcement> res = await AnnouncementController.GetAllWithPastDue();
+            ControllerAccessData<Announcement> res = await AnnouncementController.GetAllWithPastDue(page);
 
             if (res.IsSuccess)
             {
+                this.loader.StopLoading();
+
+                // set pages
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 20));
+                pageLbl.Text = $"{page} | {maxPage}";
+
                 // clear data grid
                 dataGridView1.Rows.Clear();
 
                 announcements = res.Results;
-                foreach (Announcement ann in announcements)
-                {
 
+                if (announcements.Count == 0) DialogBuilder.Show("No announcements yet", "No announcements", MessageBoxIcon.Information);
+
+                for (int i = 0; i < announcements.Count; i++)
+                {
                     dataGridView1.Rows.Add(
-                        ann.ID,
-                        ann.Header,
-                        ann.Body,
-                        ann.Due.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                        ann.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                        ann.Cover,
-                        string.Join(" ", ann.VisibleRoles)
+                        announcements[i].ID,
+                        announcements[i].Header,
+                        announcements[i].Body,
+                        announcements[i].Due.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                        announcements[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                        announcements[i].Cover,
+                        string.Join(" ", announcements[i].VisibleRoles)
                         );
+
+                    if (announcements[i].IsPriority) dataGridView1.Rows[i].DefaultCellStyle.BackColor = ColorTranslator.FromHtml("#fece2f");
                 }
+            } else
+            {
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Fetch Announcements Error", MessageBoxIcon.Hand);
             }
 
         }
@@ -98,6 +122,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            if (this.parentForm != null) this.parentForm.Enabled = true;
             this.Close();
         }
 
@@ -139,6 +164,9 @@ namespace LibraryManagementSystemWF.views.Dashboard
             if (checkBoxLibrarian.Checked) publishToRoles.Add(RoleEnum.LIBRARIAN);
             if (checkBoxUser.Checked) publishToRoles.Add(RoleEnum.USER);
 
+            this.loader = new(this);
+            this.loader.StartLoading();
+
             ControllerModifyData<Announcement> res = await AnnouncementController.Create(
                 txtHeader.Text,
                 txtBody.Text,
@@ -150,16 +178,15 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
             if (res.IsSuccess)
             {
-                MessageBox.Show("Announcement is published!");
+                this.loader.StopLoading();
+                DialogBuilder.Show("Announcement published successfully", "Publish Announcement", MessageBoxIcon.Information);
                 this.Clear();
                 LoadAnnouncements();
                 form.RefreshDataGrid();
             } else
             {
-                foreach (KeyValuePair<string, string> error in res.Errors)
-                {
-                    MessageBox.Show($"{error.Key}: {error.Value}");
-                }
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Publish Announcement Error", MessageBoxIcon.Hand);
             }
         }
 
@@ -170,57 +197,82 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            // update announcement
-            List<RoleEnum> publishToRoles = new();
-
-            if (checkBoxAdmin.Checked) publishToRoles.Add(RoleEnum.ADMINISTRATOR);
-            if (checkBoxLibrarian.Checked) publishToRoles.Add(RoleEnum.LIBRARIAN);
-            if (checkBoxUser.Checked) publishToRoles.Add(RoleEnum.USER);
-
-            ControllerModifyData<Announcement> res = await AnnouncementController.Update(
-                textAnnouncementID.Text,
-                txtHeader.Text,
-                txtBody.Text,
-                dtpAnnouncementDue.Value,
-                publishToRoles,
-                txtCover.Text,
-                checkBoxImportant.Checked
-                );
-
-            if (res.IsSuccess)
+            if (dataGridView1.SelectedCells.Count > 0)
             {
-                MessageBox.Show("Announcement is updated!");
-                this.Clear();
-                LoadAnnouncements();
-                form.RefreshDataGrid();
-            }
-            else
-            {
-                foreach (KeyValuePair<string, string> error in res.Errors)
+                // update announcement
+                List<RoleEnum> publishToRoles = new();
+
+                if (checkBoxAdmin.Checked) publishToRoles.Add(RoleEnum.ADMINISTRATOR);
+                if (checkBoxLibrarian.Checked) publishToRoles.Add(RoleEnum.LIBRARIAN);
+                if (checkBoxUser.Checked) publishToRoles.Add(RoleEnum.USER);
+
+                this.loader = new(this);
+                this.loader.StartLoading();
+
+                ControllerModifyData<Announcement> res = await AnnouncementController.Update(
+                    textAnnouncementID.Text,
+                    txtHeader.Text,
+                    txtBody.Text,
+                    dtpAnnouncementDue.Value,
+                    publishToRoles,
+                    txtCover.Text,
+                    checkBoxImportant.Checked
+                    );
+
+                if (res.IsSuccess)
                 {
-                    MessageBox.Show($"{error.Key}: {error.Value}");
+                    this.loader.StopLoading();
+                    DialogBuilder.Show("Announcement updated successfully", "Update Announcement", MessageBoxIcon.Information);
+                    this.Clear();
+                    LoadAnnouncements();
+                    form.RefreshDataGrid();
+                }
+                else
+                {
+                    this.loader.StopLoading();
+                    DialogBuilder.Show(res.Errors, "Update Announcement Error", MessageBoxIcon.Hand);
                 }
             }
+            else DialogBuilder.Show("No announcement selected", "Nothing Selected", MessageBoxIcon.Hand);
+ 
         }
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            // remove announcement
-            ControllerActionData res = await AnnouncementController.RemoveById(
-                textAnnouncementID.Text
-                );
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to remove this announcement", "Are you sure", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-            if (res.IsSuccess)
-            {
-                MessageBox.Show("Announcement is updated!");
-                this.Clear();
-                LoadAnnouncements();
-                form.RefreshDataGrid();
-            }
-            else
-            {
-                MessageBox.Show("Announcement can't be removed");
-            }
+                if (dialogResult == DialogResult.Yes)
+                {
+                    this.loader = new(this);
+                    this.loader.StartLoading();
+
+                    string? annId = dataGridView1.SelectedRows[0].Cells["ID"]?.Value?.ToString();
+
+                    if (annId != null)
+                    {
+                        // remove announcement
+                        ControllerActionData res = await AnnouncementController.RemoveById(
+                            annId
+                            );
+
+                        if (res.IsSuccess)
+                        {
+                            this.loader.StopLoading();
+                            DialogBuilder.Show("Announcement removed successfully", "Remove Announcement", MessageBoxIcon.Information);
+                            this.Clear();
+                            LoadAnnouncements();
+                            form.RefreshDataGrid();
+                        }
+                        else
+                        {
+                            this.loader.StopLoading();
+                            DialogBuilder.Show(res.Errors, "Remove Announcement", MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            } else DialogBuilder.Show("No announcement selected", "Nothing Selected", MessageBoxIcon.Hand);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -232,6 +284,28 @@ namespace LibraryManagementSystemWF.views.Dashboard
             {
                 string imagePath = openFileDialog.FileName;
                 txtCover.Text = imagePath;
+            }
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            if (page > 1)
+            {
+                page--;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                LoadAnnouncements();
+            }
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            if (page < maxPage)
+            {
+                page++;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                LoadAnnouncements();
             }
         }
     }

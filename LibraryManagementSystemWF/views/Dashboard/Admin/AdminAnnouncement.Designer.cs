@@ -32,8 +32,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.prevBtn = new System.Windows.Forms.Button();
+            this.nextbtn = new System.Windows.Forms.Button();
             this.pageLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -97,31 +97,31 @@
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button4
+            // prevBtn
             // 
-            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button4.Location = new System.Drawing.Point(12, 416);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(26, 26);
-            this.button4.TabIndex = 11;
-            this.button4.Text = "<";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.prevBtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.prevBtn.Location = new System.Drawing.Point(12, 416);
+            this.prevBtn.Name = "prevBtn";
+            this.prevBtn.Size = new System.Drawing.Size(26, 26);
+            this.prevBtn.TabIndex = 11;
+            this.prevBtn.Text = "<";
+            this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button5
+            // nextbtn
             // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button5.Location = new System.Drawing.Point(44, 416);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(26, 26);
-            this.button5.TabIndex = 12;
-            this.button5.Text = ">";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.nextbtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.nextbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextbtn.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.nextbtn.Location = new System.Drawing.Point(44, 416);
+            this.nextbtn.Name = "nextbtn";
+            this.nextbtn.Size = new System.Drawing.Size(26, 26);
+            this.nextbtn.TabIndex = 12;
+            this.nextbtn.Text = ">";
+            this.nextbtn.UseVisualStyleBackColor = false;
+            this.nextbtn.Click += new System.EventHandler(this.button5_Click);
             // 
             // pageLbl
             // 
@@ -140,8 +140,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(870, 489);
             this.Controls.Add(this.pageLbl);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.nextbtn);
+            this.Controls.Add(this.prevBtn);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -161,8 +161,8 @@
         private Button button1;
         private Button button2;
         private Button button3;
-        private Button button4;
-        private Button button5;
+        private Button prevBtn;
+        private Button nextbtn;
         private Label pageLbl;
     }
 }

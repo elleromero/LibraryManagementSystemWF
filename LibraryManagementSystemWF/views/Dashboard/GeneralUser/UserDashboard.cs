@@ -27,7 +27,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
             this.ClearAndHide();
 
-            mainPanel.Controls.Add(new CtrlDiscover());
+            mainPanel.Controls.Add(new CtrlDiscover(this));
 
             button2.BackColor = SystemColors.Control;
             navLbl.Text = "Discover";
@@ -73,9 +73,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AuthController.LogOut();
-            new SignIn().Show();
-            this.Close();
+            DialogResult dr = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                AuthController.LogOut();
+                new SignIn().Show();
+                this.Close();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -83,7 +87,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             this.ClearAndHide();
             button2.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlDiscover());
+            mainPanel.Controls.Add(new CtrlDiscover(this));
             navLbl.Text = "Discover";
         }
 
@@ -92,7 +96,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             this.ClearAndHide();
             button3.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlRepo());
+            mainPanel.Controls.Add(new CtrlRepo(this));
             navLbl.Text = "My Repo";
         }
     }

@@ -36,7 +36,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian or administrator
             if (await AuthGuard.HavePermission("USER"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -44,21 +44,21 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validate fields
-            if (!await Validator.IsNameUnique("announcements", "announcement_header", header)) errors.Add("header", "Header already exists");
-            if (string.IsNullOrWhiteSpace(header)) errors.Add("header", "Header is required");
-            if (string.IsNullOrWhiteSpace(body)) errors.Add("body", "Body is required");
-            if (!Validator.IsDateAfter(announcementDue)) errors.Add("announcementDue", "Datetime must be after the present date");
-            if (!Validator.IsUserHavePermissionToPublish(publishToRoles)) errors.Add("publishToRoles", "Forbidden");
+            // if (!await Validator.IsAnnouncementTitleUnique(header)) errors["header"] = "Header already exists";
+            if (string.IsNullOrWhiteSpace(header)) errors["header"] = "Header is required";
+            if (string.IsNullOrWhiteSpace(body)) errors["body"] = "Body is required";
+            if (!Validator.IsDateAfter(announcementDue)) errors["announcementDue"] = "Datetime must be after the present date";
+            if (!Validator.IsUserHavePermissionToPublish(publishToRoles)) errors["publishToRoles"] = "Forbidden";
 
             if (errors.Count == 0)
             {
                 AnnouncementDAO announcementDao = new();
                 ReturnResult<Announcement> result = await announcementDao.Create(new Announcement
                 {
-                    Header = header,
-                    Body = body,
+                    Header = header.Trim(),
+                    Body = body.Trim(),
                     Due = announcementDue,
-                    Cover = cover,
+                    Cover = cover.Trim(),
                     IsPriority = isPriority,
                     User = new User()
                     {
@@ -96,7 +96,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian or administrator
             if (await AuthGuard.HavePermission("USER"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -104,10 +104,12 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validate fields
-            if (string.IsNullOrWhiteSpace(header)) errors.Add("header", "Header is required");
-            if (string.IsNullOrWhiteSpace(body)) errors.Add("body", "Body is required");
-            if (!Validator.IsDateAfter(announcementDue)) errors.Add("announcementDue", "Datetime must be after the present date");
-            if (!Validator.IsUserHavePermissionToPublish(publishToRoles)) errors.Add("publishToRoles", "Forbidden");
+            if (string.IsNullOrWhiteSpace(announcementId)) errors["announcementId"] = "Announcement ID is required";
+           //  if (!await Validator.IsAnnouncementTitleUnique(header, announcementId)) errors["header"] = "Header already exists";
+            if (string.IsNullOrWhiteSpace(header)) errors["header"] = "Header is required";
+            if (string.IsNullOrWhiteSpace(body)) errors["body"] = "Body is required";    
+            if (!Validator.IsDateAfter(announcementDue)) errors["announcementDue"] = "Datetime must be after the present date";
+            if (!Validator.IsUserHavePermissionToPublish(publishToRoles)) errors["publishToRoles"] = "Forbidden";
 
             if (errors.Count == 0)
             {
@@ -115,10 +117,10 @@ namespace LibraryManagementSystemWF.controllers
                 ReturnResult<Announcement> result = await announcementDao.Update(new Announcement
                 {
                     ID = new Guid(announcementId),
-                    Header = header,
-                    Body = body,
+                    Header = header.Trim(),
+                    Body = body.Trim(),
                     Due = announcementDue,
-                    Cover = cover,
+                    Cover = cover.Trim(),
                     IsPriority = isPriority,
                     User = new User()
                     {
@@ -145,7 +147,7 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            if (page <= 0) errors.Add("page", "Invalid page");
+            if (page <= 0) errors["page"] = "Invalid page";
 
             if (errors.Count == 0)
             {
@@ -172,7 +174,7 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            if (page <= 0) errors.Add("page", "Invalid page");
+            if (page <= 0) errors["page"] = "Invalid page";
 
             if (errors.Count == 0)
             {
@@ -200,10 +202,12 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian or admin
             if (await AuthGuard.HavePermission("USER"))
             {
-                returnResult.Errors.Add("permission", "Forbidden");
+                returnResult.Errors["permission"] = "Forbidden";
 
                 return returnResult;
             }
+
+            if (string.IsNullOrWhiteSpace(announcementId)) returnResult.Errors["id"] = "ID is required";
 
             if (returnResult.Errors.Count == 0)
             {

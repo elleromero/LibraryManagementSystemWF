@@ -23,7 +23,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -31,8 +31,8 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
-            if (copies <= 0 || copies > 50) errors.Add("copies", "Copies should between 1 to 50");
+            if (string.IsNullOrWhiteSpace(bookId)) errors["bookId"] = "ID is invalid";
+            if (copies <= 0 || copies > 50) errors["copies"] = "Copies should between 1 to 50";
 
             if (errors.Count == 0)
             {
@@ -58,12 +58,12 @@ namespace LibraryManagementSystemWF.controllers
             bool isSuccess = false;
 
             // validate fields
-            if (string.IsNullOrWhiteSpace(id)) errors.Add("id", "ID is invalid");
+            if (string.IsNullOrWhiteSpace(id)) errors["id"] = "ID is invalid";
 
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -102,7 +102,7 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                errors.Add("permission", "Forbidden");
+                errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
                 returnData.IsSuccess = false;
 
@@ -134,7 +134,9 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            if (page <= 0) errors.Add("page", "Invalid page");
+            // validate fields
+            if (string.IsNullOrWhiteSpace(bookId)) errors["bookId"] = "Book ID is invalid";
+            if (page <= 0) errors["page"] = "Invalid page";
 
             if (errors.Count == 0)
             {
@@ -162,10 +164,13 @@ namespace LibraryManagementSystemWF.controllers
             // is not librarian
             if (!await AuthGuard.HavePermission("LIBRARIAN"))
             {
-                returnResult.Errors.Add("permission", "Forbidden");
+                returnResult.Errors["permission"] = "Forbidden";
 
                 return returnResult;
             }
+
+            // validate fields
+            if (string.IsNullOrWhiteSpace(id)) returnResult.Errors["id"] = "ID is invalid";
 
             if (returnResult.Errors.Count == 0)
             {

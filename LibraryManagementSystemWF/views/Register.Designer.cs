@@ -97,6 +97,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(231, 29);
             this.txtPhone.TabIndex = 5;
+            this.txtPhone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhone_KeyPress);
             // 
             // txtEmail
             // 
@@ -118,6 +119,7 @@
             // 
             this.txtRegPass.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtRegPass.Location = new System.Drawing.Point(519, 295);
+            this.txtRegPass.MaxLength = 11;
             this.txtRegPass.Name = "txtRegPass";
             this.txtRegPass.Size = new System.Drawing.Size(279, 29);
             this.txtRegPass.TabIndex = 8;
@@ -272,6 +274,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(825, 93);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 100);
@@ -285,6 +288,7 @@
             this.txtProfile.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtProfile.Location = new System.Drawing.Point(825, 200);
             this.txtProfile.Name = "txtProfile";
+            this.txtProfile.PlaceholderText = "C://Images/profile-picture.png";
             this.txtProfile.ReadOnly = true;
             this.txtProfile.Size = new System.Drawing.Size(167, 29);
             this.txtProfile.TabIndex = 26;
@@ -334,6 +338,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Register";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Register";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

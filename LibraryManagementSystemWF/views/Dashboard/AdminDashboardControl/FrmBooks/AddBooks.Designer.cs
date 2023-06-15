@@ -29,517 +29,556 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddBooks));
-            dataGridView1 = new DataGridView();
-            txtTitle = new TextBox();
-            txtAuthor = new TextBox();
-            txtSynopsis = new TextBox();
-            txtPublisher = new TextBox();
-            txtISBN = new TextBox();
-            txtCover = new TextBox();
-            dtpPublicationDate = new DateTimePicker();
-            cmbGenre = new ComboBox();
-            button1 = new Button();
-            button2 = new Button();
-            btnDelete = new Button();
-            textBookID = new TextBox();
-            btnDeleteBooks = new Button();
-            btnBack = new Button();
-            panel1 = new Panel();
-            clearBtn = new Button();
-            coverImg = new PictureBox();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            label10 = new Label();
-            label1 = new Label();
-            button3 = new Button();
-            label2 = new Label();
-            panel2 = new Panel();
-            numCopies = new NumericUpDown();
-            label11 = new Label();
-            button4 = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)coverImg).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numCopies).BeginInit();
-            SuspendLayout();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.txtAuthor = new System.Windows.Forms.TextBox();
+            this.txtSynopsis = new System.Windows.Forms.TextBox();
+            this.txtPublisher = new System.Windows.Forms.TextBox();
+            this.txtISBN = new System.Windows.Forms.TextBox();
+            this.txtCover = new System.Windows.Forms.TextBox();
+            this.dtpPublicationDate = new System.Windows.Forms.DateTimePicker();
+            this.cmbGenre = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.textBookID = new System.Windows.Forms.TextBox();
+            this.btnDeleteBooks = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.clearBtn = new System.Windows.Forms.Button();
+            this.coverImg = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.numCopies = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.nextBtn = new System.Windows.Forms.Button();
+            this.prevBtn = new System.Windows.Forms.Button();
+            this.pageLbl = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.coverImg)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCopies)).BeginInit();
+            this.SuspendLayout();
             // 
             // dataGridView1
             // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AllowUserToOrderColumns = true;
-            dataGridView1.BackgroundColor = Color.WhiteSmoke;
-            dataGridView1.BorderStyle = BorderStyle.None;
-            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Top;
-            dataGridView1.GridColor = Color.Black;
-            dataGridView1.Location = new Point(155, 0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(831, 170);
-            dataGridView1.TabIndex = 0;
-            dataGridView1.CellClick += dataGridView1_CellClick;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dataGridView1.GridColor = System.Drawing.Color.Black;
+            this.dataGridView1.Location = new System.Drawing.Point(155, 0);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(831, 170);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // txtTitle
             // 
-            txtTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtTitle.Location = new Point(177, 280);
-            txtTitle.Name = "txtTitle";
-            txtTitle.PlaceholderText = "Harry Potter";
-            txtTitle.Size = new Size(280, 29);
-            txtTitle.TabIndex = 1;
-            txtTitle.TextChanged += txtTitle_TextChanged;
+            this.txtTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtTitle.Location = new System.Drawing.Point(177, 280);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.PlaceholderText = "Harry Potter";
+            this.txtTitle.Size = new System.Drawing.Size(280, 29);
+            this.txtTitle.TabIndex = 1;
+            this.txtTitle.TextChanged += new System.EventHandler(this.txtTitle_TextChanged);
             // 
             // txtAuthor
             // 
-            txtAuthor.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtAuthor.Location = new Point(177, 347);
-            txtAuthor.Name = "txtAuthor";
-            txtAuthor.PlaceholderText = "J. K. Rowling";
-            txtAuthor.Size = new Size(280, 29);
-            txtAuthor.TabIndex = 1;
-            txtAuthor.TextChanged += txtTitle_TextChanged;
+            this.txtAuthor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtAuthor.Location = new System.Drawing.Point(177, 347);
+            this.txtAuthor.Name = "txtAuthor";
+            this.txtAuthor.PlaceholderText = "J. K. Rowling";
+            this.txtAuthor.Size = new System.Drawing.Size(280, 29);
+            this.txtAuthor.TabIndex = 1;
+            this.txtAuthor.TextChanged += new System.EventHandler(this.txtTitle_TextChanged);
             // 
             // txtSynopsis
             // 
-            txtSynopsis.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSynopsis.Location = new Point(491, 372);
-            txtSynopsis.Multiline = true;
-            txtSynopsis.Name = "txtSynopsis";
-            txtSynopsis.PlaceholderText = "Write something awesome...";
-            txtSynopsis.ScrollBars = ScrollBars.Vertical;
-            txtSynopsis.Size = new Size(280, 212);
-            txtSynopsis.TabIndex = 1;
+            this.txtSynopsis.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtSynopsis.Location = new System.Drawing.Point(493, 347);
+            this.txtSynopsis.Multiline = true;
+            this.txtSynopsis.Name = "txtSynopsis";
+            this.txtSynopsis.PlaceholderText = "Write something awesome...";
+            this.txtSynopsis.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtSynopsis.Size = new System.Drawing.Size(280, 221);
+            this.txtSynopsis.TabIndex = 1;
             // 
             // txtPublisher
             // 
-            txtPublisher.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtPublisher.Location = new Point(177, 539);
-            txtPublisher.Name = "txtPublisher";
-            txtPublisher.PlaceholderText = "Agila Inc.";
-            txtPublisher.Size = new Size(280, 29);
-            txtPublisher.TabIndex = 1;
+            this.txtPublisher.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtPublisher.Location = new System.Drawing.Point(177, 539);
+            this.txtPublisher.Name = "txtPublisher";
+            this.txtPublisher.PlaceholderText = "Agila Inc.";
+            this.txtPublisher.Size = new System.Drawing.Size(280, 29);
+            this.txtPublisher.TabIndex = 1;
             // 
             // txtISBN
             // 
-            txtISBN.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtISBN.Location = new Point(177, 412);
-            txtISBN.Name = "txtISBN";
-            txtISBN.PlaceholderText = "ISBN 10 or ISBN 13";
-            txtISBN.Size = new Size(280, 29);
-            txtISBN.TabIndex = 1;
+            this.txtISBN.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtISBN.Location = new System.Drawing.Point(177, 412);
+            this.txtISBN.Name = "txtISBN";
+            this.txtISBN.PlaceholderText = "ISBN 10 or ISBN 13";
+            this.txtISBN.Size = new System.Drawing.Size(280, 29);
+            this.txtISBN.TabIndex = 1;
+            this.txtISBN.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtISBN_KeyPress);
             // 
             // txtCover
             // 
-            txtCover.Enabled = false;
-            txtCover.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtCover.Location = new Point(177, 476);
-            txtCover.Name = "txtCover";
-            txtCover.PlaceholderText = "C://Images/cover.png";
-            txtCover.ReadOnly = true;
-            txtCover.Size = new Size(222, 29);
-            txtCover.TabIndex = 1;
-            txtCover.TextChanged += txtTitle_TextChanged;
+            this.txtCover.Enabled = false;
+            this.txtCover.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtCover.Location = new System.Drawing.Point(177, 476);
+            this.txtCover.Name = "txtCover";
+            this.txtCover.PlaceholderText = "C://Images/cover.png";
+            this.txtCover.ReadOnly = true;
+            this.txtCover.Size = new System.Drawing.Size(222, 29);
+            this.txtCover.TabIndex = 1;
+            this.txtCover.TextChanged += new System.EventHandler(this.txtTitle_TextChanged);
             // 
             // dtpPublicationDate
             // 
-            dtpPublicationDate.CalendarFont = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dtpPublicationDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dtpPublicationDate.Location = new Point(493, 272);
-            dtpPublicationDate.Name = "dtpPublicationDate";
-            dtpPublicationDate.Size = new Size(280, 29);
-            dtpPublicationDate.TabIndex = 2;
+            this.dtpPublicationDate.CalendarFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dtpPublicationDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dtpPublicationDate.Location = new System.Drawing.Point(493, 272);
+            this.dtpPublicationDate.Name = "dtpPublicationDate";
+            this.dtpPublicationDate.Size = new System.Drawing.Size(280, 29);
+            this.dtpPublicationDate.TabIndex = 2;
             // 
             // cmbGenre
             // 
-            cmbGenre.BackColor = SystemColors.Control;
-            cmbGenre.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbGenre.FlatStyle = FlatStyle.Flat;
-            cmbGenre.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            cmbGenre.FormattingEnabled = true;
-            cmbGenre.Location = new Point(493, 216);
-            cmbGenre.Name = "cmbGenre";
-            cmbGenre.Size = new Size(280, 29);
-            cmbGenre.TabIndex = 4;
+            this.cmbGenre.BackColor = System.Drawing.SystemColors.Control;
+            this.cmbGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbGenre.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbGenre.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cmbGenre.FormattingEnabled = true;
+            this.cmbGenre.Location = new System.Drawing.Point(493, 216);
+            this.cmbGenre.Name = "cmbGenre";
+            this.cmbGenre.Size = new System.Drawing.Size(280, 29);
+            this.cmbGenre.TabIndex = 4;
             // 
             // button1
             // 
-            button1.BackColor = Color.WhiteSmoke;
-            button1.FlatAppearance.BorderSize = 2;
-            button1.FlatAppearance.CheckedBackColor = Color.FromArgb(192, 255, 255);
-            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Image = (Image)resources.GetObject("button1.Image");
-            button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(0, 173);
-            button1.Name = "button1";
-            button1.Size = new Size(155, 54);
-            button1.TabIndex = 5;
-            button1.Text = "      ADD BOOKS";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            this.button1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.button1.FlatAppearance.BorderSize = 2;
+            this.button1.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(0, 173);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(155, 54);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "      ADD BOOKS";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            button2.BackColor = Color.WhiteSmoke;
-            button2.FlatAppearance.BorderSize = 2;
-            button2.FlatAppearance.CheckedBackColor = Color.FromArgb(192, 255, 255);
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Image = (Image)resources.GetObject("button2.Image");
-            button2.ImageAlign = ContentAlignment.MiddleLeft;
-            button2.Location = new Point(0, 229);
-            button2.Name = "button2";
-            button2.Size = new Size(155, 54);
-            button2.TabIndex = 6;
-            button2.Text = "       UPDATE BOOKS";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click_1;
+            this.button2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.button2.FlatAppearance.BorderSize = 2;
+            this.button2.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.Location = new System.Drawing.Point(0, 229);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(155, 54);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "       UPDATE BOOKS";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(0, 0);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 23);
-            btnDelete.TabIndex = 0;
+            this.btnDelete.Location = new System.Drawing.Point(0, 0);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 0;
             // 
             // textBookID
             // 
-            textBookID.BackColor = SystemColors.Control;
-            textBookID.Enabled = false;
-            textBookID.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            textBookID.ForeColor = SystemColors.MenuText;
-            textBookID.Location = new Point(177, 216);
-            textBookID.Name = "textBookID";
-            textBookID.PlaceholderText = "Not required in ADD MODE";
-            textBookID.ReadOnly = true;
-            textBookID.Size = new Size(280, 29);
-            textBookID.TabIndex = 8;
+            this.textBookID.BackColor = System.Drawing.SystemColors.Control;
+            this.textBookID.Enabled = false;
+            this.textBookID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBookID.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.textBookID.Location = new System.Drawing.Point(177, 216);
+            this.textBookID.Name = "textBookID";
+            this.textBookID.PlaceholderText = "Not required in ADD MODE";
+            this.textBookID.ReadOnly = true;
+            this.textBookID.Size = new System.Drawing.Size(280, 29);
+            this.textBookID.TabIndex = 8;
             // 
             // btnDeleteBooks
             // 
-            btnDeleteBooks.BackColor = Color.WhiteSmoke;
-            btnDeleteBooks.FlatAppearance.BorderSize = 2;
-            btnDeleteBooks.FlatAppearance.CheckedBackColor = Color.FromArgb(192, 255, 255);
-            btnDeleteBooks.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnDeleteBooks.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnDeleteBooks.FlatStyle = FlatStyle.Flat;
-            btnDeleteBooks.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDeleteBooks.Image = (Image)resources.GetObject("btnDeleteBooks.Image");
-            btnDeleteBooks.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDeleteBooks.Location = new Point(-1, 285);
-            btnDeleteBooks.Name = "btnDeleteBooks";
-            btnDeleteBooks.Size = new Size(156, 54);
-            btnDeleteBooks.TabIndex = 9;
-            btnDeleteBooks.Text = "     DELETE BOOKS";
-            btnDeleteBooks.UseVisualStyleBackColor = false;
-            btnDeleteBooks.Click += btnDeleteBooks_Click;
+            this.btnDeleteBooks.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnDeleteBooks.FlatAppearance.BorderSize = 2;
+            this.btnDeleteBooks.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDeleteBooks.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDeleteBooks.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDeleteBooks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteBooks.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDeleteBooks.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteBooks.Image")));
+            this.btnDeleteBooks.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDeleteBooks.Location = new System.Drawing.Point(-1, 285);
+            this.btnDeleteBooks.Name = "btnDeleteBooks";
+            this.btnDeleteBooks.Size = new System.Drawing.Size(156, 54);
+            this.btnDeleteBooks.TabIndex = 9;
+            this.btnDeleteBooks.Text = "     DELETE BOOKS";
+            this.btnDeleteBooks.UseVisualStyleBackColor = false;
+            this.btnDeleteBooks.Click += new System.EventHandler(this.btnDeleteBooks_Click);
             // 
             // btnBack
             // 
-            btnBack.BackColor = Color.FromArgb(254, 206, 47);
-            btnBack.FlatAppearance.BorderSize = 0;
-            btnBack.FlatAppearance.CheckedBackColor = Color.FromArgb(192, 255, 255);
-            btnBack.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            btnBack.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            btnBack.FlatStyle = FlatStyle.Flat;
-            btnBack.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBack.Image = (Image)resources.GetObject("btnBack.Image");
-            btnBack.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBack.Location = new Point(0, 0);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(155, 53);
-            btnBack.TabIndex = 10;
-            btnBack.Text = "BACK";
-            btnBack.UseVisualStyleBackColor = false;
-            btnBack.Click += btnBack_Click;
+            this.btnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.btnBack.FlatAppearance.BorderSize = 0;
+            this.btnBack.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnBack.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnBack.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBack.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
+            this.btnBack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBack.Location = new System.Drawing.Point(0, 0);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(155, 53);
+            this.btnBack.TabIndex = 10;
+            this.btnBack.Text = "BACK";
+            this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(254, 206, 47);
-            panel1.Controls.Add(button4);
-            panel1.Controls.Add(clearBtn);
-            panel1.Controls.Add(coverImg);
-            panel1.Controls.Add(btnBack);
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(btnDeleteBooks);
-            panel1.Controls.Add(button2);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(155, 595);
-            panel1.TabIndex = 11;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.panel1.Controls.Add(this.clearBtn);
+            this.panel1.Controls.Add(this.coverImg);
+            this.panel1.Controls.Add(this.btnBack);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btnDeleteBooks);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(155, 595);
+            this.panel1.TabIndex = 11;
             // 
             // clearBtn
             // 
-            clearBtn.BackColor = Color.WhiteSmoke;
-            clearBtn.FlatAppearance.BorderSize = 2;
-            clearBtn.FlatAppearance.CheckedBackColor = Color.FromArgb(192, 255, 255);
-            clearBtn.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            clearBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            clearBtn.FlatStyle = FlatStyle.Flat;
-            clearBtn.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            clearBtn.Image = (Image)resources.GetObject("clearBtn.Image");
-            clearBtn.ImageAlign = ContentAlignment.MiddleLeft;
-            clearBtn.Location = new Point(0, 116);
-            clearBtn.Name = "clearBtn";
-            clearBtn.Size = new Size(155, 54);
-            clearBtn.TabIndex = 44;
-            clearBtn.Text = "      CLEAR";
-            clearBtn.UseVisualStyleBackColor = false;
-            clearBtn.Click += clearBtn_Click;
+            this.clearBtn.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.clearBtn.FlatAppearance.BorderSize = 2;
+            this.clearBtn.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clearBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clearBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clearBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.clearBtn.Font = new System.Drawing.Font("Segoe UI Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.clearBtn.Image = ((System.Drawing.Image)(resources.GetObject("clearBtn.Image")));
+            this.clearBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.clearBtn.Location = new System.Drawing.Point(0, 116);
+            this.clearBtn.Name = "clearBtn";
+            this.clearBtn.Size = new System.Drawing.Size(155, 54);
+            this.clearBtn.TabIndex = 44;
+            this.clearBtn.Text = "      CLEAR";
+            this.clearBtn.UseVisualStyleBackColor = false;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
             // coverImg
             // 
-            coverImg.Location = new Point(0, 399);
-            coverImg.Name = "coverImg";
-            coverImg.Size = new Size(155, 196);
-            coverImg.SizeMode = PictureBoxSizeMode.StretchImage;
-            coverImg.TabIndex = 11;
-            coverImg.TabStop = false;
+            this.coverImg.Location = new System.Drawing.Point(0, 399);
+            this.coverImg.Name = "coverImg";
+            this.coverImg.Size = new System.Drawing.Size(155, 196);
+            this.coverImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.coverImg.TabIndex = 11;
+            this.coverImg.TabStop = false;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = Color.Black;
-            label3.Location = new Point(173, 196);
-            label3.Margin = new Padding(0);
-            label3.Name = "label3";
-            label3.Size = new Size(56, 17);
-            label3.TabIndex = 18;
-            label3.Text = "Book ID";
-            label3.TextAlign = ContentAlignment.MiddleLeft;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(173, 196);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 17);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Book ID";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label4
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.ForeColor = Color.Black;
-            label4.Location = new Point(174, 260);
-            label4.Margin = new Padding(0);
-            label4.Name = "label4";
-            label4.Size = new Size(68, 17);
-            label4.TabIndex = 19;
-            label4.Text = "Book Title";
-            label4.TextAlign = ContentAlignment.MiddleLeft;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(174, 260);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 17);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Book Title";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label5
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.ForeColor = Color.Black;
-            label5.Location = new Point(174, 327);
-            label5.Margin = new Padding(0);
-            label5.Name = "label5";
-            label5.Size = new Size(51, 17);
-            label5.TabIndex = 20;
-            label5.Text = "Author";
-            label5.TextAlign = ContentAlignment.MiddleLeft;
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(174, 327);
+            this.label5.Margin = new System.Windows.Forms.Padding(0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 17);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Author";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label6
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label6.ForeColor = Color.Black;
-            label6.Location = new Point(174, 392);
-            label6.Margin = new Padding(0);
-            label6.Name = "label6";
-            label6.Size = new Size(37, 17);
-            label6.TabIndex = 21;
-            label6.Text = "ISBN";
-            label6.TextAlign = ContentAlignment.MiddleLeft;
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(174, 392);
+            this.label6.Margin = new System.Windows.Forms.Padding(0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 17);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "ISBN";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label7
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label7.ForeColor = Color.Black;
-            label7.Location = new Point(174, 456);
-            label7.Margin = new Padding(0);
-            label7.Name = "label7";
-            label7.Size = new Size(85, 17);
-            label7.TabIndex = 22;
-            label7.Text = "Cover Image";
-            label7.TextAlign = ContentAlignment.MiddleLeft;
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(174, 456);
+            this.label7.Margin = new System.Windows.Forms.Padding(0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 17);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Cover Image";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label8
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label8.ForeColor = Color.Black;
-            label8.Location = new Point(174, 519);
-            label8.Margin = new Padding(0);
-            label8.Name = "label8";
-            label8.Size = new Size(64, 17);
-            label8.TabIndex = 23;
-            label8.Text = "Publisher";
-            label8.TextAlign = ContentAlignment.MiddleLeft;
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label8.ForeColor = System.Drawing.Color.Black;
+            this.label8.Location = new System.Drawing.Point(174, 519);
+            this.label8.Margin = new System.Windows.Forms.Padding(0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(64, 17);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "Publisher";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label9
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label9.ForeColor = Color.Black;
-            label9.Location = new Point(491, 196);
-            label9.Margin = new Padding(0);
-            label9.Name = "label9";
-            label9.Size = new Size(44, 17);
-            label9.TabIndex = 24;
-            label9.Text = "Genre";
-            label9.TextAlign = ContentAlignment.MiddleLeft;
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label9.ForeColor = System.Drawing.Color.Black;
+            this.label9.Location = new System.Drawing.Point(491, 196);
+            this.label9.Margin = new System.Windows.Forms.Padding(0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(44, 17);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "Genre";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label10
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label10.ForeColor = Color.Black;
-            label10.Location = new Point(491, 252);
-            label10.Margin = new Padding(0);
-            label10.Name = "label10";
-            label10.Size = new Size(107, 17);
-            label10.TabIndex = 25;
-            label10.Text = "Publication Date";
-            label10.TextAlign = ContentAlignment.MiddleLeft;
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label10.ForeColor = System.Drawing.Color.Black;
+            this.label10.Location = new System.Drawing.Point(491, 252);
+            this.label10.Margin = new System.Windows.Forms.Padding(0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(107, 17);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "Publication Date";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.Black;
-            label1.Location = new Point(490, 352);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(61, 17);
-            label1.TabIndex = 26;
-            label1.Text = "Sypnosis";
-            label1.TextAlign = ContentAlignment.MiddleLeft;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(492, 327);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 17);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "Sypnosis";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button3
             // 
-            button3.BackColor = Color.FromArgb(254, 206, 47);
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Location = new Point(405, 476);
-            button3.Name = "button3";
-            button3.Size = new Size(52, 29);
-            button3.TabIndex = 27;
-            button3.Text = "find";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += button3_Click;
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(405, 476);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(52, 29);
+            this.button3.TabIndex = 27;
+            this.button3.Text = "find";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.ForeColor = Color.Black;
-            label2.Location = new Point(809, 196);
-            label2.Margin = new Padding(0);
-            label2.Name = "label2";
-            label2.Size = new Size(55, 17);
-            label2.TabIndex = 40;
-            label2.Text = "Preview";
-            label2.TextAlign = ContentAlignment.MiddleLeft;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(809, 196);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 17);
+            this.label2.TabIndex = 40;
+            this.label2.Text = "Preview";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel2
             // 
-            panel2.Location = new Point(812, 216);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(152, 252);
-            panel2.TabIndex = 39;
+            this.panel2.Location = new System.Drawing.Point(812, 216);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(152, 252);
+            this.panel2.TabIndex = 39;
             // 
             // numCopies
             // 
-            numCopies.Location = new Point(491, 326);
-            numCopies.Name = "numCopies";
-            numCopies.Size = new Size(282, 23);
-            numCopies.TabIndex = 41;
+            this.numCopies.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numCopies.Location = new System.Drawing.Point(812, 519);
+            this.numCopies.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numCopies.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numCopies.Name = "numCopies";
+            this.numCopies.Size = new System.Drawing.Size(152, 29);
+            this.numCopies.TabIndex = 41;
+            this.numCopies.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label11
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label11.ForeColor = Color.Black;
-            label11.Location = new Point(491, 306);
-            label11.Margin = new Padding(0);
-            label11.Name = "label11";
-            label11.Size = new Size(96, 17);
-            label11.TabIndex = 42;
-            label11.Text = "Copy of Books";
-            label11.TextAlign = ContentAlignment.MiddleLeft;
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label11.ForeColor = System.Drawing.Color.Black;
+            this.label11.Location = new System.Drawing.Point(809, 498);
+            this.label11.Margin = new System.Windows.Forms.Padding(0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(96, 17);
+            this.label11.TabIndex = 42;
+            this.label11.Text = "Copy of Books";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button4
+            // nextBtn
             // 
-            button4.BackColor = Color.WhiteSmoke;
-            button4.FlatAppearance.BorderSize = 2;
-            button4.FlatAppearance.CheckedBackColor = Color.FromArgb(192, 255, 255);
-            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
-            button4.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Segoe UI Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            button4.Image = (Image)resources.GetObject("button4.Image");
-            button4.ImageAlign = ContentAlignment.MiddleLeft;
-            button4.Location = new Point(-1, 341);
-            button4.Name = "button4";
-            button4.Size = new Size(156, 54);
-            button4.TabIndex = 45;
-            button4.Text = "       COPY OF BOOKS";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
+            this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.nextBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nextBtn.Location = new System.Drawing.Point(950, 173);
+            this.nextBtn.Name = "nextBtn";
+            this.nextBtn.Size = new System.Drawing.Size(24, 24);
+            this.nextBtn.TabIndex = 47;
+            this.nextBtn.Text = ">";
+            this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
+            // 
+            // prevBtn
+            // 
+            this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.prevBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.prevBtn.Location = new System.Drawing.Point(886, 173);
+            this.prevBtn.Name = "prevBtn";
+            this.prevBtn.Size = new System.Drawing.Size(24, 24);
+            this.prevBtn.TabIndex = 46;
+            this.prevBtn.Text = "<";
+            this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
+            // 
+            // pageLbl
+            // 
+            this.pageLbl.AutoSize = true;
+            this.pageLbl.Location = new System.Drawing.Point(916, 178);
+            this.pageLbl.Name = "pageLbl";
+            this.pageLbl.Size = new System.Drawing.Size(28, 15);
+            this.pageLbl.TabIndex = 45;
+            this.pageLbl.Text = "1 | 1";
             // 
             // AddBooks
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(986, 595);
-            Controls.Add(label11);
-            Controls.Add(numCopies);
-            Controls.Add(label2);
-            Controls.Add(panel2);
-            Controls.Add(button3);
-            Controls.Add(label1);
-            Controls.Add(label10);
-            Controls.Add(label9);
-            Controls.Add(label8);
-            Controls.Add(label7);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(textBookID);
-            Controls.Add(cmbGenre);
-            Controls.Add(dtpPublicationDate);
-            Controls.Add(txtPublisher);
-            Controls.Add(txtSynopsis);
-            Controls.Add(txtAuthor);
-            Controls.Add(txtCover);
-            Controls.Add(txtISBN);
-            Controls.Add(txtTitle);
-            Controls.Add(dataGridView1);
-            Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
-            Name = "AddBooks";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "AddBooks";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)coverImg).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numCopies).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(986, 595);
+            this.Controls.Add(this.nextBtn);
+            this.Controls.Add(this.prevBtn);
+            this.Controls.Add(this.pageLbl);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.numCopies);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBookID);
+            this.Controls.Add(this.cmbGenre);
+            this.Controls.Add(this.dtpPublicationDate);
+            this.Controls.Add(this.txtPublisher);
+            this.Controls.Add(this.txtSynopsis);
+            this.Controls.Add(this.txtAuthor);
+            this.Controls.Add(this.txtCover);
+            this.Controls.Add(this.txtISBN);
+            this.Controls.Add(this.txtTitle);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "AddBooks";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "AddBooks";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.coverImg)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCopies)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -574,8 +613,10 @@
         private Button clearBtn;
         private Label label2;
         private Panel panel2;
-        private Button button4;
         private NumericUpDown numCopies;
         private Label label11;
+        private Button nextBtn;
+        private Button prevBtn;
+        private Label pageLbl;
     }
 }
