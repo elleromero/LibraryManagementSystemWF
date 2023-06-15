@@ -41,9 +41,36 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             LoadBorrowedBooks();
         }
 
+        private async void LoadSearchBorrowedBooks()
+        {
+            ControllerAccessData<Loan> res = await LoanController.Search(txtSearch.Text, page);
+
+            if (res.IsSuccess)
+            {
+                this.loader.StopLoading();
+                flowLayoutPanel1.Controls.Clear();
+
+                if (res.Results.Count == 0) flowLayoutPanel1.Controls.Add(new CtrlEmpty());
+
+                // init page
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{page} | {maxPage}";
+
+                foreach (Loan loan in res.Results)
+                {
+                    flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan, this, this.form));
+                }
+            }
+            else
+            {
+                this.loader.StopLoading();
+
+            }
+        }
+
         public async void LoadBorrowedBooks()
         {
-            ControllerAccessData<Loan> res = await LoanController.GetAllBorrowedBooks();
+            ControllerAccessData<Loan> res = await LoanController.GetAllBorrowedBooks(page);
 
             if (res.IsSuccess)
             {
@@ -107,6 +134,28 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 page = maxPage;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
+                LoadBorrowedBooks();
+            }
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.page = 1;
+                LoadSearchBorrowedBooks();
+            }
+        }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.page = 1;
                 LoadBorrowedBooks();
             }
         }
