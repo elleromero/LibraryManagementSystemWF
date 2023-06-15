@@ -36,6 +36,8 @@
             this.nextBtn = new System.Windows.Forms.Button();
             this.prevBtn = new System.Windows.Forms.Button();
             this.prevLastBtn = new System.Windows.Forms.Button();
+            this.searchBtn = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // subtitleLbl
@@ -129,10 +131,37 @@
             this.prevLastBtn.UseVisualStyleBackColor = false;
             this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
+            // searchBtn
+            // 
+            this.searchBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.searchBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.searchBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.searchBtn.Location = new System.Drawing.Point(677, 14);
+            this.searchBtn.Name = "searchBtn";
+            this.searchBtn.Size = new System.Drawing.Size(27, 27);
+            this.searchBtn.TabIndex = 27;
+            this.searchBtn.Text = "🔎";
+            this.searchBtn.UseVisualStyleBackColor = false;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtSearch.Location = new System.Drawing.Point(408, 14);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search book title";
+            this.txtSearch.Size = new System.Drawing.Size(263, 27);
+            this.txtSearch.TabIndex = 26;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
+            // 
             // CtrlDiscover
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.searchBtn);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.pageLbl);
             this.Controls.Add(this.nextLastBtn);
             this.Controls.Add(this.nextBtn);
@@ -158,5 +187,7 @@
         private Button nextBtn;
         private Button prevBtn;
         private Button prevLastBtn;
+        private Button searchBtn;
+        private TextBox txtSearch;
     }
 }

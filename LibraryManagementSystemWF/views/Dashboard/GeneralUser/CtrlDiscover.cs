@@ -76,6 +76,37 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             }
         }
 
+        private async void LoadSearchBooks()
+        {
+            ControllerAccessData<Book> res = await BookController.Search(txtSearch.Text, currentPage);
+
+            if (res.IsSuccess)
+            {
+                this.loader.StopLoading();
+
+                flowLayoutPanel1.Controls.Clear();
+
+                if (res.Results.Count == 0)
+                {
+                    flowLayoutPanel1.Controls.Add(new CtrlEmpty());
+                }
+
+                // init page label
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{currentPage} | {maxPage}";
+
+                foreach (Book book in res.Results)
+                {
+                    flowLayoutPanel1.Controls.Add(new BookBorrowContainer(book, this, this.form));
+                }
+            }
+            else
+            {
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Fetch Books Failed", MessageBoxIcon.Hand);
+            }
+        }
+
         private void prevBtn_Click(object sender, EventArgs e)
         {
             if (currentPage > 1)
@@ -116,6 +147,28 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 currentPage = maxPage;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
+                LoadBooks();
+            }
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.currentPage = 1;
+                LoadSearchBooks();
+            }
+        }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.currentPage = 1;
                 LoadBooks();
             }
         }
