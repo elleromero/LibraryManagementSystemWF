@@ -35,6 +35,47 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             LoadBooks();
         }
 
+        public async void LoadSearchBooks()
+        {
+            ControllerAccessData<Book> res = await BookController.Search(txtSearch.Text, page);
+
+            if (res.IsSuccess)
+            {
+                this.loader.StopLoading();
+
+                books = res.Results;
+
+                subtitleLbl.Text = $"{res.rowCount} book(s) found.";
+
+                // Fill books
+                flowLayoutPanel1.Controls.Clear();
+                if (res.Results.Count > 0)
+                {
+                    flowLayoutPanel1.Margin = new Padding(3);
+                    // loop through results
+                    foreach (Book book in books)
+                    {
+                        flowLayoutPanel1.Controls.Add(new BookContainer(book, false, this.form));
+                    }
+                }
+                else
+                {
+                    // add empty template
+                    flowLayoutPanel1.Margin = Padding.Empty;
+                    flowLayoutPanel1.Controls.Add(new CtrlEmpty());
+                }
+
+                // init page label
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{page} | {maxPage}";
+            }
+            else
+            {
+                this.loader.StopLoading();
+                DialogBuilder.Show(res.Errors, "Fetch Books", MessageBoxIcon.Hand);
+            }
+        }
+
         public async void LoadBooks()
         {
             ControllerAccessData<Book> res = await BookController.GetAllBooks(page);
@@ -120,6 +161,28 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 page--;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
+                LoadBooks();
+            }
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.page = 1;
+                LoadSearchBooks();
+            }
+        }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.page = 1;
                 LoadBooks();
             }
         }
