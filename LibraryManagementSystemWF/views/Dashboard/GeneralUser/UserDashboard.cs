@@ -73,9 +73,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AuthController.LogOut();
-            new SignIn().Show();
-            this.Close();
+            DialogResult dr = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                AuthController.LogOut();
+                new SignIn().Show();
+                this.Close();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
