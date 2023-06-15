@@ -132,5 +132,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             page -= 1;
             LoadUsers();
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new AdminAnnouncement().Show();
+        }
     }
 }

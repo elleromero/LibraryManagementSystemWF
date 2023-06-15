@@ -16,5 +16,12 @@ namespace LibraryManagementSystemWF.views.Dashboard
         {
             InitializeComponent();
         }
+
+        private void Return_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
