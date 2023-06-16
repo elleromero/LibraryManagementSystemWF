@@ -67,7 +67,7 @@
             this.prevLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevLastBtn.Location = new System.Drawing.Point(267, 433);
+            this.prevLastBtn.Location = new System.Drawing.Point(264, 484);
             this.prevLastBtn.Name = "prevLastBtn";
             this.prevLastBtn.Size = new System.Drawing.Size(42, 27);
             this.prevLastBtn.TabIndex = 2;
@@ -80,7 +80,7 @@
             this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevBtn.Location = new System.Drawing.Point(317, 433);
+            this.prevBtn.Location = new System.Drawing.Point(314, 484);
             this.prevBtn.Name = "prevBtn";
             this.prevBtn.Size = new System.Drawing.Size(27, 27);
             this.prevBtn.TabIndex = 5;
@@ -94,7 +94,7 @@
             this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 92);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(683, 320);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(683, 383);
             this.flowLayoutPanel1.TabIndex = 6;
             // 
             // nextBtn
@@ -102,7 +102,7 @@
             this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextBtn.Location = new System.Drawing.Point(386, 433);
+            this.nextBtn.Location = new System.Drawing.Point(383, 484);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.Size = new System.Drawing.Size(27, 27);
             this.nextBtn.TabIndex = 7;
@@ -115,7 +115,7 @@
             this.nextLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextLastBtn.Location = new System.Drawing.Point(419, 433);
+            this.nextLastBtn.Location = new System.Drawing.Point(416, 484);
             this.nextLastBtn.Name = "nextLastBtn";
             this.nextLastBtn.Size = new System.Drawing.Size(42, 27);
             this.nextLastBtn.TabIndex = 8;
@@ -141,7 +141,7 @@
             // 
             this.pageLbl.AutoSize = true;
             this.pageLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.pageLbl.Location = new System.Drawing.Point(350, 437);
+            this.pageLbl.Location = new System.Drawing.Point(347, 488);
             this.pageLbl.Name = "pageLbl";
             this.pageLbl.Size = new System.Drawing.Size(30, 17);
             this.pageLbl.TabIndex = 11;

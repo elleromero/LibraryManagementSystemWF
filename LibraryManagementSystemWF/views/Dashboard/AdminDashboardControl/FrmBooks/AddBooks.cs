@@ -51,7 +51,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         {
 
             // Create an Instance of the BookController class
-            ControllerAccessData<Book> books = await BookController.GetAllBooks();
+            ControllerAccessData<Book> books = await BookController.GetAllBooks(currentPage);
 
             if (books.IsSuccess)
             {
@@ -60,7 +60,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 if (books.Results.Count == 0) DialogBuilder.Show("No books found", "Fetch Books", MessageBoxIcon.Information);
 
                 // init page label
-                maxPage = Math.Max(1, (int)Math.Ceiling((double)books.rowCount / 20));
+                maxPage = Math.Max(1, (int)Math.Ceiling((double)books.rowCount / 10));
                 pageLbl.Text = $"{currentPage} | {maxPage}";
 
                 booksList.Clear();
