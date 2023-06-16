@@ -21,15 +21,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
     {
         private Book book = new();
         private Form? form;
-        private Ctrldashboard? db;
+        private ICustomForm? customForm;
 
-        public BookInformation(Book book, Form? form = null, Ctrldashboard? db = null)
+        public BookInformation(Book book, Form? form = null, ICustomForm? customForm = null)
         {
             InitializeComponent();
 
             this.book = book;
             this.form = form;
-            this.db = db;
+            this.customForm = customForm;
 
             // check user role
             User? user = AuthService.getSignedUser();
@@ -104,10 +104,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private void button11_Click(object sender, EventArgs e)
         {
             if (this.form != null) this.form.Enabled = true;
-            if (this.db != null)
+            if (this.customForm != null)
             {
-                this.db.LoadStats();
-                this.db.LoadRecentBooks();
+                this.customForm.RefreshDataGrid();
             }
             this.Close();
         }
