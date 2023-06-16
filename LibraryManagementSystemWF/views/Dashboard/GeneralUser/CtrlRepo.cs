@@ -42,7 +42,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             this.txtSearch.Clear();
             this.page = 1;
-            if (this.isSearch) LoadSearchBorrowedBooks(); else LoadBorrowedBooks();
+            LoadBorrowedBooks();
         }
 
         private async void LoadSearchBorrowedBooks()

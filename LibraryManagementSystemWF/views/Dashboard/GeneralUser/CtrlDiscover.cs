@@ -181,7 +181,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             this.txtSearch.Clear();
             this.currentPage = 1;
-            if (this.isSearch) LoadSearchBooks(); else LoadBooks();
+            LoadBooks();
         }
     }
 }

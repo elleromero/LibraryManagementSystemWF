@@ -194,10 +194,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 
         public void RefreshDataGrid()
         {
-            MessageBox.Show("CAALED");
             this.txtSearch.Clear();
             this.page = 1;
-            if (this.isSearch) LoadSearchBooks(); else LoadBooks();
+            LoadBooks();
         }
     }
 }
