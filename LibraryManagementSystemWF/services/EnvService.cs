@@ -13,7 +13,7 @@ namespace LibraryManagementSystemWF.services
         //DESKTOP-SL438A7\SQLEXPRESS
         private const string
             DB_NAME = "DB_LMS",
-            CONN_BASE = "Data Source = DESKTOP-PDLDGGJ\\SQLEXPRESS;Integrated Security=true;",
+            CONN_BASE = "Data Source = DESKTOP-2H2BIK1\\SQLEXPRESS;Integrated Security=true;",
             CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}",
             VERSION = "v3.8.0 - stable branch";
         private const int BORROW_TIME_DAYS = 7;
