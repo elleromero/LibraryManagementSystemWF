@@ -15,7 +15,7 @@ namespace LibraryManagementSystemWF.services
             DB_NAME = "DB_LMS",
             CONN_BASE = "Data Source = DESKTOP-2H2BIK1\\SQLEXPRESS;Integrated Security=true;",
             CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}",
-            VERSION = "v3.9.2 - stable branch";
+            VERSION = "v3.9.3 - stable branch";
         private const int BORROW_TIME_DAYS = 0;
                            
         public static int GetBorrowTimeDays()

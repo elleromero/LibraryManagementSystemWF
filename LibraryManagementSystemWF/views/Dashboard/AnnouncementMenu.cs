@@ -107,6 +107,8 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
         private void Clear()
         {
+            User? user = AuthService.getSignedUser();
+
             textAnnouncementID.Clear();
             txtHeader.Clear();
             txtBody.Clear();
@@ -114,10 +116,28 @@ namespace LibraryManagementSystemWF.views.Dashboard
             txtCover.Clear();
             checkBoxImportant.Checked = false;
 
-            // set checkbox
+            // default set checkbox
             checkBoxAdmin.Checked = false;
             checkBoxUser.Checked = false;
             checkBoxLibrarian.Checked = false;
+
+            // set checkbox
+            if (user != null)
+            {
+                if (user.Role.Name == RoleEnum.ADMINISTRATOR.ToString())
+                {
+                    checkBoxAdmin.Checked = true;
+                    checkBoxUser.Checked = false;
+                    checkBoxLibrarian.Checked = false;
+                } else if (user.Role.Name == RoleEnum.LIBRARIAN.ToString())
+                {
+                    checkBoxAdmin.Checked = false;
+                    checkBoxUser.Checked = false;
+                    checkBoxLibrarian.Checked = true;
+                }
+            }
+
+
         }
 
         private void btnBack_Click(object sender, EventArgs e)
