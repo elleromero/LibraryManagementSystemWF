@@ -232,7 +232,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(292, 135);
             this.label13.TabIndex = 15;
-            this.label13.Text = "- Added About Form\r\n- Added Loading screen on Sign In Form\r\n";
+            this.label13.Text = "- Stable Release\r\n";
             // 
             // pictureBox4
             // 

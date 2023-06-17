@@ -19,9 +19,9 @@ namespace LibraryManagementSystemWF.views.components
         private Book book = new();
         private bool isPreview;
         private Form? form;
-        private Ctrldashboard? db;
+        private ICustomForm? customForm;
 
-        public BookContainer(Book book, bool isPreview = false, Form? form = null, Ctrldashboard? db = null)
+        public BookContainer(Book book, bool isPreview = false, Form? form = null, ICustomForm? customForm = null)
         {
             InitializeComponent();
 
@@ -32,7 +32,7 @@ namespace LibraryManagementSystemWF.views.components
             authorLbl.Text = book.Author;
 
             this.form = form;
-            this.db = db;
+            this.customForm = customForm;
 
             if (File.Exists(book.Cover)) pictureBox1.Image = Image.FromFile(book.Cover);
         }
@@ -42,7 +42,7 @@ namespace LibraryManagementSystemWF.views.components
             if (!isPreview)
             {
                 if (this.form != null) this.form.Enabled = false;
-                new BookInformation(this.book, this.form, this.db).Show();
+                new BookInformation(this.book, this.form, this.customForm).Show();
             }
         }
 

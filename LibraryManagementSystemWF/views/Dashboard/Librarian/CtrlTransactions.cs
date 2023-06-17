@@ -40,7 +40,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private async void LoadTransactions()
         {
-            ControllerAccessData<Loan> res = await LoanController.GetAllLoans();
+            ControllerAccessData<Loan> res = await LoanController.GetAllLoans(page);
 
             if (res.IsSuccess)
             {

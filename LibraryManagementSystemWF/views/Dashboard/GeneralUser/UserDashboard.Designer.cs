@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserDashboard));
             this.sidebar = new System.Windows.Forms.Panel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.versionlbl = new System.Windows.Forms.Label();
             this.idLbl = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -54,6 +55,7 @@
             // sidebar
             // 
             this.sidebar.BackColor = System.Drawing.Color.White;
+            this.sidebar.Controls.Add(this.linkLabel2);
             this.sidebar.Controls.Add(this.versionlbl);
             this.sidebar.Controls.Add(this.idLbl);
             this.sidebar.Controls.Add(this.panel3);
@@ -64,6 +66,18 @@
             this.sidebar.Name = "sidebar";
             this.sidebar.Size = new System.Drawing.Size(288, 558);
             this.sidebar.TabIndex = 1;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel2.Location = new System.Drawing.Point(12, 454);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(134, 15);
+            this.linkLabel2.TabIndex = 24;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Recent Announcements";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // versionlbl
             // 
@@ -97,7 +111,7 @@
             this.panel3.Controls.Add(this.button2);
             this.panel3.Location = new System.Drawing.Point(-45, 75);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(333, 402);
+            this.panel3.Size = new System.Drawing.Size(333, 376);
             this.panel3.TabIndex = 0;
             // 
             // button3
@@ -252,6 +266,7 @@
             this.Controls.Add(this.sidebar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "UserDashboard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UserDashboard";
             this.sidebar.ResumeLayout(false);
             this.sidebar.PerformLayout();
@@ -282,5 +297,6 @@
         private Label timerLbl;
         private Label navLbl;
         private Panel mainPanel;
+        private LinkLabel linkLabel2;
     }
 }

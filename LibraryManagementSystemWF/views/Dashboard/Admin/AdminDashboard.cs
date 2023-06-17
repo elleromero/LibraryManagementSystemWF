@@ -242,7 +242,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             this.txtSearch.Clear();
             this.page = 1;
-            if (this.isSearch) LoadSearchUsers(); else LoadUsers();
+            LoadUsers();
         }
     }
 }

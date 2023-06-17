@@ -58,7 +58,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                     // loop through results
                     foreach (Book book in books)
                     {
-                        flowLayoutPanel1.Controls.Add(new BookContainer(book, false, this.form));
+                        flowLayoutPanel1.Controls.Add(new BookContainer(book, false, this.form, this));
                     }
                 }
                 else
@@ -99,7 +99,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                     // loop through results
                     foreach (Book book in books)
                     {
-                        flowLayoutPanel1.Controls.Add(new BookContainer(book, false, this.form));
+                        flowLayoutPanel1.Controls.Add(new BookContainer(book, false, this.form, this));
                     }
                 }
                 else
@@ -196,7 +196,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         {
             this.txtSearch.Clear();
             this.page = 1;
-            if (this.isSearch) LoadSearchBooks(); else LoadBooks();
+            LoadBooks();
         }
     }
 }
