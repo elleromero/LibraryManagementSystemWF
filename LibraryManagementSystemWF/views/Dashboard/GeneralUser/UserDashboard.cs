@@ -99,5 +99,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             mainPanel.Controls.Add(new CtrlRepo(this));
             navLbl.Text = "My Repo";
         }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Enabled = false;
+            new UserAnnouncement(this).Show();
+        }
     }
 }
