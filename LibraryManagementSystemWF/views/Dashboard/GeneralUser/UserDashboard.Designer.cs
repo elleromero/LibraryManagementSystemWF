@@ -29,41 +29,55 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserDashboard));
-            sidebar = new Panel();
-            versionlbl = new Label();
-            idLbl = new Label();
-            panel3 = new Panel();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
-            panel2 = new Panel();
-            emailLbl = new Label();
-            nameLbl = new Label();
-            pictureBox1 = new PictureBox();
-            topbar = new Panel();
-            timerLbl = new Label();
-            navLbl = new Label();
-            mainPanel = new Panel();
-            sidebar.SuspendLayout();
-            panel3.SuspendLayout();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            topbar.SuspendLayout();
-            SuspendLayout();
+            this.sidebar = new System.Windows.Forms.Panel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.versionlbl = new System.Windows.Forms.Label();
+            this.idLbl = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.emailLbl = new System.Windows.Forms.Label();
+            this.nameLbl = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.topbar = new System.Windows.Forms.Panel();
+            this.timerLbl = new System.Windows.Forms.Label();
+            this.navLbl = new System.Windows.Forms.Label();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.sidebar.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.topbar.SuspendLayout();
+            this.SuspendLayout();
             // 
             // sidebar
             // 
-            sidebar.BackColor = Color.White;
-            sidebar.Controls.Add(versionlbl);
-            sidebar.Controls.Add(idLbl);
-            sidebar.Controls.Add(panel3);
-            sidebar.Controls.Add(button1);
-            sidebar.Controls.Add(panel2);
-            sidebar.Dock = DockStyle.Left;
-            sidebar.Location = new Point(0, 0);
-            sidebar.Name = "sidebar";
-            sidebar.Size = new Size(288, 558);
-            sidebar.TabIndex = 1;
+            this.sidebar.BackColor = System.Drawing.Color.White;
+            this.sidebar.Controls.Add(this.linkLabel2);
+            this.sidebar.Controls.Add(this.versionlbl);
+            this.sidebar.Controls.Add(this.idLbl);
+            this.sidebar.Controls.Add(this.panel3);
+            this.sidebar.Controls.Add(this.button1);
+            this.sidebar.Controls.Add(this.panel2);
+            this.sidebar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.sidebar.Location = new System.Drawing.Point(0, 0);
+            this.sidebar.Name = "sidebar";
+            this.sidebar.Size = new System.Drawing.Size(288, 558);
+            this.sidebar.TabIndex = 1;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel2.Location = new System.Drawing.Point(12, 454);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(134, 15);
+            this.linkLabel2.TabIndex = 24;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Recent Announcements";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // versionlbl
             // 
@@ -88,13 +102,15 @@
             // 
             // panel3
             // 
-            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.Controls.Add(button3);
-            panel3.Controls.Add(button2);
-            panel3.Location = new Point(-45, 75);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(333, 402);
-            panel3.TabIndex = 0;
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Controls.Add(this.button3);
+            this.panel3.Controls.Add(this.button2);
+            this.panel3.Location = new System.Drawing.Point(-45, 75);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(333, 376);
+            this.panel3.TabIndex = 0;
             // 
             // button3
             // 
@@ -235,26 +251,27 @@
             // 
             // UserDashboard
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Gainsboro;
-            ClientSize = new Size(998, 558);
-            Controls.Add(mainPanel);
-            Controls.Add(topbar);
-            Controls.Add(sidebar);
-            FormBorderStyle = FormBorderStyle.None;
-            Name = "UserDashboard";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "UserDashboard";
-            sidebar.ResumeLayout(false);
-            sidebar.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            topbar.ResumeLayout(false);
-            topbar.PerformLayout();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.ClientSize = new System.Drawing.Size(998, 558);
+            this.Controls.Add(this.mainPanel);
+            this.Controls.Add(this.topbar);
+            this.Controls.Add(this.sidebar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "UserDashboard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "UserDashboard";
+            this.sidebar.ResumeLayout(false);
+            this.sidebar.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.topbar.ResumeLayout(false);
+            this.topbar.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -274,5 +291,6 @@
         private Label timerLbl;
         private Label navLbl;
         private Panel mainPanel;
+        private LinkLabel linkLabel2;
     }
 }
