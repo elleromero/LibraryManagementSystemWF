@@ -62,7 +62,7 @@ namespace LibraryManagementSystemWF.dao
                 IsSuccess = false
             };
 
-            string query = $"SELECT * FROM users u JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE u.username = '{username}';";
+            string query = $"SELECT * FROM users u JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE u.username COLLATE Latin1_General_CS_AS = '{username}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
