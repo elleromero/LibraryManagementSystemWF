@@ -81,26 +81,24 @@
             // 
             // versionlbl
             // 
-            this.versionlbl.AutoSize = true;
-            this.versionlbl.Location = new System.Drawing.Point(12, 480);
-            this.versionlbl.Name = "versionlbl";
-            this.versionlbl.Size = new System.Drawing.Size(80, 15);
-            this.versionlbl.TabIndex = 23;
-            this.versionlbl.Text = "Version Name";
+            versionlbl.AutoSize = true;
+            versionlbl.Location = new Point(12, 480);
+            versionlbl.Name = "versionlbl";
+            versionlbl.Size = new Size(80, 15);
+            versionlbl.TabIndex = 23;
+            versionlbl.Text = "Version Name";
             // 
             // idLbl
             // 
-            this.idLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.idLbl.AutoEllipsis = true;
-            this.idLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.idLbl.ForeColor = System.Drawing.Color.Black;
-            this.idLbl.Location = new System.Drawing.Point(12, 495);
-            this.idLbl.Name = "idLbl";
-            this.idLbl.Size = new System.Drawing.Size(262, 15);
-            this.idLbl.TabIndex = 2;
-            this.idLbl.Text = "ID: ";
+            idLbl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            idLbl.AutoEllipsis = true;
+            idLbl.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            idLbl.ForeColor = Color.Black;
+            idLbl.Location = new Point(12, 495);
+            idLbl.Name = "idLbl";
+            idLbl.Size = new Size(262, 15);
+            idLbl.TabIndex = 2;
+            idLbl.Text = "ID: ";
             // 
             // panel3
             // 
@@ -116,144 +114,140 @@
             // 
             // button3
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.Location = new System.Drawing.Point(0, 43);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(333, 43);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "My Repo";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            button3.Dock = DockStyle.Top;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button3.Image = (Image)resources.GetObject("button3.Image");
+            button3.Location = new Point(0, 43);
+            button3.Name = "button3";
+            button3.Size = new Size(333, 43);
+            button3.TabIndex = 1;
+            button3.Text = "My Repo";
+            button3.TextAlign = ContentAlignment.MiddleLeft;
+            button3.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button2
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(0, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(333, 43);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Discover";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.Dock = DockStyle.Top;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.Location = new Point(0, 0);
+            button2.Name = "button2";
+            button2.Size = new Size(333, 43);
+            button2.TabIndex = 0;
+            button2.Text = "Discover";
+            button2.TextAlign = ContentAlignment.MiddleLeft;
+            button2.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(12, 513);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(262, 33);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Log Out";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.BackColor = Color.FromArgb(254, 206, 47);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.Location = new Point(12, 513);
+            button1.Name = "button1";
+            button1.Size = new Size(262, 33);
+            button1.TabIndex = 0;
+            button1.Text = "Log Out";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.emailLbl);
-            this.panel2.Controls.Add(this.nameLbl);
-            this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Location = new System.Drawing.Point(12, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(262, 57);
-            this.panel2.TabIndex = 0;
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(emailLbl);
+            panel2.Controls.Add(nameLbl);
+            panel2.Controls.Add(pictureBox1);
+            panel2.Location = new Point(12, 12);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(262, 57);
+            panel2.TabIndex = 0;
             // 
             // emailLbl
             // 
-            this.emailLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.emailLbl.AutoEllipsis = true;
-            this.emailLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.emailLbl.ForeColor = System.Drawing.Color.Black;
-            this.emailLbl.Location = new System.Drawing.Point(47, 28);
-            this.emailLbl.Name = "emailLbl";
-            this.emailLbl.Size = new System.Drawing.Size(270, 15);
-            this.emailLbl.TabIndex = 1;
-            this.emailLbl.Text = "marklopez@gmail.com";
+            emailLbl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            emailLbl.AutoEllipsis = true;
+            emailLbl.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            emailLbl.ForeColor = Color.Black;
+            emailLbl.Location = new Point(47, 28);
+            emailLbl.Name = "emailLbl";
+            emailLbl.Size = new Size(270, 15);
+            emailLbl.TabIndex = 1;
+            emailLbl.Text = "marklopez@gmail.com";
             // 
             // nameLbl
             // 
-            this.nameLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameLbl.AutoEllipsis = true;
-            this.nameLbl.AutoSize = true;
-            this.nameLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nameLbl.Location = new System.Drawing.Point(47, 10);
-            this.nameLbl.Name = "nameLbl";
-            this.nameLbl.Size = new System.Drawing.Size(72, 15);
-            this.nameLbl.TabIndex = 0;
-            this.nameLbl.Text = "Mark Lopez";
+            nameLbl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            nameLbl.AutoEllipsis = true;
+            nameLbl.AutoSize = true;
+            nameLbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            nameLbl.Location = new Point(47, 10);
+            nameLbl.Name = "nameLbl";
+            nameLbl.Size = new Size(72, 15);
+            nameLbl.TabIndex = 0;
+            nameLbl.Text = "Mark Lopez";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(7, 9);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(34, 34);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(7, 9);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(34, 34);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // topbar
             // 
-            this.topbar.BackColor = System.Drawing.Color.White;
-            this.topbar.Controls.Add(this.timerLbl);
-            this.topbar.Controls.Add(this.navLbl);
-            this.topbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topbar.Location = new System.Drawing.Point(288, 0);
-            this.topbar.Name = "topbar";
-            this.topbar.Size = new System.Drawing.Size(710, 38);
-            this.topbar.TabIndex = 2;
+            topbar.BackColor = Color.White;
+            topbar.Controls.Add(timerLbl);
+            topbar.Controls.Add(navLbl);
+            topbar.Dock = DockStyle.Top;
+            topbar.Location = new Point(288, 0);
+            topbar.Name = "topbar";
+            topbar.Size = new Size(710, 38);
+            topbar.TabIndex = 2;
             // 
             // timerLbl
             // 
-            this.timerLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.timerLbl.Location = new System.Drawing.Point(336, 12);
-            this.timerLbl.Name = "timerLbl";
-            this.timerLbl.Size = new System.Drawing.Size(362, 15);
-            this.timerLbl.TabIndex = 1;
-            this.timerLbl.Text = "Sept. 14 2023. Monday. 11:00:34 AM";
-            this.timerLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            timerLbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            timerLbl.Location = new Point(336, 12);
+            timerLbl.Name = "timerLbl";
+            timerLbl.Size = new Size(362, 15);
+            timerLbl.TabIndex = 1;
+            timerLbl.Text = "Sept. 14 2023. Monday. 11:00:34 AM";
+            timerLbl.TextAlign = ContentAlignment.MiddleRight;
             // 
             // navLbl
             // 
-            this.navLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.navLbl.AutoSize = true;
-            this.navLbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.navLbl.Location = new System.Drawing.Point(6, 9);
-            this.navLbl.Name = "navLbl";
-            this.navLbl.Size = new System.Drawing.Size(56, 21);
-            this.navLbl.TabIndex = 0;
-            this.navLbl.Text = "Books";
-            this.navLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            navLbl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            navLbl.AutoSize = true;
+            navLbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            navLbl.Location = new Point(6, 9);
+            navLbl.Name = "navLbl";
+            navLbl.Size = new Size(56, 21);
+            navLbl.TabIndex = 0;
+            navLbl.Text = "Books";
+            navLbl.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // mainPanel
             // 
-            this.mainPanel.BackColor = System.Drawing.Color.Transparent;
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(288, 38);
-            this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(710, 520);
-            this.mainPanel.TabIndex = 3;
+            mainPanel.BackColor = Color.Transparent;
+            mainPanel.Dock = DockStyle.Fill;
+            mainPanel.Location = new Point(288, 38);
+            mainPanel.Margin = new Padding(0);
+            mainPanel.Name = "mainPanel";
+            mainPanel.Size = new Size(710, 520);
+            mainPanel.TabIndex = 3;
             // 
             // UserDashboard
             // 
