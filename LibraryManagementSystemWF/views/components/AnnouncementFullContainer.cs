@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.Dashboard;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace LibraryManagementSystemWF.views.components
             InitializeComponent();
 
             this.announcement = ann;
+
+            this.titleLbl.Text = this.announcement.Header;
+            this.subtitleLbl.Text = this.announcement.Body;
+
+            if (File.Exists(this.announcement.Cover)) this.pictureBox1.Image = Image.FromFile(this.announcement.Cover);
         }
 
         private void titleLbl_Click(object sender, EventArgs e)
