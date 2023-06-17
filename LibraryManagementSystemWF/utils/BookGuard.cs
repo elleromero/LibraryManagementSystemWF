@@ -32,7 +32,7 @@ namespace LibraryManagementSystemWF.utils
                     {
                         DateTime dt = reader.GetDateTime(reader.GetOrdinal("due_date"));
                         
-                        if (dt.Date < DateTime.Now.Date)
+                        if (dt.Date < DateTime.Now)
                         {
                             return;
                         }

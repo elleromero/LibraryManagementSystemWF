@@ -42,7 +42,7 @@ namespace LibraryManagementSystemWF.controllers
                 errors.Add("auth", "Please login");
             } else
             {
-                if (!await BookGuard.IsPastDue(userId)) errors.Add("book", "You currently have books borrowed past due");
+                if (await BookGuard.IsPastDue(userId)) errors.Add("book", "You currently have books borrowed past due");
             }
             if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
             if (dueDate.Date < DateTime.Now.Date) errors.Add("dueDate", "Invalid due date");
