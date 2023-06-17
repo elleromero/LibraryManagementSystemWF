@@ -169,7 +169,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     this.currentPage = 1;
                     LoadBooks();
                     ctrlbookRevamp.RefreshDataGrid();
-                    clearBtn.PerformClick();
+                    this.Clear();
                 }
                 else
                 {
@@ -209,23 +209,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 if (result.IsSuccess)
                 {
-                    cmbGenre.SelectedIndex = 0;
-                    textBookID.Text = "";
-                    txtTitle.Text = "";
-                    txtAuthor.Text = "";
-                    txtPublisher.Text = "";
-                    dtpPublicationDate.Value = DateTime.Now;
-                    txtISBN.Text = "";
-                    txtCover.Text = "";
-                    txtSynopsis.Text = "";
-                    coverImg.Image = null;
-
                     DialogBuilder.Show("Book updated successfully", "Update Book", MessageBoxIcon.Information);
 
                     this.currentPage = 1;
                     LoadBooks();
                     ctrlbookRevamp.RefreshDataGrid();
-                    clearBtn.PerformClick();
+                    this.Clear();
                 }
                 else
                 {
@@ -269,7 +258,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                             this.currentPage = 1;
                             LoadBooks();
                             ctrlbookRevamp.RefreshDataGrid();
-                            clearBtn.PerformClick();
+                            this.Clear();
                         }
                         else
                         {
@@ -333,7 +322,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             }
         }
 
-        private void clearBtn_Click(object sender, EventArgs e)
+        private void Clear()
         {
             cmbGenre.SelectedIndex = 0;
             textBookID.Text = "";
@@ -353,6 +342,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             numCopies.Minimum = 1;
 
             defaultPreview();
+        }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            this.Clear();
         }
 
         private void txtTitle_TextChanged(object sender, EventArgs e)

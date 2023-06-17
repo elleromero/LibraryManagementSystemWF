@@ -26,6 +26,8 @@ namespace LibraryManagementSystemWF.views.components
             this.titleLbl.Text = this.announcement.Header;
             this.subtitleLbl.Text = this.announcement.Body;
 
+
+            if (announcement.IsPriority) this.BackColor = ColorTranslator.FromHtml("#fece2f");
             if (File.Exists(this.announcement.Cover)) this.pictureBox1.Image = Image.FromFile(this.announcement.Cover);
         }
 

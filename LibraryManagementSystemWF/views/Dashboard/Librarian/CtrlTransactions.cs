@@ -46,6 +46,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             {
                 this.loader.StopLoading();
 
+                this.dataGridView1.Rows.Clear();
+
                 if (res.Results.Count == 0) DialogBuilder.Show("No transactions recorded yet", "Fetch Transactions", MessageBoxIcon.Information);
 
                 // init page label
