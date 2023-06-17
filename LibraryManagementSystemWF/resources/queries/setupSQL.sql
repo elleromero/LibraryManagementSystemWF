@@ -136,7 +136,7 @@ INSERT INTO members (
 	'John',
 	'Doe',
 	'johndoe@mail.co.uk',
-	'+639100813695',
+	'09100813695',
 	'211 Baker St.',
 	@member_id
 );
