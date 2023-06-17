@@ -30,7 +30,7 @@ namespace LibraryManagementSystemWF.utils
 
                     while (await reader.ReadAsync())
                     {
-                        DateTime dt = reader.GetDateTime(0);
+                        DateTime dt = reader.GetDateTime(reader.GetOrdinal("due_date"));
                         
                         if (dt.Date < DateTime.Now.Date)
                         {
