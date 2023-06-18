@@ -46,9 +46,11 @@
             this.availableCopiesLbl = new System.Windows.Forms.Label();
             this.addedOnLbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.isbnBarcode = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.coverPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookCoverPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.isbnBarcode)).BeginInit();
             this.SuspendLayout();
             // 
             // coverPictureBox
@@ -119,7 +121,7 @@
             this.txtSypnosis.Name = "txtSypnosis";
             this.txtSypnosis.ReadOnly = true;
             this.txtSypnosis.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSypnosis.Size = new System.Drawing.Size(588, 205);
+            this.txtSypnosis.Size = new System.Drawing.Size(588, 204);
             this.txtSypnosis.TabIndex = 5;
             this.txtSypnosis.Text = "No sypnosis available";
             // 
@@ -208,7 +210,7 @@
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.LinkColor = System.Drawing.Color.Black;
-            this.linkLabel1.Location = new System.Drawing.Point(540, 551);
+            this.linkLabel1.Location = new System.Drawing.Point(540, 496);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(71, 15);
             this.linkLabel1.TabIndex = 20;
@@ -250,12 +252,22 @@
             this.label2.Text = "Added On";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // isbnBarcode
+            // 
+            this.isbnBarcode.Location = new System.Drawing.Point(511, 516);
+            this.isbnBarcode.Name = "isbnBarcode";
+            this.isbnBarcode.Size = new System.Drawing.Size(100, 50);
+            this.isbnBarcode.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.isbnBarcode.TabIndex = 24;
+            this.isbnBarcode.TabStop = false;
+            // 
             // BookInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(633, 585);
+            this.Controls.Add(this.isbnBarcode);
             this.Controls.Add(this.addedOnLbl);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.availableCopiesLbl);
@@ -279,6 +291,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.coverPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookCoverPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.isbnBarcode)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,5 +316,6 @@
         private Label availableCopiesLbl;
         private Label addedOnLbl;
         private Label label2;
+        private PictureBox isbnBarcode;
     }
 }

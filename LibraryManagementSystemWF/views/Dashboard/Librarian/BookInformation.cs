@@ -49,6 +49,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void LoadBook(Book book)
         {
+            isbnBarcode.Image = BarcodeMaker.BuildISBN(book.ISBN);
+
             if (File.Exists(book.Cover))
             {
                 coverPictureBox.Image = Image.FromFile(book.Cover);
