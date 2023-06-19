@@ -38,6 +38,7 @@
             this.titleLbl = new System.Windows.Forms.Label();
             this.searchBtn = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // pageLbl
@@ -158,10 +159,23 @@
             this.txtSearch.TabIndex = 33;
             this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel2.Location = new System.Drawing.Point(595, 496);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(111, 15);
+            this.linkLabel2.TabIndex = 35;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Print Borrower Card";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
             // CtrlRepo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.searchBtn);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.pageLbl);
@@ -191,5 +205,6 @@
         private Label titleLbl;
         private Button searchBtn;
         private TextBox txtSearch;
+        private LinkLabel linkLabel2;
     }
 }

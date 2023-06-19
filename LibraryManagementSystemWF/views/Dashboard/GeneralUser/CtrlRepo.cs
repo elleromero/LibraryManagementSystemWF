@@ -24,6 +24,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         private Loader loader;
         private Form form;
         private bool isSearch;
+        private List<Loan> loansList = new();
 
         public CtrlRepo(Form form)
         {
@@ -87,6 +88,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
 
+                this.loansList = res.Results;
                 foreach (Loan loan in res.Results)
                 {
                     flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan, this, this.form));
@@ -164,6 +166,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 this.page = 1;
                 LoadBorrowedBooks();
             }
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new BorrowerCard(this.loansList).ShowDialog();
         }
     }
 }
