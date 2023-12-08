@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystemWF.models
 {
-    public class Book
+    public class Source
     {
-        public Guid ID { get; set; }
-        public BookMetadata BookMetadata = new BookMetadata();
-        public int AvailableCopies { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
     }
 }
