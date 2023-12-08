@@ -12,7 +12,7 @@ namespace LibraryManagementSystemWF.services
         // You can customize the values of each variable as much as you like.
         //DESKTOP-SL438A7\SQLEXPRESS
         private const string
-            DB_NAME = "DB_LMS",
+            DB_NAME = "LMS",
             CONN_BASE = "Data Source = DESKTOP-PDLDGGJ\\SQLEXPRESS;Integrated Security=true;",
             CONN_STR = $"{CONN_BASE}Initial Catalog={DB_NAME}",
             VERSION = "v4.0 - stable branch";

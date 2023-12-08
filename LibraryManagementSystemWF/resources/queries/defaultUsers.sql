@@ -5,6 +5,7 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
+	student_no,
 	email,
 	phone,
 	address,
@@ -12,6 +13,7 @@ INSERT INTO members (
 ) VALUES (
 	'Shello Luis',
 	'Roxas',
+	'100813695',
 	'SheRoxas@gmail.com',
 	'09113456780',
 	'1049 Malhacan St.',
@@ -31,6 +33,7 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
+	student_no,
 	email,
 	phone,
 	address,
@@ -38,6 +41,7 @@ INSERT INTO members (
 ) VALUES (
 	'Juan',
 	'Dela Cruz',
+	'10091',
 	'juandc@mail.co.uk',
 	'09123456789',
 	'102 Melbourne St.',
@@ -57,6 +61,7 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
+	student_no,
 	email,
 	phone,
 	address,
@@ -64,6 +69,7 @@ INSERT INTO members (
 ) VALUES (
 	'Jameson',
 	'Teodore',
+	'102901',
 	'jTeodore@gmail.com',
 	'09987654321',
 	'1023 Santolan St.',
@@ -83,6 +89,7 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
+	student_no,
 	email,
 	phone,
 	address,
@@ -90,6 +97,7 @@ INSERT INTO members (
 ) VALUES (
 	'Jamesmar',
 	'Martin',
+	'21612',
 	'jmartin@gmail.com',
 	'09192365102',
 	'0018 Payatas St.',
