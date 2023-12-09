@@ -13,7 +13,7 @@ namespace LibraryManagementSystemWF.models
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public int CourseYear { get; set; }
-        public string StudentNumber { get; set; } = string.Empty;
+        public string SchoolNumber { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

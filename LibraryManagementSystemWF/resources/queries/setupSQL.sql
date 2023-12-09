@@ -10,7 +10,7 @@ CREATE TABLE members (
 	first_name VARCHAR(30) NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
 	course_year INT NULL,
-	student_no VARCHAR(55) UNIQUE NOT NULL,
+	school_no VARCHAR(55) UNIQUE NOT NULL,
 	address VARCHAR(200) NOT NULL,
 	phone VARCHAR(13) NOT NULL,
 	email VARCHAR(100) NULL,
@@ -166,11 +166,12 @@ DECLARE @member_id UNIQUEIDENTIFIER; SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
-	student_no,
+	school_no,
 	email,
 	phone,
 	address,
-	member_id
+	member_id,
+	program_id
 ) VALUES (
 	'John',
 	'Doe',
@@ -178,7 +179,8 @@ INSERT INTO members (
 	'admin@test.com',
 	'09100813695',
 	'211 baker St.',
-	@member_id
+	@member_id,
+	1
 );
 
 INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (

@@ -38,7 +38,8 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN books b ON c.book_id = b.book_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 "WHERE l.copy_id = @copy_id; " +
                 "END";
@@ -82,16 +83,22 @@ namespace LibraryManagementSystemWF.dao
             Book? book = new()
             {
                 ID = reader.GetGuid(reader.GetOrdinal("book_id")),
-                Title = reader.GetString(reader.GetOrdinal("title")),
-                Sypnosis = reader.GetString(reader.GetOrdinal("sypnosis")),
-                Author = reader.GetString(reader.GetOrdinal("author")),
-                Cover = reader.GetString(reader.GetOrdinal("cover")),
-                Publisher = reader.GetString(reader.GetOrdinal("publisher")),
-                PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
-                ISBN = reader.GetString(reader.GetOrdinal("isbn")),
-                AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
-                Genre = genre,
-                AvailableCopies = reader.GetInt32(reader.GetOrdinal("available_copies"))
+                AvailableCopies = reader.GetInt32(reader.GetOrdinal("available_copies")),
+                BookMetadata = new BookMetadata
+                {
+                    Title = reader.GetString(reader.GetOrdinal("title")),
+                    Sypnosis = reader.GetString(reader.GetOrdinal("sypnosis")),
+                    Author = reader.GetString(reader.GetOrdinal("author")),
+                    Cover = reader.GetString(reader.GetOrdinal("cover")),
+                    Publisher = reader.GetString(reader.GetOrdinal("publisher")),
+                    PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
+                    ISBN = reader.GetString(reader.GetOrdinal("isbn")),
+                    AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
+                    Genre = genre,
+                    Copyright = reader.GetString(reader.GetOrdinal("copyright")),
+                    EditionStr = reader.GetString(reader.GetOrdinal("edition_str")),
+                    EditionNumber = reader.GetInt32(reader.GetOrdinal("edition_num"))
+                }
             };
 
             Status? status = new()
@@ -159,7 +166,8 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN books b ON c.book_id = b.book_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"WHERE l.user_id = '{model.User.ID}' " +
                 "AND is_returned = 0" +
@@ -218,7 +226,8 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN books b ON c.book_id = b.book_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
@@ -273,7 +282,8 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN books b ON c.book_id = b.book_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"WHERE loan_id = '{id}';";
 
@@ -330,7 +340,8 @@ namespace LibraryManagementSystemWF.dao
                            "JOIN books b ON c.book_id = b.book_id " +
                            "JOIN roles r ON u.role_id = r.role_id " +
                            "JOIN members m ON u.member_id = m.member_id " +
-                           "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                           "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                           "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                            "JOIN statuses s ON c.status_id = s.status_id " +
                            $"WHERE loan_id = '{model.ID}';";
 
@@ -379,7 +390,8 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN books b ON c.book_id = b.book_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"WHERE l.user_id = '{userId}' " +
                 "AND is_returned = 0" +

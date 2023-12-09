@@ -5,11 +5,12 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
-	student_no,
+	school_no,
 	email,
 	phone,
 	address,
-	member_id
+	member_id,
+	program_id
 ) VALUES (
 	'Shello Luis',
 	'Roxas',
@@ -17,7 +18,8 @@ INSERT INTO members (
 	'SheRoxas@gmail.com',
 	'09113456780',
 	'1049 Malhacan St.',
-	@member_id
+	@member_id,
+	2
 );
 
 INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
@@ -33,11 +35,12 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
-	student_no,
+	school_no,
 	email,
 	phone,
 	address,
-	member_id
+	member_id,
+	program_id
 ) VALUES (
 	'Juan',
 	'Dela Cruz',
@@ -45,7 +48,8 @@ INSERT INTO members (
 	'juandc@mail.co.uk',
 	'09123456789',
 	'102 Melbourne St.',
-	@member_id
+	@member_id,
+	2
 );
 
 INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
@@ -61,11 +65,12 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
-	student_no,
+	school_no,
 	email,
 	phone,
 	address,
-	member_id
+	member_id,
+	program_id
 ) VALUES (
 	'Jameson',
 	'Teodore',
@@ -73,7 +78,8 @@ INSERT INTO members (
 	'jTeodore@gmail.com',
 	'09987654321',
 	'1023 Santolan St.',
-	@member_id
+	@member_id,
+	3
 );
 
 INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
@@ -89,11 +95,12 @@ SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
-	student_no,
+	school_no,
 	email,
 	phone,
 	address,
-	member_id
+	member_id,
+	program_id
 ) VALUES (
 	'Jamesmar',
 	'Martin',
@@ -101,7 +108,8 @@ INSERT INTO members (
 	'jmartin@gmail.com',
 	'09192365102',
 	'0018 Payatas St.',
-	@member_id
+	@member_id,
+	2
 );
 
 INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
