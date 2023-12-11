@@ -81,7 +81,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != null;
                     }
                 }
-                catch { return; }
+                catch (Exception e) { Console.WriteLine(e.Message);  return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -133,7 +133,7 @@ namespace LibraryManagementSystemWF.dao
                     Address = reader.GetString(reader.GetOrdinal("address")),
                     Program = new models.Program
                     {
-                        ID = reader.GetGuid(reader.GetOrdinal("program_id")),
+                        ID = reader.GetInt32(reader.GetOrdinal("program_id")),
                         Name = reader.GetString(reader.GetOrdinal("program_name")),
                         Description = reader.GetString(reader.GetOrdinal("program_description"))
                     }

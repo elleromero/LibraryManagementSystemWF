@@ -117,7 +117,7 @@ namespace LibraryManagementSystemWF.dao
                     Address = reader.GetString(reader.GetOrdinal("address")),
                     Program = new models.Program
                     {
-                        ID = reader.GetGuid(reader.GetOrdinal("program_id")),
+                        ID = reader.GetInt32(reader.GetOrdinal("program_id")),
                         Name = reader.GetString(reader.GetOrdinal("program_name")),
                         Description = reader.GetString(reader.GetOrdinal("program_description"))
                     }
