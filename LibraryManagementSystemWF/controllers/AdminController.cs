@@ -19,11 +19,14 @@ namespace LibraryManagementSystemWF.controllers
             string password,
             string firstName,
             string lastName,
+            int courseYear,
+            string schoolNumber,
             string address,
             string phone,
             int roleId,
             string email = "",
-            string profilePicture = ""
+            string profilePicture = "",
+            int? programId = null
             )
         {
             ControllerModifyData<User> returnData = new()
@@ -72,9 +75,15 @@ namespace LibraryManagementSystemWF.controllers
                     {
                         FirstName = textInfo.ToTitleCase(firstName.Trim()),
                         LastName = textInfo.ToTitleCase(lastName.Trim()),
+                        CourseYear = courseYear,
+                        SchoolNumber = schoolNumber.Trim(),
                         Address = address.Trim(),
                         Phone = phone.Trim(),
-                        Email = email.Trim()
+                        Email = email.Trim(),
+                        Program = new models.Program
+                        {
+                            ID = programId
+                        }
                     },
                     Role = new Role
                     {
@@ -100,11 +109,14 @@ namespace LibraryManagementSystemWF.controllers
             string password,
             string firstName,
             string lastName,
+            int courseYear,
+            string schoolNumber,
             string address,
             string phone,
             string adminPassword,
             string email = "",
-            string profilePicture = ""
+            string profilePicture = "",
+            int? programId = null
             )
         {
             ControllerModifyData<User> returnData = new()
@@ -167,9 +179,15 @@ namespace LibraryManagementSystemWF.controllers
                     {
                         FirstName = textInfo.ToTitleCase(firstName.Trim()),
                         LastName = textInfo.ToTitleCase(lastName.Trim()),
+                        CourseYear = courseYear,
+                        SchoolNumber = schoolNumber.Trim(),
                         Address = address.Trim(),
                         Phone = phone.Trim(),
-                        Email = email.Trim()
+                        Email = email.Trim(),
+                        Program = new models.Program
+                        {
+                            ID = programId
+                        }
                     }
                 });
 

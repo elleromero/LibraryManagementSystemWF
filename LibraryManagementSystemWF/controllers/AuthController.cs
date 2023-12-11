@@ -20,6 +20,9 @@ namespace LibraryManagementSystemWF.controllers
             string password,
             string firstName,
             string lastName,
+            int courseYear,
+            string schoolNumber,
+            int programId,
             string address,
             string phone,
             string email = "",
@@ -59,9 +62,15 @@ namespace LibraryManagementSystemWF.controllers
                     {
                         FirstName = textInfo.ToTitleCase(firstName.Trim()),
                         LastName = textInfo.ToTitleCase(lastName.Trim()),
+                        CourseYear = courseYear,
+                        SchoolNumber = schoolNumber.Trim(),
                         Address = address.Trim(),
                         Phone = phone.Trim(),
-                        Email = email.Trim()
+                        Email = email.Trim(),
+                        Program = new models.Program
+                        {
+                            ID = programId
+                        }
                     },
                     Role = new Role
                     {

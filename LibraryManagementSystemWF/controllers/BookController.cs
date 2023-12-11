@@ -20,9 +20,12 @@ namespace LibraryManagementSystemWF.controllers
             string publisher,
             DateTime publicationDate,
             string isbn,
+            string copyright,
             int copies = 1,
             string coverPath = "",
-            string sypnosis = "No sypnosis available"
+            string sypnosis = "No sypnosis available",
+            int editionNum = 0,
+            string editionStr = ""
             )
         {
             ControllerModifyData<Book> returnData = new()
@@ -58,18 +61,24 @@ namespace LibraryManagementSystemWF.controllers
                 BookDAO bookDao = new();
                 ReturnResult<Book> result = await bookDao.Create(new Book
                 {
-                    Title = title,
-                    Sypnosis = string.IsNullOrWhiteSpace(sypnosis) ? "No sypnosis available" : sypnosis,
-                    Author = author,
-                    Cover = coverPath,
-                    Publisher = publisher,
-                    PublicationDate = publicationDate,
-                    ISBN = isbn,
-                    AvailableCopies = copies,
-                    Genre = new Genre
+                    BookMetadata = new BookMetadata
                     {
-                        ID = genreId
-                    }
+                        Title = title,
+                        Sypnosis = string.IsNullOrWhiteSpace(sypnosis) ? "No sypnosis available" : sypnosis,
+                        Author = author,
+                        Cover = coverPath,
+                        Publisher = publisher,
+                        PublicationDate = publicationDate,
+                        ISBN = isbn,
+                        Copyright = copyright.Trim(),
+                        EditionNumber = editionNum,
+                        EditionStr = editionStr,
+                        Genre = new Genre
+                        {
+                            ID = genreId
+                        }
+                    },
+                    AvailableCopies = copies,
                 });
 
                 isSuccess = result.IsSuccess;
@@ -89,8 +98,11 @@ namespace LibraryManagementSystemWF.controllers
             string publisher,
             DateTime publicationDate,
             string isbn,
+            string copyright,
             string coverPath = "",
-            string sypnosis = "No sypnosis available"
+            string sypnosis = "No sypnosis available",
+            int editionNum = 0,
+            string editionStr = ""
             )
         {
             ControllerModifyData<Book> returnData = new()
@@ -140,16 +152,22 @@ namespace LibraryManagementSystemWF.controllers
                 ReturnResult<Book> result = await bookDao.Update(new Book
                 {
                     ID = new Guid(bookId),
-                    Title = title,
-                    Sypnosis = sypnosis,
-                    Author = author,
-                    Cover = coverPath,
-                    Publisher = publisher,
-                    PublicationDate = publicationDate,
-                    ISBN = isbn,
-                    Genre = new Genre
+                    BookMetadata = new BookMetadata
                     {
-                        ID = genreId
+                        Title = title,
+                        Sypnosis = string.IsNullOrWhiteSpace(sypnosis) ? "No sypnosis available" : sypnosis,
+                        Author = author,
+                        Cover = coverPath,
+                        Publisher = publisher,
+                        PublicationDate = publicationDate,
+                        ISBN = isbn,
+                        Copyright = copyright.Trim(),
+                        EditionNumber = editionNum,
+                        EditionStr = editionStr,
+                        Genre = new Genre
+                        {
+                            ID = genreId
+                        }
                     }
                 });
 
