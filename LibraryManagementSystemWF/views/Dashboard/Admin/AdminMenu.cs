@@ -156,6 +156,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Password,
                     FirstName,
                     LastName,
+                    0, // sample course year
+                    "020012004", // sample school number
                     Address,
                     Phone,
                     selectedRoleId,
@@ -213,6 +215,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Password,
                     FirstName,
                     LastName,
+                    0, // sample course year
+                    "020012004", // sample school number
                     Address,
                     Phone,
                     this.adminPassword,

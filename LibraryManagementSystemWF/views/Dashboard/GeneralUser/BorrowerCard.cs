@@ -50,7 +50,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             {
                 dataGridView1.Rows.Add(
                     loan.DateDue.ToString("MMMM dd',' yyyy 'at' hh:mm:ss tt"),
-                    loan.Copy.Book.Title,
+                    loan.Copy.Book.BookMetadata.Title,
                     loan.IsReturned ? "Yes" : "No"
                     );
             }

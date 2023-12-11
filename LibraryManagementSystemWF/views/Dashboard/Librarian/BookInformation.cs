@@ -49,22 +49,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void LoadBook(Book book)
         {
-            isbnBarcode.Image = BarcodeMaker.BuildISBN(book.ISBN);
+            isbnBarcode.Image = BarcodeMaker.BuildISBN(book.BookMetadata.ISBN);
 
-            if (File.Exists(book.Cover))
+            if (File.Exists(book.BookMetadata.Cover))
             {
-                coverPictureBox.Image = Image.FromFile(book.Cover);
-                bookCoverPictureBox.Image = Image.FromFile(book.Cover);
+                coverPictureBox.Image = Image.FromFile(book.BookMetadata.Cover);
+                bookCoverPictureBox.Image = Image.FromFile(book.BookMetadata.Cover);
             }
 
-            if (string.IsNullOrWhiteSpace(book.Genre.Name))
+            if (string.IsNullOrWhiteSpace(book.BookMetadata.Genre.Name))
             {
                 genreLbl.Text = "NO GENRE";
             }
             else
             {
-                genreLbl.Text = book.Genre.Name;
-                genreLbl.BackColor = ColorTranslator.FromHtml(PastelColorGenerator.GeneratePastelColor(book.Genre.Name));
+                genreLbl.Text = book.BookMetadata.Genre.Name;
+                genreLbl.BackColor = ColorTranslator.FromHtml(PastelColorGenerator.GeneratePastelColor(book.BookMetadata.Genre.Name));
             }
 
             switch (book.AvailableCopies)
@@ -83,13 +83,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                     break;
             }
 
-            addedOnLbl.Text = book.AddedOn.ToString("MMMM d, yyyy, 'at' hh:mm tt");
-            titleLbl.Text = book.Title;
-            authorLbl.Text = $"by {book.Author}";
-            datePublishedLbl.Text = $"Published on {book.PublicationDate.ToString("MMMM d, yyyy")}";
-            txtSypnosis.Text = string.IsNullOrWhiteSpace(book.Sypnosis) ? "No sypnosis available" : book.Sypnosis;
-            publisherLbl.Text = book.Publisher;
-            isbnLbl.Text = book.ISBN;
+            addedOnLbl.Text = book.BookMetadata.AddedOn.ToString("MMMM d, yyyy, 'at' hh:mm tt");
+            titleLbl.Text = book.BookMetadata.Title;
+            authorLbl.Text = $"by {book.BookMetadata.Author}";
+            datePublishedLbl.Text = $"Published on {book.BookMetadata.PublicationDate.ToString("MMMM d, yyyy")}";
+            txtSypnosis.Text = string.IsNullOrWhiteSpace(book.BookMetadata.Sypnosis) ? "No sypnosis available" : book.BookMetadata.Sypnosis;
+            publisherLbl.Text = book.BookMetadata.Publisher;
+            isbnLbl.Text = book.BookMetadata.ISBN;
         }
 
         public async void RefreshBook()

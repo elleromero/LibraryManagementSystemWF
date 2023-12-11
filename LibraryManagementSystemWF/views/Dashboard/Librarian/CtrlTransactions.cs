@@ -58,7 +58,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 {
                     string transaction = $"{loan.User.Username} " +
                         $"{(loan.IsReturned ? "returned" : "borrowed")} " +
-                        $"{loan.Copy.Book.Title}";
+                        $"{loan.Copy.Book.BookMetadata.Title}";
 
                     dataGridView1.Rows.Add(
                         loan.ID,

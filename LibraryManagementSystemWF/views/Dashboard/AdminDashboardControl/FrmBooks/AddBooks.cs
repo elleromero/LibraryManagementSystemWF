@@ -39,9 +39,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             panel2.Controls.Clear();
             panel2.Controls.Add(new BookContainer(new Book
             {
-                Cover = "",
-                Author = "J. K. Rowling",
-                Title = "Harry Potter"
+                BookMetadata = new BookMetadata
+                {
+                    Cover = "",
+                    Author = "J. K. Rowling",
+                    Title = "Harry Potter"
+                }
             }, true));
 
             isInitialized = false;
@@ -72,14 +75,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                     dataGridView1.Rows.Add(
                         book.ID,
                         book.AvailableCopies,
-                        book.Title,
-                        book.Genre.Name,
-                        book.Author,
-                        book.Publisher,
-                        book.Sypnosis,
-                        book.PublicationDate,
-                        book.ISBN,
-                        book.Cover
+                        book.BookMetadata.Title,
+                        book.BookMetadata.Genre.Name,
+                        book.BookMetadata.Author,
+                        book.BookMetadata.Publisher,
+                        book.BookMetadata.Sypnosis,
+                        book.BookMetadata.PublicationDate,
+                        book.BookMetadata.ISBN,
+                        book.BookMetadata.Cover
                         );
 
                 }
@@ -160,7 +163,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 this.loader = new(this);
                 this.loader.StartLoading();
 
-                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, copies, Cover, Sypnosis);
+                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, "Example Copyright", copies, Cover, Sypnosis);
 
                 if (result.IsSuccess)
                 {
@@ -357,9 +360,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 panel2.Controls.Clear();
                 panel2.Controls.Add(new BookContainer(new Book
                 {
-                    Cover = txtCover.Text,
-                    Author = txtAuthor.Text,
-                    Title = txtTitle.Text
+                    BookMetadata = new BookMetadata
+                    {
+                        Cover = txtCover.Text,
+                        Author = txtAuthor.Text,
+                        Title = txtTitle.Text
+                    }
                 }, true));
             }
 
