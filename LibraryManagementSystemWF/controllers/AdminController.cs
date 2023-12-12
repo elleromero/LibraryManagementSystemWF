@@ -19,14 +19,14 @@ namespace LibraryManagementSystemWF.controllers
             string password,
             string firstName,
             string lastName,
-            int courseYear,
             string schoolNumber,
             string address,
             string phone,
             int roleId,
             string email = "",
             string profilePicture = "",
-            int? programId = null
+            int? programId = null,
+            int? courseYear = null
             )
         {
             ControllerModifyData<User> returnData = new()
@@ -109,14 +109,14 @@ namespace LibraryManagementSystemWF.controllers
             string password,
             string firstName,
             string lastName,
-            int courseYear,
             string schoolNumber,
             string address,
             string phone,
             string adminPassword,
             string email = "",
             string profilePicture = "",
-            int? programId = null
+            int? programId = null,
+            int? courseYear = null
             )
         {
             ControllerModifyData<User> returnData = new()
