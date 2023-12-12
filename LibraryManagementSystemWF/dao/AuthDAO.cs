@@ -23,10 +23,10 @@ namespace LibraryManagementSystemWF.dao
 
             string declareQuery = "DECLARE @member_id UNIQUEIDENTIFIER; SET @member_id = NEWID();";
             string memberQuery = "INSERT INTO members (first_name, last_name, course_year, school_no, address, phone, email, member_id, program_id) " +
-                $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', {model.Member.CourseYear}, '{model.Member.SchoolNumber}', '{model.Member.Address}', '{model.Member.Phone}', '{model.Member.Email}', @member_id, '{model.Member.Program.ID}');";
+                $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', {(model.Member.CourseYear == null ? "NULL" : model.Member.CourseYear)}, '{10003}', '{model.Member.Address}', '{model.Member.Phone}', '{model.Member.Email}', @member_id, {(model.Member.Program.ID == null ? "NULL" : $"'{model.Member.Program.ID}'")});";
             string userQuery = "INSERT INTO users (member_id, role_id, username, password_hash, profile_picture) " +
                 $"VALUES (@member_id, {model.Role.ID}, '{model.Username}', '{model.PasswordHash}', '{model.ProfilePicture}');";
-            string selectQuery = "SELECT * FROM members m JOIN users u ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id JOIN programs p ON p.program_id = m.program_id WHERE u.member_id = @member_id;";
+            string selectQuery = "SELECT * FROM members m JOIN users u ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id LEFT JOIN programs p ON p.program_id = m.program_id WHERE u.member_id = @member_id;";
             string query = $"{declareQuery} {memberQuery} {userQuery} {selectQuery}";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>

@@ -20,13 +20,13 @@ namespace LibraryManagementSystemWF.controllers
             string password,
             string firstName,
             string lastName,
-            int courseYear,
             string schoolNumber,
-            int programId,
             string address,
             string phone,
             string email = "",
-            string profilePicture = ""
+            string profilePicture = "",
+            int? programId = null,
+            int? courseYear = null
             ) {
             ControllerModifyData<User> returnData = new()
             {
