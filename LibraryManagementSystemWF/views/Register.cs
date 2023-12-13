@@ -33,6 +33,7 @@ namespace LibraryManagementSystemWF.views
 
         private async void button3_Click(object sender, EventArgs e)
         {
+            string SchoolNumber = schoolNum.Text.Trim();
             string reguser = txtRegUser.Text.Trim();
             string regpass = txtRegPass.Text.Trim();
             string firstname = txtFirstName.Text.Trim();
