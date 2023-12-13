@@ -41,6 +41,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
+            if (!Validator.IsSchoolNum(schoolNumber)) errors["school_no"] = "School Number should atleast 5 characters and contain only numbers";
             if (string.IsNullOrWhiteSpace(address)) errors["address"] = "Address is required";
             if (string.IsNullOrWhiteSpace(phone)) errors["phone"] = "Phone is required";
             if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmail(email)) errors["email"] = "Email is invalid";

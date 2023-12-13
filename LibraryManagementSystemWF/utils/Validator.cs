@@ -68,6 +68,19 @@ namespace LibraryManagementSystemWF.utils
             return true;
         }
 
+        public static bool IsSchoolNum(string schoolnum)
+        {
+            if (string.IsNullOrWhiteSpace(schoolnum)) return false;
+
+            // CHECKING IF THE SCHOOL NUMBER CONTAINS NUMBERS ONLY
+            if (!Regex.IsMatch(schoolnum, @"^[\d]+$")) return false;
+
+            // CHECKING IF THE SCHOOL NUMBER VALIDATES ATLEAST IT HAS 5 CHARACTERS ONLY
+            if (!Regex.IsMatch(schoolnum, @"^.{5}$")) return false;
+
+            return true;
+        }
+
         public static async Task<bool> IsNameUnique(string tableName, string columnName, string value)
         {
             bool isUnique = false;
