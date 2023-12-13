@@ -281,7 +281,7 @@ namespace LibraryManagementSystemWF.dao
                 "SELECT * FROM users u " +
                 "JOIN members m ON m.member_id = u.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id " +
-                "JOIN programs p ON p.program_id = m.program_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 $"WHERE username LIKE '%{searchText}%' " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
