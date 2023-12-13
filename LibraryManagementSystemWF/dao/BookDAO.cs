@@ -147,7 +147,7 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = true;
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString());  return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 

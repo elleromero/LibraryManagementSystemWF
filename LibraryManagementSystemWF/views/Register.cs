@@ -48,7 +48,7 @@ namespace LibraryManagementSystemWF.views
             loader.StartLoading();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
-            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, 1, SchoolNumber, 1, address, phone, email, profile);
+            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, "0200213", address, phone, email, profile);
 
             if (res.IsSuccess)
             {
