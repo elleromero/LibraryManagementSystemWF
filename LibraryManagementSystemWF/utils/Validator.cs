@@ -128,8 +128,8 @@ namespace LibraryManagementSystemWF.utils
                     if (error != null) return;
 
                     string query = string.IsNullOrWhiteSpace(bookId) ?
-                    $"SELECT title FROM books WHERE title = '{title}'" :
-                    $"SELECT title FROM books WHERE title = '{title}' AND book_id != '{bookId}'";
+                    $"SELECT title FROM books b JOIN book_metadata bmd ON b.metadata_id = bmd.metadata_id WHERE bmd.title = '{title}'" :
+                    $"SELECT title FROM books b JOIN book_metadata bmd ON b.metadata_id = bmd.metadata_id WHERE bmd.title = '{title}' AND b.book_id != '{bookId}'";
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();
 
@@ -227,7 +227,7 @@ namespace LibraryManagementSystemWF.utils
                     if (error != null) return;
 
                     string query = string.IsNullOrWhiteSpace(bookId) ?
-                    $"SELECT isbn FROM books WHERE isbn = '{isbn}'" :
+                    $"SELECT isbn FROM books b JOIN book_metadata bmd ON b.metadata_id = bmd.metadata_id WHERE bmd.isbn = '{isbn}'" :
                     $"SELECT isbn FROM books WHERE isbn = '{isbn}' AND book_id != '{bookId}'";
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();

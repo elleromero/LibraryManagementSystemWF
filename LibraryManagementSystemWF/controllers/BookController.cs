@@ -22,6 +22,7 @@ namespace LibraryManagementSystemWF.controllers
             string isbn,
             string copyright,
             int copies = 1,
+            decimal price = 0,
             string coverPath = "",
             string sypnosis = "No sypnosis available",
             int editionNum = 0,
@@ -79,7 +80,7 @@ namespace LibraryManagementSystemWF.controllers
                         }
                     },
                     AvailableCopies = copies,
-                });
+                }, price, SourceEnum.SCHOOL);
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
@@ -125,6 +126,7 @@ namespace LibraryManagementSystemWF.controllers
             // validation
             if (string.IsNullOrWhiteSpace(bookId)) errors["bookId"] = "Book ID is required";
             if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "ID is invalid";
+            // if (!await Validator.IsISBNUnique(isbn)) errors["isbn"] = "ISBN was already registered";
             if (string.IsNullOrWhiteSpace(title)) errors["title"] = "Title is required";
             if (string.IsNullOrWhiteSpace(author)) errors["author"] = "Author is required";
             if (string.IsNullOrWhiteSpace(publisher)) errors["publisher"] = "Publisher is required";

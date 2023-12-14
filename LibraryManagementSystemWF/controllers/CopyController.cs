@@ -11,7 +11,7 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class CopyController : BaseController
     {
-        public static async Task<ControllerModifyData<Copy>> CreateCopies(string bookId, int copies = 1)
+        public static async Task<ControllerModifyData<Copy>> CreateCopies(string bookId, SourceEnum source, int copies = 1)
         {
             ControllerModifyData<Copy> returnData = new()
             {
@@ -37,7 +37,7 @@ namespace LibraryManagementSystemWF.controllers
             if (errors.Count == 0)
             {
                 CopyDAO copyDao = new();
-                ReturnResult<Copy> result = await copyDao.CreateMany(bookId, copies);
+                ReturnResult<Copy> result = await copyDao.CreateMany(bookId, copies, source);
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;

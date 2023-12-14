@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class BookDAO : IDAO<Book>
     {
-        public async Task<ReturnResult<Book>> Create(Book model)
+        public async Task<ReturnResult<Book>> Create(Book model, decimal price, SourceEnum source)
         {
             ReturnResult<Book> returnResult = new()
             {
@@ -26,7 +26,7 @@ namespace LibraryManagementSystemWF.dao
             string copies = "";
             for (int i = 0; i < model.AvailableCopies; i++)
             {
-                copies += "(@book_id, 1), ";
+                copies += $"(@book_id, 1, {price}, {(int)source}), ";
             }
             copies = copies.Trim();
 
@@ -41,8 +41,8 @@ namespace LibraryManagementSystemWF.dao
                 $"VALUES (@metadata_id, {bookMD.Genre.ID}, '{bookMD.Title}', '{bookMD.Sypnosis}', '{bookMD.Cover}', '{bookMD.Author}', '{bookMD.PublicationDate.ToString("yyyy-MM-dd HH:mm:ss.fff")}', '{bookMD.Publisher}', '{bookMD.ISBN}', '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}', " +
                 $"'{bookMD.Copyright}', '{bookMD.EditionStr}', {bookMD.EditionNumber});";
             string insertBook = "INSERT INTO books (book_id, metadata_id) VALUES (@book_id, @metadata_id);";
-            string copyQuery = $"INSERT INTO copies (book_id, status_id) VALUES {copies.Substring(0, copies.Length - 1)};";
-            string selectQuery = "SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = @book_id AND co.status_id = 1) AS available_copies \nFROM books b JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id JOIN genres g ON g.genre_id = bmd.genre_id WHERE book_id = @book_id;";
+            string copyQuery = $"INSERT INTO copies (book_id, status_id, price, source_id) VALUES {copies.Substring(0, copies.Length - 1)};";
+            string selectQuery = "SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = @book_id AND co.status_id = 1) AS available_copies FROM books b JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id JOIN genres g ON g.genre_id = bmd.genre_id WHERE book_id = @book_id;";
             string query = $"{declareQuery} {insertQuery} {insertBook} {copyQuery} {selectQuery}";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -62,7 +62,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != null;
                     }
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -232,8 +232,10 @@ namespace LibraryManagementSystemWF.dao
                            $"copyright = '{model.BookMetadata.Copyright}', " +
                            $"edition_str = '{model.BookMetadata.EditionStr}', " +
                            $"edition_num = {model.BookMetadata.EditionNumber} " +
-                           $"WHERE metadata_id = '{model.BookMetadata.ID}'; " +
-                           $"SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM books b JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id JOIN genres g ON g.genre_id = bmd.genre_id WHERE b.metadata_id = '{model.BookMetadata.ID}';";
+                           $"FROM book_metadata " +
+                           $"JOIN books ON books.metadata_id = book_metadata.metadata_id " +
+                           $"WHERE books.book_id = '{model.ID}'; " +
+                           $"SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM books b JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id JOIN genres g ON g.genre_id = bmd.genre_id WHERE b.book_id = '{model.ID}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -252,7 +254,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != default(Book);
                     }
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -268,11 +270,11 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 1
             };
 
-            string query = $"SELECT COUNT(*) as row_count FROM books WHERE title LIKE '%{searchText}%'; " +
+            string query = $"SELECT COUNT(*) as row_count FROM books b LEFT JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id WHERE bmd.title LIKE '%{searchText}%'; " +
                 "SELECT *, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM books b " +
                 "LEFT JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
-                $"WHERE title LIKE '%{searchText}%' " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
+                $"WHERE bmd.title LIKE '%{searchText}%' " +
                 $"ORDER BY added_on DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -308,6 +310,11 @@ namespace LibraryManagementSystemWF.dao
             });
 
             return returnResult;
+        }
+
+        public Task<ReturnResult<Book>> Create(Book model)
+        {
+            throw new NotImplementedException();
         }
     }
 }
