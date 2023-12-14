@@ -62,7 +62,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != null;
                     }
                 }
-                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
+                catch { return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -147,7 +147,7 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = true;
                 }
-                catch (Exception e) { MessageBox.Show(e.ToString());  return; }
+                catch { return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -254,7 +254,7 @@ namespace LibraryManagementSystemWF.dao
                         returnResult.IsSuccess = returnResult.Result != default(Book);
                     }
                 }
-                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
+                catch { return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 

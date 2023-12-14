@@ -228,7 +228,7 @@ namespace LibraryManagementSystemWF.utils
 
                     string query = string.IsNullOrWhiteSpace(bookId) ?
                     $"SELECT isbn FROM books b JOIN book_metadata bmd ON b.metadata_id = bmd.metadata_id WHERE bmd.isbn = '{isbn}'" :
-                    $"SELECT isbn FROM books WHERE isbn = '{isbn}' AND book_id != '{bookId}'";
+                    $"SELECT isbn FROM books b JOIN book_metadata bmd ON b.metadata_id = bmd.metadata_id WHERE bmd.isbn = '{isbn}' AND b.book_id != '{bookId}'";
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();
 

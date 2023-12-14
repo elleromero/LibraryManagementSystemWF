@@ -126,7 +126,7 @@ namespace LibraryManagementSystemWF.controllers
             // validation
             if (string.IsNullOrWhiteSpace(bookId)) errors["bookId"] = "Book ID is required";
             if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "ID is invalid";
-            // if (!await Validator.IsISBNUnique(isbn)) errors["isbn"] = "ISBN was already registered";
+            if (!await Validator.IsISBNUnique(isbn, bookId)) errors["isbn"] = "ISBN was already registered";
             if (string.IsNullOrWhiteSpace(title)) errors["title"] = "Title is required";
             if (string.IsNullOrWhiteSpace(author)) errors["author"] = "Author is required";
             if (string.IsNullOrWhiteSpace(publisher)) errors["publisher"] = "Publisher is required";
