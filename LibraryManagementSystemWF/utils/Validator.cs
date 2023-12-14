@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -113,6 +114,40 @@ namespace LibraryManagementSystemWF.utils
             });
 
             return isUnique;
+        }
+
+        public static async Task<bool> IsSchoolNumUnique(string schoolnum, string memberId = "")
+        {
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(memberId) ?
+                    $"SELECT school_no FROM members WHERE school_no = '{schoolnum}'" :
+                    $"SELECT school_no FROM members WHERE school_no = '{schoolnum}' AND book_id != '{memberId}'";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("school_no"));
+
+                        if (name.Equals(schoolnum)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return !isUnique;
+
         }
 
         public static async Task<bool> IsBookTitleUnique(string title, string bookId = "")
