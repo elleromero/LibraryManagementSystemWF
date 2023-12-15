@@ -163,7 +163,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 this.loader = new(this);
                 this.loader.StartLoading();
 
-                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, "Example Copyright", copies, Cover, Sypnosis);
+                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, "Example Copyright", copies, 0, Cover, Sypnosis);
 
                 if (result.IsSuccess)
                 {
@@ -207,7 +207,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 this.loader.StartLoading();
 
                 ControllerModifyData<Book> result = await BookController.UpdateBook(
-                    BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, Cover, Sypnosis);
+                    BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, "Copyright 2020", Cover, Sypnosis);
 
 
                 if (result.IsSuccess)
@@ -386,7 +386,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                         int copies = Convert.ToInt32(numCopies.Value);
 
                         // Call the method to create copies of the book
-                        ControllerModifyData<Copy> result = await CopyController.CreateCopies(bookId, copies);
+                        ControllerModifyData<Copy> result = await CopyController.CreateCopies(bookId, SourceEnum.SCHOOL, copies); // Change this later
 
                         if (result.IsSuccess)
                         {

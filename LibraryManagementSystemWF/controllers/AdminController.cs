@@ -50,6 +50,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!await Validator.IsPhoneUnique(phone)) errors["phone"] = "Phone was already registered";
             if (!await Validator.IsEmailUnique(email)) errors["email"] = "Email was already registered";
             if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
+            if (!await Validator.IsSchoolNumUnique(schoolNumber)) errors["school_no"] = "School Number is already exist";
             if (!await Validator.IsRoleIdValid(roleId)) errors["roleId"] = "Invalid Role ID";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
@@ -142,6 +143,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!await Validator.IsPhoneUnique(phone, userId)) errors["phone"] = "Phone was already registered";
             if (!await Validator.IsEmailUnique(email, userId)) errors["email"] = "Email was already registered";
             if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
+            if (!await Validator.IsSchoolNumUnique(schoolNumber)) errors["school_no"] = "School Number is already exist";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
             if (!Validator.IsSchoolNum(schoolNumber)) errors["school_no"] = "School Number should atleast 5 characters and contain only numbers";

@@ -4,3 +4,9 @@
     USER = 2,
     LIBRARIAN = 3
 }
+
+public enum SourceEnum
+{
+    DONATION = 1,
+    SCHOOL = 2
+}

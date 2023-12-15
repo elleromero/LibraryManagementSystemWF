@@ -174,7 +174,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.loader.StartLoading();
 
             // Call the method to create copies of the book
-            ControllerModifyData<Copy> result = await CopyController.CreateCopies(this.bookId, copies);
+            ControllerModifyData<Copy> result = await CopyController.CreateCopies(this.bookId, SourceEnum.SCHOOL, copies); // TODO: Change this later
 
             if (result.IsSuccess && result.Result != null)
             {

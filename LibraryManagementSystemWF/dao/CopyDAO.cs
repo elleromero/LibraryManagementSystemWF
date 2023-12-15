@@ -12,7 +12,7 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class CopyDAO : IDAO<Copy>
     {
-        public async Task<ReturnResult<Copy>> CreateMany(string bookId, int copies)
+        public async Task<ReturnResult<Copy>> CreateMany(string bookId, int copies, SourceEnum source, decimal price = 0)
         {
             ReturnResult<Copy> returnResult = new()
             {
@@ -25,7 +25,7 @@ namespace LibraryManagementSystemWF.dao
             string loopQuery = $"WHILE (@counter <= {copies}) " +
                 "BEGIN " +
                 "SET @copy_id = NEWID(); " +
-                $"INSERT INTO copies (copy_id, book_id, status_id) VALUES (@copy_id, '{bookId}', 1); " +
+                $"INSERT INTO copies (copy_id, book_id, price, source_id, status_id) VALUES (@copy_id, '{bookId}', {price}, {(int)source}, 1); " +
                 "SET @counter = @counter + 1; " +
                 "END;";
             string selectQuery = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
