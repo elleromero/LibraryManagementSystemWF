@@ -130,15 +130,16 @@ namespace LibraryManagementSystemWF.utils
 
                     string query = string.IsNullOrWhiteSpace(memberId) ?
                     $"SELECT school_no FROM members WHERE school_no = '{schoolnum}'" :
-                    $"SELECT school_no FROM members WHERE school_no = '{schoolnum}' AND book_id != '{memberId}'";
+                    $"SELECT school_no FROM members WHERE school_no = '{schoolnum}' AND member_id != '{memberId}'";
+
                     SqlCommand command = new(query, conn);
                     reader = await command.ExecuteReaderAsync();
 
                     while (await reader.ReadAsync())
                     {
-                        string name = reader.GetString(reader.GetOrdinal("school_no"));
+                        string existingSchoolNumber = reader.GetString(reader.GetOrdinal("school_no"));
 
-                        if (name.Equals(schoolnum)) return;
+                        if (existingSchoolNumber.Equals(schoolnum)) return;
                     }
 
                     isUnique = true;
@@ -146,8 +147,7 @@ namespace LibraryManagementSystemWF.utils
                 catch { return; }
             });
 
-            return !isUnique;
-
+            return isUnique;
         }
 
         public static async Task<bool> IsBookTitleUnique(string title, string bookId = "")
