@@ -121,31 +121,31 @@ namespace LibraryManagementSystemWF.utils
             bool isUnique = false;
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
-            {
-                SqlDataReader? reader = null;
+          {
+            SqlDataReader? reader = null;
 
-                try
+                 try
                 {
-                    if (error != null) return;
+                 if (error != null) return;
 
-                    string query = string.IsNullOrWhiteSpace(memberId) ?
-                    $"SELECT school_no FROM members WHERE school_no = '{schoolnum}'" :
-                    $"SELECT school_no FROM members WHERE school_no = '{schoolnum}' AND member_id != '{memberId}'";
+                 string query = string.IsNullOrWhiteSpace(memberId) ?
+                 $"SELECT school_no FROM members WHERE school_no = '{schoolnum}'" :
+                 $"SELECT school_no FROM members WHERE school_no = '{schoolnum}' AND member_id != '{memberId}'";
 
-                    SqlCommand command = new(query, conn);
-                    reader = await command.ExecuteReaderAsync();
+                 SqlCommand command = new(query, conn);
+                 reader = await command.ExecuteReaderAsync();
 
-                    while (await reader.ReadAsync())
-                    {
-                        string existingSchoolNumber = reader.GetString(reader.GetOrdinal("school_no"));
+                 while (await reader.ReadAsync())
+             {
+                string existingSchoolNumber = reader.GetString(reader.GetOrdinal("school_no"));
 
-                        if (existingSchoolNumber.Equals(schoolnum)) return;
-                    }
-
-                    isUnique = true;
+                if (existingSchoolNumber.Equals(schoolnum)) return;
                 }
-                catch { return; }
-            });
+
+                isUnique = true;
+            }
+            catch { return; }
+        });
 
             return isUnique;
         }
