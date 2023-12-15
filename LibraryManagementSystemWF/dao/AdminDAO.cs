@@ -27,7 +27,7 @@ namespace LibraryManagementSystemWF.dao
                 $"INSERT INTO members " +
                 $"(first_name, last_name, course_year, school_no, " +
                 $"address, phone, email, member_id, program_id) " +
-                $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', {(model.Member.CourseYear == null ? "NULL" : model.Member.CourseYear)}, '{22413}', " +
+                $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', {(model.Member.CourseYear == null ? "NULL" : model.Member.CourseYear)}, '{model.Member.SchoolNumber}', " +
                 $"'{model.Member.Address}', '{model.Member.Phone}', '{model.Member.Email}', @member_id, {(model.Member.Program.ID == null ? "NULL" : $"'{model.Member.Program.ID}'")});";
             string userQuery = $"INSERT INTO users (member_id, role_id, username, password_hash, profile_picture) " +
                 $"VALUES (@member_id, {model.Role.ID}, '{model.Username}', '{model.PasswordHash}', '{model.ProfilePicture}');";
@@ -194,7 +194,7 @@ namespace LibraryManagementSystemWF.dao
                 $"first_name = '{model.Member.FirstName}', " +
                 $"last_name = '{model.Member.LastName}', " +
                 $"course_year = {(model.Member.CourseYear == null ? "NULL" : model.Member.CourseYear)}, " +
-                $"school_no = '{244713781}', " +
+                $"school_no = '{model.Member.SchoolNumber}', " +
                 $"address = '{model.Member.Address}', " +
                 $"email = '{model.Member.Email}', " +
                 $"phone = '{model.Member.Phone}' " +

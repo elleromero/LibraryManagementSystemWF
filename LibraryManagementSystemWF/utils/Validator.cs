@@ -77,7 +77,7 @@ namespace LibraryManagementSystemWF.utils
             if (!Regex.IsMatch(schoolnum, @"^[\d]+$")) return false;
 
             // CHECKING IF THE SCHOOL NUMBER VALIDATES ATLEAST IT HAS 5 CHARACTERS ONLY
-            if (!Regex.IsMatch(schoolnum, @"^.{5}$")) return false;
+            if (schoolnum.Length >= 5) return false;
 
             return true;
         }
