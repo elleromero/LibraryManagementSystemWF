@@ -120,5 +120,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             mainPanel.Controls.Add(new CtrlTransactions(this));
             navLbl.Text = "Loans";
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button5.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlActivityLog());
+            navLbl.Text = "Activity Log";
+        }
     }
 }
