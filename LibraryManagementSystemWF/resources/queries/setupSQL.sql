@@ -118,7 +118,30 @@ CREATE TABLE loans (
 	FOREIGN KEY (copy_id) REFERENCES copies(copy_id) ON DELETE CASCADE,
 )
 
+CREATE TABLE activity_type (
+	activity_type_id INT PRIMARY KEY IDENTITY(1,1),
+	activity_name VARCHAR(50) NOT NULL,
+	activity_description VARCHAR(200)
+)
+
+CREATE TABLE activities (
+	activity_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+	activity_log VARCHAR(1000) NOT NULL,
+	activity_type_id INT,
+	timestamp DATETIME2 NOT NULL DEFAULT(GETDATE()),
+	FOREIGN KEY (activity_type_id) REFERENCES activity_type(activity_type_id),
+)
+
 /* INSERTS DATA */
+
+INSERT INTO activity_type (activity_name, activity_description)
+VALUES
+('AUTHENTICATION', 'Authentication related activities'),
+('BOOK_TRANSACT', 'Book related transaction'),
+('BOOK_OPERATION', 'Book related operation'),
+('USER_OPERATION', 'User related operation'),
+('PROGRAM_OPERATION', 'Program related operation'),
+('COPY_OPERATION', 'Book related operation')
 
 INSERT INTO programs(program_name, program_description) VALUES
 ('BSIT', 'Bachelor of Science in Information Technology'),
