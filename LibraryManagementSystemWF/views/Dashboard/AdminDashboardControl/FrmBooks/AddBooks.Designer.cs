@@ -169,7 +169,7 @@
             // 
             this.dtpPublicationDate.CalendarFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.dtpPublicationDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dtpPublicationDate.Location = new System.Drawing.Point(496, 310);
+            this.dtpPublicationDate.Location = new System.Drawing.Point(496, 318);
             this.dtpPublicationDate.Name = "dtpPublicationDate";
             this.dtpPublicationDate.Size = new System.Drawing.Size(280, 29);
             this.dtpPublicationDate.TabIndex = 2;
@@ -422,7 +422,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(494, 290);
+            this.label10.Location = new System.Drawing.Point(494, 298);
             this.label10.Margin = new System.Windows.Forms.Padding(0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(107, 17);
@@ -516,7 +516,7 @@
             this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nextBtn.Location = new System.Drawing.Point(939, 176);
+            this.nextBtn.Location = new System.Drawing.Point(935, 178);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.Size = new System.Drawing.Size(29, 29);
             this.nextBtn.TabIndex = 47;
@@ -529,7 +529,7 @@
             this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.prevBtn.Location = new System.Drawing.Point(870, 176);
+            this.prevBtn.Location = new System.Drawing.Point(866, 178);
             this.prevBtn.Name = "prevBtn";
             this.prevBtn.Size = new System.Drawing.Size(29, 29);
             this.prevBtn.TabIndex = 46;
@@ -540,7 +540,7 @@
             // pageLbl
             // 
             this.pageLbl.AutoSize = true;
-            this.pageLbl.Location = new System.Drawing.Point(905, 184);
+            this.pageLbl.Location = new System.Drawing.Point(901, 186);
             this.pageLbl.Name = "pageLbl";
             this.pageLbl.Size = new System.Drawing.Size(28, 15);
             this.pageLbl.TabIndex = 45;
@@ -551,7 +551,7 @@
             this.btnMaximize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.btnMaximize.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMaximize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaximize.Location = new System.Drawing.Point(835, 176);
+            this.btnMaximize.Location = new System.Drawing.Point(831, 178);
             this.btnMaximize.Name = "btnMaximize";
             this.btnMaximize.Size = new System.Drawing.Size(29, 29);
             this.btnMaximize.TabIndex = 56;
@@ -563,7 +563,7 @@
             this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Location = new System.Drawing.Point(468, 176);
+            this.btnSearch.Location = new System.Drawing.Point(431, 178);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(29, 29);
             this.btnSearch.TabIndex = 55;
@@ -575,10 +575,10 @@
             this.txtSearch.BackColor = System.Drawing.Color.White;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtSearch.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.txtSearch.Location = new System.Drawing.Point(180, 176);
+            this.txtSearch.Location = new System.Drawing.Point(180, 178);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.PlaceholderText = "Search book title";
-            this.txtSearch.Size = new System.Drawing.Size(282, 29);
+            this.txtSearch.Size = new System.Drawing.Size(245, 29);
             this.txtSearch.TabIndex = 54;
             // 
             // label12

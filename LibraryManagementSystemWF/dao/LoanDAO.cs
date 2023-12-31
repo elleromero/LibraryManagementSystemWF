@@ -148,7 +148,7 @@ namespace LibraryManagementSystemWF.dao
             };
         }
 
-        public async Task<ReturnResultArr<Loan>> GetAllLoans(int page, Loan model)
+        public async Task<ReturnResultArr<Loan>> GetAllLoans(int? page, Loan model, bool afterDue = false)
         {
             ReturnResultArr<Loan> returnResult = new()
             {
@@ -156,6 +156,7 @@ namespace LibraryManagementSystemWF.dao
                 IsSuccess = false,
                 rowCount = 1
             };
+            Console.WriteLine(model.User.ID);
 
             string query = $"SELECT COUNT(*) as row_count FROM loans WHERE user_id = '{model.User.ID}'; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
@@ -170,8 +171,13 @@ namespace LibraryManagementSystemWF.dao
                 "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
                 $"WHERE l.user_id = '{model.User.ID}' " +
-                "AND is_returned = 0" +
-                $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+                "AND is_returned = 0 " +
+                $"{(afterDue ? $"AND due_date < '{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}' " : string.Empty)}";
+
+            if (page != null)
+            {
+                query += $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+            }
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -201,7 +207,7 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = true;
                 }
-                catch { return; }
+                catch (Exception e){ MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 

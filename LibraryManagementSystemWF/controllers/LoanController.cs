@@ -213,6 +213,56 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
+        public static async Task<ControllerAccessData<Loan>> GetAllBorrowedBooksPastDue(string targetUserId)
+        {
+            ControllerAccessData<Loan> returnData = new()
+            {
+                Results = new List<Loan>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+            string? userId = AuthService.getSignedUser()?.ID.ToString();
+            Console.WriteLine(await AuthGuard.HavePermission("USER"));
+            Console.WriteLine(await AuthGuard.HavePermission("LIBRARIAN"));
+
+            // validate
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
+
+            // is user or librarian
+            if (!await AuthGuard.HavePermission("USER") || !await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                if (errors.Count == 0 && userId != null)
+                {
+                    LoanDAO loanDao = new();
+                    ReturnResultArr<Loan> result = await loanDao.GetAllLoans(null, new Loan
+                    {
+                        User = new User
+                        {
+                            ID = new Guid(targetUserId)
+                        }
+                    }, true);
+
+                    isSuccess = result.IsSuccess;
+                    returnData.Results = result.Results;
+                    returnData.rowCount = result.rowCount;
+                }
+            }
+            else
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
+
         public static async Task<ControllerAccessData<Loan>> GetAllLoans(int page = 1)
         {
             ControllerAccessData<Loan> returnData = new()

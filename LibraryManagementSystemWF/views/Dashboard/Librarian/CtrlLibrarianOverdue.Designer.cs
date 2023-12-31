@@ -30,10 +30,10 @@
         {
             this.subtitleLbl = new System.Windows.Forms.Label();
             this.titleLbl = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridUsers = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridDueBooks = new System.Windows.Forms.DataGridView();
             this.pageLbl = new System.Windows.Forms.Label();
             this.nextLastBtn = new System.Windows.Forms.Button();
             this.nextBtn = new System.Windows.Forms.Button();
@@ -46,8 +46,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridDueBooks)).BeginInit();
             this.SuspendLayout();
             // 
             // subtitleLbl
@@ -71,15 +71,19 @@
             this.titleLbl.TabIndex = 29;
             this.titleLbl.Text = "Overdue Books";
             // 
-            // dataGridView1
+            // dataGridUsers
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 110);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(370, 364);
-            this.dataGridView1.TabIndex = 31;
+            this.dataGridUsers.AllowUserToAddRows = false;
+            this.dataGridUsers.AllowUserToDeleteRows = false;
+            this.dataGridUsers.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridUsers.Location = new System.Drawing.Point(6, 110);
+            this.dataGridUsers.Name = "dataGridUsers";
+            this.dataGridUsers.RowTemplate.Height = 25;
+            this.dataGridUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridUsers.Size = new System.Drawing.Size(370, 364);
+            this.dataGridUsers.TabIndex = 31;
+            this.dataGridUsers.SelectionChanged += new System.EventHandler(this.dataGridUsers_SelectionChanged);
             // 
             // textBox1
             // 
@@ -106,15 +110,15 @@
             this.button2.Text = "🔍";
             this.button2.UseVisualStyleBackColor = false;
             // 
-            // dataGridView2
+            // dataGridDueBooks
             // 
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(382, 164);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(325, 153);
-            this.dataGridView2.TabIndex = 35;
+            this.dataGridDueBooks.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridDueBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridDueBooks.Location = new System.Drawing.Point(382, 164);
+            this.dataGridDueBooks.Name = "dataGridDueBooks";
+            this.dataGridDueBooks.RowTemplate.Height = 25;
+            this.dataGridDueBooks.Size = new System.Drawing.Size(325, 153);
+            this.dataGridDueBooks.TabIndex = 35;
             // 
             // pageLbl
             // 
@@ -191,9 +195,9 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(536, 334);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 20);
+            this.label2.Size = new System.Drawing.Size(31, 20);
             this.label2.TabIndex = 44;
-            this.label2.Text = "100.70";
+            this.label2.Text = "0.0";
             // 
             // textBox2
             // 
@@ -253,7 +257,7 @@
             this.panel1.Size = new System.Drawing.Size(271, 126);
             this.panel1.TabIndex = 49;
             // 
-            // CtrlLibrarianRepo
+            // CtrlLibrarianOverdue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -269,16 +273,16 @@
             this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.prevBtn);
             this.Controls.Add(this.prevLastBtn);
-            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.dataGridDueBooks);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridUsers);
             this.Controls.Add(this.subtitleLbl);
             this.Controls.Add(this.titleLbl);
-            this.Name = "CtrlLibrarianRepo";
+            this.Name = "CtrlLibrarianOverdue";
             this.Size = new System.Drawing.Size(710, 520);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridUsers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridDueBooks)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,10 +292,10 @@
 
         private Label subtitleLbl;
         private Label titleLbl;
-        private DataGridView dataGridView1;
+        private DataGridView dataGridUsers;
         private TextBox textBox1;
         private Button button2;
-        private DataGridView dataGridView2;
+        private DataGridView dataGridDueBooks;
         private Label pageLbl;
         private Button nextLastBtn;
         private Button nextBtn;
