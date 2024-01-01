@@ -420,6 +420,32 @@ namespace LibraryManagementSystemWF.utils
             return isValid;
         }
 
+        public static async Task<bool> IsSourceIdValid(int sourceId)
+        {
+            bool isValid = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                try
+                {
+                    int count = 0;
+                    if (error != null) return;
+
+                    string query = $"SELECT COUNT(*) FROM sources WHERE source_id = {sourceId}";
+                    SqlCommand command = new(query, conn);
+
+                    object? v = await command.ExecuteScalarAsync();
+                    if (v != null) count = (int)v;
+
+
+                    isValid = count > 0;
+                }
+                catch { return; }
+            });
+
+            return isValid;
+        }
+
         public static async Task<bool> IsRoleIdValid(int? roleId)
         {
             bool isValid = false;

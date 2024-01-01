@@ -72,13 +72,17 @@
             this.label13 = new System.Windows.Forms.Label();
             this.txtEditionName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtEditionNo = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.cmbSource = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.numPrice = new System.Windows.Forms.NumericUpDown();
+            this.numEditionNo = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.coverImg)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCopies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEditionNo)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -638,15 +642,6 @@
             this.label14.Text = "Edition No.";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtEditionNo
-            // 
-            this.txtEditionNo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtEditionNo.Location = new System.Drawing.Point(650, 576);
-            this.txtEditionNo.Name = "txtEditionNo";
-            this.txtEditionNo.PlaceholderText = "1";
-            this.txtEditionNo.Size = new System.Drawing.Size(126, 29);
-            this.txtEditionNo.TabIndex = 61;
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -672,16 +667,73 @@
             this.cmbSource.Size = new System.Drawing.Size(126, 29);
             this.cmbSource.TabIndex = 63;
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(493, 178);
+            this.label16.Margin = new System.Windows.Forms.Padding(0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(137, 17);
+            this.label16.TabIndex = 66;
+            this.label16.Text = "Initial Price (In Pesos)";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // numPrice
+            // 
+            this.numPrice.DecimalPlaces = 3;
+            this.numPrice.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numPrice.Location = new System.Drawing.Point(496, 198);
+            this.numPrice.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.numPrice.Name = "numPrice";
+            this.numPrice.Size = new System.Drawing.Size(280, 29);
+            this.numPrice.TabIndex = 67;
+            this.numPrice.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // numEditionNo
+            // 
+            this.numEditionNo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numEditionNo.Location = new System.Drawing.Point(650, 577);
+            this.numEditionNo.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numEditionNo.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numEditionNo.Name = "numEditionNo";
+            this.numEditionNo.Size = new System.Drawing.Size(126, 29);
+            this.numEditionNo.TabIndex = 68;
+            this.numEditionNo.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // AddBooks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(986, 618);
+            this.Controls.Add(this.numEditionNo);
+            this.Controls.Add(this.numPrice);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.cmbSource);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.txtEditionNo);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtEditionName);
             this.Controls.Add(this.label12);
@@ -725,6 +777,8 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.coverImg)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCopies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numEditionNo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -775,8 +829,10 @@
         private Label label13;
         private TextBox txtEditionName;
         private Label label14;
-        private TextBox txtEditionNo;
         private Label label15;
         private ComboBox cmbSource;
+        private Label label16;
+        private NumericUpDown numPrice;
+        private NumericUpDown numEditionNo;
     }
 }
