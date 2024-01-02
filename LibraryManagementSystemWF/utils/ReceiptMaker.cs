@@ -47,6 +47,18 @@ namespace LibraryManagementSystemWF.utils
             return total;
         }
 
+        public double GetChange(double cash)
+        {
+            double change = 0;
+
+            if (cash >= this.GetTotal())
+            {
+                change = cash - this.GetTotal();
+            }
+
+            return change;
+        }
+
         public string GetReceipt()
         {
             string receipt = string.Empty;

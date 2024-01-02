@@ -123,6 +123,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void dataGridDueBooks_SelectionChanged(object sender, EventArgs e)
         {
+            double cash = 0;
+
+            if (txtCash.Text.ToString().Trim() != string.Empty)
+            {
+                cash = Double.Parse(txtCash.Text.ToString());
+            }
+
             // clear
             lblTotalAmountDue.Text = "0.0";
             this.receiptMaker.Clear();
@@ -133,15 +140,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 double price = Double.Parse(row.Cells["Price"].Value.ToString());
                 string itemName = $"{row.Cells["Book Title"].Value} ({row.Cells["Loan ID"].Value.ToString().Substring(0, 4)})";
 
-                // calculate value
-                double totalAmountDue = Double.Parse(lblTotalAmountDue.Text.Trim());
-                totalAmountDue += price;
-
                 // add item to receipt
                 this.receiptMaker.AddItem(itemName, price);
 
                 // set value
-                lblTotalAmountDue.Text = totalAmountDue.ToString();
+                lblTotalAmountDue.Text = this.receiptMaker.GetTotal().ToString();
+
+                if (this.receiptMaker.GetTotal() <= cash)
+                {
+                    lblChange.Text = this.receiptMaker.GetChange(cash).ToString();
+                }
             }
         }
 
@@ -154,7 +162,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 Loan foundLoan = this.loans.Find((x) => x.ID.ToString() == row.Cells["Loan ID"].Value.ToString());
                 if (foundLoan != null) loansIdList.Add(foundLoan.ID.ToString());
             }
-            Console.WriteLine(loansIdList.Count);
+
             ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList);
             new ConfirmPayment(this.receiptMaker.GetReceipt()).ShowDialog();
         }
