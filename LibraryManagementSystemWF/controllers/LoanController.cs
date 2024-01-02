@@ -128,6 +128,46 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
+        public static async Task<ControllerAccessData<Loan>> ReturnDueBooks(List<string> loans)
+        {
+            ControllerAccessData<Loan> returnData = new()
+            {
+                Results = new List<Loan>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+            string? userId = AuthService.getSignedUser()?.ID.ToString();
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors.Add("permission", "Forbidden");
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
+            // validate
+            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
+            if (loans.Count <= 0) errors.Add("loans", "Loans required");
+
+            if (errors.Count == 0 && userId != null)
+            {
+                LoanDAO loanDao = new();
+                ReturnResultArr<Loan> result = await loanDao.ReturnAll(loans);
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
+
         public static async Task<ControllerModifyData<Loan>> GetLoanById(string id)
         {
             ControllerModifyData<Loan> returnData = new()

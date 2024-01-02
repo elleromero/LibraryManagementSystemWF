@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.controllers;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
     {
         private List<User> users = new();
         private List<Loan> loans = new();
-        private List<User> selectedBooks = new();
         private User? currentUser = null;
+        private ReceiptMaker receiptMaker = new();
 
         public CtrlLibrarianOverdue()
         {
@@ -82,7 +83,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private void LoadDueBooks()
         {
             // load columns
-            dataGridDueBooks.Columns.Add("Copy ID", "Copy ID");
+            dataGridDueBooks.Columns.Add("Loan ID", "Loan ID");
             dataGridDueBooks.Columns.Add("Book Title", "Book Title");
             dataGridDueBooks.Columns.Add("Date Borrowed", "Date Borrowed");
             dataGridDueBooks.Columns.Add("Price", "Price");
@@ -111,13 +112,51 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 foreach (Loan loan in res.Results)
                 {
                     dataGridDueBooks.Rows.Add(
-                        loan.Copy.ID,
+                        loan.ID,
                         loan.Copy.Book.BookMetadata.Title,
                         loan.DateBorrowed,
                         loan.Copy.Price
                         );
                 }
             }
+        }
+
+        private void dataGridDueBooks_SelectionChanged(object sender, EventArgs e)
+        {
+            // clear
+            lblTotalAmountDue.Text = "0.0";
+            this.receiptMaker.Clear();
+
+            foreach (DataGridViewRow row in dataGridDueBooks.SelectedRows)
+            {
+                // init values
+                double price = Double.Parse(row.Cells["Price"].Value.ToString());
+                string itemName = $"{row.Cells["Book Title"].Value} ({row.Cells["Loan ID"].Value.ToString().Substring(0, 4)})";
+
+                // calculate value
+                double totalAmountDue = Double.Parse(lblTotalAmountDue.Text.Trim());
+                totalAmountDue += price;
+
+                // add item to receipt
+                this.receiptMaker.AddItem(itemName, price);
+
+                // set value
+                lblTotalAmountDue.Text = totalAmountDue.ToString();
+            }
+        }
+
+        private async void btnProceedPayment_Click(object sender, EventArgs e)
+        {
+            List<string> loansIdList = new();
+
+            foreach (DataGridViewRow row in dataGridDueBooks.SelectedRows)
+            {
+                Loan foundLoan = this.loans.Find((x) => x.ID.ToString() == row.Cells["Loan ID"].Value.ToString());
+                if (foundLoan != null) loansIdList.Add(foundLoan.ID.ToString());
+            }
+            Console.WriteLine(loansIdList.Count);
+            ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList);
+            new ConfirmPayment(this.receiptMaker.GetReceipt()).ShowDialog();
         }
     }
 }

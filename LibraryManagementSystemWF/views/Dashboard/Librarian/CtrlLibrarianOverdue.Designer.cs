@@ -40,10 +40,10 @@
             this.prevBtn = new System.Windows.Forms.Button();
             this.prevLastBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.lblTotalAmountDue = new System.Windows.Forms.Label();
+            this.txtCash = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnProceedPayment = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridUsers)).BeginInit();
@@ -119,6 +119,7 @@
             this.dataGridDueBooks.RowTemplate.Height = 25;
             this.dataGridDueBooks.Size = new System.Drawing.Size(325, 153);
             this.dataGridDueBooks.TabIndex = 35;
+            this.dataGridDueBooks.SelectionChanged += new System.EventHandler(this.dataGridDueBooks_SelectionChanged);
             // 
             // pageLbl
             // 
@@ -189,24 +190,24 @@
             this.label1.TabIndex = 43;
             this.label1.Text = "Total Amount Due:";
             // 
-            // label2
+            // lblTotalAmountDue
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(536, 334);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 20);
-            this.label2.TabIndex = 44;
-            this.label2.Text = "0.0";
+            this.lblTotalAmountDue.AutoSize = true;
+            this.lblTotalAmountDue.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTotalAmountDue.Location = new System.Drawing.Point(536, 334);
+            this.lblTotalAmountDue.Name = "lblTotalAmountDue";
+            this.lblTotalAmountDue.Size = new System.Drawing.Size(31, 20);
+            this.lblTotalAmountDue.TabIndex = 44;
+            this.lblTotalAmountDue.Text = "0.0";
             // 
-            // textBox2
+            // txtCash
             // 
-            this.textBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.textBox2.Location = new System.Drawing.Point(536, 372);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.PlaceholderText = "0.0";
-            this.textBox2.Size = new System.Drawing.Size(171, 27);
-            this.textBox2.TabIndex = 45;
+            this.txtCash.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.txtCash.Location = new System.Drawing.Point(536, 372);
+            this.txtCash.Name = "txtCash";
+            this.txtCash.PlaceholderText = "0.0";
+            this.txtCash.Size = new System.Drawing.Size(171, 27);
+            this.txtCash.TabIndex = 45;
             // 
             // label3
             // 
@@ -218,21 +219,22 @@
             this.label3.TabIndex = 46;
             this.label3.Text = "Cash:";
             // 
-            // button1
+            // btnProceedPayment
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(382, 414);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(325, 27);
-            this.button1.TabIndex = 47;
-            this.button1.Text = "Proceed Payment";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnProceedPayment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.btnProceedPayment.FlatAppearance.BorderSize = 0;
+            this.btnProceedPayment.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnProceedPayment.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnProceedPayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProceedPayment.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnProceedPayment.ForeColor = System.Drawing.Color.Black;
+            this.btnProceedPayment.Location = new System.Drawing.Point(382, 414);
+            this.btnProceedPayment.Name = "btnProceedPayment";
+            this.btnProceedPayment.Size = new System.Drawing.Size(325, 27);
+            this.btnProceedPayment.TabIndex = 47;
+            this.btnProceedPayment.Text = "Proceed Payment";
+            this.btnProceedPayment.UseVisualStyleBackColor = false;
+            this.btnProceedPayment.Click += new System.EventHandler(this.btnProceedPayment_Click);
             // 
             // button3
             // 
@@ -263,10 +265,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnProceedPayment);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtCash);
+            this.Controls.Add(this.lblTotalAmountDue);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pageLbl);
             this.Controls.Add(this.nextLastBtn);
@@ -302,10 +304,10 @@
         private Button prevBtn;
         private Button prevLastBtn;
         private Label label1;
-        private Label label2;
-        private TextBox textBox2;
+        private Label lblTotalAmountDue;
+        private TextBox txtCash;
         private Label label3;
-        private Button button1;
+        private Button btnProceedPayment;
         private Button button3;
         private Panel panel1;
     }
