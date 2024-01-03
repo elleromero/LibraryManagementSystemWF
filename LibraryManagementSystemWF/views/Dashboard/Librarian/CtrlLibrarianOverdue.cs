@@ -20,6 +20,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private List<Loan> loans = new();
         private User? currentUser = null;
         private ReceiptMaker receiptMaker = new();
+        private double cash = 0;
+        private double amountDue = 0;
+        private double change = 0;
 
         public CtrlLibrarianOverdue()
         {
@@ -123,11 +126,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void dataGridDueBooks_SelectionChanged(object sender, EventArgs e)
         {
-            double cash = 0;
-
             if (txtCash.Text.ToString().Trim() != string.Empty)
             {
-                cash = Double.Parse(txtCash.Text.ToString());
+                this.cash = Double.Parse(txtCash.Text.ToString());
             }
 
             // clear
@@ -144,11 +145,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 this.receiptMaker.AddItem(itemName, price);
 
                 // set value
-                lblTotalAmountDue.Text = this.receiptMaker.GetTotal().ToString();
+                this.amountDue = this.receiptMaker.GetTotal();
+                lblTotalAmountDue.Text = this.amountDue.ToString();
 
-                if (this.receiptMaker.GetTotal() <= cash)
+                if (this.receiptMaker.GetTotal() <= this.cash)
                 {
-                    lblChange.Text = this.receiptMaker.GetChange(cash).ToString();
+                    lblChange.Text = this.receiptMaker.GetChange(this.cash).ToString();
                 }
             }
         }
@@ -163,7 +165,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 if (foundLoan != null) loansIdList.Add(foundLoan.ID.ToString());
             }
 
-            ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList);
+            ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
             new ConfirmPayment(this.receiptMaker.GetReceipt()).ShowDialog();
         }
     }

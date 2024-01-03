@@ -128,7 +128,7 @@ namespace LibraryManagementSystemWF.controllers
             return returnData;
         }
 
-        public static async Task<ControllerAccessData<Loan>> ReturnDueBooks(List<string> loans)
+        public static async Task<ControllerAccessData<Loan>> ReturnDueBooks(List<string> loans, double cash, double totalAmount)
         {
             ControllerAccessData<Loan> returnData = new()
             {
@@ -152,6 +152,7 @@ namespace LibraryManagementSystemWF.controllers
             // validate
             if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
             if (loans.Count <= 0) errors.Add("loans", "Loans required");
+            if (cash < totalAmount) errors.Add("cash", "Insufficient Cash");
 
             if (errors.Count == 0 && userId != null)
             {
