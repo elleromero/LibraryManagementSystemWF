@@ -4,6 +4,7 @@ using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -40,7 +41,9 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN members m ON u.member_id = m.member_id " +
                 "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                 "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
+                "JOIN sources so ON c.source_id = so.source_id " +
                 "WHERE l.copy_id = @copy_id; " +
                 "END";
 
@@ -113,13 +116,20 @@ namespace LibraryManagementSystemWF.dao
             {
                 ID = reader.GetGuid(reader.GetOrdinal("copy_id")),
                 Book = book,
-                Status = status
+                Status = status,
+                Price = reader.GetDecimal(reader.GetOrdinal("price")),
+                Source = new Source
+                {
+                    ID = reader.GetInt32(reader.GetOrdinal("source_id")),
+                    Name = reader.GetString(reader.GetOrdinal("source_name"))
+                }
             };
 
             User? user = new()
             {
                 ID = reader.GetGuid(reader.GetOrdinal("user_id")),
                 Username = reader.GetString(reader.GetOrdinal("username")),
+                ProfilePicture = reader.GetString(reader.GetOrdinal("profile_picture")),
                 Role = new Role
                 {
                     ID = reader.GetInt32(reader.GetOrdinal("role_id")),
@@ -131,9 +141,17 @@ namespace LibraryManagementSystemWF.dao
                     ID = reader.GetGuid(reader.GetOrdinal("member_id")),
                     FirstName = reader.GetString(reader.GetOrdinal("first_name")),
                     LastName = reader.GetString(reader.GetOrdinal("last_name")),
+                    CourseYear = reader.IsDBNull(reader.GetOrdinal("course_year")) ? null : reader.GetInt32(reader.GetOrdinal("course_year")),
+                    SchoolNumber = reader.GetString(reader.GetOrdinal("school_no")),
                     Phone = reader.GetString(reader.GetOrdinal("phone")),
                     Email = reader.GetString(reader.GetOrdinal("email")),
                     Address = reader.GetString(reader.GetOrdinal("address")),
+                    Program = new models.Program
+                    {
+                        ID = reader.IsDBNull(reader.GetOrdinal("program_id")) ? null : reader.GetInt32(reader.GetOrdinal("program_id")),
+                        Name = reader.IsDBNull(reader.GetOrdinal("program_name")) ? string.Empty : reader.GetString(reader.GetOrdinal("program_name")),
+                        Description = reader.IsDBNull(reader.GetOrdinal("program_description")) ? string.Empty : reader.GetString(reader.GetOrdinal("program_description"))
+                    }
                 }
             };
             return new Loan
@@ -148,7 +166,7 @@ namespace LibraryManagementSystemWF.dao
             };
         }
 
-        public async Task<ReturnResultArr<Loan>> GetAllLoans(int page, Loan model)
+        public async Task<ReturnResultArr<Loan>> GetAllLoans(int? page, Loan model, bool afterDue = false)
         {
             ReturnResultArr<Loan> returnResult = new()
             {
@@ -156,6 +174,7 @@ namespace LibraryManagementSystemWF.dao
                 IsSuccess = false,
                 rowCount = 1
             };
+            Console.WriteLine(model.User.ID);
 
             string query = $"SELECT COUNT(*) as row_count FROM loans WHERE user_id = '{model.User.ID}'; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
@@ -168,10 +187,17 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN members m ON u.member_id = m.member_id " +
                 "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                 "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
+                "JOIN sources so ON c.source_id = so.source_id " +
                 $"WHERE l.user_id = '{model.User.ID}' " +
-                "AND is_returned = 0" +
-                $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+                "AND is_returned = 0 " +
+                $"{(afterDue ? $"AND due_date < '{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}' " : string.Empty)}";
+
+            if (page != null)
+            {
+                query += $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+            }
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -201,7 +227,7 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = true;
                 }
-                catch { return; }
+                catch (Exception e){ MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -228,7 +254,9 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN members m ON u.member_id = m.member_id " +
                 "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                 "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
+                "JOIN sources so ON c.source_id = so.source_id " +
                 $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -284,7 +312,9 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN members m ON u.member_id = m.member_id " +
                 "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                 "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
+                "JOIN sources so ON c.source_id = so.source_id " +
                 $"WHERE loan_id = '{id}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -342,7 +372,9 @@ namespace LibraryManagementSystemWF.dao
                            "JOIN members m ON u.member_id = m.member_id " +
                            "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                            "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
-                           "JOIN statuses s ON c.status_id = s.status_id " +
+                            "LEFT JOIN programs p ON p.program_id = m.program_id " +
+                            "JOIN statuses s ON c.status_id = s.status_id " +
+                            "JOIN sources so ON c.source_id = so.source_id " +
                            $"WHERE loan_id = '{model.ID}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -369,6 +401,45 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
+        public async Task<ReturnResultArr<Loan>> ReturnAll(List<string> loans)
+        {
+            ReturnResultArr<Loan> returnResult = new()
+            {
+                Results = new List<Loan>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
+
+            string loansStr = string.Empty;
+            foreach (string loan in loans)
+            {
+                loansStr += $"'{loan}', ";
+            }
+            loansStr = loansStr.Trim();
+            string query = "UPDATE loans " +
+                "SET is_returned = 1 " +
+                "WHERE loan_id " +
+                $"IN ({loansStr.Substring(0, loansStr.Length - 1)});";
+            Console.WriteLine(query);
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    await command.ExecuteNonQueryAsync();
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+            });
+
+            return returnResult;
+
+        }
+
         public async Task<ReturnResultArr<Loan>> GetSearchResults(string userId, string searchText, int page)
         {
             ReturnResultArr<Loan> returnResult = new()
@@ -392,7 +463,9 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN members m ON u.member_id = m.member_id " +
                 "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                 "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 "JOIN statuses s ON c.status_id = s.status_id " +
+                "JOIN sources so ON c.source_id = so.source_id " +
                 $"WHERE l.user_id = '{userId}' " +
                 "AND is_returned = 0" +
                 $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";

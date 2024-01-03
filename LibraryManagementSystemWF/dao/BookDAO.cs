@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class BookDAO : IDAO<Book>
     {
-        public async Task<ReturnResult<Book>> Create(Book model, decimal price, SourceEnum source)
+        public async Task<ReturnResult<Book>> Create(Book model, decimal price, int sourceId)
         {
             ReturnResult<Book> returnResult = new()
             {
@@ -26,7 +26,7 @@ namespace LibraryManagementSystemWF.dao
             string copies = "";
             for (int i = 0; i < model.AvailableCopies; i++)
             {
-                copies += $"(@book_id, 1, {price}, {(int)source}), ";
+                copies += $"(@book_id, 1, {price}, {sourceId}), ";
             }
             copies = copies.Trim();
 

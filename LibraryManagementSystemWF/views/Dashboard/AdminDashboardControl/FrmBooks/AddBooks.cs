@@ -23,6 +23,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
     public partial class AddBooks : Form
     {
         private List<Genre> genresList = new List<Genre>();
+        private List<Source> sourcesList = new List<Source>();
         private List<Book> booksList = new List<Book>();
         private Ctrlbooksrevamp ctrlbookRevamp;
         private Form parentForm;
@@ -108,12 +109,24 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
                 for (int i = 0; i < genres.Results.Count; i++)
                 {
-                    Genre genre = genresList[i];
                     cmbGenre.ValueMember = nameof(Genre.ID);
                     cmbGenre.DisplayMember = nameof(Genre.Name);
                     cmbGenre.DataSource = genresList;
-
                 }
+            }
+        }
+
+        public async void LoadSources()
+        {
+            ControllerAccessData<Source> res = await SourceController.GetAllSources();
+
+            sourcesList = res.Results;
+
+            if (res.IsSuccess)
+            {
+                cmbSource.ValueMember = nameof(Source.ID);
+                cmbSource.DisplayMember = nameof(Source.Name);
+                cmbSource.DataSource = sourcesList;
             }
         }
 
@@ -141,13 +154,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             LoadBooks();
             LoadGenres();
+            LoadSources();
 
             defaultPreview();
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            if (cmbGenre.SelectedItem != null)
+            if (cmbGenre.SelectedItem != null && cmbSource.SelectedItem != null)
             {
                 Genre selectedGenre = (Genre)cmbGenre.SelectedItem;
                 int selectedGenreId = selectedGenre.ID;
@@ -159,11 +173,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string Cover = txtCover.Text;
                 string Sypnosis = txtSynopsis.Text;
                 int copies = (int)numCopies.Value;
+                Source source = (Source)cmbSource.SelectedItem;
+                decimal initialPrice = (decimal)numPrice.Value;
+                string copyright = txtCopyright.Text;
+                string editionStr = txtEditionName.Text;
+                int editionNo = (int)numEditionNo.Value;
 
                 this.loader = new(this);
                 this.loader.StartLoading();
 
-                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, "Example Copyright", copies, 0, Cover, Sypnosis);
+                ControllerModifyData<Book> result = await BookController.CreateBook(selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, copyright, source.ID, copies, initialPrice, Cover, Sypnosis, editionNo, editionStr);
 
                 if (result.IsSuccess)
                 {
@@ -202,12 +221,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 string ISBN = txtISBN.Text;
                 string Cover = txtCover.Text;
                 string Sypnosis = txtSynopsis.Text;
+                string copyright = txtCopyright.Text;
+                string editionStr = txtEditionName.Text;
+                int editionNo = (int)numEditionNo.Value;
 
                 this.loader = new(this);
                 this.loader.StartLoading();
 
                 ControllerModifyData<Book> result = await BookController.UpdateBook(
-                    BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, "Copyright 2020", Cover, Sypnosis);
+                    BookId, selectedGenreId, Title, Author, Publisher, PublicationDate, ISBN, copyright, Cover, Sypnosis, editionNo, editionStr);
 
 
                 if (result.IsSuccess)

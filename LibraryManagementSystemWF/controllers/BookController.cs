@@ -21,11 +21,12 @@ namespace LibraryManagementSystemWF.controllers
             DateTime publicationDate,
             string isbn,
             string copyright,
+            int sourceId,
             int copies = 1,
             decimal price = 0,
             string coverPath = "",
             string sypnosis = "No sypnosis available",
-            int editionNum = 0,
+            int editionNum = 1,
             string editionStr = ""
             )
         {
@@ -48,7 +49,8 @@ namespace LibraryManagementSystemWF.controllers
 
             // validation
             if (!await Validator.IsBookTitleUnique(title)) errors["title"] = "Title already exists";
-            if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "ID is invalid";
+            if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "Genre is invalid";
+            if (!await Validator.IsSourceIdValid(sourceId)) errors["sourceId"] = "Source is invalid";
             if (!await Validator.IsISBNUnique(isbn)) errors["isbn"] = "ISBN was already registered";
             if (string.IsNullOrWhiteSpace(title)) errors["title"] = "Title is required";
             if (string.IsNullOrWhiteSpace(author)) errors["author"] = "Author is required";
@@ -56,6 +58,8 @@ namespace LibraryManagementSystemWF.controllers
             if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors["publicationDate"] = "Datetime must be before or on the present date";
             if (!Validator.IsValidISBN(isbn)) errors["isbn"] = "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format";
             if (!(copies > 0 && copies <= 50)) errors["copies"] = "Should at least have a single copy and should not exceed 50 copies";
+            if (price < 0) errors["price"] = "Invalid amount";
+            if (editionNum < 1) errors["editionNum"] = "Invalid number";
 
             if (errors.Count == 0)
             {
@@ -80,7 +84,7 @@ namespace LibraryManagementSystemWF.controllers
                         }
                     },
                     AvailableCopies = copies,
-                }, price, SourceEnum.SCHOOL);
+                }, price, sourceId);
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
@@ -102,7 +106,7 @@ namespace LibraryManagementSystemWF.controllers
             string copyright,
             string coverPath = "",
             string sypnosis = "No sypnosis available",
-            int editionNum = 0,
+            int editionNum = 1,
             string editionStr = ""
             )
         {
@@ -132,6 +136,7 @@ namespace LibraryManagementSystemWF.controllers
             if (string.IsNullOrWhiteSpace(publisher)) errors["publisher"] = "Publisher is required";
             if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors["publicationDate"] = "Datetime must be before or on the present date";
             if (!Validator.IsValidISBN(isbn)) errors["isbn"] = "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format";
+            if (editionNum < 1) errors["editionNum"] = "Invalid number";
 
             // update if theres no error
             if (errors.Count == 0)
