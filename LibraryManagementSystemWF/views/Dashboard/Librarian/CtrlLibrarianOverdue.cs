@@ -39,6 +39,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void LoadPreview()
         {
+
             this.AddUserToPreview(new User
             {
                 Username = "juan_54",
@@ -63,23 +64,34 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private async void LoadUsers()
         {
-            ControllerAccessData<User> res = await LibrarianController.GetAllUsersOnly(1);
-            this.users = res.Results;
-
-            // load columns
-            dataGridUsers.Columns.Add("ID", "ID");
-            dataGridUsers.Columns.Add("Username", "Username");
-            dataGridUsers.Columns.Add("Name", "Name");
-            dataGridUsers.Columns.Add("Course", "Course");
-
-            foreach (User user in res.Results)
+            // Handle the Controller
+            try
             {
-                dataGridUsers.Rows.Add(
-                    user.ID,
-                    user.Username,
-                    $"{user.Member.FirstName} {user.Member.LastName}",
-                    $"{user.Member.CourseYear} - {user.Member.Program.Name}"
-                    );
+                ControllerAccessData<User> res = await LibrarianController.GetAllUsersOnly(1);
+                this.users = res.Results;
+                
+
+                // load columns
+                dataGridUsers.Columns.Add("ID", "ID");
+                dataGridUsers.Columns.Add("Username", "Username");
+                dataGridUsers.Columns.Add("Name", "Name");
+                dataGridUsers.Columns.Add("Course", "Course");
+
+                foreach (User user in res.Results)
+                {
+                    dataGridUsers.Rows.Add(
+                        user.ID,
+                        user.Username,
+                        $"{user.Member.FirstName} {user.Member.LastName}",
+                        $"{user.Member.CourseYear} - {user.Member.Program.Name}"
+                        );
+                }
+
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show("Error Load User: ", ex.Message);
             }
         }
 
@@ -166,9 +178,44 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             }
 
             ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
-            new ConfirmPayment(this.receiptMaker.GetReceipt()).ShowDialog();
-            
-            
+            if (double.TryParse(txtCash.Text, out double ChangeCash))
+            {
+                new ConfirmPayment(this.receiptMaker.GetReceipt()).ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Error!!", res.Errors.ToString());
+            }
+
+        }
+
+        private void txtCash_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void txtCash_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                // If the initial cash value is entered, the Change will be updated.
+                if (e.KeyCode == Keys.Enter)
+                {
+                    if (double.TryParse(txtCash.Text, out double ChangeCash))
+                    {
+                        this.cash = ChangeCash;
+                        dataGridDueBooks_SelectionChanged(sender, e);
+                    }
+                    else
+                    {
+                        // Will Show Error if the user input a Non numeric character
+                        MessageBox.Show("Error!! You Enter Non numeric character!!");
+                        e.Handled = true;
+                    }
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Error : ", ex.Message);
+            }
         }
     }
 }
