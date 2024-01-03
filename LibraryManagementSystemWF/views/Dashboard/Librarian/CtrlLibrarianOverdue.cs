@@ -167,6 +167,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
             new ConfirmPayment(this.receiptMaker.GetReceipt()).ShowDialog();
+            
+            
         }
     }
 }

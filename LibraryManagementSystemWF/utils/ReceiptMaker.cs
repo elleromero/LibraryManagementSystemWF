@@ -1,24 +1,32 @@
-﻿using System;
+﻿using LibraryManagementSystemWF.models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LibraryManagementSystemWF.utils
 {
-    internal class ReceiptMaker
+    internal class ReceiptMaker 
     {
-        private string headerTitle, headerAddress, footerText;
+        private string headerTitle, headerName, headerCourse, footerText;
         private Dictionary<string, double> items;
+        
 
         public ReceiptMaker()
         {
-            this.headerTitle = "Library Management System";
-            this.headerAddress = "717 Baker St.";
-            this.footerText = "DO NOT THROW AWAY THIS RECEIPT";
+            
+
+            this.headerTitle = "                       Library Management System"; ;
+            this.headerName = "Name: " ;
+            this.headerCourse = "Course: ";
+            this.footerText = "             DO NOT THROW AWAY THIS RECEIPT";
             this.items = new();
         }
+
+        
 
         public void AddItem(string itemName, double amount)
         {
@@ -65,7 +73,9 @@ namespace LibraryManagementSystemWF.utils
 
             // render header
             receipt += $"{this.headerTitle}" +
-                $"\n{this.headerAddress}" +
+                $"\n{this.InsertLineBreak()}" +
+                $"\n{this.headerName}" +
+                $"\n{this.headerCourse}" +
                 $"\n{this.InsertLineBreak()}" +
                 $"\nBook (Copy ID){this.InsertWhitespace(35)}Amount (PHP)" +
                 $"{this.GetItems()}" +
@@ -74,6 +84,8 @@ namespace LibraryManagementSystemWF.utils
 
             return receipt;
         }
+
+        
 
         public string GetItems()
         {
