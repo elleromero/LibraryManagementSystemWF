@@ -52,6 +52,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
             if (!await Validator.IsSchoolNumUnique(schoolNumber)) errors["school_no"] = "School Number is already exist";
             if (!await Validator.IsRoleIdValid(roleId)) errors["roleId"] = "Invalid Role ID";
+            if (programId != null && !await Validator.IsProgramIdValid(programId)) errors["programId"] = "Invalid Program ID";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
             if (!Validator.IsSchoolNum(schoolNumber)) errors["school_no"] = "School Number should atleast 5 characters and contain only numbers";
@@ -61,7 +62,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!Validator.IsUsername(username)) errors["username"] = "Username should atleast 5 characters in length and contain only letters, numbers, underscores, or hyphens";
             if (!Validator.IsPassword(password)) errors["password"] = "Password is too short";
             if (phone.Length > 11 || phone.Length < 11) errors["phone"] = "Phone should not exceed or below 11 characters";
-
+            if (courseYear != null && courseYear < 0) errors["courseYear"] = "Invalid Course Year";
 
             // register user if theres no error
             if (errors.Count == 0)
@@ -144,6 +145,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!await Validator.IsEmailUnique(email, userId)) errors["email"] = "Email was already registered";
             if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
             if (!await Validator.IsSchoolNumUnique(schoolNumber)) errors["school_no"] = "School Number is already exist";
+            if (programId != null && !await Validator.IsProgramIdValid(programId)) errors["programId"] = "Invalid Program ID";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
             if (!Validator.IsSchoolNum(schoolNumber)) errors["school_no"] = "School Number should atleast 5 characters and contain only numbers";
@@ -153,7 +155,7 @@ namespace LibraryManagementSystemWF.controllers
             if (!Validator.IsUsername(username)) errors["username"] = "Username should atleast 5 characters in length and contain only letters, numbers, underscores, or hyphens";
             if (!Validator.IsPassword(password)) errors["password"] = "Password is too short";
             if (phone.Length > 11 || phone.Length < 11) errors["phone"] = "Phone should not exceed or below 11 characters";
-
+            if (courseYear != null && courseYear < 0) errors["courseYear"] = "Invalid Course Year";
 
             // update user if theres no error
             if (errors.Count == 0)

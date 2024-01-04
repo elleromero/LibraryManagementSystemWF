@@ -24,6 +24,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
         private Loader loader;
         private int page = 1;
         private int maxPage = 1;
+        private bool isSearch = false;
 
         public AnnouncementMenu(ICustomForm form, Form? parentForm = null)
         {
@@ -62,12 +63,26 @@ namespace LibraryManagementSystemWF.views.Dashboard
             this.loader.StartLoading();
 
             LoadAnnouncements();
+
+            this.DisableButtons();
         }
 
         private async void LoadAnnouncements()
         {
             ControllerAccessData<Announcement> res = await AnnouncementController.GetAllWithPastDue(page);
 
+            this.SetData(res);
+
+        }
+        private async void LoadSearchAnnouncements()
+        {
+            ControllerAccessData<Announcement> res = await AnnouncementController.Search(txtSearch.Text, page);
+
+            this.SetData(res);
+        }
+
+        private void SetData(ControllerAccessData<Announcement> res)
+        {
             if (res.IsSuccess)
             {
                 this.loader.StopLoading();
@@ -97,12 +112,12 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
                     if (announcements[i].IsPriority) dataGridView1.Rows[i].DefaultCellStyle.BackColor = ColorTranslator.FromHtml("#fece2f");
                 }
-            } else
+            }
+            else
             {
                 this.loader.StopLoading();
                 DialogBuilder.Show(res.Errors, "Fetch Announcements Error", MessageBoxIcon.Hand);
             }
-
         }
 
         private void Clear()
@@ -148,8 +163,11 @@ namespace LibraryManagementSystemWF.views.Dashboard
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
-            if (e.RowIndex >= 0) 
+            if (dataGridView1.SelectedRows.Count <= 0)
+            {
+                this.clearBtn_Click(sender, e);
+            }
+            else if (e.RowIndex >= 0) 
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 string rowId = row.Cells["ID"].Value.ToString() ?? string.Empty;
@@ -173,6 +191,8 @@ namespace LibraryManagementSystemWF.views.Dashboard
                     }
                 }
             }
+
+            this.DisableButtons();
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -314,7 +334,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 page--;
                 this.loader = new(this);
                 this.loader.StartLoading();
-                LoadAnnouncements();
+                if (this.isSearch) LoadSearchAnnouncements(); else LoadAnnouncements();
             }
         }
 
@@ -325,8 +345,52 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 page++;
                 this.loader = new(this);
                 this.loader.StartLoading();
+                if (this.isSearch) LoadSearchAnnouncements(); else LoadAnnouncements();
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = true;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.page = 1;
+                this.LoadSearchAnnouncements();
+            }
+        }
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = false;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.page = 1;
                 LoadAnnouncements();
             }
+        }
+        private void DisableButtons()
+        {
+            this.ResetButtons();
+
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                button1.Enabled = false;
+            }
+            else
+            {
+                btnDelete.Enabled = false;
+                button2.Enabled = false;
+            }
+        }
+
+        private void ResetButtons()
+        {
+            button1.Enabled = true;
+            btnDelete.Enabled = true;
+            button2.Enabled = true;
         }
     }
 }

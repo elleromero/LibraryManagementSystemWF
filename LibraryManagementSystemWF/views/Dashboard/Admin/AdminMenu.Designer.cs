@@ -65,16 +65,16 @@
             this.nextBtn = new System.Windows.Forms.Button();
             this.SchoolNum = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.txtCourseYear = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.cmbProgram = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.btnMaximize = new System.Windows.Forms.Button();
+            this.numCourseYear = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCourseYear)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -110,6 +110,7 @@
             this.clearBtn.TabIndex = 43;
             this.clearBtn.Text = "      CLEAR";
             this.clearBtn.UseVisualStyleBackColor = false;
+            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
             // 
             // pictureBox1
             // 
@@ -216,6 +217,7 @@
             this.usersGridList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.usersGridList.Size = new System.Drawing.Size(946, 170);
             this.usersGridList.TabIndex = 13;
+            this.usersGridList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersList_CellClick);
             // 
             // label3
             // 
@@ -551,17 +553,6 @@
             this.label12.Text = "School Number";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // txtCourseYear
-            // 
-            this.txtCourseYear.BackColor = System.Drawing.Color.White;
-            this.txtCourseYear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtCourseYear.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.txtCourseYear.Location = new System.Drawing.Point(802, 477);
-            this.txtCourseYear.Name = "txtCourseYear";
-            this.txtCourseYear.PlaceholderText = "Leave blank if N/A";
-            this.txtCourseYear.Size = new System.Drawing.Size(280, 29);
-            this.txtCourseYear.TabIndex = 48;
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -610,6 +601,7 @@
             this.txtSearch.PlaceholderText = "Search username";
             this.txtSearch.Size = new System.Drawing.Size(282, 29);
             this.txtSearch.TabIndex = 51;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
             // btnSearch
             // 
@@ -622,18 +614,15 @@
             this.btnSearch.TabIndex = 52;
             this.btnSearch.Text = "🔍";
             this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // btnMaximize
+            // numCourseYear
             // 
-            this.btnMaximize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.btnMaximize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMaximize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaximize.Location = new System.Drawing.Point(966, 184);
-            this.btnMaximize.Name = "btnMaximize";
-            this.btnMaximize.Size = new System.Drawing.Size(29, 29);
-            this.btnMaximize.TabIndex = 53;
-            this.btnMaximize.Text = "💢";
-            this.btnMaximize.UseVisualStyleBackColor = false;
+            this.numCourseYear.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.numCourseYear.Location = new System.Drawing.Point(802, 477);
+            this.numCourseYear.Name = "numCourseYear";
+            this.numCourseYear.Size = new System.Drawing.Size(280, 29);
+            this.numCourseYear.TabIndex = 54;
             // 
             // AdminMenu
             // 
@@ -641,12 +630,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1101, 572);
-            this.Controls.Add(this.btnMaximize);
+            this.Controls.Add(this.numCourseYear);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.cmbProgram);
-            this.Controls.Add(this.txtCourseYear);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.SchoolNum);
@@ -685,6 +673,7 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numCourseYear)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -728,12 +717,11 @@
         private Button nextBtn;
         private TextBox SchoolNum;
         private Label label12;
-        private TextBox txtCourseYear;
         private Label label13;
         private Label label14;
         private ComboBox cmbProgram;
         private TextBox txtSearch;
         private Button btnSearch;
-        private Button btnMaximize;
+        private NumericUpDown numCourseYear;
     }
 }

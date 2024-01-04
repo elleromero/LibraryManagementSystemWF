@@ -55,6 +55,8 @@
             this.nextBtn = new System.Windows.Forms.Button();
             this.prevBtn = new System.Windows.Forms.Button();
             this.pageLbl = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -409,12 +411,39 @@
             this.pageLbl.TabIndex = 45;
             this.pageLbl.Text = "1 | 1";
             // 
+            // btnSearch
+            // 
+            this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Location = new System.Drawing.Point(460, 178);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(29, 29);
+            this.btnSearch.TabIndex = 54;
+            this.btnSearch.Text = "🔍";
+            this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtSearch.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.txtSearch.Location = new System.Drawing.Point(172, 178);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search header";
+            this.txtSearch.Size = new System.Drawing.Size(282, 29);
+            this.txtSearch.TabIndex = 53;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
+            // 
             // AnnouncementMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(980, 556);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.nextBtn);
             this.Controls.Add(this.prevBtn);
             this.Controls.Add(this.label1);
@@ -474,5 +503,7 @@
         private Button nextBtn;
         private Button prevBtn;
         private Label pageLbl;
+        private Button btnSearch;
+        private TextBox txtSearch;
     }
 }

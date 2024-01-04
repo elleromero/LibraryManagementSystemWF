@@ -399,9 +399,74 @@ namespace LibraryManagementSystemWF.dao
 
         }
 
-        public Task<ReturnResultArr<Announcement>> GetSearchResults(string searchText, int page)
+        public async Task<ReturnResultArr<Announcement>> GetSearchResults(string searchText, int page)
         {
-            throw new NotImplementedException();
+            ReturnResultArr<Announcement> returnResult = new()
+            {
+                Results = new List<Announcement>(),
+                IsSuccess = false,
+                rowCount = 0
+            };
+
+            // get authenticated role
+            User? user = AuthService.getSignedUser();
+
+            if (user == null) return returnResult;
+
+            string query = $"SELECT COUNT(*) as row_count FROM announcement_roles WHERE role_id = {user.Role.ID}; " +
+                "SELECT *, " +
+                "STUFF((SELECT ' ' + r.name " +
+                "FROM roles r " +
+                "INNER JOIN announcement_roles ar ON ar.role_id = r.role_id " +
+                "WHERE ar.announcement_id = a.announcement_id " +
+                "FOR XML PATH('')), 1, 1, '') AS visible_roles " +
+                "FROM announcements a " +
+                "INNER JOIN announcement_roles ar ON a.announcement_id = ar.announcement_id " +
+                "INNER JOIN users u ON u.user_id = a.user_id " +
+                "INNER JOIN members m ON m.member_id = u.member_id " +
+                "INNER JOIN roles r ON r.role_id = u.role_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
+                $"WHERE a.announcement_due > '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}' " +
+                $"AND ar.role_id = {user.Role.ID} " +
+                $"AND a.announcement_header LIKE '%{searchText}%' " +
+                $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
+
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // Add row count
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
+
+                    // Fill data
+                    if (await reader.NextResultAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            Announcement? announcement = Fill(reader);
+
+                            if (announcement != null) returnResult.Results.Add(announcement);
+                        }
+                    }
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
         }
     }
 }
