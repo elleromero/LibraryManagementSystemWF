@@ -194,7 +194,7 @@ namespace LibraryManagementSystemWF.dao
 
             // remove genre
             string query = $"DELETE FROM genres WHERE genre_id = ${id}; " +
-                $"UPDATE books SET genre_id = NULL WHERE genre_id = ${id};";
+                $"UPDATE book_metadata SET genre_id = NULL WHERE genre_id = ${id};";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

@@ -211,6 +211,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             }
             else
             {
+                Console.WriteLine(deleteResult.Errors.Count);
                 this.loader.StopLoading();
                 DialogBuilder.Show(deleteResult.Errors, "Remove Genre", MessageBoxIcon.Hand);
             }
