@@ -504,23 +504,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void DisableButtons()
         {
-            this.ResetButtons();
-
             if (usersGridList.SelectedRows.Count > 0)
             {
                 button1.Enabled = false;
+                btnDeleteBooks.Enabled = true;
+                button2.Enabled = true;
             } else
             {
-                btnDeleteBooks.Enabled = false;
-                button2.Enabled = false;
+                this.ResetButtons();
             }
         }
 
         private void ResetButtons()
         {
             button1.Enabled = true;
-            btnDeleteBooks.Enabled = true;
-            button2.Enabled = true;
+            btnDeleteBooks.Enabled = false;
+            button2.Enabled = false;
         }
     }
 }

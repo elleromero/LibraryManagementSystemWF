@@ -152,7 +152,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
                 }
             }
 
-
+            this.ResetButtons();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -373,24 +373,23 @@ namespace LibraryManagementSystemWF.views.Dashboard
         }
         private void DisableButtons()
         {
-            this.ResetButtons();
-
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 button1.Enabled = false;
+                btnDelete.Enabled = true;
+                button2.Enabled = true;
             }
             else
             {
-                btnDelete.Enabled = false;
-                button2.Enabled = false;
+                this.ResetButtons();
             }
         }
 
         private void ResetButtons()
         {
             button1.Enabled = true;
-            btnDelete.Enabled = true;
-            button2.Enabled = true;
+            btnDelete.Enabled = false;
+            button2.Enabled = false;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
         private int currentPage = 1;
         private int maxPage = 1;
         private Loader loader;
+        private bool isSearch = false;
 
         private void defaultPreview()
         {
@@ -56,6 +57,20 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
             // Create an Instance of the BookController class
             ControllerAccessData<Book> books = await BookController.GetAllBooks(currentPage);
+
+            this.SetData(books);
+        }
+
+        public async void LoadSearchBooks()
+        {
+            // Create an Instance of the BookController class
+            ControllerAccessData<Book> books = await BookController.Search(txtSearch.Text, this.currentPage);
+
+            this.SetData(books);
+        }
+
+        private void SetData(ControllerAccessData<Book> books)
+        {
 
             if (books.IsSuccess)
             {
@@ -87,7 +102,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                         );
 
                 }
-
             }
             else
             {
@@ -157,6 +171,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             LoadSources();
 
             defaultPreview();
+
+            this.DisableButtons();
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -317,7 +333,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (dataGridView1.SelectedRows.Count <= 0)
+            {
+                this.clearBtn_Click(sender, e);
+            }
+            else if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
@@ -345,6 +365,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 }
                 else coverImg.Image = null;
             }
+
+            this.DisableButtons();
         }
 
         private void Clear()
@@ -367,6 +389,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             numCopies.Minimum = 1;
 
             defaultPreview();
+
+            this.ResetButtons();
         }
 
         private void clearBtn_Click(object sender, EventArgs e)
@@ -445,7 +469,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 currentPage--;
                 this.loader = new(this);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -456,7 +480,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 currentPage++;
                 this.loader = new(this);
                 this.loader.StartLoading();
-                LoadBooks();
+                if (this.isSearch) LoadSearchBooks(); else LoadBooks();
             }
         }
 
@@ -466,6 +490,63 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             {
                 e.Handled = true;
             }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = true;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.currentPage = 1;
+                this.LoadSearchBooks();
+            }
+        }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = false;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.currentPage = 1;
+                LoadBooks();
+            }
+        }
+
+        private void DisableButtons()
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                this.ToggleFields(false);
+
+                button1.Enabled = false;
+                btnDeleteBooks.Enabled = true;
+                button2.Enabled = true;
+            }
+            else
+            {
+                this.ResetButtons();
+            }
+        }
+
+        private void ResetButtons()
+        {
+            this.ToggleFields(true);
+
+            button1.Enabled = true;
+            btnDeleteBooks.Enabled = false;
+            button2.Enabled = false;
+        }
+
+        private void ToggleFields(bool isShow)
+        {
+            label16.Visible = isShow;
+            numPrice.Visible = isShow;
+            label15.Visible = isShow;
+            cmbSource.Visible = isShow;
         }
     }
 }
