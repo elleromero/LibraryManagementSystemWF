@@ -15,59 +15,59 @@ using System.Windows.Forms;
 
 namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
 {
-    public partial class CtrlGenre : UserControl
+    public partial class CtrlProgram : UserControl
     {
-        private List<Genre> genresList = new List<Genre>();
+        private List<models.Program> progsList = new List<models.Program>();
         private int maxPage = 1;
         private int currentPage = 1;
         private Form form;
         private Loader loader;
 
-        public void SelectGenre(Genre genre)
+        public void SelectProgram(models.Program program)
         {
-            txtID.Text = genre.ID.ToString();
-            txtName.Text = genre.Name;
-            txtDescription.Text = genre.Description;
+            txtID.Text = program.ID.ToString();
+            txtName.Text = program.Name;
+            txtDescription.Text = program.Description;
 
-            foreach (GenreContainer genreContainer in flowLayoutPanel1.Controls)
+            foreach (ProgramContainer progContainer in flowLayoutPanel1.Controls)
             {
-                genreContainer.Clear();
+                progContainer.Clear();
             }
         }
 
-        public async void LoadGenres(int page)
+        public async void LoadPrograms(int page)
         {
-            // Creating an Instance of the GenreController class
-            ControllerAccessData<Genre> genres = await GenreController.GetAllGenres(page);
+            // Creating an Instance of the ProgramController class
+            ControllerAccessData<models.Program> res = await ProgramController.GetAllPrograms(page);
 
-            if (genres.IsSuccess)
+            if (res.IsSuccess)
             {
                 this.loader.StopLoading();
 
-                genresList = genres.Results;
+                progsList = res.Results;
 
-                if (genresList.Count == 0)
+                if (progsList.Count == 0)
                 {
                     Label lbl = new();
-                    lbl.Text = "No genres found";
-                    DialogBuilder.Show("No genres found", "Fetch Genres", MessageBoxIcon.Information);
+                    lbl.Text = "No programs found";
+                    DialogBuilder.Show("No programs found", "Fetch Programs", MessageBoxIcon.Information);
                 }
 
-                this.maxPage = Math.Max(1, (int)Math.Ceiling((double)genres.rowCount / 10));
+                this.maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
                 pageLbl.Text = $"{page} | {maxPage}";
 
-                // Load genres on flow layout panel
+                // Load programs on flow layout panel
                 flowLayoutPanel1.Controls.Clear();
 
-                foreach (Genre genre in genresList)
+                foreach (models.Program prog in progsList)
                 {
-                    flowLayoutPanel1.Controls.Add(new GenreContainer(genre, this));
+                    flowLayoutPanel1.Controls.Add(new ProgramContainer(prog, this));
                 }
             }
             else this.loader.StopLoading();
         }
 
-        public CtrlGenre(Form form)
+        public CtrlProgram(Form form)
         {
             InitializeComponent();
 
@@ -76,7 +76,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             this.loader = new(this.form);
             this.loader.StartLoading();
 
-            LoadGenres(currentPage);
+            LoadPrograms(currentPage);
 
         }
 
@@ -86,9 +86,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             txtName.Text = "";
             txtDescription.Text = "";
 
-            foreach (GenreContainer genreContainer in flowLayoutPanel1.Controls)
+            foreach (ProgramContainer progContainer in flowLayoutPanel1.Controls)
             {
-                genreContainer.Clear();
+                progContainer.Clear();
             }
         }
 
@@ -100,67 +100,67 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
             this.loader = new(this.form);
             this.loader.StartLoading();
 
-            ControllerModifyData<Genre> result = await GenreController.CreateGenre(name, description);
+            ControllerModifyData<models.Program> result = await ProgramController.CreateProgram(name, description);
 
             if (result.IsSuccess && result.Result != null)
             {
                 this.loader.StopLoading();
 
-                Genre genre = result.Result;
-                genresList.Add(genre);
+                models.Program prog = result.Result;
+                progsList.Add(prog);
 
                 this.currentPage = 1;
-                LoadGenres(currentPage);
+                LoadPrograms(currentPage);
 
                 // Clear input fields
                 this.Clear();
 
-                DialogBuilder.Show("Genre successfully created", "Create Genre", MessageBoxIcon.Information);
+                DialogBuilder.Show("Program successfully created", "Create Program", MessageBoxIcon.Information);
             }
             else
             {
                 this.loader.StopLoading();
-                DialogBuilder.Show(result.Errors, "Create Genre Failed", MessageBoxIcon.Hand);
+                DialogBuilder.Show(result.Errors, "Create Program Failed", MessageBoxIcon.Hand);
             }
         }
 
-        private async void btnUpdateGenre_Click(object sender, EventArgs e)
+        private async void btnUpdateProgram_Click(object sender, EventArgs e)
         {
             // Retrieve the updated values from the input fields
             string name = txtName.Text;
             string description = txtDescription.Text;
-            int genreId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
+            int progId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
 
             this.loader = new(this.form);
             this.loader.StartLoading();
 
-            // Update the genre
-            ControllerModifyData<Genre> result = await GenreController.UpdateGenre(genreId, name, description);
+            // Update the program
+            ControllerModifyData<models.Program> result = await ProgramController.UpdateProgram(progId, name, description);
 
             if (result.IsSuccess && result.Result != null)
             {
                 this.loader.StopLoading();
 
-                // Update the genresList with the modified genre
-                Genre updatedGenre = result.Result;
-                int index = genresList.FindIndex(g => g.ID == genreId);
+                // Update the progsList with the modified program
+                models.Program updatedProg = result.Result;
+                int index = progsList.FindIndex(g => g.ID == progId);
                 if (index >= 0)
                 {
-                    genresList[index] = updatedGenre;
+                    progsList[index] = updatedProg;
                 }
 
                 this.currentPage = 1;
-                LoadGenres(currentPage);
+                LoadPrograms(currentPage);
 
                 // Clear input fields
                 this.Clear();
 
-                DialogBuilder.Show("Genre successfully updated", "Update Genre", MessageBoxIcon.Information);
+                DialogBuilder.Show("Program successfully updated", "Update Program", MessageBoxIcon.Information);
             }
             else
             {
                 this.loader.StopLoading();
-                DialogBuilder.Show(result.Errors, "Update Genre Failed", MessageBoxIcon.Hand);
+                DialogBuilder.Show(result.Errors, "Update Program Failed", MessageBoxIcon.Hand);
             }
 
         }
@@ -172,7 +172,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 currentPage++;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadGenres(currentPage);
+                LoadPrograms(currentPage);
             }
         }
 
@@ -183,19 +183,19 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 currentPage--;
                 this.loader = new(this.form);
                 this.loader.StartLoading();
-                LoadGenres(currentPage);
+                LoadPrograms(currentPage);
             }
         }
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            int genreId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
+            int progId = string.IsNullOrWhiteSpace(txtID.Text) ? -1 : Convert.ToInt32(txtID.Text);
 
             this.loader = new(this.form);
             this.loader.StartLoading();
 
-            // Call the appropriate method from your controller to delete the genre by its ID
-            ControllerActionData deleteResult = await GenreController.RemoveById(genreId);
+            // Call the appropriate method from your controller to delete the program by its ID
+            ControllerActionData deleteResult = await ProgramController.RemoveById(progId);
 
             if (deleteResult.IsSuccess)
             {
@@ -203,17 +203,16 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
                 this.loader.StopLoading();
 
                 this.currentPage = 1;
-                LoadGenres(currentPage);
+                LoadPrograms(currentPage);
 
                 this.Clear();
 
-                DialogBuilder.Show("Genre successfully removed", "Remove Genre", MessageBoxIcon.Information);
+                DialogBuilder.Show("Program successfully removed", "Remove Program", MessageBoxIcon.Information);
             }
             else
             {
-                Console.WriteLine(deleteResult.Errors.Count);
                 this.loader.StopLoading();
-                DialogBuilder.Show(deleteResult.Errors, "Remove Genre", MessageBoxIcon.Hand);
+                DialogBuilder.Show(deleteResult.Errors, "Remove Program", MessageBoxIcon.Hand);
             }
         }
 
@@ -224,4 +223,3 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl
         }
     }
 }
-

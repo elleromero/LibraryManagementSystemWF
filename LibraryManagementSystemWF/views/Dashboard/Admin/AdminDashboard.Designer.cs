@@ -46,6 +46,7 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.searchBtn = new System.Windows.Forms.Button();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.topbar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -264,12 +265,25 @@
             this.searchBtn.UseVisualStyleBackColor = false;
             this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel3.Location = new System.Drawing.Point(1072, 575);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(98, 15);
+            this.linkLabel3.TabIndex = 26;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "View Activity Log";
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
+            // 
             // AdminDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1182, 629);
+            this.Controls.Add(this.linkLabel3);
             this.Controls.Add(this.searchBtn);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.linkLabel1);
@@ -316,5 +330,6 @@
         private LinkLabel linkLabel1;
         private TextBox txtSearch;
         private Button searchBtn;
+        private LinkLabel linkLabel3;
     }
 }

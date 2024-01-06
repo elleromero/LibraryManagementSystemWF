@@ -86,6 +86,9 @@ namespace LibraryManagementSystemWF.controllers
                     // clear password field
                     result.Result.PasswordHash = "";
                     returnData.Result = result.Result;
+
+                    // log history
+                    ActivityLogger.Log($"{username.Trim()} registered", result.Result.ID, ActivityTypeEnum.AUTHENTICATION);
                 }
             }
 
@@ -120,6 +123,9 @@ namespace LibraryManagementSystemWF.controllers
                     AuthService.setSignedUser(result.Result);
                     returnData.Result = result.Result;
                     isSuccess = true;
+
+                    // log history
+                    ActivityLogger.Log($"{result.Result.Username.Trim()} signed in", result.Result.ID, ActivityTypeEnum.AUTHENTICATION);
                 }
                 else errors["password"] = "Incorrect password";
             } else errors["username"] = "Username did not exist";
@@ -131,7 +137,14 @@ namespace LibraryManagementSystemWF.controllers
 
         public static ControllerActionData LogOut() {
             ControllerActionData returnData = new();
-            
+
+            User? signedUser = AuthService.getSignedUser();
+            if (signedUser != null)
+            {
+                // log history
+                ActivityLogger.Log($"{signedUser.Username} logged out", signedUser.ID, ActivityTypeEnum.AUTHENTICATION);
+            }
+
             AuthService.setSignedUser(default);
             returnData.IsSuccess = true;
 

@@ -11,7 +11,7 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class ActivityLogController : BaseController
     {
-        public static async Task<ControllerAccessData<ActivityLog>> GetAllUsers(int page = 1)
+        public static async Task<ControllerAccessData<ActivityLog>> GetAllUsers(int page = 1, string searchText = "", ActivityTypeEnum? ate = null)
         {
             ControllerAccessData<ActivityLog> returnData = new()
             {
@@ -21,8 +21,8 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
 
-            // is not admin or not librarian
-            if (!await AuthGuard.HavePermission("ADMINISTRATOR") || !await AuthGuard.HavePermission("LIBRARIAN"))
+            // is not admin
+            if (!await AuthGuard.HavePermission("ADMINISTRATOR"))
             {
                 errors["permission"] = "Forbidden";
                 returnData.Errors = errors;
@@ -36,7 +36,44 @@ namespace LibraryManagementSystemWF.controllers
             if (errors.Count == 0)
             {
                 ActivityLogDAO activityLogDao = new();
-                ReturnResultArr<ActivityLog> result = await activityLogDao.GetAll(page);
+                ReturnResultArr<ActivityLog> result = await activityLogDao.GetAll(page, searchText, ate);
+
+                isSuccess = result.IsSuccess;
+                returnData.Results = result.Results;
+                returnData.rowCount = result.rowCount;
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
+
+        public static async Task<ControllerAccessData<ActivityLog>> GetAllForLibrarian(int page = 1)
+        {
+            ControllerAccessData<ActivityLog> returnData = new()
+            {
+                Results = new List<ActivityLog>(),
+                rowCount = 0
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors["permission"] = "Forbidden";
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
+            if (page <= 0) errors["page"] = "Invalid page";
+
+            if (errors.Count == 0)
+            {
+                ActivityLogDAO activityLogDao = new();
+                ReturnResultArr<ActivityLog> result = await activityLogDao.GetAllWithPermission(RoleEnum.LIBRARIAN, page);
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;

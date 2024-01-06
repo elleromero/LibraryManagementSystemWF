@@ -70,6 +70,18 @@ namespace LibraryManagementSystemWF.controllers
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
+
+                if (isSuccess)
+                {
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null && result.Result != null)
+                    {
+                        string bookTitle = result.Result.Copy.Book.BookMetadata.Title;
+                        string copyId = result.Result.Copy.ID.ToString();
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} borrowed '{bookTitle}' [COPY ID: {copyId}]", signedUser.ID, ActivityTypeEnum.BOOK_TRANSACT);
+                    }
+                }
             }
 
             returnData.Errors = errors;
@@ -120,6 +132,15 @@ namespace LibraryManagementSystemWF.controllers
                 if (isSuccess && result.Result != null)
                 {
                     returnData.Result = result.Result;
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        string bookTitle = result.Result.Copy.Book.BookMetadata.Title;
+                        string copyId = result.Result.Copy.ID.ToString();
+
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} returned '{bookTitle}' [COPY ID: {copyId}]", signedUser.ID, ActivityTypeEnum.BOOK_TRANSACT);
+                    }
                 }
             }
 
@@ -162,6 +183,13 @@ namespace LibraryManagementSystemWF.controllers
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;
                 returnData.rowCount = result.rowCount;
+
+                User? signedUser = AuthService.getSignedUser();
+                if (signedUser != null)
+                {
+                    // log history
+                    ActivityLogger.Log($"{signedUser.Username} paid {totalAmount} for the overdue books", signedUser.ID, ActivityTypeEnum.BOOK_TRANSACT);
+                }
             }
 
             returnData.Errors = errors;

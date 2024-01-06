@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
@@ -88,6 +89,17 @@ namespace LibraryManagementSystemWF.controllers
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
+
+                if (result.IsSuccess)
+                {
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} created book '{title}'", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
+                    }
+
+                }
             }
 
             returnData.Errors = errors;
@@ -182,6 +194,13 @@ namespace LibraryManagementSystemWF.controllers
                 if (isSuccess && result.Result != null)
                 {
                     returnData.Result = result.Result;
+
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} updated book '{title}'", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
+                    }
                 }
             }
 
@@ -268,6 +287,16 @@ namespace LibraryManagementSystemWF.controllers
             {
                 BookDAO bookDao = new();
                 returnResult.IsSuccess = await bookDao.Remove(id);
+
+                if (returnResult.IsSuccess)
+                {
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} removed a book", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
+                    }
+                }
             }
 
             return returnResult;

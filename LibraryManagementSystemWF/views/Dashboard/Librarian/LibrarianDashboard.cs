@@ -68,7 +68,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             button2.BackColor = Color.White;
             button3.BackColor = Color.White;
             button4.BackColor = Color.White;
-            button5.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }
@@ -112,15 +111,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             navLbl.Text = "Genres";
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            this.ClearAndHide();
-            button5.BackColor = SystemColors.Control;
-
-            mainPanel.Controls.Add(new CtrlTransactions(this));
-            navLbl.Text = "Loans";
-        }
-
         private void button6_Click(object sender, EventArgs e)
         {
             this.ClearAndHide();
@@ -137,6 +127,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             mainPanel.Controls.Add(new CtrlLibrarianOverdue());
             navLbl.Text = "Overdue Returns";
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button5.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlProgram(this));
+            navLbl.Text = "Programs";
         }
     }
 }

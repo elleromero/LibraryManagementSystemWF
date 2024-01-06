@@ -74,7 +74,7 @@ CREATE TABLE genres (
 
 CREATE TABLE book_metadata (
     metadata_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	genre_id INT NOT NULL,
+	genre_id INT NULL,
 	title VARCHAR(100) NOT NULL,
 	sypnosis VARCHAR(1500) NOT NULL,
 	author VARCHAR(45) NOT NULL,
@@ -128,8 +128,10 @@ CREATE TABLE activities (
 	activity_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	activity_log VARCHAR(1000) NOT NULL,
 	activity_type_id INT,
+	user_id UNIQUEIDENTIFIER NOT NULL,
 	timestamp DATETIME2 NOT NULL DEFAULT(GETDATE()),
 	FOREIGN KEY (activity_type_id) REFERENCES activity_type(activity_type_id),
+	FOREIGN KEY (user_id) REFERENCES users(user_id),
 )
 
 /* INSERTS DATA */

@@ -12,9 +12,40 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class ProgramDAO : IDAO<models.Program>
     {
-        public Task<ReturnResult<models.Program>> Create(models.Program model)
+        public async Task<ReturnResult<models.Program>> Create(models.Program model)
         {
-            throw new NotImplementedException();
+            ReturnResult<models.Program> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
+
+            string query = "INSERT INTO programs (program_name, program_description) " +
+                $"VALUES ('{model.Name}', '{model.Description}'); " +
+                "SELECT * FROM programs WHERE program_id = SCOPE_IDENTITY();";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.Result = Fill(reader);
+                        returnResult.IsSuccess = returnResult.Result != default(models.Program);
+                    }
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
         }
 
         public models.Program? Fill(SqlDataReader reader)
@@ -76,14 +107,86 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
-        public Task<ReturnResultArr<models.Program>> GetAll(int page)
+        public async Task<ReturnResultArr<models.Program>> GetAll(int page)
         {
-            throw new NotImplementedException();
+            ReturnResultArr<models.Program> returnResult = new()
+            {
+                Results = new List<models.Program>(),
+                IsSuccess = false,
+                rowCount = 1
+            };
+
+            string query = "SELECT COUNT(*) as row_count FROM programs; " +
+                "SELECT * FROM programs " +
+                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // add row count
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
+
+                    // fill data
+                    await reader.NextResultAsync();
+                    while (reader.Read())
+                    {
+                        models.Program? program = this.Fill(reader);
+
+                        if (program != null) returnResult.Results.Add(program);
+                    }
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
         }
 
-        public Task<ReturnResult<models.Program>> GetById(string id)
+        public async Task<ReturnResult<models.Program>> GetById(string id)
         {
-            throw new NotImplementedException();
+            ReturnResult<models.Program> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
+
+            string query = $"SELECT * FROM programs WHERE program_id = {id};";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.Result = Fill(reader);
+                        returnResult.IsSuccess = returnResult.Result != default(models.Program);
+                    }
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
         }
 
         public Task<ReturnResultArr<models.Program>> GetSearchResults(string searchText, int page)
@@ -91,14 +194,66 @@ namespace LibraryManagementSystemWF.dao
             throw new NotImplementedException();
         }
 
-        public Task<bool> Remove(string id)
+        public async Task<bool> Remove(string id)
         {
-            throw new NotImplementedException();
+            bool isRemoved = false;
+
+            // remove program
+            string query = $"DELETE FROM programs WHERE program_id = ${id}; " +
+                $"UPDATE members SET program_id = NULL WHERE program_id = ${id};";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    await command.ExecuteNonQueryAsync();
+
+                    isRemoved = true;
+                }
+                catch { return; }
+            });
+
+            return isRemoved;
         }
 
-        public Task<ReturnResult<models.Program>> Update(models.Program model)
+        public async Task<ReturnResult<models.Program>> Update(models.Program model)
         {
-            throw new NotImplementedException();
+            ReturnResult<models.Program> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
+
+            string query = "UPDATE programs SET " +
+                $"program_name = '{model.Name}', " +
+                $"program_description = '{model.Description}' WHERE program_id = {model.ID}; " +
+                $"SELECT * FROM programs WHERE program_id = {model.ID};";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (reader.Read())
+                    {
+                        returnResult.Result = Fill(reader);
+                        returnResult.IsSuccess = returnResult.Result != default(models.Program);
+                    }
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
         }
     }
 }

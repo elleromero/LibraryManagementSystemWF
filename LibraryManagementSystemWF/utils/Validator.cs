@@ -382,7 +382,41 @@ namespace LibraryManagementSystemWF.utils
             });
 
             return isUnique;
-        } 
+        }
+
+        public static async Task<bool> IsProgramNameUnique(string programName, string programId = "")
+        {
+            // Check if username is unique
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(programId) ?
+                    $"SELECT program_name FROM programs WHERE program_name = '{programName}'" :
+                    $"SELECT program_name FROM programs WHERE program_name = '{programName}' AND program_id != {programId}";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("program_name"));
+
+                        if (name.Equals(programName)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
 
         public static bool IsPassword(string password)
         {
