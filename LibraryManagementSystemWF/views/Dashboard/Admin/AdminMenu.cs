@@ -35,7 +35,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             usersGridList.Columns.Add("ID", "ID");
             usersGridList.Columns.Add("Username", "Username");
             usersGridList.Columns.Add("Role", "Role");
-            usersGridList.Columns.Add("School Number", "School Number");
             usersGridList.Columns.Add("First Name", "First Name");
             usersGridList.Columns.Add("Last Name", "Last Name");
             usersGridList.Columns.Add("Address", "Address");
@@ -95,7 +94,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                         user.ID,
                         user.Username,
                         user.Role.Name,
-                        user.Member.SchoolNumber,
                         user.Member.FirstName,
                         user.Member.LastName,
                         user.Member.Address,
@@ -141,7 +139,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             {
                 Role selectedRole = (Role)cmbRole.SelectedItem;
                 int selectedRoleId = selectedRole.ID;
-                string SchoolNumber = SchoolNum.Text;
                 string Username = textUsername.Text;
                 string Password = textPassword.Text;
                 string FirstName = textFirstName.Text;
@@ -159,7 +156,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Password,
                     FirstName,
                     LastName,
-                    SchoolNumber, 
                     Address,
                     Phone,
                     selectedRoleId,
@@ -194,7 +190,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private async void button2_Click(object sender, EventArgs e)
         {
             string UserId = textUserID.Text;
-            string SchoolNumber = SchoolNum.Text;
             string Username = textUsername.Text;
             string Password = textPassword.Text;
             string FirstName = textFirstName.Text;
@@ -218,7 +213,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Password,
                     FirstName,
                     LastName,
-                    SchoolNumber,
                     Address,
                     Phone,
                     this.adminPassword,
@@ -263,7 +257,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 // Set the values of the text boxes to the values in the clicked row
                 textUserID.Text = row.Cells["ID"].Value.ToString();
                 textUsername.Text = row.Cells["Username"].Value.ToString();
-                SchoolNum.Text = row.Cells["School Number"].Value.ToString();
                 cmbRole.Text = row.Cells["Role"].Value.ToString();
                 textFirstName.Text = row.Cells["First Name"].Value.ToString();
                 textLastName.Text = row.Cells["Last Name"].Value.ToString();
@@ -379,7 +372,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             cmbRole.SelectedIndex = 0;
             textUserID.Text = "";
-            SchoolNum.Text = "";
             textUsername.Text = "";
             textPassword.Text = "";
             textFirstName.Text = "";

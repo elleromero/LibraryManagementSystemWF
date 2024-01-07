@@ -57,7 +57,6 @@ namespace LibraryManagementSystemWF.dao
                 "INNER JOIN users u ON u.user_id = a.user_id " +
                 "INNER JOIN members m ON m.member_id = u.member_id " +
                 "INNER JOIN roles r ON r.role_id = u.role_id " +
-                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 "WHERE a.announcement_id = @announcement_id;";
             string query = $"{declareQuery} {insertQuery} {insertAncmtRolesQuery} {selectQuery}";
 
@@ -79,7 +78,7 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = returnResult.Result != null;
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -110,17 +109,9 @@ namespace LibraryManagementSystemWF.dao
                     ID = reader.GetGuid(reader.GetOrdinal("member_id")),
                     FirstName = reader.GetString(reader.GetOrdinal("first_name")),
                     LastName = reader.GetString(reader.GetOrdinal("last_name")),
-                    CourseYear = reader.IsDBNull(reader.GetOrdinal("course_year")) ? null : reader.GetInt32(reader.GetOrdinal("course_year")),
-                    SchoolNumber = reader.GetString(reader.GetOrdinal("school_no")),
                     Phone = reader.GetString(reader.GetOrdinal("phone")),
                     Email = reader.GetString(reader.GetOrdinal("email")),
                     Address = reader.GetString(reader.GetOrdinal("address")),
-                    Program = new models.Program
-                    {
-                        ID = reader.IsDBNull(reader.GetOrdinal("program_id")) ? null : reader.GetInt32(reader.GetOrdinal("program_id")),
-                        Name = reader.IsDBNull(reader.GetOrdinal("program_name")) ? string.Empty : reader.GetString(reader.GetOrdinal("program_name")),
-                        Description = reader.IsDBNull(reader.GetOrdinal("program_description")) ? string.Empty : reader.GetString(reader.GetOrdinal("program_description"))
-                    }
                 }
             };
 
@@ -187,7 +178,6 @@ namespace LibraryManagementSystemWF.dao
                 "INNER JOIN users u ON u.user_id = a.user_id " +
                 "INNER JOIN members m ON m.member_id = u.member_id " +
                 "INNER JOIN roles r ON r.role_id = u.role_id " +
-                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 $"WHERE a.announcement_due > '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}' " +
                 $"AND ar.role_id = {user.Role.ID} " +
                 $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
@@ -255,7 +245,6 @@ namespace LibraryManagementSystemWF.dao
                            "INNER JOIN users u ON u.user_id = a.user_id " +
                            "INNER JOIN members m ON m.member_id = u.member_id " +
                            "INNER JOIN roles r ON r.role_id = u.role_id " +
-                           "LEFT JOIN programs p ON p.program_id = m.program_id " +
                            $"WHERE ar.role_id = {user.Role.ID} " +
                            $"AND u.user_id = '{user.ID}' " +
                            $"ORDER BY is_priority DESC, (SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
@@ -321,7 +310,7 @@ namespace LibraryManagementSystemWF.dao
 
                     isRemoved = true;
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
             });
 
             return isRemoved;
@@ -370,7 +359,6 @@ namespace LibraryManagementSystemWF.dao
                 "INNER JOIN users u ON u.user_id = a.user_id " +
                 "INNER JOIN members m ON m.member_id = u.member_id " +
                 "INNER JOIN roles r ON r.role_id = u.role_id " +
-                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 $"WHERE a.announcement_id = '{model.ID}';";
             string query = $"{updateQuery} {deleteQuery} {selectQuery}";
 

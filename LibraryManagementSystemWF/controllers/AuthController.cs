@@ -20,13 +20,10 @@ namespace LibraryManagementSystemWF.controllers
             string password,
             string firstName,
             string lastName,
-            string schoolNumber,
             string address,
             string phone,
             string email = "",
-            string profilePicture = "",
-            int? programId = null,
-            int? courseYear = null
+            string profilePicture = ""
             ) {
             ControllerModifyData<User> returnData = new()
             {
@@ -39,10 +36,8 @@ namespace LibraryManagementSystemWF.controllers
             if (!await Validator.IsPhoneUnique(phone)) errors["phone"] = "Phone was already registered";
             if (!await Validator.IsEmailUnique(email)) errors["email"] = "Email was already registered";
             if (!await Validator.IsUsernameUnique(username)) errors["username"] = "Username already exists";
-            if (!await Validator.IsSchoolNumUnique(schoolNumber)) errors["school_no"] = "School Number is already exist";
             if (!Validator.IsName(firstName)) errors["first_name"] = "Name is invalid";
             if (!Validator.IsName(lastName)) errors["last_name"] = "Name is invalid";
-            if (!Validator.IsSchoolNum(schoolNumber)) errors["school_no"] = "School Number should atleast 5 characters and contain only numbers";
             if (string.IsNullOrWhiteSpace(address)) errors["address"] = "Address is required";
             if (string.IsNullOrWhiteSpace(phone)) errors["phone"] = "Phone is required";
             if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmail(email)) errors["email"] = "Email is invalid";
@@ -64,15 +59,9 @@ namespace LibraryManagementSystemWF.controllers
                     {
                         FirstName = textInfo.ToTitleCase(firstName.Trim()),
                         LastName = textInfo.ToTitleCase(lastName.Trim()),
-                        CourseYear = courseYear,
-                        SchoolNumber = schoolNumber.Trim(),
                         Address = address.Trim(),
                         Phone = phone.Trim(),
-                        Email = email.Trim(),
-                        Program = new models.Program
-                        {
-                            ID = programId
-                        }
+                        Email = email.Trim()
                     },
                     Role = new Role
                     {

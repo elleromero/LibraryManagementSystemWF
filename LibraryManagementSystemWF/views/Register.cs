@@ -33,7 +33,6 @@ namespace LibraryManagementSystemWF.views
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            string SchoolNumber = schoolNum.Text.Trim();
             string reguser = txtRegUser.Text.Trim();
             string regpass = txtRegPass.Text.Trim();
             string firstname = txtFirstName.Text.Trim();
@@ -48,7 +47,7 @@ namespace LibraryManagementSystemWF.views
             loader.StartLoading();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
-            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, SchoolNumber, address, phone, email, profile);
+            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, address, phone, email, profile);
 
             if (res.IsSuccess)
             {

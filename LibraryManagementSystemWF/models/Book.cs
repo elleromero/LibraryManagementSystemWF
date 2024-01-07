@@ -9,7 +9,15 @@ namespace LibraryManagementSystemWF.models
     public class Book
     {
         public Guid ID { get; set; }
-        public BookMetadata BookMetadata { get; set; } = new BookMetadata();
+        public Genre Genre { get; set; } = new Genre();
+        public string Title { get; set; } = string.Empty;
+        public string Sypnosis { get; set; } = string.Empty;
+        public string Author { get; set; } = string.Empty;
+        public string Cover { get; set; } = string.Empty;
+        public string Publisher { get; set; } = string.Empty;
+        public DateTime PublicationDate { get; set; }
+        public string ISBN { get; set; } = string.Empty;
+        public DateTime AddedOn { get; set; }
         public int AvailableCopies { get; set; }
     }
 }
