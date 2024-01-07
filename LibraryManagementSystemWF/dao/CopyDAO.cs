@@ -12,7 +12,7 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class CopyDAO : IDAO<Copy>
     {
-        public async Task<ReturnResult<Copy>> CreateMany(string bookId, int copies)
+        public async Task<ReturnResult<Copy>> CreateMany(string bookId, int copies, SourceEnum source, decimal price = 0)
         {
             ReturnResult<Copy> returnResult = new()
             {
@@ -25,14 +25,15 @@ namespace LibraryManagementSystemWF.dao
             string loopQuery = $"WHILE (@counter <= {copies}) " +
                 "BEGIN " +
                 "SET @copy_id = NEWID(); " +
-                $"INSERT INTO copies (copy_id, book_id, status_id) VALUES (@copy_id, '{bookId}', 1); " +
+                $"INSERT INTO copies (copy_id, book_id, price, source_id, status_id) VALUES (@copy_id, '{bookId}', {price}, {(int)source}, 1); " +
                 "SET @counter = @counter + 1; " +
                 "END;";
             string selectQuery = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
                 "g.name AS genre_name, g.description AS genre_description, " +
                 "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                 "JOIN books b ON b.book_id = c.book_id " +
-                "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON s.status_id = c.status_id " +
                 "WHERE copy_id = @copy_id;";
             string query = $"{declareQuery} {loopQuery} {selectQuery}";
@@ -82,16 +83,22 @@ namespace LibraryManagementSystemWF.dao
             Book? book = new Book
             {
                 ID = reader.GetGuid(reader.GetOrdinal("book_id")),
-                Title = reader.GetString(reader.GetOrdinal("title")),
-                Sypnosis = reader.GetString(reader.GetOrdinal("sypnosis")),
-                Author = reader.GetString(reader.GetOrdinal("author")),
-                Cover = reader.GetString(reader.GetOrdinal("cover")),
-                Publisher = reader.GetString(reader.GetOrdinal("publisher")),
-                PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
-                ISBN = reader.GetString(reader.GetOrdinal("isbn")),
-                AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
-                Genre = genre,
-                AvailableCopies = reader.GetInt32(reader.GetOrdinal("available_copies"))
+                AvailableCopies = reader.GetInt32(reader.GetOrdinal("available_copies")),
+                BookMetadata = new BookMetadata
+                {
+                    Title = reader.GetString(reader.GetOrdinal("title")),
+                    Sypnosis = reader.GetString(reader.GetOrdinal("sypnosis")),
+                    Author = reader.GetString(reader.GetOrdinal("author")),
+                    Cover = reader.GetString(reader.GetOrdinal("cover")),
+                    Publisher = reader.GetString(reader.GetOrdinal("publisher")),
+                    PublicationDate = reader.GetDateTime(reader.GetOrdinal("publication_date")),
+                    ISBN = reader.GetString(reader.GetOrdinal("isbn")),
+                    AddedOn = reader.GetDateTime(reader.GetOrdinal("added_on")),
+                    Genre = genre,
+                    Copyright = reader.GetString(reader.GetOrdinal("copyright")),
+                    EditionStr = reader.GetString(reader.GetOrdinal("edition_str")),
+                    EditionNumber = reader.GetInt32(reader.GetOrdinal("edition_num"))
+                }
             };
 
             Status? status = new Status
@@ -125,7 +132,8 @@ namespace LibraryManagementSystemWF.dao
                            "g.name AS genre_name, g.description AS genre_description, " +
                            "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                            "JOIN books b ON b.book_id = c.book_id " +
-                           "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                           "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                           "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                            "JOIN statuses s ON s.status_id = c.status_id " +
                            $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
@@ -178,7 +186,8 @@ namespace LibraryManagementSystemWF.dao
                            "g.name AS genre_name, g.description AS genre_description," +
                            "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                            "JOIN books b ON b.book_id = c.book_id " +
-                           "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+                           "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                           "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                            "JOIN statuses s ON s.status_id = c.status_id " +
                            $"WHERE c.book_id = '{bookId}'" +
                            $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
@@ -230,7 +239,8 @@ namespace LibraryManagementSystemWF.dao
                "g.name AS genre_name, g.description AS genre_description," +
                "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
                "JOIN books b ON b.book_id = c.book_id " +
-               "LEFT JOIN genres g ON g.genre_id = b.genre_id " +
+               "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+               "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                "JOIN statuses s ON s.status_id = c.status_id " +
                $"WHERE copy_id = '{id}';";
 

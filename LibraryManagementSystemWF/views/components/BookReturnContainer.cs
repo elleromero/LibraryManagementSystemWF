@@ -23,13 +23,13 @@ namespace LibraryManagementSystemWF.views.components
             this.parentForm = parentForm;
             this.loader = new(this.parentForm);
 
-            lblTitle.Text = loan.Copy.Book.Title;
-            lblAuthor.Text = $"by {loan.Copy.Book.Author}";
-            txtDescription.Text = loan.Copy.Book.Sypnosis;
+            lblTitle.Text = loan.Copy.Book.BookMetadata.Title;
+            lblAuthor.Text = $"by {loan.Copy.Book.BookMetadata.Author}";
+            txtDescription.Text = loan.Copy.Book.BookMetadata.Sypnosis;
             lblCopyId.Text = $"Copy ID: {loan.Copy.ID}";
             lblDueDate.Text = $"Due on {loan.DateDue:MMM dd, yyyy 'at' h:mm tt}";
 
-            if (File.Exists(loan.Copy.Book.Cover)) pictureBoxCover.Image = Image.FromFile(loan.Copy.Book.Cover);
+            if (File.Exists(loan.Copy.Book.BookMetadata.Cover)) pictureBoxCover.Image = Image.FromFile(loan.Copy.Book.BookMetadata.Cover);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,7 +47,7 @@ namespace LibraryManagementSystemWF.views.components
             if (res.IsSuccess)
             {
                 this.loader.StopLoading();
-                DialogBuilder.Show($"'{loan.Copy.Book.Title}' is returned successfully.\nCopyID: {loan.Copy.ID}", "Return Book", MessageBoxIcon.Information);
+                DialogBuilder.Show($"'{loan.Copy.Book.BookMetadata.Title}' is returned successfully.\nCopyID: {loan.Copy.ID}", "Return Book", MessageBoxIcon.Information);
                 form.RefreshDataGrid();
             }
             else

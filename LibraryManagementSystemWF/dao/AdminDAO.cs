@@ -4,6 +4,7 @@ using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,15 @@ namespace LibraryManagementSystemWF.dao
             };
 
             string declareQuery = "DECLARE @member_id UNIQUEIDENTIFIER = NEWID();";
-            string memberQuery = $"INSERT INTO members (first_name, last_name, address, phone, email, member_id) " +
-                $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', '{model.Member.Address}', '{model.Member.Phone}', '{model.Member.Email}', @member_id);";
+            string memberQuery = 
+                $"INSERT INTO members " +
+                $"(first_name, last_name, course_year, school_no, " +
+                $"address, phone, email, member_id, program_id) " +
+                $"VALUES ('{model.Member.FirstName}', '{model.Member.LastName}', {(model.Member.CourseYear == null ? "NULL" : model.Member.CourseYear)}, '{model.Member.SchoolNumber}', " +
+                $"'{model.Member.Address}', '{model.Member.Phone}', '{model.Member.Email}', @member_id, {(model.Member.Program.ID == null ? "NULL" : $"'{model.Member.Program.ID}'")});";
             string userQuery = $"INSERT INTO users (member_id, role_id, username, password_hash, profile_picture) " +
                 $"VALUES (@member_id, {model.Role.ID}, '{model.Username}', '{model.PasswordHash}', '{model.ProfilePicture}');";
-            string selectQuery = "SELECT * FROM members m JOIN users u ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE u.member_id = @member_id;";
+            string selectQuery = "SELECT * FROM members m JOIN users u ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id LEFT JOIN programs p ON p.program_id = m.program_id WHERE u.member_id = @member_id;";
             string query = $"{declareQuery} {memberQuery} {userQuery} {selectQuery}";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -67,6 +72,7 @@ namespace LibraryManagementSystemWF.dao
                 "SELECT * FROM users u " +
                 "JOIN members m ON m.member_id = u.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -115,7 +121,7 @@ namespace LibraryManagementSystemWF.dao
             };
 
             string query = "SELECT * FROM users u " +
-                $"JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE u.user_id = '{id}';";
+                $"JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id LEFT JOIN programs p ON p.program_id = m.program_id WHERE u.user_id = '{id}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -187,11 +193,13 @@ namespace LibraryManagementSystemWF.dao
             string updateMemberQuery = "UPDATE members SET " +
                 $"first_name = '{model.Member.FirstName}', " +
                 $"last_name = '{model.Member.LastName}', " +
+                $"course_year = {(model.Member.CourseYear == null ? "NULL" : model.Member.CourseYear)}, " +
+                $"school_no = '{model.Member.SchoolNumber}', " +
                 $"address = '{model.Member.Address}', " +
                 $"email = '{model.Member.Email}', " +
                 $"phone = '{model.Member.Phone}' " +
                 "WHERE member_id = (SELECT member_id FROM @user as u WHERE u.member_id = members.member_id);";
-            string selectQuery = $"SELECT * FROM users u JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id WHERE user_id = '{model.ID}';";
+            string selectQuery = $"SELECT * FROM users u JOIN members m ON m.member_id = u.member_id JOIN roles r ON r.role_id = u.role_id LEFT JOIN programs p ON p.program_id = m.program_id WHERE user_id = '{model.ID}';";
             string query = $"{declareQuery} {updateUserQuery} {updateMemberQuery} {selectQuery}";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -243,9 +251,17 @@ namespace LibraryManagementSystemWF.dao
                     ID = reader.GetGuid(reader.GetOrdinal("member_id")),
                     FirstName = reader.GetString(reader.GetOrdinal("first_name")),
                     LastName = reader.GetString(reader.GetOrdinal("last_name")),
+                    CourseYear = reader.IsDBNull(reader.GetOrdinal("course_year")) ? null : reader.GetInt32(reader.GetOrdinal("course_year")),
+                    SchoolNumber = reader.GetString(reader.GetOrdinal("school_no")),
                     Phone = reader.GetString(reader.GetOrdinal("phone")),
                     Email = reader.GetString(reader.GetOrdinal("email")),
                     Address = reader.GetString(reader.GetOrdinal("address")),
+                    Program = new models.Program
+                    {
+                        ID = reader.IsDBNull(reader.GetOrdinal("program_id")) ? null : reader.GetInt32(reader.GetOrdinal("program_id")),
+                        Name = reader.IsDBNull(reader.GetOrdinal("program_name")) ? string.Empty : reader.GetString(reader.GetOrdinal("program_name")),
+                        Description = reader.IsDBNull(reader.GetOrdinal("program_description")) ? string.Empty : reader.GetString(reader.GetOrdinal("program_description"))
+                    }
                 }
             };
 
@@ -265,6 +281,7 @@ namespace LibraryManagementSystemWF.dao
                 "SELECT * FROM users u " +
                 "JOIN members m ON m.member_id = u.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
                 $"WHERE username LIKE '%{searchText}%' " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 

@@ -11,5 +11,7 @@ namespace LibraryManagementSystemWF.models
         public Guid ID { get; set; }
         public Book Book { get; set; } = new Book();
         public Status Status { get; set; } = new Status();
+        public Source Source { get; set; } = new Source();
+        public decimal Price { get; set; }
     }
 }

@@ -120,5 +120,23 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             mainPanel.Controls.Add(new CtrlTransactions(this));
             navLbl.Text = "Loans";
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button6.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlActivityLog());
+            navLbl.Text = "Activity Log";
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button7.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlLibrarianOverdue());
+            navLbl.Text = "Overdue Returns";
+        }
     }
 }
