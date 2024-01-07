@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystemWF.views.Dashboard
 {
-    partial class CtrlActivityLog
+    partial class CtrlLibrarianActivityLog
     {
         /// <summary> 
         /// Required designer variable.
@@ -38,7 +38,8 @@
             this.nextBtn = new System.Windows.Forms.Button();
             this.prevBtn = new System.Windows.Forms.Button();
             this.prevLastBtn = new System.Windows.Forms.Button();
-            this.cmbSort = new System.Windows.Forms.ComboBox();
+            this.cmbFilter = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,9 +50,9 @@
             this.subtitleLbl.ForeColor = System.Drawing.Color.Gray;
             this.subtitleLbl.Location = new System.Drawing.Point(6, 49);
             this.subtitleLbl.Name = "subtitleLbl";
-            this.subtitleLbl.Size = new System.Drawing.Size(221, 17);
+            this.subtitleLbl.Size = new System.Drawing.Size(296, 17);
             this.subtitleLbl.TabIndex = 30;
-            this.subtitleLbl.Text = "All users activity can be found here";
+            this.subtitleLbl.Text = "You and other users\' activity can be found here";
             // 
             // titleLbl
             // 
@@ -76,8 +77,9 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(698, 394);
+            this.dataGridView1.Size = new System.Drawing.Size(415, 394);
             this.dataGridView1.TabIndex = 31;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // searchBtn
             // 
@@ -90,23 +92,25 @@
             this.searchBtn.TabIndex = 33;
             this.searchBtn.Text = "🔎";
             this.searchBtn.UseVisualStyleBackColor = false;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
             // txtSearch
             // 
             this.txtSearch.BackColor = System.Drawing.Color.White;
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtSearch.Location = new System.Drawing.Point(233, 25);
+            this.txtSearch.Location = new System.Drawing.Point(313, 25);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.PlaceholderText = "Search activity";
-            this.txtSearch.Size = new System.Drawing.Size(263, 27);
+            this.txtSearch.Size = new System.Drawing.Size(183, 27);
             this.txtSearch.TabIndex = 32;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
             // pageLbl
             // 
             this.pageLbl.AutoSize = true;
             this.pageLbl.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.pageLbl.Location = new System.Drawing.Point(336, 486);
+            this.pageLbl.Location = new System.Drawing.Point(89, 486);
             this.pageLbl.Name = "pageLbl";
             this.pageLbl.Size = new System.Drawing.Size(30, 17);
             this.pageLbl.TabIndex = 42;
@@ -118,73 +122,79 @@
             this.nextLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextLastBtn.Location = new System.Drawing.Point(405, 482);
+            this.nextLastBtn.Location = new System.Drawing.Point(158, 482);
             this.nextLastBtn.Name = "nextLastBtn";
             this.nextLastBtn.Size = new System.Drawing.Size(42, 27);
             this.nextLastBtn.TabIndex = 41;
             this.nextLastBtn.Text = ">>";
             this.nextLastBtn.UseVisualStyleBackColor = false;
+            this.nextLastBtn.Click += new System.EventHandler(this.nextLastBtn_Click);
             // 
             // nextBtn
             // 
             this.nextBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.nextBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nextBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.nextBtn.Location = new System.Drawing.Point(372, 482);
+            this.nextBtn.Location = new System.Drawing.Point(125, 482);
             this.nextBtn.Name = "nextBtn";
             this.nextBtn.Size = new System.Drawing.Size(27, 27);
             this.nextBtn.TabIndex = 40;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // prevBtn
             // 
             this.prevBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevBtn.Location = new System.Drawing.Point(303, 482);
+            this.prevBtn.Location = new System.Drawing.Point(56, 482);
             this.prevBtn.Name = "prevBtn";
             this.prevBtn.Size = new System.Drawing.Size(27, 27);
             this.prevBtn.TabIndex = 39;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // prevLastBtn
             // 
             this.prevLastBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.prevLastBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.prevLastBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.prevLastBtn.Location = new System.Drawing.Point(253, 482);
+            this.prevLastBtn.Location = new System.Drawing.Point(6, 482);
             this.prevLastBtn.Name = "prevLastBtn";
             this.prevLastBtn.Size = new System.Drawing.Size(42, 27);
             this.prevLastBtn.TabIndex = 38;
             this.prevLastBtn.Text = "<<";
             this.prevLastBtn.UseVisualStyleBackColor = false;
+            this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
-            // cmbSort
+            // cmbFilter
             // 
-            this.cmbSort.BackColor = System.Drawing.Color.White;
-            this.cmbSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbSort.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cmbSort.FormattingEnabled = true;
-            this.cmbSort.Items.AddRange(new object[] {
-            "Show All",
-            "Show Recent only",
-            "Show Login only",
-            "Show Register only",
-            "Show Borrowed Books only",
-            "Show Returned Books only"});
-            this.cmbSort.Location = new System.Drawing.Point(535, 24);
-            this.cmbSort.Name = "cmbSort";
-            this.cmbSort.Size = new System.Drawing.Size(163, 28);
-            this.cmbSort.TabIndex = 43;
+            this.cmbFilter.BackColor = System.Drawing.Color.White;
+            this.cmbFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbFilter.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cmbFilter.FormattingEnabled = true;
+            this.cmbFilter.Location = new System.Drawing.Point(535, 24);
+            this.cmbFilter.Name = "cmbFilter";
+            this.cmbFilter.Size = new System.Drawing.Size(163, 28);
+            this.cmbFilter.TabIndex = 43;
+            this.cmbFilter.SelectedValueChanged += new System.EventHandler(this.cmbFilter_SelectedValueChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(427, 82);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(271, 126);
+            this.panel1.TabIndex = 57;
             // 
             // CtrlActivityLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.cmbSort);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.cmbFilter);
             this.Controls.Add(this.pageLbl);
             this.Controls.Add(this.nextLastBtn);
             this.Controls.Add(this.nextBtn);
@@ -215,6 +225,7 @@
         private Button nextBtn;
         private Button prevBtn;
         private Button prevLastBtn;
-        private ComboBox cmbSort;
+        private ComboBox cmbFilter;
+        private Panel panel1;
     }
 }

@@ -1,11 +1,14 @@
 ﻿using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LibraryManagementSystemWF.controllers
 {
@@ -46,6 +49,17 @@ namespace LibraryManagementSystemWF.controllers
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
+
+                if (isSuccess)
+                {
+                    // Log
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} created program {name}", signedUser.ID, ActivityTypeEnum.PROGRAM_OPERATION);
+                    }
+                }
             }
 
             returnData.Errors = errors;
@@ -76,6 +90,17 @@ namespace LibraryManagementSystemWF.controllers
             {
                 ProgramDAO progDao = new();
                 returnResult.IsSuccess = await progDao.Remove(id.ToString());
+
+                if (returnResult.IsSuccess)
+                {
+                    // Log
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} removed a program", signedUser.ID, ActivityTypeEnum.PROGRAM_OPERATION);
+                    }
+                }
             }
 
             return returnResult;
@@ -134,6 +159,17 @@ namespace LibraryManagementSystemWF.controllers
                 if (isSuccess && result.Result != null)
                 {
                     returnData.Result = result.Result;
+
+                    if (isSuccess)
+                    {
+                        // Log
+                        User? signedUser = AuthService.getSignedUser();
+                        if (signedUser != null)
+                        {
+                            // log history
+                            ActivityLogger.Log($"{signedUser.Username} updated a program '{result.Result.Name}' to '{name}'", signedUser.ID, ActivityTypeEnum.PROGRAM_OPERATION);
+                        }
+                    }
                 }
             }
 

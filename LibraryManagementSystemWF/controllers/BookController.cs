@@ -199,7 +199,7 @@ namespace LibraryManagementSystemWF.controllers
                     if (signedUser != null)
                     {
                         // log history
-                        ActivityLogger.Log($"{signedUser.Username} updated book '{title}'", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
+                        ActivityLogger.Log($"{signedUser.Username} updated book '{book.Result.BookMetadata.Title}' to '{title}'", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
                     }
                 }
             }

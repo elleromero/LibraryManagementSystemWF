@@ -42,6 +42,17 @@ namespace LibraryManagementSystemWF.controllers
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
+
+                if (isSuccess)
+                {
+                    // Log
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} created {copies} copies of '{bookId[..4]}' [SOURCE: {source}]", signedUser.ID, ActivityTypeEnum.COPY_OPERATION);
+                    }
+                }
             }
 
             returnData.Errors = errors;
@@ -177,6 +188,18 @@ namespace LibraryManagementSystemWF.controllers
             {
                 CopyDAO copyDao = new();
                 returnResult.IsSuccess = await copyDao.Remove(id);
+
+
+                if (returnResult.IsSuccess)
+                {
+                    // Log
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} removed copy '{id[..4]}'", signedUser.ID, ActivityTypeEnum.COPY_OPERATION);
+                    }
+                }
             }
 
             return returnResult;

@@ -116,7 +116,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button6.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlActivityLog());
+            mainPanel.Controls.Add(new CtrlLibrarianActivityLog(this));
             navLbl.Text = "Activity Log";
         }
 

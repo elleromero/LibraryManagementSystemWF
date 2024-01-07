@@ -67,6 +67,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             button2.BackColor = Color.White;
             button3.BackColor = Color.White;
+            button4.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }
@@ -104,6 +105,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             this.Enabled = false;
             new UserAnnouncement(this).Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button4.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlUserActivityLog(this));
+            navLbl.Text = "My Activity";
         }
     }
 }

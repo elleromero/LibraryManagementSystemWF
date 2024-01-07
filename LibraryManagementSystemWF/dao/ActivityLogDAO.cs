@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.interfaces;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
@@ -130,7 +131,7 @@ namespace LibraryManagementSystemWF.dao
                 "INNER JOIN programs p ON m.program_id = p.program_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 $"WHERE a.activity_log LIKE '%{searchText}%' " +
-                $"{(ate != null ? $"AND a.activity_type_id = {(int)ate} " : string.Empty)}" +
+                $"{(ate != null ? $"AND a.activity_type_id = {(int)ate} " : string.Empty)} " +
                 "ORDER BY timestamp DESC, " +
                 $"(SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
 
@@ -176,7 +177,7 @@ namespace LibraryManagementSystemWF.dao
             throw new NotImplementedException();
         }
 
-        public async Task<ReturnResultArr<ActivityLog>> GetAllByRole(RoleEnum role, int page)
+        public async Task<ReturnResultArr<ActivityLog>> GetAllBySelf(Guid userId, RoleEnum role, int page, string searchText = "")
         {
             ReturnResultArr<ActivityLog> returnResult = new()
             {
@@ -185,14 +186,16 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 1
             };
 
-            string query = "SELECT COUNT(*) as row_count FROM activities; " +
+            string query = $"SELECT COUNT(*) as row_count FROM activities WHERE r.role_id = {(int)role} AND a.user_id = '{userId}' AND a.activity_log LIKE '%{searchText}%'; " +
                 "SELECT * FROM activities a " +
                 "JOIN activity_type at ON a.activity_type_id = at.activity_type_id " +
                 "JOIN users u ON a.user_id = u.user_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
                 "INNER JOIN programs p ON m.program_id = p.program_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
-                $"WHERE r.role_id = {(int)role}" +
+                $"WHERE r.role_id = {(int)role} " +
+                $"AND a.user_id = '{userId}' " +
+                $"AND a.activity_log LIKE '%{searchText}%' " +
                 "ORDER BY timestamp DESC, " +
                 $"(SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
 
@@ -231,7 +234,7 @@ namespace LibraryManagementSystemWF.dao
             return returnResult;
         }
 
-        public async Task<ReturnResultArr<ActivityLog>> GetAllWithPermission(RoleEnum role, int page)
+        public async Task<ReturnResultArr<ActivityLog>> GetAllWithPermission(Guid userId, RoleEnum role, int page, string searchText = "", ActivityTypeEnum? ate = null)
         {
             ReturnResultArr<ActivityLog> returnResult = new()
             {
@@ -240,14 +243,19 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 1
             };
 
-            string query = "SELECT COUNT(*) as row_count FROM activities; " +
+            string query = $"SELECT COUNT(*) as row_count FROM activities " +
+                $"WHERE (activity_type_id IN ({roleRange[role]}) OR user_id = '{userId}')" +
+                $"AND (activity_log LIKE '%{searchText}%' {(ate != null ? $"AND activity_type_id = {(int)ate} " : string.Empty)}); " +
                 "SELECT * FROM activities a " +
                 "JOIN activity_type at ON a.activity_type_id = at.activity_type_id " +
                 "JOIN users u ON a.user_id = u.user_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
                 "INNER JOIN programs p ON m.program_id = p.program_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
-                $"WHERE a.activity_type_id IN ({roleRange[role]})" +
+                $"WHERE (a.activity_type_id IN ({roleRange[role]}) " +
+                $"OR a.user_id = '{userId}')" +
+                $"AND (a.activity_log LIKE '%{searchText}%' " +
+                $"{(ate != null ? $"AND a.activity_type_id = {(int)ate} " : string.Empty)}) " +
                 "ORDER BY a.timestamp DESC, " +
                 $"(SELECT NULL) OFFSET ({page} - 1) * 20 ROWS FETCH NEXT 20 ROWS ONLY;";
             Console.WriteLine(query);
