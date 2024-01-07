@@ -71,6 +71,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             button5.BackColor = Color.White;
             button6.BackColor = Color.White;
             button7.BackColor = Color.White;
+            button8.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }
@@ -139,6 +140,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             mainPanel.Controls.Add(new CtrlProgram(this));
             navLbl.Text = "Programs";
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button8.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlCardIssue(this));
+            navLbl.Text = "Issue Library Card";
         }
     }
 }

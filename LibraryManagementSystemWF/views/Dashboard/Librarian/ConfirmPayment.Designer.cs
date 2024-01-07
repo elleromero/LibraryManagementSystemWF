@@ -28,69 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            richTextBox1 = new RichTextBox();
-            label1 = new Label();
-            button1 = new Button();
-            button2 = new Button();
-            SuspendLayout();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.SuspendLayout();
             // 
             // richTextBox1
             // 
-            richTextBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            richTextBox1.Location = new Point(12, 42);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(303, 495);
-            richTextBox1.TabIndex = 0;
-            richTextBox1.Text = "";
+            this.richTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 42);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(303, 516);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(68, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(184, 30);
-            label1.TabIndex = 1;
-            label1.Text = "Confirm Payment";
-            // 
-            // button1
-            // 
-            button1.Location = new Point(12, 543);
-            button1.Name = "button1";
-            button1.Size = new Size(148, 23);
-            button1.TabIndex = 2;
-            button1.Text = "Cancel";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(167, 543);
-            button2.Name = "button2";
-            button2.Size = new Size(148, 23);
-            button2.TabIndex = 3;
-            button2.Text = "Confirm Payment";
-            button2.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(119, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 30);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Receipt";
             // 
             // ConfirmPayment
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(327, 570);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(label1);
-            Controls.Add(richTextBox1);
-            Name = "ConfirmPayment";
-            Text = "ConfirmPayment";
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(327, 570);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.richTextBox1);
+            this.Name = "ConfirmPayment";
+            this.Text = "ConfirmPayment";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
 
         private RichTextBox richTextBox1;
         private Label label1;
-        private Button button1;
-        private Button button2;
     }
 }

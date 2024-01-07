@@ -232,14 +232,24 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 if (foundLoan != null) loansIdList.Add(foundLoan.ID.ToString());
             }
 
-            ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
             if (double.TryParse(txtCash.Text, out double ChangeCash))
             {
-                new ConfirmPayment(this.receiptMaker.GetReceipt()).ShowDialog();
+                ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
+                
+                if (res.IsSuccess && this.currentUser != null)
+                {
+                    new ConfirmPayment(this.receiptMaker.GetReceipt(
+                        $"{this.currentUser.Member.FirstName} {this.currentUser.Member.FirstName}",
+                        this.currentUser.Username
+                        )).ShowDialog();
+                } else
+                {
+                    DialogBuilder.Show(res.Errors, "Error", MessageBoxIcon.Hand);
+                }
             }
             else
             {
-                MessageBox.Show("Error!!", res.Errors.ToString());
+                MessageBox.Show("Error!!");
             }
 
         }

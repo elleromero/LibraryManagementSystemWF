@@ -23,6 +23,22 @@ namespace LibraryManagementSystemWF.views
             InitializeComponent();
 
             this.form = form;
+            LoadPrograms();
+        }
+
+        private async void LoadPrograms()
+        {
+            ControllerAccessData<models.Program> res = await ProgramController.GetAllPrograms();
+
+            if (res.IsSuccess)
+            {
+                for (int i = 0; i < res.Results.Count; i++)
+                {
+                    cmbProgram.ValueMember = nameof(models.Program.ID);
+                    cmbProgram.DisplayMember = nameof(models.Program.Name);
+                    cmbProgram.DataSource = res.Results;
+                }
+            }
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -48,7 +64,7 @@ namespace LibraryManagementSystemWF.views
             loader.StartLoading();
 
             // CALLING THE METHOD FROM AUTHCONTROLLER
-            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, SchoolNumber, address, phone, email, profile);
+            ControllerModifyData<User> res = await AuthController.Register(reguser, regpass, firstname, lastname, SchoolNumber, address, phone, email, profile, ((models.Program)cmbProgram.SelectedItem).ID, (int)numCourseYear.Value);
 
             if (res.IsSuccess)
             {
