@@ -49,6 +49,9 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
+            Config config = new();
+            int maxCopies = config.maxCopies;
+            decimal maxPrice = config.maxPrice;
             if (!await Validator.IsBookTitleUnique(title)) errors["title"] = "Title already exists";
             if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "Genre is invalid";
             if (!await Validator.IsSourceIdValid(sourceId)) errors["sourceId"] = "Source is invalid";
@@ -58,8 +61,8 @@ namespace LibraryManagementSystemWF.controllers
             if (string.IsNullOrWhiteSpace(publisher)) errors["publisher"] = "Publisher is required";
             if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors["publicationDate"] = "Datetime must be before or on the present date";
             if (!Validator.IsValidISBN(isbn)) errors["isbn"] = "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format";
-            if (!(copies > 0 && copies <= 50)) errors["copies"] = "Should at least have a single copy and should not exceed 50 copies";
-            if (price < 0) errors["price"] = "Invalid amount";
+            if (!(copies > 0 && copies <= maxCopies)) errors["copies"] = $"Should at least have a single copy and should not exceed {maxCopies} copies";
+            if (price > maxPrice || price < 0) errors["price"] = "Invalid amount";
             if (editionNum < 1) errors["editionNum"] = "Invalid number";
 
             if (errors.Count == 0)

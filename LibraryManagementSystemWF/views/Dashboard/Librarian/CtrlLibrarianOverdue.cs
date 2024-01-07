@@ -197,22 +197,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         {
             try
             {
-                // If the initial cash value is entered, the Change will be updated.
-                if (e.KeyCode == Keys.Enter)
+                if (double.TryParse(txtCash.Text, out double ChangeCash))
                 {
-                    if (double.TryParse(txtCash.Text, out double ChangeCash))
-                    {
-                        this.cash = ChangeCash;
-                        dataGridDueBooks_SelectionChanged(sender, e);
-                    }
-                    else
-                    {
-                        // Will Show Error if the user input a Non numeric character
-                        MessageBox.Show("Error!! You Enter Non numeric character!!");
-                        e.Handled = true;
-                    }
+                    this.cash = ChangeCash;
+                    dataGridDueBooks_SelectionChanged(sender, e);
                 }
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show("Error : ", ex.Message);
             }

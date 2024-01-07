@@ -24,7 +24,7 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
             string? userId = AuthService.getSignedUser()?.ID.ToString();
-            DateTime dueDate = DateTime.Now.AddDays(EnvService.GetBorrowTimeDays());
+            DateTime dueDate = DateTime.Now.AddDays(new Config().daysBeforeDue);
 
             // is not librarian
             if (!await AuthGuard.HavePermission("USER"))
@@ -110,8 +110,16 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                errors.Add("auth", "Please login");
+            }
+            else
+            {
+                if (await BookGuard.IsPastDue(userId)) errors.Add("book", "Cannot return book past due. Please pay through the librarian");
+            }
             if (string.IsNullOrWhiteSpace(loanId)) errors.Add("loanId", "ID is invalid");
+
 
             // update if theres no error
             if (errors.Count == 0 && userId != null)

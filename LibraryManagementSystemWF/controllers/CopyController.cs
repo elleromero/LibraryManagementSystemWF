@@ -32,9 +32,12 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
+            Config config = new();
+            int maxCopies = config.maxCopies;
+            decimal maxPrice = config.maxPrice;
             if (string.IsNullOrWhiteSpace(bookId)) errors["bookId"] = "ID is invalid";
-            if (copies <= 0 || copies > 50) errors["copies"] = "Copies should between 1 to 50";
-            if (price < 0) errors["price"] = "Invalid Price";
+            if (copies < 0 || copies > maxCopies) errors["copies"] = $"Copies should between 1 to {maxCopies}";
+            if (price > maxPrice || price < 0) errors["price"] = "Invalid Price";
             if (!await Validator.IsSourceIdValid(sourceId)) errors["sourceId"] = "Source is invalid";
 
             if (errors.Count == 0)
@@ -227,8 +230,10 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
+            Config config = new();
+            decimal maxPrice = config.maxPrice;
             if (string.IsNullOrWhiteSpace(copyId)) errors["copyId"] = "ID is invalid";
-            if (price < 0) errors["price"] = "Invalid Price";
+            if (price > maxPrice || price < 0) errors["price"] = "Invalid Price";
             if (!await Validator.IsSourceIdValid(sourceId)) errors["sourceId"] = "Source is invalid";
 
             if (errors.Count == 0)

@@ -249,5 +249,10 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         {
             new AdminActivityLog().ShowDialog();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new AdminConfig().ShowDialog();
+        }
     }
 }

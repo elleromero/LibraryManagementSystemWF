@@ -43,10 +43,13 @@
             this.cbAllowBorrowAfterDue = new System.Windows.Forms.CheckBox();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.CancelBtn = new System.Windows.Forms.Button();
+            this.numDaysBeforeDue = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             this.topbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericMaxBorrowedBooks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericMaxCopies)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericMaxPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDaysBeforeDue)).BeginInit();
             this.SuspendLayout();
             // 
             // subtitleLbl
@@ -170,7 +173,7 @@
             // cbAllowBorrowAfterDue
             // 
             this.cbAllowBorrowAfterDue.AutoSize = true;
-            this.cbAllowBorrowAfterDue.Location = new System.Drawing.Point(15, 239);
+            this.cbAllowBorrowAfterDue.Location = new System.Drawing.Point(24, 284);
             this.cbAllowBorrowAfterDue.Name = "cbAllowBorrowAfterDue";
             this.cbAllowBorrowAfterDue.Size = new System.Drawing.Size(150, 19);
             this.cbAllowBorrowAfterDue.TabIndex = 5;
@@ -182,7 +185,7 @@
             this.SaveBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.SaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.SaveBtn.Location = new System.Drawing.Point(170, 277);
+            this.SaveBtn.Location = new System.Drawing.Point(180, 316);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(109, 32);
             this.SaveBtn.TabIndex = 16;
@@ -195,19 +198,39 @@
             this.CancelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.CancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CancelBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.CancelBtn.Location = new System.Drawing.Point(55, 277);
+            this.CancelBtn.Location = new System.Drawing.Point(65, 316);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(109, 32);
             this.CancelBtn.TabIndex = 16;
             this.CancelBtn.Text = "CANCEL";
             this.CancelBtn.UseVisualStyleBackColor = false;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
+            // 
+            // numDaysBeforeDue
+            // 
+            this.numDaysBeforeDue.Location = new System.Drawing.Point(159, 240);
+            this.numDaysBeforeDue.Name = "numDaysBeforeDue";
+            this.numDaysBeforeDue.Size = new System.Drawing.Size(120, 23);
+            this.numDaysBeforeDue.TabIndex = 18;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(15, 240);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(111, 17);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Days Before Due:";
             // 
             // AdminConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(312, 331);
+            this.ClientSize = new System.Drawing.Size(312, 364);
+            this.Controls.Add(this.numDaysBeforeDue);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.cbAllowBorrowAfterDue);
@@ -228,6 +251,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericMaxBorrowedBooks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericMaxCopies)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericMaxPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numDaysBeforeDue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,5 +274,7 @@
         private Label navLbl;
         private Panel topbar;
         private Label timerLbl;
+        private NumericUpDown numDaysBeforeDue;
+        private Label label4;
     }
 }

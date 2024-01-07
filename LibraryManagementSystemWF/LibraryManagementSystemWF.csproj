@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="resources\config\" />
     <Folder Include="views\Dashboard\User\" />
   </ItemGroup>
 

@@ -47,6 +47,7 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.searchBtn = new System.Windows.Forms.Button();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.button1 = new System.Windows.Forms.Button();
             this.topbar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,7 +107,7 @@
             this.button11.FlatAppearance.BorderSize = 0;
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button11.Location = new System.Drawing.Point(1080, 56);
+            this.button11.Location = new System.Drawing.Point(1035, 56);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(90, 27);
             this.button11.TabIndex = 13;
@@ -245,7 +246,7 @@
             this.txtSearch.BackColor = System.Drawing.Color.White;
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtSearch.Location = new System.Drawing.Point(596, 56);
+            this.txtSearch.Location = new System.Drawing.Point(564, 56);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.PlaceholderText = "Search username";
             this.txtSearch.Size = new System.Drawing.Size(432, 27);
@@ -257,7 +258,7 @@
             this.searchBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
             this.searchBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.searchBtn.Location = new System.Drawing.Point(1034, 56);
+            this.searchBtn.Location = new System.Drawing.Point(1002, 56);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(27, 27);
             this.searchBtn.TabIndex = 25;
@@ -277,12 +278,27 @@
             this.linkLabel3.Text = "View Activity Log";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button1.Location = new System.Drawing.Point(1131, 56);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(39, 27);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "⚙";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AdminDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1182, 629);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.linkLabel3);
             this.Controls.Add(this.searchBtn);
             this.Controls.Add(this.txtSearch);
@@ -331,5 +347,6 @@
         private TextBox txtSearch;
         private Button searchBtn;
         private LinkLabel linkLabel3;
+        private Button button1;
     }
 }
