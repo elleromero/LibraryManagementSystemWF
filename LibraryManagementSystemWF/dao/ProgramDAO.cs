@@ -199,8 +199,9 @@ namespace LibraryManagementSystemWF.dao
             bool isRemoved = false;
 
             // remove program
-            string query = $"DELETE FROM programs WHERE program_id = ${id}; " +
-                $"UPDATE members SET program_id = NULL WHERE program_id = ${id};";
+            string query = $"UPDATE members SET program_id = NULL WHERE program_id = ${id};" +
+                $"DELETE FROM programs WHERE program_id = ${id};";
+
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {

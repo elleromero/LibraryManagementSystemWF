@@ -45,36 +45,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
             loader.StartLoading();
             LoadActivities();
-            LoadPreview();
 
             loader.StopLoading();
-        }
-
-        private void LoadPreview(User? user = null)
-        {
-            // load default preview
-            panel1.Controls.Clear();
-
-            if (user != null)
-            {
-                panel1.Controls.Add(new UserContainer(user));
-            }
-            else
-            {
-                panel1.Controls.Add(new UserContainer(new User
-                {
-                    Username = "juan_54",
-                    Member = new Member
-                    {
-                        FirstName = "Juan",
-                        LastName = "Dela Cruz"
-                    },
-                    Role = new Role
-                    {
-                        Name = "ADMINISTRATOR"
-                    }
-                }, true));
-            }
         }
 
         private async void LoadActivities()
@@ -115,13 +87,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             loader.StartLoading();
             LoadActivities();
             loader.StopLoading();
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            ActivityLog? al = this.results.Find((x) => { return dataGridView1.Rows[e.RowIndex].Cells["ID"].Value.ToString() == x.ID.ToString(); });
-
-            LoadPreview(al?.User);
         }
 
         private void navigatePage()

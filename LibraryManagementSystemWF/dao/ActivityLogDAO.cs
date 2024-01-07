@@ -128,7 +128,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN activity_type at ON a.activity_type_id = at.activity_type_id " +
                 "JOIN users u ON a.user_id = u.user_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "INNER JOIN programs p ON m.program_id = p.program_id " +
+                "LEFT JOIN programs p ON m.program_id = p.program_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 $"WHERE a.activity_log LIKE '%{searchText}%' " +
                 $"{(ate != null ? $"AND a.activity_type_id = {(int)ate} " : string.Empty)} " +
@@ -177,7 +177,7 @@ namespace LibraryManagementSystemWF.dao
             throw new NotImplementedException();
         }
 
-        public async Task<ReturnResultArr<ActivityLog>> GetAllBySelf(Guid userId, RoleEnum role, int page, string searchText = "")
+        public async Task<ReturnResultArr<ActivityLog>> GetAllBySelf(Guid userId, int roleId, int page, string searchText = "")
         {
             ReturnResultArr<ActivityLog> returnResult = new()
             {
@@ -186,14 +186,17 @@ namespace LibraryManagementSystemWF.dao
                 rowCount = 1
             };
 
-            string query = $"SELECT COUNT(*) as row_count FROM activities WHERE r.role_id = {(int)role} AND a.user_id = '{userId}' AND a.activity_log LIKE '%{searchText}%'; " +
+            string query = $"SELECT COUNT(*) as row_count FROM activities a " +
+                $"JOIN users u ON a.user_id = u.user_id " +
+                $"JOIN roles r ON u.role_id = r.role_id " +
+                $"WHERE r.role_id = {roleId} AND a.user_id = '{userId}' AND a.activity_log LIKE '%{searchText}%'; " +
                 "SELECT * FROM activities a " +
                 "JOIN activity_type at ON a.activity_type_id = at.activity_type_id " +
                 "JOIN users u ON a.user_id = u.user_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "INNER JOIN programs p ON m.program_id = p.program_id " +
+                "LEFT JOIN programs p ON m.program_id = p.program_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
-                $"WHERE r.role_id = {(int)role} " +
+                $"WHERE r.role_id = {roleId} " +
                 $"AND a.user_id = '{userId}' " +
                 $"AND a.activity_log LIKE '%{searchText}%' " +
                 "ORDER BY timestamp DESC, " +
@@ -227,7 +230,7 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = true;
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -250,7 +253,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN activity_type at ON a.activity_type_id = at.activity_type_id " +
                 "JOIN users u ON a.user_id = u.user_id " +
                 "JOIN members m ON u.member_id = m.member_id " +
-                "INNER JOIN programs p ON m.program_id = p.program_id " +
+                "LEFT JOIN programs p ON m.program_id = p.program_id " +
                 "JOIN roles r ON u.role_id = r.role_id " +
                 $"WHERE (a.activity_type_id IN ({roleRange[role]}) " +
                 $"OR a.user_id = '{userId}')" +

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.pageLbl = new System.Windows.Forms.Label();
             this.nextLastBtn = new System.Windows.Forms.Button();
             this.nextBtn = new System.Windows.Forms.Button();
@@ -41,13 +40,6 @@
             this.titleLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(432, 78);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(271, 126);
-            this.panel1.TabIndex = 69;
             // 
             // pageLbl
             // 
@@ -71,6 +63,7 @@
             this.nextLastBtn.TabIndex = 66;
             this.nextLastBtn.Text = ">>";
             this.nextLastBtn.UseVisualStyleBackColor = false;
+            this.nextLastBtn.Click += new System.EventHandler(this.nextLastBtn_Click);
             // 
             // nextBtn
             // 
@@ -83,6 +76,7 @@
             this.nextBtn.TabIndex = 65;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // prevBtn
             // 
@@ -95,6 +89,7 @@
             this.prevBtn.TabIndex = 64;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // prevLastBtn
             // 
@@ -107,6 +102,7 @@
             this.prevLastBtn.TabIndex = 63;
             this.prevLastBtn.Text = "<<";
             this.prevLastBtn.UseVisualStyleBackColor = false;
+            this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
             // searchBtn
             // 
@@ -119,6 +115,7 @@
             this.searchBtn.TabIndex = 62;
             this.searchBtn.Text = "🔎";
             this.searchBtn.UseVisualStyleBackColor = false;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
             // 
             // txtSearch
             // 
@@ -130,6 +127,7 @@
             this.txtSearch.PlaceholderText = "Search activity";
             this.txtSearch.Size = new System.Drawing.Size(183, 27);
             this.txtSearch.TabIndex = 61;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
             // dataGridView1
             // 
@@ -144,7 +142,7 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(415, 394);
+            this.dataGridView1.Size = new System.Drawing.Size(692, 394);
             this.dataGridView1.TabIndex = 60;
             // 
             // subtitleLbl
@@ -172,7 +170,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pageLbl);
             this.Controls.Add(this.nextLastBtn);
             this.Controls.Add(this.nextBtn);
@@ -192,8 +189,6 @@
         }
 
         #endregion
-
-        private Panel panel1;
         private Label pageLbl;
         private Button nextLastBtn;
         private Button nextBtn;

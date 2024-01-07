@@ -98,6 +98,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                         book.BookMetadata.Sypnosis,
                         book.BookMetadata.PublicationDate,
                         book.BookMetadata.ISBN,
+                        book.BookMetadata.Copyright,
+                        book.BookMetadata.EditionNumber,
+                        book.BookMetadata.EditionStr,
                         book.BookMetadata.Cover
                         );
 
@@ -161,6 +164,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
             dataGridView1.Columns.Add("Sypnosis", "Sypnosis");
             dataGridView1.Columns.Add("PubDate", "Publication Date");
             dataGridView1.Columns.Add("ISBN", "ISBN");
+            dataGridView1.Columns.Add("Copyright", "Copyright");
+            dataGridView1.Columns.Add("Edition No", "Edition No");
+            dataGridView1.Columns.Add("Edition", "Edition");
             dataGridView1.Columns.Add("Cover", "Cover");
 
             this.loader = new(this);
@@ -355,6 +361,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 txtISBN.Text = row.Cells["ISBN"].Value.ToString();
                 txtCover.Text = row.Cells["Cover"].Value.ToString();
                 txtSynopsis.Text = row.Cells["Sypnosis"].Value.ToString();
+                txtCopyright.Text = row.Cells["Copyright"].Value.ToString();
+                txtEditionName.Text = row.Cells["Edition"].Value.ToString();
+                numEditionNo.Value = (int)row.Cells["Edition No"].Value;
                 numCopies.Value = (int)row.Cells["Copies"].Value;
                 cmbGenre.Text = row.Cells["Genre"].Value.ToString();
 

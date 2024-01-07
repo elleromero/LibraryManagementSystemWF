@@ -139,6 +139,7 @@
             this.btnBack.TabIndex = 10;
             this.btnBack.Text = "BACK";
             this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // button1
             // 
@@ -158,6 +159,7 @@
             this.button1.TabIndex = 5;
             this.button1.Text = "      ADD USER";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btnDeleteBooks
             // 
@@ -177,6 +179,7 @@
             this.btnDeleteBooks.TabIndex = 9;
             this.btnDeleteBooks.Text = "      DELETE USER";
             this.btnDeleteBooks.UseVisualStyleBackColor = false;
+            this.btnDeleteBooks.Click += new System.EventHandler(this.btnDeleteBooks_Click);
             // 
             // button2
             // 
@@ -196,6 +199,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "       UPDATE USER";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // usersGridList
             // 
@@ -255,6 +259,7 @@
             this.textFirstName.PlaceholderText = "Juan";
             this.textFirstName.Size = new System.Drawing.Size(280, 29);
             this.textFirstName.TabIndex = 22;
+            this.textFirstName.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // label1
             // 
@@ -279,6 +284,7 @@
             this.textLastName.PlaceholderText = "Dela Cruz";
             this.textLastName.Size = new System.Drawing.Size(280, 29);
             this.textLastName.TabIndex = 24;
+            this.textLastName.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // label2
             // 
@@ -352,6 +358,7 @@
             this.textPhone.PlaceholderText = "09100813695";
             this.textPhone.Size = new System.Drawing.Size(280, 29);
             this.textPhone.TabIndex = 30;
+            this.textPhone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textPhone_KeyPress);
             // 
             // label6
             // 
@@ -376,6 +383,7 @@
             this.textUsername.PlaceholderText = "johndoe";
             this.textUsername.Size = new System.Drawing.Size(280, 29);
             this.textUsername.TabIndex = 32;
+            this.textUsername.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // label7
             // 
@@ -439,6 +447,7 @@
             this.cmbRole.Name = "cmbRole";
             this.cmbRole.Size = new System.Drawing.Size(280, 29);
             this.cmbRole.TabIndex = 35;
+            this.cmbRole.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // panel2
             // 
@@ -471,6 +480,7 @@
             this.button3.TabIndex = 41;
             this.button3.Text = "find";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label11
             // 
@@ -495,6 +505,7 @@
             this.txtProfile.ReadOnly = true;
             this.txtProfile.Size = new System.Drawing.Size(214, 29);
             this.txtProfile.TabIndex = 39;
+            this.txtProfile.TextChanged += new System.EventHandler(this.text_TextChanged);
             // 
             // pageLbl
             // 
@@ -516,6 +527,7 @@
             this.prevBtn.TabIndex = 43;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // nextBtn
             // 
@@ -528,6 +540,7 @@
             this.nextBtn.TabIndex = 44;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // SchoolNum
             // 

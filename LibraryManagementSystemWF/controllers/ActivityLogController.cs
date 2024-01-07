@@ -103,7 +103,7 @@ namespace LibraryManagementSystemWF.controllers
             if (errors.Count == 0 && user != null)
             {
                 ActivityLogDAO activityLogDao = new();
-                ReturnResultArr<ActivityLog> result = await activityLogDao.GetAllBySelf(user.ID, RoleEnum.LIBRARIAN, page, searchText);
+                ReturnResultArr<ActivityLog> result = await activityLogDao.GetAllBySelf(user.ID, user.Role.ID, page, searchText);
 
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;

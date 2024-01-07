@@ -108,6 +108,7 @@ namespace LibraryManagementSystemWF.views.Dashboard
             if (res.IsSuccess)
             {
                 this.results = res.Results;
+                Console.WriteLine(res.Results);
 
                 dataGridView1.Rows.Clear();
                 this.maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 20));
