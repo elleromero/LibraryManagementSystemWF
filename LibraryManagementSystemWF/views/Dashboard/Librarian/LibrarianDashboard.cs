@@ -68,6 +68,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             button2.BackColor = Color.White;
             button3.BackColor = Color.White;
             button4.BackColor = Color.White;
+            button5.BackColor = Color.White;
+            button6.BackColor = Color.White;
+            button7.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }

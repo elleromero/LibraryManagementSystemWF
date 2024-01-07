@@ -210,6 +210,8 @@
             this.txtCash.PlaceholderText = "0.0";
             this.txtCash.Size = new System.Drawing.Size(171, 27);
             this.txtCash.TabIndex = 45;
+            this.txtCash.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCash_KeyDown);
+            this.txtCash.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCash_KeyPress);
             // 
             // label3
             // 
