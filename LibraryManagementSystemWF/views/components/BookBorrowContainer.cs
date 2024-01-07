@@ -33,11 +33,11 @@ namespace LibraryManagementSystemWF.views.components
             this.book = book;
             this.loader = new(this.form);
 
-            lblTitle.Text = book.BookMetadata.Title;
-            lblAuthor.Text = $"by {book.BookMetadata.Author}";
-            txtDescription.Text = book.BookMetadata.Sypnosis;
+            lblTitle.Text = book.Title;
+            lblAuthor.Text = $"by {book.Author}";
+            txtDescription.Text = book.Sypnosis;
             
-            if (File.Exists(book.BookMetadata.Cover)) pictureBoxCover.Image = Image.FromFile(book.BookMetadata.Cover);
+            if (File.Exists(book.Cover)) pictureBoxCover.Image = Image.FromFile(book.Cover);
 
             switch (book.AvailableCopies)
             {
@@ -73,7 +73,7 @@ namespace LibraryManagementSystemWF.views.components
             {
                 this.loader.StopLoading();
                 this.customForm.RefreshDataGrid();
-                DialogBuilder.Show($"'{book.BookMetadata.Title}' is borrowed succesfully. Check your repo.", "Borrow Book", MessageBoxIcon.Information);
+                DialogBuilder.Show($"'{book.Title}' is borrowed succesfully. Check your repo.", "Borrow Book", MessageBoxIcon.Information);
             } else
             {
                 this.loader.StopLoading();

@@ -120,9 +120,9 @@
             this.subtitleLbl.ForeColor = System.Drawing.Color.Gray;
             this.subtitleLbl.Location = new System.Drawing.Point(15, 80);
             this.subtitleLbl.Name = "subtitleLbl";
-            this.subtitleLbl.Size = new System.Drawing.Size(242, 17);
+            this.subtitleLbl.Size = new System.Drawing.Size(247, 17);
             this.subtitleLbl.TabIndex = 12;
-            this.subtitleLbl.Text = "You currently have 5 user(s) registered";
+            this.subtitleLbl.Text = "You currently have 5 book(s) registered";
             // 
             // titleLbl
             // 

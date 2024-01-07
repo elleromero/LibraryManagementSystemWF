@@ -1,20 +1,10 @@
-CREATE TABLE programs (
-    program_id INT PRIMARY KEY IDENTITY(1,1),
-    program_name VARCHAR(55) NOT NULL,
-	program_description VARCHAR(55)
-);
-
 CREATE TABLE members (
 	member_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	program_id INT NULL,
 	first_name VARCHAR(30) NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
-	course_year INT NULL,
-	school_no VARCHAR(55) UNIQUE NOT NULL,
 	address VARCHAR(200) NOT NULL,
 	phone VARCHAR(13) NOT NULL,
-	email VARCHAR(100) NULL,
-	FOREIGN KEY (program_id) REFERENCES programs(program_id)
+	email VARCHAR(100) NULL
 )
 
 CREATE TABLE roles (
@@ -27,7 +17,7 @@ CREATE TABLE users (
 	user_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	role_id INT,
 	member_id UNIQUEIDENTIFIER,
-	username VARCHAR(20) UNIQUE NOT NULL,
+	username VARCHAR(20) NOT NULL,
     password_hash VARCHAR(500) NOT NULL,
 	profile_picture VARCHAR(500) NOT NULL,
 	FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE,
@@ -54,11 +44,6 @@ CREATE TABLE announcement_roles (
     FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE
 );
 
-CREATE TABLE sources (
-    source_id INT PRIMARY KEY IDENTITY(1,1),
-    source_name VARCHAR(55) NOT NULL
-);
-
 CREATE TABLE statuses (
 	status_id INT PRIMARY KEY IDENTITY(1,1),
 	name VARCHAR(20) NOT NULL,
@@ -72,38 +57,26 @@ CREATE TABLE genres (
 	description VARCHAR(500) NOT NULL
 )
 
-CREATE TABLE book_metadata (
-    metadata_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	genre_id INT NOT NULL,
+CREATE TABLE books (
+	book_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+	genre_id INT,
 	title VARCHAR(100) NOT NULL,
 	sypnosis VARCHAR(1500) NOT NULL,
-	author VARCHAR(45) NOT NULL,
-	copyright VARCHAR(55) NOT NULL,
+	author VARCHAR(40) NOT NULL,
 	cover VARCHAR(500) NOT NULL,
 	publisher VARCHAR(40) NOT NULL,
 	publication_date DATETIME2 NOT NULL,
 	added_on DATETIME2 NOT NULL,
 	isbn VARCHAR(100) NOT NULL,
-	edition_str VARCHAR(55) NOT NULL,
-    edition_num INT NULL,
 	FOREIGN KEY (genre_id) REFERENCES genres(genre_id),
-);
-
-CREATE TABLE books (
-	book_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	metadata_id UNIQUEIDENTIFIER NOT NULL,
-	FOREIGN KEY (metadata_id) REFERENCES book_metadata(metadata_id)
 )
 
 CREATE TABLE copies (
 	copy_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	book_id UNIQUEIDENTIFIER,
-	source_id INT NOT NULL,
 	status_id INT,
-	price MONEY NOT NULL,
 	FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE,
-	FOREIGN KEY (status_id) REFERENCES statuses(status_id) ON DELETE CASCADE,
-	FOREIGN KEY (source_id) REFERENCES sources(source_id)
+	FOREIGN KEY (status_id) REFERENCES statuses(status_id) ON DELETE CASCADE
 )
 
 CREATE TABLE loans (
@@ -118,41 +91,7 @@ CREATE TABLE loans (
 	FOREIGN KEY (copy_id) REFERENCES copies(copy_id) ON DELETE CASCADE,
 )
 
-CREATE TABLE activity_type (
-	activity_type_id INT PRIMARY KEY IDENTITY(1,1),
-	activity_name VARCHAR(50) NOT NULL,
-	activity_description VARCHAR(200)
-)
-
-CREATE TABLE activities (
-	activity_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	activity_log VARCHAR(1000) NOT NULL,
-	activity_type_id INT,
-	timestamp DATETIME2 NOT NULL DEFAULT(GETDATE()),
-	FOREIGN KEY (activity_type_id) REFERENCES activity_type(activity_type_id),
-)
-
 /* INSERTS DATA */
-
-INSERT INTO activity_type (activity_name, activity_description)
-VALUES
-('AUTHENTICATION', 'Authentication related activities'),
-('BOOK_TRANSACT', 'Book related transaction'),
-('BOOK_OPERATION', 'Book related operation'),
-('USER_OPERATION', 'User related operation'),
-('PROGRAM_OPERATION', 'Program related operation'),
-('COPY_OPERATION', 'Book related operation')
-
-INSERT INTO programs(program_name, program_description) VALUES
-('BSIT', 'Bachelor of Science in Information Technology'),
-('BSCPE','Bachelor of Science in Computer Engineering'),
-('BSTM','Bachelor of Science in Tourism Management'),
-('BSHM','Bachelor of Science in Hospitality Management'),
-('BSBA','Bachelor of Science in Business Administration');
-
-INSERT INTO sources(source_name) VALUES
-('Donation'),
-('School');
 
 INSERT INTO roles (name, has_access) VALUES 
 ('ADMINISTRATOR', 1),
@@ -189,21 +128,17 @@ DECLARE @member_id UNIQUEIDENTIFIER; SET @member_id = NEWID();
 INSERT INTO members (
 	first_name,
 	last_name,
-	school_no,
 	email,
 	phone,
 	address,
-	member_id,
-	program_id
+	member_id
 ) VALUES (
 	'John',
 	'Doe',
-	'02002244713',
-	'admin@test.com',
+	'johndoe@mail.co.uk',
 	'09100813695',
-	'211 baker St.',
-	@member_id,
-	1
+	'211 Baker St.',
+	@member_id
 );
 
 INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (

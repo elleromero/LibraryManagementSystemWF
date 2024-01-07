@@ -27,14 +27,14 @@ namespace LibraryManagementSystemWF.views.components
 
             this.isPreview = isPreview;
             this.book = book;
-            new ToolTip().SetToolTip(titleLbl, book.BookMetadata.Title);
-            titleLbl.Text = book.BookMetadata.Title;
-            authorLbl.Text = book.BookMetadata.Author;
+            new ToolTip().SetToolTip(titleLbl, book.Title);
+            titleLbl.Text = book.Title;
+            authorLbl.Text = book.Author;
 
             this.form = form;
             this.customForm = customForm;
 
-            if (File.Exists(book.BookMetadata.Cover)) pictureBox1.Image = Image.FromFile(book.BookMetadata.Cover);
+            if (File.Exists(book.Cover)) pictureBox1.Image = Image.FromFile(book.Cover);
         }
 
         private void titleLbl_Click(object sender, EventArgs e)
