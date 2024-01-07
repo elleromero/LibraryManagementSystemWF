@@ -31,7 +31,7 @@
             this.subtitleLbl = new System.Windows.Forms.Label();
             this.titleLbl = new System.Windows.Forms.Label();
             this.dataGridUsers = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridDueBooks = new System.Windows.Forms.DataGridView();
             this.pageLbl = new System.Windows.Forms.Label();
@@ -87,14 +87,15 @@
             this.dataGridUsers.TabIndex = 31;
             this.dataGridUsers.SelectionChanged += new System.EventHandler(this.dataGridUsers_SelectionChanged);
             // 
-            // textBox1
+            // txtSearch
             // 
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.Location = new System.Drawing.Point(6, 77);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.PlaceholderText = "Search Username";
-            this.textBox1.Size = new System.Drawing.Size(307, 27);
-            this.textBox1.TabIndex = 32;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtSearch.Location = new System.Drawing.Point(6, 77);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search Username";
+            this.txtSearch.Size = new System.Drawing.Size(307, 27);
+            this.txtSearch.TabIndex = 32;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
             // button2
             // 
@@ -111,6 +112,7 @@
             this.button2.TabIndex = 33;
             this.button2.Text = "🔍";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridDueBooks
             // 
@@ -145,6 +147,7 @@
             this.nextLastBtn.TabIndex = 41;
             this.nextLastBtn.Text = ">>";
             this.nextLastBtn.UseVisualStyleBackColor = false;
+            this.nextLastBtn.Click += new System.EventHandler(this.nextLastBtn_Click);
             // 
             // nextBtn
             // 
@@ -157,6 +160,7 @@
             this.nextBtn.TabIndex = 40;
             this.nextBtn.Text = ">";
             this.nextBtn.UseVisualStyleBackColor = false;
+            this.nextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
             // prevBtn
             // 
@@ -169,6 +173,7 @@
             this.prevBtn.TabIndex = 39;
             this.prevBtn.Text = "<";
             this.prevBtn.UseVisualStyleBackColor = false;
+            this.prevBtn.Click += new System.EventHandler(this.prevBtn_Click);
             // 
             // prevLastBtn
             // 
@@ -181,6 +186,7 @@
             this.prevLastBtn.TabIndex = 38;
             this.prevLastBtn.Text = "<<";
             this.prevLastBtn.UseVisualStyleBackColor = false;
+            this.prevLastBtn.Click += new System.EventHandler(this.prevLastBtn_Click);
             // 
             // label1
             // 
@@ -303,7 +309,7 @@
             this.Controls.Add(this.prevLastBtn);
             this.Controls.Add(this.dataGridDueBooks);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.dataGridUsers);
             this.Controls.Add(this.subtitleLbl);
             this.Controls.Add(this.titleLbl);
@@ -321,7 +327,7 @@
         private Label subtitleLbl;
         private Label titleLbl;
         private DataGridView dataGridUsers;
-        private TextBox textBox1;
+        private TextBox txtSearch;
         private Button button2;
         private DataGridView dataGridDueBooks;
         private Label pageLbl;

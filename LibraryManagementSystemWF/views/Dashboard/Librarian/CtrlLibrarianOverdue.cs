@@ -2,6 +2,7 @@
 using LibraryManagementSystemWF.models;
 using LibraryManagementSystemWF.utils;
 using LibraryManagementSystemWF.views.components;
+using LibraryManagementSystemWF.views.loader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,14 +20,24 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private List<User> users = new();
         private List<Loan> loans = new();
         private User? currentUser = null;
+        private Loader loader;
+        private Form form;
         private ReceiptMaker receiptMaker = new();
+        private bool isSearch = false;
+        private int currentPage = 1;
+        private int maxPage = 1;
         private double cash = 0;
         private double amountDue = 0;
         private double change = 0;
 
-        public CtrlLibrarianOverdue()
+        public CtrlLibrarianOverdue(Form form)
         {
             InitializeComponent();
+
+            this.form = form;
+            this.loader = new(this.form);
+
+            this.loader.StartLoading();
             this.Init();
         }
 
@@ -64,10 +75,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private async void LoadUsers()
         {
+            dataGridUsers.Rows.Clear();
             // Handle the Controller
             try
             {
-                ControllerAccessData<User> res = await LibrarianController.GetAllUsersOnly(1);
+                ControllerAccessData<User> res = await LibrarianController.GetAllUsersOnly(this.currentPage);
                 this.users = res.Results;
                 
 
@@ -87,10 +99,53 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                         );
                 }
 
+                this.loader.StopLoading();
+                // set page
+                this.maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{currentPage} | {maxPage}";
+
             }
             catch (Exception ex)
             {
                 
+                MessageBox.Show("Error Load User: ", ex.Message);
+            }
+        }
+
+        private async void LoadSearchUsers()
+        {
+            dataGridUsers.Rows.Clear();
+            // Handle the Controller
+            try
+            {
+                ControllerAccessData<User> res = await LibrarianController.SearchUsersOnly(txtSearch.Text, this.currentPage);
+                this.users = res.Results;
+
+                // load columns
+                dataGridUsers.Columns.Add("ID", "ID");
+                dataGridUsers.Columns.Add("Username", "Username");
+                dataGridUsers.Columns.Add("Name", "Name");
+                dataGridUsers.Columns.Add("Course", "Course");
+
+                foreach (User user in res.Results)
+                {
+                    dataGridUsers.Rows.Add(
+                        user.ID,
+                        user.Username,
+                        $"{user.Member.FirstName} {user.Member.LastName}",
+                        $"{user.Member.CourseYear} - {user.Member.Program.Name}"
+                        );
+                }
+
+                this.loader.StopLoading();
+                // set page
+                this.maxPage = Math.Max(1, (int)Math.Ceiling((double)res.rowCount / 10));
+                pageLbl.Text = $"{currentPage} | {maxPage}";
+
+            }
+            catch (Exception ex)
+            {
+
                 MessageBox.Show("Error Load User: ", ex.Message);
             }
         }
@@ -206,6 +261,74 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             catch(Exception ex)
             {
                 MessageBox.Show("Error : ", ex.Message);
+            }
+        }
+
+        private void nextBtn_Click(object sender, EventArgs e)
+        {
+            if (this.currentPage < maxPage)
+            {
+                currentPage++;
+                this.loader = new(this.form);
+                loader.StartLoading();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
+            }
+        }
+
+        private void nextLastBtn_Click(object sender, EventArgs e)
+        {
+            if (this.currentPage < maxPage)
+            {
+                currentPage++;
+                this.loader = new(this.form);
+                loader.StartLoading();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
+            }
+        }
+
+        private void prevBtn_Click(object sender, EventArgs e)
+        {
+            if (this.currentPage > 1)
+            {
+                this.currentPage--;
+                this.loader = new(this.form);
+                loader.StartLoading();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
+            }
+        }
+
+        private void prevLastBtn_Click(object sender, EventArgs e)
+        {
+            if (this.currentPage > 1)
+            {
+                this.currentPage--;
+                this.loader = new(this.form);
+                loader.StartLoading();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = true;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.currentPage = 1;
+                this.LoadSearchUsers();
+            }
+        }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = false;
+                this.loader = new(this.form);
+                this.loader.StartLoading();
+                this.currentPage = 1;
+                LoadUsers();
             }
         }
     }

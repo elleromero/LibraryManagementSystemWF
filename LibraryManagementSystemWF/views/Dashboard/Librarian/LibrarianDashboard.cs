@@ -128,7 +128,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button7.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlLibrarianOverdue());
+            mainPanel.Controls.Add(new CtrlLibrarianOverdue(this));
             navLbl.Text = "Overdue Returns";
         }
 

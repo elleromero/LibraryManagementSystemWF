@@ -47,6 +47,7 @@ namespace LibraryManagementSystemWF.controllers
             if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
             if (dueDate.Date < DateTime.Now.Date) errors.Add("dueDate", "Invalid due date");
             if (!await Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available copies for this book");
+            if (await BookGuard.IsLimitReached(userId)) errors.Add("book_count", "Maximum limit reached");
 
             if (errors.Count == 0)
             {
