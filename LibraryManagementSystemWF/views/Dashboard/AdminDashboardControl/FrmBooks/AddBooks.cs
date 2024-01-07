@@ -426,13 +426,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.AdminDashboardControl.FrmBoo
                 {
                     // Get the selected book's ID
                     string bookId = dataGridView1.SelectedRows[0].Cells["ID"]?.Value?.ToString();
+                    Source source = (Source)cmbSource.SelectedItem;
 
                     if (bookId != null)
                     {
                         int copies = Convert.ToInt32(numCopies.Value);
 
                         // Call the method to create copies of the book
-                        ControllerModifyData<Copy> result = await CopyController.CreateCopies(bookId, SourceEnum.SCHOOL, copies); // Change this later
+                        ControllerModifyData<Copy> result = await CopyController.CreateCopies(bookId, source.ID, copies); // Change this later
 
                         if (result.IsSuccess)
                         {

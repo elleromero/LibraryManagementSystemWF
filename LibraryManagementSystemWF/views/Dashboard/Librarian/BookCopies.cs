@@ -32,12 +32,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             dataGridView1.Columns.Add("ID", "ID");
             dataGridView1.Columns.Add("BookId", "BookId");
+            dataGridView1.Columns.Add("Source", "Source");
+            dataGridView1.Columns.Add("Price", "Price");
             dataGridView1.Columns.Add("StatusName", "Status");
 
             this.loader = new(this);
             this.loader.StartLoading();
 
             this.LoadCopies();
+            this.LoadSources();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -51,6 +54,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 txtBookId.Text = row.Cells["BookId"].Value.ToString();
                 txtStatus.Text = row.Cells["StatusName"].Value.ToString();
 
+            }
+        }
+
+        public async void LoadSources()
+        {
+            ControllerAccessData<Source> res = await SourceController.GetAllSources();
+
+            if (res.IsSuccess)
+            {
+                cmbSource.ValueMember = nameof(Source.ID);
+                cmbSource.DisplayMember = nameof(Source.Name);
+                cmbSource.DataSource = res.Results;
             }
         }
 
@@ -68,7 +83,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
                 foreach (Copy copy in copies.Results)
                 {
-                    dataGridView1.Rows.Add(copy.ID, copy.Book.ID, copy.Status.Name);
+                    dataGridView1.Rows.Add(copy.ID, copy.Book.ID, copy.Source.Name, copy.Price.ToString(), copy.Status.Name);
                 }
 
                 if (copies.Results.Count > 0)
@@ -169,12 +184,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private async void button2_Click(object sender, EventArgs e)
         {
             int copies = Convert.ToInt32(numCopies.Value);
+            Source source = (Source)cmbSource.SelectedItem;
+            decimal price = numPrice.Value;
 
             this.loader = new(this);
             this.loader.StartLoading();
 
             // Call the method to create copies of the book
-            ControllerModifyData<Copy> result = await CopyController.CreateCopies(this.bookId, SourceEnum.SCHOOL, copies); // TODO: Change this later
+            ControllerModifyData<Copy> result = await CopyController.CreateCopies(this.bookId, source.ID, price, copies);
 
             if (result.IsSuccess && result.Result != null)
             {
@@ -186,7 +203,43 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             else
             {
                 this.loader.StopLoading();
-                DialogBuilder.Show(result.Errors, "Remove Copy Error", MessageBoxIcon.Hand);
+                DialogBuilder.Show(result.Errors, "Copy Error", MessageBoxIcon.Hand);
+            }
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+
+                string copyId = selectedRow.Cells["ID"]?.Value?.ToString(); // Assuming the column name for the ID is "ID"
+                Source source = (Source)cmbSource.SelectedItem;
+                decimal price = numPrice.Value;
+
+
+                // Call the appropriate method from your controller to delete the copy by its ID
+                if (copyId != null)
+                {
+                    this.loader = new(this);
+                    this.loader.StartLoading();
+
+                    ControllerModifyData<Copy> res = await CopyController.UpdateCopy(copyId, source.ID, price);
+
+                    if (res.IsSuccess)
+                    {
+                        this.loader.StopLoading();
+                        this.form.RefreshBook();
+                        DialogBuilder.Show("Row updated successfully.", "Update Copy", MessageBoxIcon.Information);
+
+                        LoadCopies();
+                    }
+                    else
+                    {
+                        this.loader.StopLoading();
+                        DialogBuilder.Show(res.Errors, "Update Copy Error", MessageBoxIcon.Hand);
+                    }
+                }
             }
         }
     }
