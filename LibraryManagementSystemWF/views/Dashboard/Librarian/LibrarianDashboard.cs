@@ -18,11 +18,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
     public partial class LibrarianDashboard : Form
     {
         private User? user;
+        private Form form;
 
-        public LibrarianDashboard()
+        public LibrarianDashboard(Form form)
         {
             InitializeComponent();
 
+            this.form = form;
             versionlbl.Text = EnvService.GetVersion();
 
             this.ClearAndHide();
@@ -101,7 +103,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             if (dr == DialogResult.Yes)
             {
                 AuthController.LogOut();
-                new SignIn().Show();
+                this.form.Show();
                 this.Close();
             }
         }

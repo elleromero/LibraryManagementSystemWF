@@ -18,11 +18,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
     public partial class UserDashboard : Form
     {
         private User? user;
+        private Form form;
 
-        public UserDashboard()
+        public UserDashboard(Form form)
         {
             InitializeComponent();
 
+            this.form = form;
             versionlbl.Text = EnvService.GetVersion();
 
             this.ClearAndHide();
@@ -78,7 +80,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             if (dr == DialogResult.Yes)
             {
                 AuthController.LogOut();
-                new SignIn().Show();
+                this.form.Show();
                 this.Close();
             }
         }

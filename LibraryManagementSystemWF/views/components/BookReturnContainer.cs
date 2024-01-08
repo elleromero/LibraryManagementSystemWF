@@ -14,7 +14,7 @@ namespace LibraryManagementSystemWF.views.components
         private Form parentForm;
         private Loader loader;
 
-        public BookReturnContainer(Loan loan, ICustomForm form, Form parentForm)
+        public BookReturnContainer(Loan loan, ICustomForm form, Form parentForm, bool isGuest = false)
         {
             InitializeComponent();
 
@@ -30,6 +30,15 @@ namespace LibraryManagementSystemWF.views.components
             lblDueDate.Text = $"Due on {loan.DateDue:MMM dd, yyyy 'at' h:mm tt}";
 
             if (File.Exists(loan.Copy.Book.BookMetadata.Cover)) pictureBoxCover.Image = Image.FromFile(loan.Copy.Book.BookMetadata.Cover);
+            if (isGuest)
+            {
+                button1.Hide();
+                button2.Hide();
+                txtDescription.Size = new Size(txtDescription.Size.Width, 80);
+                lblCopyId.Location = new Point(lblCopyId.Location.X, 143);
+                lblDueDate.Location = new Point(lblDueDate.Location.X, 162);
+            }
+        
         }
 
         private void button1_Click(object sender, EventArgs e)

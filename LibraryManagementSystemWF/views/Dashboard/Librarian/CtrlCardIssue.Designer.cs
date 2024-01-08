@@ -41,6 +41,7 @@
             this.prevLastBtn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -105,7 +106,7 @@
             this.btnIssueCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnIssueCard.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnIssueCard.ForeColor = System.Drawing.Color.Black;
-            this.btnIssueCard.Location = new System.Drawing.Point(424, 395);
+            this.btnIssueCard.Location = new System.Drawing.Point(424, 390);
             this.btnIssueCard.Name = "btnIssueCard";
             this.btnIssueCard.Size = new System.Drawing.Size(271, 36);
             this.btnIssueCard.TabIndex = 48;
@@ -203,10 +204,28 @@
             this.txtSearch.TabIndex = 49;
             this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Silver;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(424, 432);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(271, 36);
+            this.button1.TabIndex = 56;
+            this.button1.Text = "Open Issued IDs";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // CtrlCardIssue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pageLbl);
             this.Controls.Add(this.nextLastBtn);
             this.Controls.Add(this.nextBtn);
@@ -244,5 +263,6 @@
         private Button prevLastBtn;
         private Button button2;
         private TextBox txtSearch;
+        private Button button1;
     }
 }
