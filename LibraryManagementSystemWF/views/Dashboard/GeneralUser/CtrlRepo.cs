@@ -25,18 +25,21 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         private Form form;
         private bool isSearch;
         private List<Loan> loansList = new();
+        private User? user;
 
-        public CtrlRepo(Form form)
+        public CtrlRepo(Form form, User? user = null)
         {
             InitializeComponent();
 
             this.form = form;
+            this.user = user;
             this.isSearch = false;
             this.loader = new(this.form);
             this.loader.StartLoading();
 
             LoadBorrowedBooks();
 
+            if (user == null) this.linkLabel1.Hide();
         }
 
         public void RefreshDataGrid()
@@ -48,7 +51,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
         private async void LoadSearchBorrowedBooks()
         {
-            ControllerAccessData<Loan> res = await LoanController.Search(txtSearch.Text, page);
+            ControllerAccessData<Loan> res = this.user != null ? await GuestController.Search(txtSearch.Text, user.ID.ToString(), page) : await LoanController.Search(txtSearch.Text, page);
 
             if (res.IsSuccess)
             {
@@ -63,7 +66,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
                 foreach (Loan loan in res.Results)
                 {
-                    flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan, this, this.form));
+                    flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan, this, this.form, user != null));
                 }
             }
             else
@@ -75,7 +78,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
         public async void LoadBorrowedBooks()
         {
-            ControllerAccessData<Loan> res = await LoanController.GetAllBorrowedBooks(page);
+            ControllerAccessData<Loan> res = this.user != null ? await GuestController.GetAllBorrowedBooks(user.ID.ToString(), page) : await LoanController.GetAllBorrowedBooks(page);
 
             if (res.IsSuccess)
             {
@@ -91,7 +94,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
                 this.loansList = res.Results;
                 foreach (Loan loan in res.Results)
                 {
-                    flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan, this, this.form));
+                    flowLayoutPanel1.Controls.Add(new BookReturnContainer(loan, this, this.form, user != null));
                 }
             } else
             {
@@ -170,7 +173,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new BorrowerCard(this.loansList).ShowDialog();
+            new BorrowerCard(this.loansList, this.user).ShowDialog();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.form.Close();
         }
     }
 }

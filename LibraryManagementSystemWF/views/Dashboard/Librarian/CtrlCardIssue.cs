@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -198,6 +199,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void btnIssueCard_Click(object sender, EventArgs e)
         {
+            Loader loader = new(this.form);
+
+            loader.StartLoading();
             //PowerpointBuilder.UpdatePowerPointFile("../../../resources/templates/LIBRARY-ID-CARD.pptx", "TESTING EHE");
             string basePath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             string path = Path.Combine(basePath, "resources", "templates", "LIBRARY-ID-CARD.pptx");
@@ -211,6 +215,32 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 this.currentUser.ProfilePicture,
                 true
                 );
+
+            loader.StopLoading();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Loader loader = new(this.form);
+
+            loader.StartLoading();
+
+            string basePath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            string path = Path.Combine(basePath, "resources", "library_id");
+
+            if (Directory.Exists(path))
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    Arguments = path,
+                    FileName = "explorer.exe"
+                };
+
+                Process.Start(startInfo);
+            }
+
+            loader.StopLoading();
         }
     }
 }
+

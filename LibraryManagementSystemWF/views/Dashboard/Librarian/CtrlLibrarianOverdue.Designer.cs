@@ -80,7 +80,9 @@
             this.dataGridUsers.BackgroundColor = System.Drawing.Color.White;
             this.dataGridUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridUsers.Location = new System.Drawing.Point(6, 110);
+            this.dataGridUsers.MultiSelect = false;
             this.dataGridUsers.Name = "dataGridUsers";
+            this.dataGridUsers.ReadOnly = true;
             this.dataGridUsers.RowTemplate.Height = 25;
             this.dataGridUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridUsers.Size = new System.Drawing.Size(370, 364);
@@ -116,11 +118,15 @@
             // 
             // dataGridDueBooks
             // 
+            this.dataGridDueBooks.AllowUserToAddRows = false;
+            this.dataGridDueBooks.AllowUserToDeleteRows = false;
             this.dataGridDueBooks.BackgroundColor = System.Drawing.Color.White;
             this.dataGridDueBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridDueBooks.Location = new System.Drawing.Point(382, 164);
             this.dataGridDueBooks.Name = "dataGridDueBooks";
+            this.dataGridDueBooks.ReadOnly = true;
             this.dataGridDueBooks.RowTemplate.Height = 25;
+            this.dataGridDueBooks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridDueBooks.Size = new System.Drawing.Size(325, 153);
             this.dataGridDueBooks.TabIndex = 35;
             this.dataGridDueBooks.SelectionChanged += new System.EventHandler(this.dataGridDueBooks_SelectionChanged);
@@ -261,6 +267,7 @@
             this.button3.TabIndex = 48;
             this.button3.Text = "Scan QR";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // panel1
             // 

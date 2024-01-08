@@ -453,7 +453,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN copies c ON c.copy_id = l.copy_id " +
                 "JOIN books b ON c.book_id = b.book_id " +
                 "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
-                $"WHERE l.user_id = '{userId}' AND bmd.title = '%{searchText}%'; " +
+                $"WHERE l.user_id = '{userId}' AND bmd.title LIKE '%{searchText}%'; " +
                 "SELECT *, s.name AS sname, s.description AS sdescription, s.is_available AS savailable, " +
                 "g.name AS gname, g.description AS gdescription, (SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies " +
                 "FROM loans l " +
@@ -469,7 +469,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN sources so ON c.source_id = so.source_id " +
                 $"WHERE l.user_id = '{userId}' " +
                 "AND is_returned = 0 " +
-                $"AND bmd.title = '%{searchText}%' " +
+                $"AND bmd.title LIKE '%{searchText}%' " +
                 $"ORDER BY timestamp DESC, (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
             Console.WriteLine(query);
             await SqlClient.ExecuteAsync(async (error, conn) =>

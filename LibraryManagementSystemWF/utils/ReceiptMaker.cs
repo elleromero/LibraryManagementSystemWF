@@ -22,7 +22,7 @@ namespace LibraryManagementSystemWF.utils
             this.headerTitle = "                       Library Management System"; ;
             this.headerName = "Name: " ;
             this.headerUsername = "Username: ";
-            this.footerText = "             DO NOT THROW AWAY THIS RECEIPT";
+            this.footerText = "             THIS SERVES AS YOUR OFFICIAL RECEIPT";
             this.items = new();
         }
 
@@ -79,6 +79,7 @@ namespace LibraryManagementSystemWF.utils
                 $"\n{this.InsertLineBreak()}" +
                 $"\nBook (Copy ID){this.InsertWhitespace(35)}Amount (PHP)" +
                 $"{this.GetItems()}" +
+                $"\nTOTAL AMOUNT DUE: {this.GetTotal()}" +
                 $"\n{this.InsertLineBreak()}\n" +
                 $"\n{this.footerText}";
 

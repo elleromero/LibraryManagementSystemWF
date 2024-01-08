@@ -29,11 +29,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private double cash = 0;
         private double amountDue = 0;
         private double change = 0;
+        private ScanLibraryCard slc;
 
         public CtrlLibrarianOverdue(Form form)
         {
             InitializeComponent();
 
+            this.slc = new ScanLibraryCard(this.form, callback);
             this.form = form;
             this.loader = new(this.form);
 
@@ -234,18 +236,33 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             if (double.TryParse(txtCash.Text, out double ChangeCash))
             {
-                ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
+                DialogResult dr = MessageBox.Show("Proceed Payment", "Confirmation", MessageBoxButtons.YesNo);
+
+                if (dr == DialogResult.OK)
+                {
+                    this.cash = ChangeCash;
+                    ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
                 
-                if (res.IsSuccess && this.currentUser != null)
-                {
-                    new ConfirmPayment(this.receiptMaker.GetReceipt(
-                        $"{this.currentUser.Member.FirstName} {this.currentUser.Member.FirstName}",
-                        this.currentUser.Username
-                        )).ShowDialog();
-                } else
-                {
-                    DialogBuilder.Show(res.Errors, "Error", MessageBoxIcon.Hand);
+                    if (res.IsSuccess && this.currentUser != null)
+                    {
+                        MessageBox.Show("Payment Successful");
+                        new ConfirmPayment(this.receiptMaker.GetReceipt(
+                            $"{this.currentUser.Member.FirstName} {this.currentUser.Member.FirstName}",
+                            this.currentUser.Username
+                            )).ShowDialog();
+
+                        // clear
+                        txtCash.Text = "";
+                        lblTotalAmountDue.Text = "0.0";
+                        lblChange.Text = "0";
+
+                        dataGridDueBooks.Rows.Clear();
+                    } else
+                    {
+                        DialogBuilder.Show(res.Errors, "Error", MessageBoxIcon.Hand);
+                    }
                 }
+
             }
             else
             {
@@ -256,22 +273,21 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
         private void txtCash_KeyPress(object sender, KeyPressEventArgs e)
         {
-        }
-
-        private void txtCash_KeyDown(object sender, KeyEventArgs e)
-        {
             try
             {
                 if (double.TryParse(txtCash.Text, out double ChangeCash))
                 {
-                    this.cash = ChangeCash;
                     dataGridDueBooks_SelectionChanged(sender, e);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error : ", ex.Message);
             }
+        }
+
+        private void txtCash_KeyDown(object sender, KeyEventArgs e)
+        {
         }
 
         private void nextBtn_Click(object sender, EventArgs e)
@@ -340,6 +356,27 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 this.currentPage = 1;
                 LoadUsers();
             }
+        }
+
+        private void callback(User user)
+        {
+            this.slc.Close();
+            this.form.Show();
+            dataGridUsers.Rows.Clear();
+            dataGridDueBooks.Rows.Clear();
+
+            dataGridUsers.Rows.Add(
+                user.ID,
+                user.Username,
+                $"{user.Member.FirstName} {user.Member.LastName}",
+                $"{user.Member.CourseYear} - {user.Member.Program.Name}"
+                );
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.form.Hide();
+            this.slc.Show();
         }
     }
 }
