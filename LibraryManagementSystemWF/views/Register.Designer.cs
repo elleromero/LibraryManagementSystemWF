@@ -144,6 +144,7 @@
             this.button2.TabIndex = 10;
             this.button2.Text = "<";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // pictureBox2
             // 
@@ -248,6 +249,7 @@
             this.button3.TabIndex = 22;
             this.button3.Text = "Create an account";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label8
             // 
@@ -310,6 +312,7 @@
             this.button1.TabIndex = 27;
             this.button1.Text = "+";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label10
             // 

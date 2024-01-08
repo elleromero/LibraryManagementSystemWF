@@ -19,7 +19,7 @@ namespace LibraryManagementSystemWF
             SetupService.Ready();
 
             // Application.Run(new Form1());
-            Application.Run(new SignIn());
+            Application.Run(new Welcome());
         }
     }
 }

@@ -25,12 +25,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         private Form form;
         private bool isSearch;
         private List<Loan> loansList = new();
+        private string? userId;
 
-        public CtrlRepo(Form form)
+        public CtrlRepo(Form form, string? userId = null)
         {
             InitializeComponent();
 
             this.form = form;
+            this.userId = userId;
             this.isSearch = false;
             this.loader = new(this.form);
             this.loader.StartLoading();
@@ -75,7 +77,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
 
         public async void LoadBorrowedBooks()
         {
-            ControllerAccessData<Loan> res = await LoanController.GetAllBorrowedBooks(page);
+            ControllerAccessData<Loan> res = this.userId != null ? await GuestController.GetAllBorrowedBooks(userId, page) : await LoanController.GetAllBorrowedBooks(page);
 
             if (res.IsSuccess)
             {
