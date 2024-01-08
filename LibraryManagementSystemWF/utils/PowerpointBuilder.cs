@@ -19,7 +19,7 @@ namespace LibraryManagementSystemWF.utils
             this.presentation = pptApp.Presentations.Open(filePath, MSO.msoFalse, MSO.msoFalse, MSO.msoFalse);
         }
 
-        public void Modify(string studentNo, string name, string year, string course, string profile, bool saveCopy = false)
+        public void Modify(Image qr, string studentNo, string userId, string name, string year, string course, string profile, bool saveCopy = false)
         {
             foreach (Slide slide in this.presentation.Slides)
             {
@@ -36,12 +36,17 @@ namespace LibraryManagementSystemWF.utils
                         if (text.Contains("@valid_until")) shape.TextFrame.TextRange.Text = DateTime.Now.AddMonths(6).ToString("dd MMMM yyyy");
                     }
 
-                    if (shape.Type == MsoShapeType.msoPicture && shape.Name.Contains("@profile"))
+                    if (shape.Type == MsoShapeType.msoAutoShape && shape.Name.Contains("@profile"))
                     {
                         this.basePath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
                         this.path = Path.Combine(this.basePath, profile.Replace("../../../", ""));
-
+                        this.path = this.path.Replace("/", "\\");
                         shape.Fill.UserPicture(this.path);
+                    }
+
+                    if (shape.Type == MsoShapeType.msoAutoShape && shape.Name.Contains("@qr"))
+                    {
+                        shape.Fill.UserPicture(QRMaker.SaveQr(qr, userId));
                     }
                 }
             }

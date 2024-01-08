@@ -24,6 +24,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
         private Form form;
         private List<User> users;
         private User currentUser;
+        private Image qr;
 
         public CtrlCardIssue(Form form)
         {
@@ -117,7 +118,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 string id = dataGridUsers.SelectedRows[0].Cells["ID"].Value.ToString();
                 this.currentUser = this.users.Find((x) => x.ID == new Guid(id));
                 this.AddUserToPreview(this.currentUser);
-                pictureBox1.Image = QRMaker.GenerateQR(this.currentUser.ID.ToString(), 162);
+                this.qr = QRMaker.GenerateQR(this.currentUser.ID.ToString(), 162);
+                pictureBox1.Image = this.qr;
             }
         }
 
@@ -200,11 +202,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             string basePath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             string path = Path.Combine(basePath, "resources", "templates", "LIBRARY-ID-CARD.pptx");
             new PowerpointBuilder(path).Modify(
+                this.qr,
                 this.currentUser.Member.SchoolNumber,
+                this.currentUser.ID.ToString(),
                 $"{this.currentUser.Member.FirstName} {this.currentUser.Member.LastName}",
                 $"{(this.currentUser.Member.CourseYear != null ? this.currentUser.Member.CourseYear.ToString() : "UNKNOWN")}",
                 $"{(this.currentUser.Member.Program.Description != null ? this.currentUser.Member.Program.Description : "UNKNOWN")}",
-                this.currentUser.ProfilePicture
+                this.currentUser.ProfilePicture,
+                true
                 );
         }
     }

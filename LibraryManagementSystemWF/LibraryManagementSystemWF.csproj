@@ -57,6 +57,7 @@
   <ItemGroup>
     <Folder Include="resources\config\" />
     <Folder Include="resources\library_id\" />
+    <Folder Include="resources\temp_qr\" />
     <Folder Include="views\Dashboard\User\" />
   </ItemGroup>
 
