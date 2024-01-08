@@ -70,7 +70,8 @@ INSERT INTO members (
 	phone,
 	address,
 	member_id,
-	program_id
+	program_id,
+	course_year
 ) VALUES (
 	'Jameson',
 	'Teodore',
@@ -79,6 +80,7 @@ INSERT INTO members (
 	'09987654321',
 	'1023 Santolan St.',
 	@member_id,
+	1,
 	3
 );
 
@@ -100,7 +102,8 @@ INSERT INTO members (
 	phone,
 	address,
 	member_id,
-	program_id
+	program_id,
+	course_year
 ) VALUES (
 	'Jamesmar',
 	'Martin',
@@ -109,13 +112,79 @@ INSERT INTO members (
 	'09192365102',
 	'0018 Payatas St.',
 	@member_id,
-	2
+	1,
+	3
 );
 
 INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
 	'User2',
 	'$argon2id$v=19$m=65536,t=3,p=1$3wKJEyw8CQjpQHN2DjH7qg$uRD8wwKE4DTmjFVgunfEcH+zbdJOzi7n1/03Le70lRo',
-	'../../../resources/assets/defaults/users/User2.jpg',
+	'../../../resources/assets/defaults/users/User3.jpeg',
+	2,
+	@member_id
+);
+
+
+SET @member_id = NEWID();
+
+INSERT INTO members (
+	first_name,
+	last_name,
+	school_no,
+	email,
+	phone,
+	address,
+	member_id,
+	program_id,
+	course_year
+) VALUES (
+	'Shello',
+	'Roxas',
+	'21613',
+	'Sheshe@gmail.com',
+	'09987654312',
+	'1023 Santolan St.',
+	@member_id,
+	1,
+	3
+);
+
+INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
+	'User3',
+	'$argon2id$v=19$m=65536,t=3,p=1$3wKJEyw8CQjpQHN2DjH7qg$uRD8wwKE4DTmjFVgunfEcH+zbdJOzi7n1/03Le70lRo',
+	'../../../resources/assets/defaults/users/Admin.png',
+	2,
+	@member_id
+);
+
+SET @member_id = NEWID();
+
+INSERT INTO members (
+	first_name,
+	last_name,
+	school_no,
+	email,
+	phone,
+	address,
+	member_id,
+	program_id,
+	course_year
+) VALUES (
+	'Eleazar',
+	'Romero',
+	'202902',
+	'Elromero@gmail.com',
+	'09987654322',
+	'1023 Santolan St.',
+	@member_id,
+	1,
+	3
+);
+
+INSERT INTO users (username, password_hash, profile_picture, role_id, member_id) VALUES (
+	'User4',
+	'$argon2id$v=19$m=65536,t=3,p=1$3wKJEyw8CQjpQHN2DjH7qg$uRD8wwKE4DTmjFVgunfEcH+zbdJOzi7n1/03Le70lRo',
+	'../../../resources/assets/defaults/users/babboon.JPG',
 	2,
 	@member_id
 );
