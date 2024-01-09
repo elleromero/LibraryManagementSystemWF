@@ -74,7 +74,7 @@ CREATE TABLE genres (
 
 CREATE TABLE book_metadata (
     metadata_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	genre_id INT NOT NULL,
+	genre_id INT NULL,
 	title VARCHAR(100) NOT NULL,
 	sypnosis VARCHAR(1500) NOT NULL,
 	author VARCHAR(45) NOT NULL,
@@ -128,8 +128,10 @@ CREATE TABLE activities (
 	activity_id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	activity_log VARCHAR(1000) NOT NULL,
 	activity_type_id INT,
+	user_id UNIQUEIDENTIFIER NOT NULL,
 	timestamp DATETIME2 NOT NULL DEFAULT(GETDATE()),
 	FOREIGN KEY (activity_type_id) REFERENCES activity_type(activity_type_id),
+	FOREIGN KEY (user_id) REFERENCES users(user_id),
 )
 
 /* INSERTS DATA */
@@ -144,11 +146,11 @@ VALUES
 ('COPY_OPERATION', 'Book related operation')
 
 INSERT INTO programs(program_name, program_description) VALUES
-('BSIT', 'Bachelor of Science in Information Technology'),
-('BSCPE','Bachelor of Science in Computer Engineering'),
-('BSTM','Bachelor of Science in Tourism Management'),
-('BSHM','Bachelor of Science in Hospitality Management'),
-('BSBA','Bachelor of Science in Business Administration');
+('BSIT', 'BS in Information Technology'),
+('BSCPE','BS in Computer Engineering'),
+('BSTM','BS in Tourism Management'),
+('BSHM','BS in Hospitality Management'),
+('BSBA','BS in Business Administration');
 
 INSERT INTO sources(source_name) VALUES
 ('Donation'),

@@ -58,6 +58,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="button4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAXdJREFUSEtjGH5AQsLeRELS7rKEpP0/IP5PPLb7Iy5hNwtqDG4ANlzC7jbQog5S
+        MNDww0CL/kKNwQ1AisQl7RtB7P9ndI3+n9Mr+X9Wv5wQTgi22g3yCVj9FS0hsGHYAEgR0IKG/xf0DP+e
+        0/v175z+f2JwV4k5OKhAbKAlFVDjMAHcgnN6lSDFRfGWaGGNwCA5bBb8PavfADUOE4AUgSwAKQIpPrbI
+        +H9LrgVWDJKj2AJiMUkWAFNRPcwC9CBCDhZkTLQFQNf3ionZW8AsQA8i5GBBxkRbAAMwC4jFg8cCcUm7
+        A5KSdoGkWgAKuuIECzAbrwUgV5CTipDxCLBAQtJhZXa05e5JVWb/icXNeeb/y5IheYQIC8jDkkBMnAUS
+        dud/kxhEJBQVdt+B+JeNqc3dSF+r/7gwKEiQgyjM0/q/tDQxFkjYxwJ9ALQEMwjwYSmg4SWJRMQBDJBa
+        4SBjvBUOMvh/Xt8AqLgWaFEHsRhYfdYgqkwGBgCwSWarjPo5cwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -73,7 +85,7 @@
   <data name="button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAAAlRJREFUSEtjGAUkAXl5ewFxSbvFEpL2H4H4PxA/Y2AIZZaUdLAGsn9BxXDhjyC9
+        DAAACwwBP0AiyAAAAlRJREFUSEtjGAUkAXl5ewFxSbvFEpL2H4H4PxA/Y2AIZZaUdLAGsn9BxXDhjyC9
         IDOgxmECcQn7JeISdt+BiqdISNh3SEjYpoPE5eRsBCUk7OohYtixuKT9VKDeH0BLFoENwwZArgAaNAnK
         JRmA9EpI2n2AcjEByKtAlzSA2P/P6wf8Paf//N85/f/E4q4Sc3BwAfW6gQ1EB8gWoBv+cLvhf1sz2//G
         enb/L681QjEYhmEW/D2rfwNsIDpAtgBdc3KI5X81Fbv/hrq2/30cbVDkYBjJgk9gA9EBugUXVhn/3zbV

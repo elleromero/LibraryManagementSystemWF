@@ -18,11 +18,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
     public partial class UserDashboard : Form
     {
         private User? user;
+        private Form form;
 
-        public UserDashboard()
+        public UserDashboard(Form form)
         {
             InitializeComponent();
 
+            this.form = form;
             versionlbl.Text = EnvService.GetVersion();
 
             this.ClearAndHide();
@@ -67,6 +69,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             button2.BackColor = Color.White;
             button3.BackColor = Color.White;
+            button4.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }
@@ -77,7 +80,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
             if (dr == DialogResult.Yes)
             {
                 AuthController.LogOut();
-                new SignIn().Show();
+                this.form.Show();
                 this.Close();
             }
         }
@@ -104,6 +107,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         {
             this.Enabled = false;
             new UserAnnouncement(this).Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button4.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlUserActivityLog(this));
+            navLbl.Text = "My Activity";
         }
     }
 }

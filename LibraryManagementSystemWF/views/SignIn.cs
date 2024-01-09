@@ -12,12 +12,14 @@ namespace LibraryManagementSystemWF.views
     public partial class SignIn : Form
     {
         private Loader loader;
+        private Form? form;
 
-        public SignIn()
+        public SignIn(Form? form = null)
         {
             InitializeComponent();
 
             this.loader = new(this);
+            this.form = form;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -52,13 +54,13 @@ namespace LibraryManagementSystemWF.views
                 }
                 else if (user.Role.HasAccess && user.Role.Name == "LIBRARIAN")
                 {
-                    LibrarianDashboard librarian = new();
+                    LibrarianDashboard librarian = new(this);
                     this.Hide();
                     librarian.Show();
                 }
                 else
                 {
-                    UserDashboard userDb = new();
+                    UserDashboard userDb = new(this);
                     this.Hide();
                     userDb.Show();
                 }
@@ -75,12 +77,17 @@ namespace LibraryManagementSystemWF.views
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             new About().ShowDialog();
+        }
+
+        private void SignIn_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.form?.Show();
         }
     }
 }

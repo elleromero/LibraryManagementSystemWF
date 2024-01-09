@@ -38,6 +38,7 @@
             versionlbl = new Label();
             idLbl = new Label();
             panel3 = new Panel();
+            button8 = new Button();
             button7 = new Button();
             button6 = new Button();
             button5 = new Button();
@@ -151,6 +152,7 @@
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel3.Controls.Add(button8);
             panel3.Controls.Add(button7);
             panel3.Controls.Add(button6);
             panel3.Controls.Add(button5);
@@ -161,6 +163,27 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(333, 402);
             panel3.TabIndex = 0;
+            // 
+            // button8
+            // 
+            button8.Dock = DockStyle.Top;
+            button8.FlatAppearance.BorderColor = Color.FromArgb(255, 255, 128);
+            button8.FlatAppearance.BorderSize = 0;
+            button8.FlatAppearance.CheckedBackColor = Color.FromArgb(255, 255, 128);
+            button8.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 255, 128);
+            button8.FlatAppearance.MouseOverBackColor = Color.FromArgb(255, 255, 128);
+            button8.FlatStyle = FlatStyle.Flat;
+            button8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button8.Image = (Image)resources.GetObject("button8.Image");
+            button8.Location = new Point(0, 258);
+            button8.Name = "button8";
+            button8.Size = new Size(333, 43);
+            button8.TabIndex = 6;
+            button8.Text = "  Cards";
+            button8.TextAlign = ContentAlignment.MiddleLeft;
+            button8.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
             // 
             // button7
             // 
@@ -198,7 +221,7 @@
             button6.Name = "button6";
             button6.Size = new Size(333, 43);
             button6.TabIndex = 4;
-            button6.Text = "Activity";
+            button6.Text = " Activity";
             button6.TextAlign = ContentAlignment.MiddleLeft;
             button6.TextImageRelation = TextImageRelation.ImageBeforeText;
             button6.UseVisualStyleBackColor = true;
@@ -219,7 +242,7 @@
             button5.Name = "button5";
             button5.Size = new Size(333, 43);
             button5.TabIndex = 3;
-            button5.Text = "Loans";
+            button5.Text = " Course";
             button5.TextAlign = ContentAlignment.MiddleLeft;
             button5.TextImageRelation = TextImageRelation.ImageBeforeText;
             button5.UseVisualStyleBackColor = true;
@@ -240,7 +263,7 @@
             button4.Name = "button4";
             button4.Size = new Size(333, 43);
             button4.TabIndex = 2;
-            button4.Text = "Genres";
+            button4.Text = " Genres";
             button4.TextAlign = ContentAlignment.MiddleLeft;
             button4.TextImageRelation = TextImageRelation.ImageBeforeText;
             button4.UseVisualStyleBackColor = true;
@@ -261,7 +284,7 @@
             button3.Name = "button3";
             button3.Size = new Size(333, 43);
             button3.TabIndex = 1;
-            button3.Text = "Books";
+            button3.Text = " Books";
             button3.TextAlign = ContentAlignment.MiddleLeft;
             button3.TextImageRelation = TextImageRelation.ImageBeforeText;
             button3.UseVisualStyleBackColor = true;
@@ -282,7 +305,7 @@
             button2.Name = "button2";
             button2.Size = new Size(333, 43);
             button2.TabIndex = 0;
-            button2.Text = "Home";
+            button2.Text = " Home";
             button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.TextImageRelation = TextImageRelation.ImageBeforeText;
             button2.UseVisualStyleBackColor = true;
@@ -391,8 +414,9 @@
         private Label idLbl;
         private Label versionlbl;
         private Button button4;
-        private Button button5;
         private Button button6;
         private Button button7;
+        private Button button5;
+        private Button button8;
     }
 }

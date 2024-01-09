@@ -11,7 +11,7 @@ namespace LibraryManagementSystemWF.utils
 {
     internal class ReceiptMaker 
     {
-        private string headerTitle, headerName, headerCourse, footerText;
+        private string headerTitle, headerName, headerUsername, footerText;
         private Dictionary<string, double> items;
         
 
@@ -21,8 +21,8 @@ namespace LibraryManagementSystemWF.utils
 
             this.headerTitle = "                       Library Management System"; ;
             this.headerName = "Name: " ;
-            this.headerCourse = "Course: ";
-            this.footerText = "             DO NOT THROW AWAY THIS RECEIPT";
+            this.headerUsername = "Username: ";
+            this.footerText = "             THIS SERVES AS YOUR OFFICIAL RECEIPT";
             this.items = new();
         }
 
@@ -67,18 +67,19 @@ namespace LibraryManagementSystemWF.utils
             return change;
         }
 
-        public string GetReceipt()
+        public string GetReceipt(string name, string username)
         {
             string receipt = string.Empty;
 
             // render header
             receipt += $"{this.headerTitle}" +
                 $"\n{this.InsertLineBreak()}" +
-                $"\n{this.headerName}" +
-                $"\n{this.headerCourse}" +
+                $"\n{this.headerName} {name}" +
+                $"\n{this.headerUsername} {username}" +
                 $"\n{this.InsertLineBreak()}" +
                 $"\nBook (Copy ID){this.InsertWhitespace(35)}Amount (PHP)" +
                 $"{this.GetItems()}" +
+                $"\nTOTAL AMOUNT DUE: {this.GetTotal()}" +
                 $"\n{this.InsertLineBreak()}\n" +
                 $"\n{this.footerText}";
 

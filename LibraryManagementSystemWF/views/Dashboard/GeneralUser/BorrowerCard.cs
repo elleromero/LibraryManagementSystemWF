@@ -16,12 +16,14 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
     public partial class BorrowerCard : Form
     {
         private List<Loan> listLoans;
+        private User? guest;
 
-        public BorrowerCard(List<Loan> loans)
+        public BorrowerCard(List<Loan> loans, User? guest = null)
         {
             InitializeComponent();
 
             this.listLoans = loans;
+            this.guest = guest;
 
             dataGridView1.Columns.Add("Due On", "Due On");
             dataGridView1.Columns.Add("Book Title", "Book Title");
@@ -33,7 +35,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.GeneralUser
         private void LoadInfo()
         {
             // Load user
-            User? user = AuthService.getSignedUser();
+            User? user = this.guest != null ? this.guest : AuthService.getSignedUser();
 
             if (user != null)
             {

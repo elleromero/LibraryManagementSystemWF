@@ -27,7 +27,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN members m ON m.member_id = u.member_id " +
                 "JOIN roles r ON r.role_id = u.role_id " +
                 "LEFT JOIN programs p ON p.program_id = m.program_id " +
-                $"WHERE r.name = '{RoleEnum.USER}'" +
+                $"WHERE r.name = '{RoleEnum.USER}' " +
                 $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -112,9 +112,59 @@ namespace LibraryManagementSystemWF.dao
             throw new NotImplementedException();
         }
 
-        public Task<ReturnResultArr<User>> GetSearchResults(string searchText, int page)
+        public async Task<ReturnResultArr<User>> GetSearchResults(string searchText, int page)
         {
-            throw new NotImplementedException();
+            ReturnResultArr<User> returnResult = new()
+            {
+                Results = new List<User>(),
+                IsSuccess = false,
+                rowCount = 0
+            };
+
+            string query = $"SELECT COUNT(*) as row_count FROM users WHERE username LIKE '%{searchText}%'; " +
+                "SELECT * FROM users u " +
+                "JOIN members m ON m.member_id = u.member_id " +
+                "JOIN roles r ON r.role_id = u.role_id " +
+                "LEFT JOIN programs p ON p.program_id = m.program_id " +
+                $"WHERE username LIKE '%{searchText}%' " +
+                $"AND r.name = '{RoleEnum.USER}' " +
+                $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    // Add row count
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+                    }
+
+                    // Fill data
+                    if (await reader.NextResultAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            User? user = Fill(reader);
+
+                            if (user != null) returnResult.Results.Add(user);
+                        }
+                    }
+
+                    returnResult.IsSuccess = true;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
         }
 
         public Task<bool> Remove(string id)

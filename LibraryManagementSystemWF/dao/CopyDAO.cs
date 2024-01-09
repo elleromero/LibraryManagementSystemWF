@@ -4,7 +4,9 @@ using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +14,7 @@ namespace LibraryManagementSystemWF.dao
 {
     internal class CopyDAO : IDAO<Copy>
     {
-        public async Task<ReturnResult<Copy>> CreateMany(string bookId, int copies, SourceEnum source, decimal price = 0)
+        public async Task<ReturnResult<Copy>> CreateMany(string bookId, int copies, int source, decimal price = 0)
         {
             ReturnResult<Copy> returnResult = new()
             {
@@ -25,7 +27,7 @@ namespace LibraryManagementSystemWF.dao
             string loopQuery = $"WHILE (@counter <= {copies}) " +
                 "BEGIN " +
                 "SET @copy_id = NEWID(); " +
-                $"INSERT INTO copies (copy_id, book_id, price, source_id, status_id) VALUES (@copy_id, '{bookId}', {price}, {(int)source}, 1); " +
+                $"INSERT INTO copies (copy_id, book_id, price, source_id, status_id) VALUES (@copy_id, '{bookId}', {price}, {source}, 1); " +
                 "SET @counter = @counter + 1; " +
                 "END;";
             string selectQuery = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
@@ -35,6 +37,7 @@ namespace LibraryManagementSystemWF.dao
                 "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                 "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                 "JOIN statuses s ON s.status_id = c.status_id " +
+                "JOIN sources so ON c.source_id = so.source_id " +
                 "WHERE copy_id = @copy_id;";
             string query = $"{declareQuery} {loopQuery} {selectQuery}";
 
@@ -112,7 +115,13 @@ namespace LibraryManagementSystemWF.dao
             {
                 ID = reader.GetGuid(reader.GetOrdinal("copy_id")),
                 Book = book,
-                Status = status
+                Status = status,
+                Price = reader.GetDecimal(reader.GetOrdinal("price")),
+                Source = new Source
+                {
+                    ID = reader.GetInt32(reader.GetOrdinal("source_id")),
+                    Name = reader.GetString(reader.GetOrdinal("source_name"))
+                }
             };
 
             return copy;
@@ -135,6 +144,7 @@ namespace LibraryManagementSystemWF.dao
                            "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                            "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                            "JOIN statuses s ON s.status_id = c.status_id " +
+                           "JOIN sources so ON c.source_id = so.source_id " +
                            $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -189,6 +199,7 @@ namespace LibraryManagementSystemWF.dao
                            "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                            "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                            "JOIN statuses s ON s.status_id = c.status_id " +
+                           "JOIN sources so ON c.source_id = so.source_id " +
                            $"WHERE c.book_id = '{bookId}'" +
                            $"ORDER BY (SELECT NULL) OFFSET ({page} - 1) * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
 
@@ -220,7 +231,7 @@ namespace LibraryManagementSystemWF.dao
 
                     returnResult.IsSuccess = true;
                 }
-                catch { return; }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
                 finally { if (reader != null) await reader.CloseAsync(); }
             });
 
@@ -242,6 +253,7 @@ namespace LibraryManagementSystemWF.dao
                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
                "JOIN statuses s ON s.status_id = c.status_id " +
+               "JOIN sources so ON c.source_id = so.source_id " +
                $"WHERE copy_id = '{id}';";
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
@@ -292,9 +304,50 @@ namespace LibraryManagementSystemWF.dao
             return isRemoved;
         }
 
-        public Task<ReturnResult<Copy>> Update(Copy model)
+        public async Task<ReturnResult<Copy>> Update(Copy model)
         {
-            throw new NotImplementedException();
+            ReturnResult<Copy> returnResult = new()
+            {
+                Result = default,
+                IsSuccess = false
+            };
+
+            string updateQuery = $"UPDATE copies SET source_id = {model.Source.ID}, price = {model.Price} WHERE copy_id = '{model.ID}';";
+            string selectQuery = "SELECT *, s.name AS status_name, s.description AS status_description, s.is_available AS status_is_available, " +
+                "g.name AS genre_name, g.description AS genre_description, " +
+                "(SELECT COUNT(*) FROM copies co WHERE book_id = b.book_id AND co.status_id = 1) AS available_copies FROM copies c " +
+                "JOIN books b ON b.book_id = c.book_id " +
+                "JOIN book_metadata bmd ON bmd.metadata_id = b.metadata_id " +
+                "LEFT JOIN genres g ON g.genre_id = bmd.genre_id " +
+                "JOIN statuses s ON s.status_id = c.status_id " +
+                "JOIN sources so ON c.source_id = so.source_id " +
+                $"WHERE copy_id = '{model.ID}';";
+            string query = $"{updateQuery} {selectQuery}";
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if (error != null) return;
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    if (await reader.ReadAsync())
+                    {
+                        returnResult.Result = Fill(reader);
+                        returnResult.IsSuccess = returnResult.Result != default(Copy);
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception e) { MessageBox.Show(e.ToString()); return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return returnResult;
         }
 
         public Task<ReturnResultArr<Copy>> GetSearchResults(string searchText, int page)

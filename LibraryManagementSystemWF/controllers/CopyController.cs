@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace LibraryManagementSystemWF.controllers
 {
     internal class CopyController : BaseController
     {
-        public static async Task<ControllerModifyData<Copy>> CreateCopies(string bookId, SourceEnum source, int copies = 1)
+        public static async Task<ControllerModifyData<Copy>> CreateCopies(string bookId, int sourceId, decimal price, int copies = 1)
         {
             ControllerModifyData<Copy> returnData = new()
             {
@@ -31,16 +32,32 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
+            Config config = new();
+            int maxCopies = config.maxCopies;
+            decimal maxPrice = config.maxPrice;
             if (string.IsNullOrWhiteSpace(bookId)) errors["bookId"] = "ID is invalid";
-            if (copies <= 0 || copies > 50) errors["copies"] = "Copies should between 1 to 50";
+            if (copies < 0 || copies > maxCopies) errors["copies"] = $"Copies should between 1 to {maxCopies}";
+            if (price > maxPrice || price < 0) errors["price"] = "Invalid Price";
+            if (!await Validator.IsSourceIdValid(sourceId)) errors["sourceId"] = "Source is invalid";
 
             if (errors.Count == 0)
             {
                 CopyDAO copyDao = new();
-                ReturnResult<Copy> result = await copyDao.CreateMany(bookId, copies, source);
+                ReturnResult<Copy> result = await copyDao.CreateMany(bookId, copies, sourceId, price);
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
+
+                if (isSuccess)
+                {
+                    // Log
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} created {copies} copies of '{bookId[..4]}' [SOURCE: {(SourceEnum)sourceId}]", signedUser.ID, ActivityTypeEnum.COPY_OPERATION);
+                    }
+                }
             }
 
             returnData.Errors = errors;
@@ -176,9 +193,81 @@ namespace LibraryManagementSystemWF.controllers
             {
                 CopyDAO copyDao = new();
                 returnResult.IsSuccess = await copyDao.Remove(id);
+
+
+                if (returnResult.IsSuccess)
+                {
+                    // Log
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} removed copy '{id[..4]}'", signedUser.ID, ActivityTypeEnum.COPY_OPERATION);
+                    }
+                }
             }
 
             return returnResult;
         }
+
+        public static async Task<ControllerModifyData<Copy>> UpdateCopy(string copyId, int sourceId, decimal price)
+        {
+            ControllerModifyData<Copy> returnData = new()
+            {
+                Result = default
+            };
+            Dictionary<string, string> errors = new();
+            bool isSuccess = false;
+
+            // is not librarian
+            if (!await AuthGuard.HavePermission("LIBRARIAN"))
+            {
+                errors["permission"] = "Forbidden";
+                returnData.Errors = errors;
+                returnData.IsSuccess = false;
+
+                return returnData;
+            }
+
+            // validation
+            Config config = new();
+            decimal maxPrice = config.maxPrice;
+            if (string.IsNullOrWhiteSpace(copyId)) errors["copyId"] = "ID is invalid";
+            if (price > maxPrice || price < 0) errors["price"] = "Invalid Price";
+            if (!await Validator.IsSourceIdValid(sourceId)) errors["sourceId"] = "Source is invalid";
+
+            if (errors.Count == 0)
+            {
+                CopyDAO copyDao = new();
+                ReturnResult<Copy> result = await copyDao.Update(new Copy
+                {
+                    ID = new Guid(copyId),
+                    Price = price,
+                    Source = new Source
+                    {
+                        ID = sourceId
+                    }
+                });
+
+                isSuccess = result.IsSuccess;
+                returnData.Result = result.Result;
+
+                if (isSuccess)
+                {
+                    // Log
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} updated '{copyId[..4]}' to price {price} [SOURCE: {(SourceEnum)sourceId}]", signedUser.ID, ActivityTypeEnum.COPY_OPERATION);
+                    }
+                }
+            }
+
+            returnData.Errors = errors;
+            returnData.IsSuccess = isSuccess;
+            return returnData;
+        }
+
     }
 }

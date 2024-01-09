@@ -193,8 +193,9 @@ namespace LibraryManagementSystemWF.dao
             bool isRemoved = false;
 
             // remove genre
-            string query = $"DELETE FROM genres WHERE genre_id = ${id}; " +
-                $"UPDATE books SET genre_id = NULL WHERE genre_id = ${id};";
+            string query = $"UPDATE book_metadata SET genre_id = NULL WHERE genre_id = ${id};" +
+                $"DELETE FROM genres WHERE genre_id = ${id};";
+                
 
             await SqlClient.ExecuteAsync(async (error, conn) =>
             {
@@ -207,7 +208,7 @@ namespace LibraryManagementSystemWF.dao
 
                         isRemoved = true;
                     }
-                    catch { return; }
+                    catch (Exception e) { MessageBox.Show(e.ToString()); return; }
             });
 
             return isRemoved;

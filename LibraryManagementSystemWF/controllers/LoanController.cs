@@ -24,7 +24,7 @@ namespace LibraryManagementSystemWF.controllers
             Dictionary<string, string> errors = new();
             bool isSuccess = false;
             string? userId = AuthService.getSignedUser()?.ID.ToString();
-            DateTime dueDate = DateTime.Now.AddDays(EnvService.GetBorrowTimeDays());
+            DateTime dueDate = DateTime.Now.AddDays(new Config().daysBeforeDue);
 
             // is not librarian
             if (!await AuthGuard.HavePermission("USER"))
@@ -47,6 +47,7 @@ namespace LibraryManagementSystemWF.controllers
             if (string.IsNullOrWhiteSpace(bookId)) errors.Add("bookId", "ID is invalid");
             if (dueDate.Date < DateTime.Now.Date) errors.Add("dueDate", "Invalid due date");
             if (!await Validator.IsCopyAvailable(bookId)) errors.Add("bookId", "No available copies for this book");
+            if (await BookGuard.IsLimitReached(userId)) errors.Add("book_count", "Maximum limit reached");
 
             if (errors.Count == 0)
             {
@@ -70,6 +71,18 @@ namespace LibraryManagementSystemWF.controllers
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
+
+                if (isSuccess)
+                {
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null && result.Result != null)
+                    {
+                        string bookTitle = result.Result.Copy.Book.BookMetadata.Title;
+                        string copyId = result.Result.Copy.ID.ToString();
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} borrowed '{bookTitle}' [COPY ID: {copyId}]", signedUser.ID, ActivityTypeEnum.BOOK_TRANSACT);
+                    }
+                }
             }
 
             returnData.Errors = errors;
@@ -98,8 +111,16 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
-            if (string.IsNullOrWhiteSpace(userId)) errors.Add("auth", "Please login");
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                errors.Add("auth", "Please login");
+            }
+            else
+            {
+                if (await BookGuard.IsPastDue(userId)) errors.Add("book", "Cannot return book past due. Please pay through the librarian");
+            }
             if (string.IsNullOrWhiteSpace(loanId)) errors.Add("loanId", "ID is invalid");
+
 
             // update if theres no error
             if (errors.Count == 0 && userId != null)
@@ -120,6 +141,15 @@ namespace LibraryManagementSystemWF.controllers
                 if (isSuccess && result.Result != null)
                 {
                     returnData.Result = result.Result;
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        string bookTitle = result.Result.Copy.Book.BookMetadata.Title;
+                        string copyId = result.Result.Copy.ID.ToString();
+
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} returned '{bookTitle}' [COPY ID: {copyId}]", signedUser.ID, ActivityTypeEnum.BOOK_TRANSACT);
+                    }
                 }
             }
 
@@ -162,6 +192,13 @@ namespace LibraryManagementSystemWF.controllers
                 isSuccess = result.IsSuccess;
                 returnData.Results = result.Results;
                 returnData.rowCount = result.rowCount;
+
+                User? signedUser = AuthService.getSignedUser();
+                if (signedUser != null)
+                {
+                    // log history
+                    ActivityLogger.Log($"{signedUser.Username} paid {totalAmount} for the overdue books", signedUser.ID, ActivityTypeEnum.BOOK_TRANSACT);
+                }
             }
 
             returnData.Errors = errors;

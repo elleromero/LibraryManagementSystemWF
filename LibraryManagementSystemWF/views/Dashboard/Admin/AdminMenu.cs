@@ -24,6 +24,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
         private Loader loader;
         private int page = 1;
         private int maxPage = 1;
+        private bool isSearch = false;
 
         public AdminMenu(AdminDashboard adminDashboard)
         {
@@ -42,14 +43,18 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             usersGridList.Columns.Add("Phone", "Phone");
             usersGridList.Columns.Add("Email", "Email");
             usersGridList.Columns.Add("Profile Picture", "Profile Picture");
+            usersGridList.Columns.Add("Program", "Program");
+            usersGridList.Columns.Add("Course Year", "Course Year");
 
             this.loader = new(this);
             this.loader.StartLoading();
 
             LoadUsers();
             LoadRoles();
+            LoadPrograms();
 
             defaultPreview();
+            this.DisableButtons();
         }
 
         private void defaultPreview()
@@ -73,10 +78,22 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             }, true));
         }
 
+        private async void LoadSearchUsers()
+        {
+            ControllerAccessData<User> res = await AdminController.Search(txtSearch.Text, page);
+
+            this.SetData(res);
+        }
+
         private async void LoadUsers()
         {
             ControllerAccessData<User> res = await AdminController.GetAllUsers(page);
 
+            this.SetData(res);
+        }
+
+        private void SetData(ControllerAccessData<User> res)
+        {
             if (res.IsSuccess)
             {
                 loader.StopLoading();
@@ -101,7 +118,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                         user.Member.Address,
                         user.Member.Phone,
                         user.Member.Email,
-                        user.ProfilePicture
+                        user.ProfilePicture,
+                        user.Member.Program.Name,
+                        user.Member.CourseYear
                         );
                 }
 
@@ -111,7 +130,6 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 loader.StopLoading();
                 DialogBuilder.Show(res.Errors, "Error Fetching Users", MessageBoxIcon.Hand);
             }
-
         }
 
         private async void LoadRoles()
@@ -129,6 +147,21 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             }
         }
 
+        private async void LoadPrograms()
+        {
+            ControllerAccessData<models.Program> res = await ProgramController.GetAllPrograms();
+
+            if (res.IsSuccess)
+            {
+                for (int i = 0; i < res.Results.Count; i++)
+                {
+                    cmbProgram.ValueMember = nameof(models.Program.ID);
+                    cmbProgram.DisplayMember = nameof(models.Program.Name);
+                    cmbProgram.DataSource = res.Results;
+                }
+            }
+        }
+
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.adminDashboard.Enabled = true;
@@ -140,7 +173,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             if (cmbRole.SelectedItem != null)
             {
                 Role selectedRole = (Role)cmbRole.SelectedItem;
+                models.Program selectedProgram = (models.Program)cmbProgram.SelectedItem;
                 int selectedRoleId = selectedRole.ID;
+                int? selectedProgramId = selectedProgram.ID;
                 string SchoolNumber = SchoolNum.Text;
                 string Username = textUsername.Text;
                 string Password = textPassword.Text;
@@ -150,6 +185,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 string Phone = textPhone.Text;
                 string Email = textEmail.Text;
                 string ProfilePicture = txtProfile.Text;
+                int CourseYear = (int)numCourseYear.Value;
 
                 this.loader = new(this);
                 this.loader.StartLoading();
@@ -164,7 +200,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Phone,
                     selectedRoleId,
                     Email,
-                    ProfilePicture
+                    ProfilePicture,
+                    selectedProgramId,
+                    CourseYear 
                     );
 
                 if (res.IsSuccess)
@@ -203,6 +241,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             string Phone = textPhone.Text;
             string Email = textEmail.Text;
             string ProfilePicture = txtProfile.Text;
+            models.Program selectedProgram = (models.Program)cmbProgram.SelectedItem;
+            int? selectedProgramId = selectedProgram.ID;
+            int CourseYear = (int)numCourseYear.Value;
 
             // show password confirmation dialog
             PasswordProtected passProtected = new(this);
@@ -223,7 +264,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                     Phone,
                     this.adminPassword,
                     Email,
-                    ProfilePicture
+                    ProfilePicture,
+                    selectedProgramId,
+                    CourseYear
                     );
 
                 this.adminPassword = "";
@@ -256,7 +299,11 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
 
         private void usersList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (usersGridList.SelectedRows.Count <= 0)
+            {
+                this.clearBtn_Click(sender, e);
+            }
+            else if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = usersGridList.Rows[e.RowIndex];
 
@@ -272,6 +319,9 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 textEmail.Text = row.Cells["Email"].Value.ToString();
                 txtProfile.Text = row.Cells["Profile Picture"].Value.ToString();
 
+                if (row.Cells["Program"].Value != null) cmbProgram.Text = row.Cells["Program"].Value.ToString();
+                if (row.Cells["Course Year"].Value != null) numCourseYear.Value = Decimal.Parse(row.Cells["Course Year"].Value.ToString());
+
                 // update image
                 if (File.Exists(txtProfile.Text))
                 {
@@ -283,6 +333,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 cmbRole.Enabled = false;
                 textUserID.Enabled = false;
             }
+            this.DisableButtons();
+
         }
 
         private async void btnDeleteBooks_Click(object sender, EventArgs e)
@@ -392,6 +444,8 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             cmbRole.Enabled = true;
 
             defaultPreview();
+
+            this.ResetButtons();
         }
 
         private void textPhone_KeyPress(object sender, KeyPressEventArgs e)
@@ -409,7 +463,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 page--;
                 this.loader = new(this);
                 loader.StartLoading();
-                LoadUsers();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
             }
         }
 
@@ -420,8 +474,52 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
                 page++;
                 this.loader = new(this);
                 loader.StartLoading();
+                if (this.isSearch) LoadSearchUsers(); else LoadUsers();
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = true;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.page = 1;
+                this.LoadSearchUsers();
+            }
+        }
+
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtSearch.Text))
+            {
+                this.isSearch = false;
+                this.loader = new(this);
+                this.loader.StartLoading();
+                this.page = 1;
                 LoadUsers();
             }
+        }
+
+        private void DisableButtons()
+        {
+            if (usersGridList.SelectedRows.Count > 0)
+            {
+                button1.Enabled = false;
+                btnDeleteBooks.Enabled = true;
+                button2.Enabled = true;
+            } else
+            {
+                this.ResetButtons();
+            }
+        }
+
+        private void ResetButtons()
+        {
+            button1.Enabled = true;
+            btnDeleteBooks.Enabled = false;
+            button2.Enabled = false;
         }
     }
 }

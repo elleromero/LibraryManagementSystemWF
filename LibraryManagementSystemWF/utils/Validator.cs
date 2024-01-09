@@ -382,7 +382,41 @@ namespace LibraryManagementSystemWF.utils
             });
 
             return isUnique;
-        } 
+        }
+
+        public static async Task<bool> IsProgramNameUnique(string programName, string programId = "")
+        {
+            // Check if username is unique
+            bool isUnique = false;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    if (error != null) return;
+
+                    string query = string.IsNullOrWhiteSpace(programId) ?
+                    $"SELECT program_name FROM programs WHERE program_name = '{programName}'" :
+                    $"SELECT program_name FROM programs WHERE program_name = '{programName}' AND program_id != {programId}";
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        string name = reader.GetString(reader.GetOrdinal("program_name"));
+
+                        if (name.Equals(programName)) return;
+                    }
+
+                    isUnique = true;
+                }
+                catch { return; }
+            });
+
+            return isUnique;
+        }
 
         public static bool IsPassword(string password)
         {
@@ -460,6 +494,34 @@ namespace LibraryManagementSystemWF.utils
                     if (error != null) return;
 
                     string query = $"SELECT COUNT(*) FROM roles WHERE role_id = {roleId}";
+                    SqlCommand command = new(query, conn);
+
+                    object? v = await command.ExecuteScalarAsync();
+                    if (v != null) count = (int)v;
+
+
+                    isValid = count > 0;
+                }
+                catch { return; }
+            });
+
+            return isValid;
+        }
+
+        public static async Task<bool> IsProgramIdValid(int? programId)
+        {
+            bool isValid = false;
+
+            if (programId == null) return isValid;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                try
+                {
+                    int count = 0;
+                    if (error != null) return;
+
+                    string query = $"SELECT COUNT(*) FROM programs WHERE program_id = {programId}";
                     SqlCommand command = new(query, conn);
 
                     object? v = await command.ExecuteScalarAsync();

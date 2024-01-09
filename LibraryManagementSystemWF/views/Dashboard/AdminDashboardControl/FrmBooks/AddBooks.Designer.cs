@@ -64,7 +64,6 @@
             this.nextBtn = new System.Windows.Forms.Button();
             this.prevBtn = new System.Windows.Forms.Button();
             this.pageLbl = new System.Windows.Forms.Label();
-            this.btnMaximize = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -550,18 +549,6 @@
             this.pageLbl.TabIndex = 45;
             this.pageLbl.Text = "1 | 1";
             // 
-            // btnMaximize
-            // 
-            this.btnMaximize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.btnMaximize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnMaximize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaximize.Location = new System.Drawing.Point(831, 178);
-            this.btnMaximize.Name = "btnMaximize";
-            this.btnMaximize.Size = new System.Drawing.Size(29, 29);
-            this.btnMaximize.TabIndex = 56;
-            this.btnMaximize.Text = "💢";
-            this.btnMaximize.UseVisualStyleBackColor = false;
-            // 
             // btnSearch
             // 
             this.btnSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
@@ -573,6 +560,7 @@
             this.btnSearch.TabIndex = 55;
             this.btnSearch.Text = "🔍";
             this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // txtSearch
             // 
@@ -584,6 +572,7 @@
             this.txtSearch.PlaceholderText = "Search book title";
             this.txtSearch.Size = new System.Drawing.Size(245, 29);
             this.txtSearch.TabIndex = 54;
+            this.txtSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyUp);
             // 
             // label12
             // 
@@ -738,7 +727,6 @@
             this.Controls.Add(this.txtEditionName);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtCopyright);
-            this.Controls.Add(this.btnMaximize);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.nextBtn);
@@ -821,7 +809,6 @@
         private Button nextBtn;
         private Button prevBtn;
         private Label pageLbl;
-        private Button btnMaximize;
         private Button btnSearch;
         private TextBox txtSearch;
         private Label label12;

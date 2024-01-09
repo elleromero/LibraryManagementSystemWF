@@ -1,5 +1,6 @@
 ﻿using LibraryManagementSystemWF.dao;
 using LibraryManagementSystemWF.models;
+using LibraryManagementSystemWF.services;
 using LibraryManagementSystemWF.utils;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,9 @@ namespace LibraryManagementSystemWF.controllers
             }
 
             // validation
+            Config config = new();
+            int maxCopies = config.maxCopies;
+            decimal maxPrice = config.maxPrice;
             if (!await Validator.IsBookTitleUnique(title)) errors["title"] = "Title already exists";
             if (!await Validator.IsGenreIdValid(genreId)) errors["genreId"] = "Genre is invalid";
             if (!await Validator.IsSourceIdValid(sourceId)) errors["sourceId"] = "Source is invalid";
@@ -57,8 +61,8 @@ namespace LibraryManagementSystemWF.controllers
             if (string.IsNullOrWhiteSpace(publisher)) errors["publisher"] = "Publisher is required";
             if (!Validator.IsDateBeforeOrOnPresent(publicationDate)) errors["publicationDate"] = "Datetime must be before or on the present date";
             if (!Validator.IsValidISBN(isbn)) errors["isbn"] = "Invalid ISBN. Make sure the ISBN is in ISBN-10 or ISBN-13 format";
-            if (!(copies > 0 && copies <= 50)) errors["copies"] = "Should at least have a single copy and should not exceed 50 copies";
-            if (price < 0) errors["price"] = "Invalid amount";
+            if (!(copies > 0 && copies <= maxCopies)) errors["copies"] = $"Should at least have a single copy and should not exceed {maxCopies} copies";
+            if (price > maxPrice || price < 0) errors["price"] = "Invalid amount";
             if (editionNum < 1) errors["editionNum"] = "Invalid number";
 
             if (errors.Count == 0)
@@ -88,6 +92,17 @@ namespace LibraryManagementSystemWF.controllers
 
                 isSuccess = result.IsSuccess;
                 returnData.Result = result.Result;
+
+                if (result.IsSuccess)
+                {
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} created book '{title}'", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
+                    }
+
+                }
             }
 
             returnData.Errors = errors;
@@ -182,6 +197,13 @@ namespace LibraryManagementSystemWF.controllers
                 if (isSuccess && result.Result != null)
                 {
                     returnData.Result = result.Result;
+
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} updated book '{book.Result.BookMetadata.Title}' to '{title}'", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
+                    }
                 }
             }
 
@@ -268,6 +290,16 @@ namespace LibraryManagementSystemWF.controllers
             {
                 BookDAO bookDao = new();
                 returnResult.IsSuccess = await bookDao.Remove(id);
+
+                if (returnResult.IsSuccess)
+                {
+                    User? signedUser = AuthService.getSignedUser();
+                    if (signedUser != null)
+                    {
+                        // log history
+                        ActivityLogger.Log($"{signedUser.Username} removed a book", signedUser.ID, ActivityTypeEnum.BOOK_OPERATION);
+                    }
+                }
             }
 
             return returnResult;

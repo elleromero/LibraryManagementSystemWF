@@ -38,6 +38,47 @@ namespace LibraryManagementSystemWF.utils
                         }
                     }
 
+                    if (new Config().allowBorrowAfterDue)
+                    {
+                        return;
+                    }
+
+                    isNotAllowed = false;
+                }
+                catch { return; }
+                finally { if (reader != null) await reader.CloseAsync(); }
+            });
+
+            return isNotAllowed;
+        }
+
+        public static async Task<bool> IsLimitReached(string userId)
+        {
+            bool isNotAllowed = true;
+
+            await SqlClient.ExecuteAsync(async (error, conn) =>
+            {
+                if ((userId == null) && error != null) return;
+
+                string query = $"SELECT COUNT(*) AS row_count FROM loans WHERE user_id = '{userId}' AND is_returned = 0";
+
+                SqlDataReader? reader = null;
+
+                try
+                {
+                    SqlCommand command = new(query, conn);
+                    reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        int rowCount = reader.GetInt32(reader.GetOrdinal("row_count"));
+
+                        if (rowCount >= new Config().maxBorrowedBooks)
+                        {
+                            return;
+                        }
+                    }
+
                     isNotAllowed = false;
                 }
                 catch { return; }

@@ -14,6 +14,8 @@ namespace LibraryManagementSystemWF.models
 
         public ActivityType Type { get; set; } = new ActivityType();
 
+        public User User { get; set; } = new();
+
         public DateTime Timestamp { get; set; }
     }
 }

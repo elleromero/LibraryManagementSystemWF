@@ -244,5 +244,15 @@ namespace LibraryManagementSystemWF.views.Dashboard.Admin
             this.page = 1;
             LoadUsers();
         }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new AdminActivityLog().ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new AdminConfig().ShowDialog();
+        }
     }
 }

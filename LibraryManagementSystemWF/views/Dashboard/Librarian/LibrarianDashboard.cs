@@ -18,11 +18,13 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
     public partial class LibrarianDashboard : Form
     {
         private User? user;
+        private Form form;
 
-        public LibrarianDashboard()
+        public LibrarianDashboard(Form form)
         {
             InitializeComponent();
 
+            this.form = form;
             versionlbl.Text = EnvService.GetVersion();
 
             this.ClearAndHide();
@@ -71,6 +73,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             button5.BackColor = Color.White;
             button6.BackColor = Color.White;
             button7.BackColor = Color.White;
+            button8.BackColor = Color.White;
 
             mainPanel.Controls.Clear();
         }
@@ -100,7 +103,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             if (dr == DialogResult.Yes)
             {
                 AuthController.LogOut();
-                new SignIn().Show();
+                this.form.Show();
                 this.Close();
             }
         }
@@ -114,21 +117,12 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             navLbl.Text = "Genres";
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            this.ClearAndHide();
-            button5.BackColor = SystemColors.Control;
-
-            mainPanel.Controls.Add(new CtrlTransactions(this));
-            navLbl.Text = "Loans";
-        }
-
         private void button6_Click(object sender, EventArgs e)
         {
             this.ClearAndHide();
             button6.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlActivityLog());
+            mainPanel.Controls.Add(new CtrlLibrarianActivityLog(this));
             navLbl.Text = "Activity Log";
         }
 
@@ -137,8 +131,26 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             this.ClearAndHide();
             button7.BackColor = SystemColors.Control;
 
-            mainPanel.Controls.Add(new CtrlLibrarianOverdue());
+            mainPanel.Controls.Add(new CtrlLibrarianOverdue(this));
             navLbl.Text = "Overdue Returns";
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button5.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlProgram(this));
+            navLbl.Text = "Programs";
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            this.ClearAndHide();
+            button8.BackColor = SystemColors.Control;
+
+            mainPanel.Controls.Add(new CtrlCardIssue(this));
+            navLbl.Text = "Issue Library Card";
         }
     }
 }
