@@ -236,7 +236,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
 
             if (double.TryParse(txtCash.Text, out double ChangeCash))
             {
-                DialogResult dr = MessageBox.Show("Proceed Payment", "Confirmation", MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show("Proceed Payment", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (dr == DialogResult.Yes)
                 {
@@ -245,7 +245,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 
                     if (res.IsSuccess && this.currentUser != null)
                     {
-                        MessageBox.Show("Payment Successful");
+                        DialogBuilder.Show("Payment Successful", "Payment", MessageBoxIcon.Information);
                         new ConfirmPayment(this.receiptMaker.GetReceipt(
                             $"{this.currentUser.Member.FirstName} {this.currentUser.Member.FirstName}",
                             this.currentUser.Username

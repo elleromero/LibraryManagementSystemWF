@@ -146,11 +146,11 @@ VALUES
 ('COPY_OPERATION', 'Book related operation')
 
 INSERT INTO programs(program_name, program_description) VALUES
-('BSIT', 'Bachelor of Science in Information Technology'),
-('BSCPE','Bachelor of Science in Computer Engineering'),
-('BSTM','Bachelor of Science in Tourism Management'),
-('BSHM','Bachelor of Science in Hospitality Management'),
-('BSBA','Bachelor of Science in Business Administration');
+('BSIT', 'BS in Information Technology'),
+('BSCPE','BS in Computer Engineering'),
+('BSTM','BS in Tourism Management'),
+('BSHM','BS in Hospitality Management'),
+('BSBA','BS in Business Administration');
 
 INSERT INTO sources(source_name) VALUES
 ('Donation'),

@@ -217,6 +217,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
                 );
 
             loader.StopLoading();
+            DialogBuilder.Show("Library ID issued successfully", "Card Issue", MessageBoxIcon.Information);
         }
 
         private void button1_Click(object sender, EventArgs e)

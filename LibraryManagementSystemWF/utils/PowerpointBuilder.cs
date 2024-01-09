@@ -21,6 +21,9 @@ namespace LibraryManagementSystemWF.utils
 
         public void Modify(Image qr, string studentNo, string userId, string name, string year, string course, string profile, bool saveCopy = false)
         {
+            this.presentation.PageSetup.SlideWidth = 288;
+            this.presentation.PageSetup.SlideHeight = 223;
+
             foreach (Slide slide in this.presentation.Slides)
             {
                 foreach (Shape shape in slide.Shapes)
