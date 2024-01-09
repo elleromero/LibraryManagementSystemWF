@@ -28,97 +28,97 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.SuspendLayout();
+            richTextBox1 = new RichTextBox();
+            label4 = new Label();
+            button2 = new Button();
+            button1 = new Button();
+            panel1 = new Panel();
+            SuspendLayout();
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Enabled = false;
-            this.richTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.richTextBox1.Location = new System.Drawing.Point(12, 47);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBox1.Size = new System.Drawing.Size(303, 516);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            richTextBox1.Enabled = false;
+            richTextBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            richTextBox1.Location = new Point(12, 47);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical;
+            richTextBox1.Size = new Size(303, 516);
+            richTextBox1.TabIndex = 0;
+            richTextBox1.Text = "";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(12, 17);
-            this.label4.Margin = new System.Windows.Forms.Padding(0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(136, 30);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "Your Receipt";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label4.AutoSize = true;
+            label4.FlatStyle = FlatStyle.Flat;
+            label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(12, 17);
+            label4.Margin = new Padding(0);
+            label4.Name = "label4";
+            label4.Size = new Size(136, 30);
+            label4.TabIndex = 18;
+            label4.Text = "Your Receipt";
+            label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // button2
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(168, 570);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(147, 26);
-            this.button2.TabIndex = 21;
-            this.button2.Text = "Print";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.BackColor = Color.FromArgb(254, 206, 47);
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
+            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            button2.ForeColor = Color.Black;
+            button2.Location = new Point(168, 570);
+            button2.Name = "button2";
+            button2.Size = new Size(147, 26);
+            button2.TabIndex = 21;
+            button2.Text = "Print";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.DarkGray;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(12, 569);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(150, 28);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Close";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.BackColor = Color.DarkGray;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 255);
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 255, 255);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.ForeColor = Color.Black;
+            button1.Location = new Point(12, 569);
+            button1.Name = "button1";
+            button1.Size = new Size(150, 28);
+            button1.TabIndex = 23;
+            button1.Text = "Close";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(206)))), ((int)(((byte)(47)))));
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(327, 14);
-            this.panel1.TabIndex = 24;
+            panel1.BackColor = Color.FromArgb(254, 206, 47);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(327, 14);
+            panel1.TabIndex = 24;
             // 
             // ConfirmPayment
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(327, 604);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.richTextBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "ConfirmPayment";
-            this.Text = "ConfirmPayment";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(327, 604);
+            Controls.Add(panel1);
+            Controls.Add(button1);
+            Controls.Add(button2);
+            Controls.Add(label4);
+            Controls.Add(richTextBox1);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "ConfirmPayment";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "ConfirmPayment";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
