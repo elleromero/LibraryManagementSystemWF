@@ -238,7 +238,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             {
                 DialogResult dr = MessageBox.Show("Proceed Payment", "Confirmation", MessageBoxButtons.YesNo);
 
-                if (dr == DialogResult.OK)
+                if (dr == DialogResult.Yes)
                 {
                     this.cash = ChangeCash;
                     ControllerAccessData<Loan> res = await LoanController.ReturnDueBooks(loansIdList, this.cash, this.amountDue);
@@ -277,6 +277,7 @@ namespace LibraryManagementSystemWF.views.Dashboard.Librarian
             {
                 if (double.TryParse(txtCash.Text, out double ChangeCash))
                 {
+                    this.cash = ChangeCash;
                     dataGridDueBooks_SelectionChanged(sender, e);
                 }
             }
